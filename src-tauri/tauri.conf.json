@@ -1,0 +1,49 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "BD2ModPreview",
+  "version": "0.1.0",
+  "identifier": "com.bd2mod.Preview",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "title": "BD2ModManager - Mod Preview",
+        "width": 800,
+        "height": 600, 
+        "dragDropEnabled": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  },
+  "plugins": {
+    "cli": {
+      "description": "A minimal CLI Spine Previewer for BD2ModManager",
+      "args": [
+        {
+          "name": "path",
+          "index": 1,
+          "takesValue" : true
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BD2ModManager - Mod Preview</title>
+    <link rel="stylesheet" href="src/css/spine-player-4.1.css">
+    <link rel="stylesheet" href="src/css/index.css">
+
+    <script src="/runtimes/spine-player-4-1.js"></script>
+</head>
+
+<body>
+    <main id="main">
+        <section id="folder-selection" class="visible">
+            <div id="folder-selection-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" height="80px" viewBox="0 -960 960 960" width="80px" fill="currentColor">
+                    <path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h240l80 80h320q33 0 56.5 23.5T880-640H447l-80-80H160v480l96-320h684L837-217q-8 26-29.5 41.5T760-160H160Zm84-80h516l72-240H316l-72 240Zm0 0 72-240-72 240Zm-84-400v-80 80Z" />
+                </svg>
+            </div>
+            <h3 id="folder-selection-title">Mod Preview</h3>
+            <p id="folder-selection-message">Drag and drop a mod folder</p>
+            <button id="folder-selection-logs-button">See Logs</button>
+        </section>
+
+                <section id="viewer-section" class="hidden">
+            <div id="controls-wrapper">
+                <button id="expand-btn" title="Show Controls">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
+                        <path d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm112-260q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Z" />
+                    </svg>
+                </button>
+                <div id="controls">
+                    <div class="control-group horizontal">
+                        <input type="checkbox" name="premultipliedAlpha" id="premultipliedAlpha">
+                        <label for="premultipliedAlpha">Premultiplied Alpha</label>
+                    </div>
+                    <div class="control-group">
+                        <label for="backgroundColor">Background Color</label>
+                        <input type="color" name="backgroundColor" id="backgroundColor" value="#111827">
+                    </div>
+                    <div class="control-group">
+                        <label>Actions</label>
+                        <button id="open-logs-btn">Open Logs</button>
+                    </div>
+                </div>
+            </div>
+            <div id="player-container"></div>
+        </section>
+    </main>
+
+    <section id="log-overlay" class="hidden">
+        <section id="logs">
+            <header id="log-header">
+                <h2>Logs</h2>
+                <button id="close-log-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                        fill="#e3e3e3">
+                        <path
+                            d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+                    </svg>
+                </button>
+            </header>
+            <section id="log-content">
+            </section>
+        </section>
+    </section>
+    <script type="module" src="src/main.ts"></script>
+</body>
+
+</html>
