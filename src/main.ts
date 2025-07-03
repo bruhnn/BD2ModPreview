@@ -8,6 +8,31 @@ interface DragDropPayload {
   paths: string[];
 }
 
+// interface CliPayload {
+//   path: string
+// }
+
+function initializeDragAndDrop(): void {
+  listen<DragDropPayload>('tauri://drag-drop', (event) => {
+    const filePath = event.payload.paths[0];
+    if (filePath) {
+      logMessage(`File dropped: ${filePath}`);
+      loadSpine(filePath);
+    }
+  });
+  logMessage("Drag and drop listener initialized.");
+}
+
+// function initializeCli() {
+//   listen<CliPayload>('load-from-cli', (event) => {
+//     const filePath = event.payload.path
+//     if (filePath) {
+//       logMessage(`File received from CLI: ${filePath}`)
+//       loadSpine(filePath)
+//     }
+//   })
+// }
+
 async function loadFromCli(): Promise<void> {
   try {
     const matches = await getMatches();
@@ -24,24 +49,13 @@ async function loadFromCli(): Promise<void> {
   }
 }
 
-function initializeDragAndDrop(): void {
-  listen<DragDropPayload>('tauri://drag-drop', (event) => {
-    console.log(event)
-    const filePath = event.payload.paths[0];
-    if (filePath) {
-      logMessage(`File dropped: ${filePath}`);
-      loadSpine(filePath);
-    }
-  });
-  logMessage("Drag and drop listener initialized.");
-}
-
 function main() {
   document.addEventListener('DOMContentLoaded', () => {
     logMessage("Application starting...");
     initializeUI();
+    // initializeCli();
     initializeDragAndDrop();
-    loadFromCli();
+    loadFromCli()
   });
 }
 

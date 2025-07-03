@@ -319,6 +319,7 @@ dependencies = [
  "tauri-plugin-cli",
  "tauri-plugin-fs",
  "tauri-plugin-opener",
+ "windows",
 ]
 
 [[package]]
