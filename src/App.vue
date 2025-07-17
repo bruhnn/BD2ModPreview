@@ -53,7 +53,7 @@ const DEFAULT_CONFIG = {
   BACKGROUND_COLOR:"#0F172A"
 }
 
-const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/myssal/Brown-Dust-2-Asset/refs/heads/master/spine'
+const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/spine'
 const GITHUB_ENDPOINTS = {
   standing: 'char',
   cutscene: 'cutscenes',
@@ -316,9 +316,12 @@ async function initializeDownloadListeners(): Promise<void> {
 
     eventListeners.downloadFinished = await listen<DownloadFinishedPayload>('download-finished', () => {
       logMessage('Download finished successfully')
-      resetDownloadState()
+      resetDownloadState()    
       downloadProgress.value = 100
       spineError.value = null
+      loadSpineAssets({
+        path: currentFolderPath.value
+      })
     })
 
     logMessage('Download event listeners initialized')
