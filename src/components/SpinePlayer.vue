@@ -6,11 +6,13 @@ import { useLogger } from '../logger';
 const props = withDefaults(defineProps<{
     backgroundColor?: string,
     premultipliedAlpha?: boolean,
-    backgroundImage?: string
+    backgroundImage?: string,
+    loopAnimation?: boolean,
 }>(), {
     backgroundColor: '#0F172A',
     premultipliedAlpha: false,
-    backgroundImage: undefined
+    backgroundImage: undefined,
+    loopAnimation: true,
 });
 
 const emit = defineEmits<{
@@ -28,6 +30,7 @@ const currentSkeletonUrl = ref<string | null>(null);
 const currentAtlasUrl = ref<string | null>(null);
 const currentSpineFolder = ref<string | null>(null);
 const isPlayerInitialized = ref(false);
+const currentAnimationName = ref<string | null>(null);
 
 declare const spine: any;
 
@@ -46,7 +49,7 @@ interface SpinePlayer {
     bg: any;
     animationState: any;
     canvas: HTMLCanvasElement;
-    setAnimation: (animation: string) => void;
+    setAnimation: (animation: string, loop: boolean) => void;
     addAnimation: () => void;
     draw: () => void;
 }
@@ -72,6 +75,7 @@ interface LoadSpineOptions {
 
 let playerInstance: SpinePlayer | null = null;
 let userCamera: any | null = null;
+
 
 const defaultCameraState: CameraState = {
     x: 0,
@@ -274,8 +278,23 @@ function setPlayerAnimation(animationName: string): void {
     }
 
     try {
-        playerInstance.setAnimation(animationName);
-        logMessage(`Playing animation: ${animationName}`, "info");
+        playerInstance.play();
+
+        const trackEntry = playerInstance.animationState.setAnimation(0, animationName, props.loopAnimation);
+
+        if (!props.loopAnimation) {
+            trackEntry.listener = {
+                complete: () => {
+                    if (playerInstance) {
+                        playerInstance.pause();
+                        logMessage(`Animation '${animationName}' completed and player is now paused.`, "info");
+                    }
+                }
+            };
+        }
+
+        logMessage(`Playing animation: ${animationName} (loop=${props.loopAnimation})`, "info");
+        currentAnimationName.value = animationName
     } catch (error) {
         logMessage(`Error setting animation: ${error}`, "error");
     }
@@ -385,6 +404,13 @@ watch(() => props.backgroundImage, async () => {
         await reloadCurrentSpine();
     }
 });
+
+watch(() => props.loopAnimation, async (shouldLoop) => {
+    if (playerInstance && currentAnimationName.value) {
+        logMessage(`Looping changed to ${shouldLoop}. Re-applying animation.`, "info");
+        setPlayerAnimation(currentAnimationName.value);
+    }
+})
 
 onMounted(() => {
     window.addEventListener("keydown", handleKeydown);

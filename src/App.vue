@@ -39,7 +39,8 @@ type CharacterType = 'standing' | 'cutscene' | 'dating'
 interface SpineConfig {
   backgroundColor: string
   backgroundImage: string | null
-  premultipliedAlpha: boolean
+  premultipliedAlpha: boolean,
+  loopAnimation: boolean
 }
 
 interface LoadSpineOptions {
@@ -74,7 +75,8 @@ const currentFolderPath = ref<string | null>(null)
 const spineConfig = reactive<SpineConfig>({
   backgroundColor: DEFAULT_CONFIG.BACKGROUND_COLOR,
   backgroundImage: null,
-  premultipliedAlpha: getStoredBoolean("PREMULTIPLIED_ALPHA", DEFAULT_CONFIG.PREMULTIPLIED_ALPHA)
+  premultipliedAlpha: getStoredBoolean("PREMULTIPLIED_ALPHA", DEFAULT_CONFIG.PREMULTIPLIED_ALPHA),
+  loopAnimation: true,
 })
 
 const spinePlayer = useTemplateRef("spinePlayer")
@@ -425,6 +427,7 @@ onUnmounted(() => {
         v-model:background-color="spineConfig.backgroundColor"
         v-model:premultiplied-alpha="spineConfig.premultipliedAlpha" 
         v-model:background-image="spineConfig.backgroundImage"
+        v-model:loop-animation="spineConfig.loopAnimation"
       />
 
       <!-- Characters list btn -->
@@ -444,7 +447,8 @@ onUnmounted(() => {
         ref="spinePlayer" 
         :background-color="spineConfig.backgroundColor" 
         :premultiplied-alpha="spineConfig.premultipliedAlpha"
-        :background-image="spineConfig.backgroundImage" 
+        :background-image="spineConfig.backgroundImage"
+        :loop-animation="spineConfig.loopAnimation"
         @animations-loaded="handleAnimationsLoaded" 
         @error="onSpineError"
         @success="onSpineSuccess" 
