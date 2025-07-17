@@ -280,8 +280,8 @@ async function downloadMissingSkeleton(): Promise<void> {
 
     const downloadError = createSpineError(
       'DownloadError',
-      'Download Failed',
-      'Failed to download the skeleton file. Please try again or check your internet connection.'
+      'Failed to download the skeleton file.',
+      error
     )
     onSpineError(downloadError)
   }

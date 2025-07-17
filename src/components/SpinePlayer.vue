@@ -43,6 +43,7 @@ interface SpineAssetData {
 interface SpinePlayer {
     dispose: () => void;
     play: () => void;
+    pause: () => void;
     skeleton: any;
     sceneRenderer: any;
     config: any;
