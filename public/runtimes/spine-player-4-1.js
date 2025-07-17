@@ -13972,7 +13972,7 @@ ${e.message}`, e);
           if (target)
             target = null;
           else if (config.showControls) {
-            // EDIT BY BRUHNN this.paused ? this.play() : this.pause();
+            // EDITED BY BRUHNN this.paused ? this.play() : this.pause();
             // Remove the toggle pause/play functionality
           }
         },

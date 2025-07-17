@@ -1,27 +1,25 @@
-const logContent = document.getElementById('log-content');
+import { ref } from "vue";
 
-export type LogLevel = "info" | "success" | "error" | "warn";
+type LogLevel = "info" | "success" | "error" | "warn";
 
-export function logMessage(message: string, level: LogLevel = "info"): void {
-  if (!logContent) {
-    console.error("Log container element not found in the DOM.");
-    return;
-  }
+interface LogEntry {
+    timestamp: string,
+    level: LogLevel,
+    message: string
+}
 
-  const logEntry = document.createElement('div');
-  logEntry.className = `log-entry ${level.toLowerCase()}`;
+const logs = ref<LogEntry[]>([])
 
-  const timestamp = new Date().toLocaleTimeString();
+export function useLogger() {
+    function logMessage(message: string, level: LogLevel = "info"): void {
+      let timestamp = new Date().toLocaleTimeString();
+      let logEntry: LogEntry = {timestamp, level, message}
+      logs.value.push(logEntry)
+      console.log(`[${timestamp}] [${level.toUpperCase()}] ${message}`);
+    }
 
-  logEntry.innerHTML = `
-    <span class="timestamp">${timestamp}</span>
-    <span class="level">${level.toUpperCase()}</span>
-    <span class="message">${message}</span>
-  `;
-
-  logContent.appendChild(logEntry);
-
-  logContent.scrollTop = logContent.scrollHeight;
-
-  console.log(`[${timestamp}] [${level.toUpperCase()}] ${message}`);
+    return {
+        logMessage,
+        logs,
+    }
 }

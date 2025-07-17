@@ -12,6 +12,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    "jsx": "preserve",
 
     /* Linting */
     "strict": true,
@@ -19,5 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "public"]
+  "include": ["src-js/**/*.ts", "src-js/**/*.d.ts", "src-js/**/*.tsx", "src-js/**/*.vue"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

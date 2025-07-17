@@ -1,62 +1,107 @@
-import { getMatches } from '@tauri-apps/plugin-cli';
-import { logMessage } from './logger';
-import { loadSpine } from './spine-player';
-import { initializeUI, showViewerError } from './ui';
-import { listen } from '@tauri-apps/api/event';
+import { createApp } from "vue";
+import App from "./App.vue";
+import interact from "interactjs";
 
-interface DragDropPayload {
-  paths: string[];
-}
+import './styles/main.css'
+import './styles/spine-player-4.1.css'
 
-// interface CliPayload {
-//   path: string
-// }
+const app = createApp(App);
 
-function initializeDragAndDrop(): void {
-  listen<DragDropPayload>('tauri://drag-drop', (event) => {
-    const filePath = event.payload.paths[0];
-    if (filePath) {
-      logMessage(`File dropped: ${filePath}`);
-      loadSpine(filePath);
+app.directive("draggable-resizable", {
+    mounted(el) {
+        interact(el)
+        .draggable({
+            inertia: true,
+            allowFrom: ".drag-handle",
+            modifiers: [
+                interact.modifiers.restrictRect({
+                    restriction: 'parent',
+                    endOnly: true
+                })
+            ],
+            autoScroll: true,
+            listeners: {
+                move(event) {
+                    const target = event.target
+                    let x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
+                    let y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
+
+                    target.style.transform = `translate(${x}px, ${y}px)`
+                    target.setAttribute('data-x', x)
+                    target.setAttribute('data-y', y)
+
+                }
+            }
+        })
+        .resizable({
+        edges: { left: true, right: true, bottom: true, top: true },
+        inertia: true,
+        modifiers: [
+          interact.modifiers.restrictEdges({
+            outer: "parent"
+          }),
+          interact.modifiers.restrictSize({
+            min: { width: 100, height: 50 }
+          })
+        ],
+        listeners: {
+          move(event) {
+            const target = event.target;
+            let x = parseFloat(target.getAttribute("data-x")) || 0;
+            let y = parseFloat(target.getAttribute("data-y")) || 0;
+
+            // Update size
+            target.style.width = event.rect.width + "px";
+            target.style.height = event.rect.height + "px";
+
+            // Translate position if resizing from top/left
+            x += event.deltaRect.left;
+            y += event.deltaRect.top;
+
+            target.style.transform = `translate(${x}px, ${y}px)`;
+            target.setAttribute("data-x", x);
+            target.setAttribute("data-y", y);
+          }
+        }
+      });
     }
-  });
-  logMessage("Drag and drop listener initialized.");
-}
+})
 
-// function initializeCli() {
-//   listen<CliPayload>('load-from-cli', (event) => {
-//     const filePath = event.payload.path
-//     if (filePath) {
-//       logMessage(`File received from CLI: ${filePath}`)
-//       loadSpine(filePath)
-//     }
-//   })
-// }
+app.directive("resizable-left", {
+    mounted(el) {
+        interact(el)
+        .resizable({
+        edges: { left: true, right: false, bottom: false, top: false },
+        inertia: true,
+        modifiers: [
+          interact.modifiers.restrictEdges({
+            outer: "parent"
+          }),
+          interact.modifiers.restrictSize({
+            min: { width: 100, height: 50 }
+          })
+        ],
+        listeners: {
+          move(event) {
+            const target = event.target;
+            let x = parseFloat(target.getAttribute("data-x")) || 0;
+            let y = parseFloat(target.getAttribute("data-y")) || 0;
 
-async function loadFromCli(): Promise<void> {
-  try {
-    const matches = await getMatches();
-    const pathArg = matches.args.path?.value;
+            // Update size
+            target.style.width = event.rect.width + "px";
+            target.style.height = event.rect.height + "px";
 
-    if (typeof pathArg === 'string' && pathArg) {
-      logMessage(`Found 'path' argument from CLI: ${pathArg}`);
-      await loadSpine(pathArg);
-    } else {
-      logMessage("No CLI 'path' argument provided. Waiting for user interaction.");
+            // Translate position if resizing from top/left
+            x += event.deltaRect.left;
+            y += event.deltaRect.top;
+
+            target.style.transform = `translate(${x}px, ${y}px)`;
+            target.setAttribute("data-x", x);
+            target.setAttribute("data-y", y);
+          }
+        }
+      });
     }
-  } catch (e) {
-    showViewerError(`Error processing CLI arguments: ${e}`);
-  }
-}
+})
 
-function main() {
-  document.addEventListener('DOMContentLoaded', () => {
-    logMessage("Application starting...");
-    initializeUI();
-    // initializeCli();
-    initializeDragAndDrop();
-    loadFromCli()
-  });
-}
-
-main();
+app.mount("#app");
