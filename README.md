@@ -1,5 +1,5 @@
  🛠️ **If you want to update the mod preview used inside BD2ModManager,**  
-> replace the `modpreview.exe` file located at:  
+> replace the `BD2ModPreview.exe` file located at:  
 > `%localappdata%/bruhnn/BD2ModManager/tools`  
 >  
 
