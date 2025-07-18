@@ -5885,7 +5885,7 @@ var spine = (() => {
       let base64Idx = dataUri.indexOf("base64,");
       if (base64Idx != -1) {
         base64Idx += "base64,".length;
-        return atob(dataUri.substr(base64Idx));
+        return new TextDecoder("utf-8").decode(Uint8Array.from(atob(dataUri.substring(base64Idx)), c => c.charCodeAt(0))) // atob(dataUri.substr(base64Idx));
       } else {
         return dataUri.substr(dataUri.indexOf(",") + 1);
       }
