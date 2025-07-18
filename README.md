@@ -1,3 +1,8 @@
+ 🛠️ **If you want to update the mod preview used inside BD2ModManager,**  
+> replace the `BD2ModPreview.exe` file located at:  
+> `%localappdata%/bruhnn/BD2ModManager/tools`  
+>  
+
 # BD2ModPreview
 
 A minimal Spine animation viewer used internally by **BD2ModManager**.
