@@ -10,11 +10,14 @@ import {
 import { onMounted, ref } from 'vue';
 import { open } from '@tauri-apps/plugin-dialog';
 import { convertFileSrc } from '@tauri-apps/api/core';
+import { getVersion } from '@tauri-apps/api/app';
 
 defineProps<{
     showControls: boolean;
     animations: string[];
 }>();
+
+const appVersion = ref('0.0.0')
 
 const defaultBackgroundColor = ref<string | undefined>('');
 
@@ -106,8 +109,13 @@ function removeBgImage() {
 //     emit('clearQueue');
 // };
 
+async function updateVersion() {
+    appVersion.value = await getVersion()
+}
+
 onMounted(() => {
     defaultBackgroundColor.value = backgroundColor.value
+    updateVersion()
 })
 </script>
 
@@ -356,7 +364,7 @@ onMounted(() => {
                 </div>
             </div>
             <p class="text-gray-400 text-medium text-xs text-center">
-                BD2ModPreview V0.2.0
+                BD2ModPreview v{{appVersion}}
             </p>
         </div>
     </Transition>

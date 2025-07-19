@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "BD2ModPreview",
-  "version": "0.3.2",
-  "identifier": "com.bd2mod.Preview",
+  "version": "0.3.0",
+  "identifier": "com.bd2modmanager.preview",
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",
@@ -15,7 +15,7 @@
       {
         "title": "BD2ModManager - Mod Preview",
         "width": 800,
-        "height": 600, 
+        "height": 600,
         "dragDropEnabled": true
       }
     ],
@@ -26,7 +26,6 @@
   "bundle": {
     "active": true,
     "targets": "all",
-    "createUpdaterArtifacts": true,
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
@@ -42,14 +41,8 @@
         {
           "name": "path",
           "index": 1,
-          "takesValue" : true
+          "takesValue": true
         }
-      ]
-    },
-    "updater": {
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEY0NUNCN0ZCOUUxRTM1OApSV1JZNCtHNWY4dEZEOTlXbnRkQmd2NExkYmFUVU9WMWllNUVNWndCeDZTRDVQbmd4NHdUNldqTQo=",
-      "endpoints": [
-        "https://github.com/bruhnn/BD2ModPreview/releases/latest/download/latest.json"
       ]
     }
   }
