@@ -12,6 +12,7 @@ import SelectFolder from "./components/SelectFolder.vue"
 import SpineControls from "./components/SpineControls.vue"
 import CharactersList from "./components/CharactersList.vue"
 import Error, { SpineError } from "./components/Error.vue"
+import SpineHistory from "./components/SpineHistory.vue"
 
 // types
 interface DragDropPayload {
@@ -64,9 +65,11 @@ const GITHUB_ENDPOINTS = {
 // eactive
 const spineError = ref<SpineError | null>(null)
 const showLogs = ref(false)
+const showHistory = ref(false)
 const showControls = ref(false)
 const showFolderSelection = ref(false)
 const showCharactersList = ref(false)
+const history = ref([])
 const isDownloadingSkeleton = ref(false)
 const downloadProgress = ref(0)
 const currentFolderPath = ref<string | null>(null)
@@ -194,10 +197,48 @@ function handleAnimationsLoaded(animations: string[]): void {
   logMessage(`Loaded ${animations.length} animations: ${animations.join(', ')}`, 'info')
 }
 
-function onSpineSuccess(currentAnimation: string): void {
+function onSpineSuccess(data: object): void {
+  console.log(data);
+
   spineError.value = null
-  spineCurrentAnimation.value = currentAnimation
+  spineCurrentAnimation.value = data.currentAnimation
   logMessage('Spine animation loaded successfully', 'success')
+  
+  addToHistory(data.folderPath)
+}
+
+
+async function loadHistory(): void {
+  try {
+    const raw = localStorage.getItem("spine-history")
+    const data = raw? JSON.parse(raw).slice(-10): []
+    history.value = data
+    logMessage("History loaded.")
+  } catch {
+    logMessage("Failed to load history.")
+    history.value = []
+  }
+}
+
+async function addToHistory(item: string) {
+  try {
+    const index = history.value.findIndex(h => h.path === item);
+
+    if (index !== -1) {
+      console.log("removing")
+      history.value.splice(index, 1); // remove existing item
+    }
+
+    history.value.push({
+      path: item,
+    });
+
+    localStorage.setItem("spine-history", JSON.stringify(history.value))
+
+    logMessage("Saved to history.", "success")
+  } catch(error) {
+    logMessage(`Failed to save history. ${error}`, "error")
+  }
 }
 
 function onSpineError(error: SpineError): void {
@@ -235,6 +276,11 @@ function handleShowLogs(): void {
   showControls.value = false
   showLogs.value = true
 }
+
+function handleShowHistory(): void {
+  showControls.value = false;
+  showHistory.value = true;
+} 
 
 async function handleSelectFolder(): Promise<void> {
   try {
@@ -283,7 +329,7 @@ async function downloadMissingSkeleton(): Promise<void> {
       'Failed to download the skeleton file.',
       error
     )
-    onSpineError(downloadError)
+    spineError.value = downloadError
   }
 }
 
@@ -360,6 +406,10 @@ function cleanupEventListeners(): void {
   }
 }
 
+function handleHistoryItemSelected(item: string): void {
+  setFolderPath(item)
+}
+
 watch(spineCurrentAnimation, (animationName: string) => {
   if (animationName && spinePlayer.value) {
     spinePlayer.value.playAnimation(animationName)
@@ -376,8 +426,11 @@ onMounted(async () => {
   await Promise.all([
     loadFromCli(),
     initializeDragAndDrop(),
-    initializeDownloadListeners()
+    initializeDownloadListeners(),
+    loadHistory()
   ])
+
+  
 
   logMessage('Application initialized successfully')  
 })
@@ -398,6 +451,8 @@ onUnmounted(() => {
     @close="showFolderSelection = false" 
     @select-folder="handleSelectFolder" 
     />
+
+    <SpineHistory @close="showHistory = false" :show="showHistory" :history="history" @spine-selected="handleHistoryItemSelected"/>
     
     <div class="flex-1 flex align-center items-center justify-center relative text-gray-400 transition-all duration-300 ease-in-out">
       <!-- {{ spinePlayer?.isInitialized() }} -->
@@ -421,6 +476,7 @@ onUnmounted(() => {
         :show-controls="showControls"
         :animations="spineAnimations"
         @open-logs="handleShowLogs"
+        @open-history="handleShowHistory"
         @select-folder="handleSelectFolder"
         @close="showControls = false"
         v-model:current-animation="spineCurrentAnimation"

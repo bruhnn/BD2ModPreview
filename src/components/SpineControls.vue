@@ -43,6 +43,7 @@ const emit = defineEmits([
     "close",
     "selectFolder",
     "openLogs",
+    "openHistory",
     'update:backgroundColor',
     'update:premultipliedAlpha',
     'update:backgroundImage',
@@ -115,10 +116,10 @@ onMounted(() => {
         enter-to-class="opacity-100 scale-100" leave-active-class="duration-200 ease-in"
         leave-from-class="opacity-100 scale-100" leave-to-class="opacity-0 scale-95">
         <div v-show="showControls" v-draggable-resizable
-            class="fixed overflow-hidden z-50 top-8 left-8 bg-gradient-to-br pointer-events-auto max-h-[90vh] overflow-y-auto from-slate-900 to-slate-800 backdrop-blur-xl border border-slate-700/50 text-slate-200 p-6 rounded-2xl w-96 flex flex-col gap-6 shadow-2xl scrollbar scrollbar-thumb-slate-600 scrollbar-track-slate-800">
+            class="fixed overflow-hidden z-50 top-8 left-8 bg-gradient-to-br pointer-events-auto max-h-[90vh] overflow-y-auto from-slate-900 to-slate-800 backdrop-blur-xl border border-slate-700/50 text-slate-200 rounded-2xl w-96 flex flex-col shadow-2xl scrollbar scrollbar-thumb-slate-600 scrollbar-track-slate-800">
 
             <!-- Header -->
-            <div class="flex items-center justify-between cursor-move drag-handle">
+            <div class="flex items-center justify-between align-center cursor-move drag-handle h-[60px] p-4">
                 <h3 class="text-lg font-semibold text-white select-none">Controls</h3>
                 <button @click="$emit('close')"
                     class="text-slate-400 hover:text-white transition-colors cursor-pointer">
@@ -130,107 +131,111 @@ onMounted(() => {
                 </button>
             </div>
 
-            <!-- Settings Section -->
-            <div class="space-y-4">
-                <h4 class="text-sm font-medium text-slate-300 uppercase tracking-wide">Render</h4>
+            <!-- contetn -->
+            <div class="p-4 flex flex-col gap-6">
 
-                <SwitchGroup>
-                    <div class="flex items-center gap-2">
-                        <Switch v-model="premultipliedAlpha" :class='premultipliedAlpha ? "bg-gray-200" : "bg-gray-600"'
-                            class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none cursor-pointer">
-                            <span :class='premultipliedAlpha ? "translate-x-6" : "translate-x-1"'
-                                class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform" />
-                        </Switch>
-                        <SwitchLabel class="mr-4 cursor-pointer select-none">Premultiplied Alpha</SwitchLabel>
-                    </div>
-                </SwitchGroup>
+                <!-- Settings Section -->
+                <div class="space-y-4">
+                    <h4 class="text-sm font-medium text-slate-300 uppercase tracking-wide">Render</h4>
 
-                <div class="space-y-2">
-                    <label class="text-sm font-medium text-slate-300 select-none">Background Color</label>
-                    <div class="relative flex gap-1">
-                        <input type="color" v-model="backgroundColor"
-                            class="w-full h-10 rounded-lg cursor-pointer border-2 border-slate-600 hover:border-slate-500 transition-colors" />
-                        <div
-                            class="absolute inset-0 rounded-lg pointer-events-none bg-gradient-to-r from-transparent via-white/5 to-transparent">
+                    <SwitchGroup>
+                        <div class="flex items-center gap-2">
+                            <Switch v-model="premultipliedAlpha"
+                                :class='premultipliedAlpha ? "bg-gray-200" : "bg-gray-600"'
+                                class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none cursor-pointer">
+                                <span :class='premultipliedAlpha ? "translate-x-6" : "translate-x-1"'
+                                    class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform" />
+                            </Switch>
+                            <SwitchLabel class="mr-4 cursor-pointer select-none">Premultiplied Alpha</SwitchLabel>
                         </div>
-                        <button class="p-2 bg-gray-600 rounded-md cursor-pointer"
-                            @click="backgroundColor = defaultBackgroundColor">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                                fill="#e3e3e3">
-                                <path
-                                    d="M440-122q-121-15-200.5-105.5T160-440q0-66 26-126.5T260-672l57 57q-38 34-57.5 79T240-440q0 88 56 155.5T440-202v80Zm80 0v-80q87-16 143.5-83T720-440q0-100-70-170t-170-70h-3l44 44-56 56-140-140 140-140 56 56-44 44h3q134 0 227 93t93 227q0 121-79.5 211.5T520-122Z" />
-                            </svg>
-                        </button>
+                    </SwitchGroup>
+
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-slate-300 select-none">Background Color</label>
+                        <div class="relative flex gap-1">
+                            <input type="color" v-model="backgroundColor"
+                                class="w-full h-10 rounded-lg cursor-pointer border-2 border-slate-600 hover:border-slate-500 transition-colors" />
+                            <div
+                                class="absolute inset-0 rounded-lg pointer-events-none bg-gradient-to-r from-transparent via-white/5 to-transparent">
+                            </div>
+                            <button class="p-2 bg-gray-600 rounded-md cursor-pointer"
+                                @click="backgroundColor = defaultBackgroundColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                    width="24px" fill="#e3e3e3">
+                                    <path
+                                        d="M440-122q-121-15-200.5-105.5T160-440q0-66 26-126.5T260-672l57 57q-38 34-57.5 79T240-440q0 88 56 155.5T440-202v80Zm80 0v-80q87-16 143.5-83T720-440q0-100-70-170t-170-70h-3l44 44-56 56-140-140 140-140 56 56-44 44h3q134 0 227 93t93 227q0 121-79.5 211.5T520-122Z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-slate-300 select-none">Background Image</label>
+                        <div class="relative flex gap-1">
+                            <input ref="fileInput" type="file" accept="image/png,image/jpeg,image/webp" class="hidden"
+                                @change="handleFileChange" />
+
+                            <button @click="fileInput?.click()"
+                                class="w-full h-10 px-4 bg-gray-600 rounded-md cursor-pointer flex items-center justify-center text-slate-300 hover:bg-gray-500 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960"
+                                    width="20px" fill="currentColor" class="mr-2">
+                                    <path
+                                        d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm40-80h480L520-590 380-420l-80-100-60 80Zm-40 80v-560 560Z" />
+                                </svg>
+                                Choose Image
+                            </button>
+
+                            <button v-if="backgroundImage" @click="removeBgImage"
+                                class="p-2 bg-gray-600 rounded-md cursor-pointer hover:bg-red-500 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                    width="24px" fill="#e3e3e3">
+                                    <path
+                                        d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="space-y-2">
-                    <label class="text-sm font-medium text-slate-300 select-none">Background Image</label>
-                    <div class="relative flex gap-1">
-                        <input ref="fileInput" type="file" accept="image/png,image/jpeg,image/webp" class="hidden"
-                            @change="handleFileChange" />
-
-                        <button @click="fileInput?.click()"
-                            class="w-full h-10 px-4 bg-gray-600 rounded-md cursor-pointer flex items-center justify-center text-slate-300 hover:bg-gray-500 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"
-                                fill="currentColor" class="mr-2">
-                                <path
-                                    d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm40-80h480L520-590 380-420l-80-100-60 80Zm-40 80v-560 560Z" />
-                            </svg>
-                            Choose Image
-                        </button>
-
-                        <button v-if="backgroundImage" @click="removeBgImage"
-                            class="p-2 bg-gray-600 rounded-md cursor-pointer hover:bg-red-500 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                                fill="#e3e3e3">
-                                <path
-                                    d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-                            </svg>
-                        </button>
+                <!-- Animations Section -->
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h4 class="text-sm font-medium text-slate-300 uppercase tracking-wide">Animations</h4>
+                        <span class="text-xs text-slate-500">{{ animations.length }} available</span>
                     </div>
-                </div>
-            </div>
 
-            <!-- Animations Section -->
-            <div class="space-y-4">
-                <div class="flex items-center justify-between">
-                    <h4 class="text-sm font-medium text-slate-300 uppercase tracking-wide">Animations</h4>
-                    <span class="text-xs text-slate-500">{{ animations.length }} available</span>
-                </div>
+                    <SwitchGroup>
+                        <div class="flex items-center gap-2">
+                            <Switch v-model="loopAnimation" :class='loopAnimation ? "bg-slate-500" : "bg-gray-600"'
+                                class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none cursor-pointer">
+                                <span :class='loopAnimation ? "translate-x-6" : "translate-x-1"'
+                                    class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform" />
+                            </Switch>
+                            <SwitchLabel class="mr-4 cursor-pointer select-none">Loop Animation</SwitchLabel>
+                        </div>
+                    </SwitchGroup>
 
-                <SwitchGroup>
-                    <div class="flex items-center gap-2">
-                        <Switch v-model="loopAnimation" :class='loopAnimation ? "bg-slate-500" : "bg-gray-600"'
-                            class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none cursor-pointer">
-                            <span :class='loopAnimation ? "translate-x-6" : "translate-x-1"'
-                                class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform" />
-                        </Switch>
-                        <SwitchLabel class="mr-4 cursor-pointer select-none">Loop Animation</SwitchLabel>
-                    </div>
-                </SwitchGroup>
-
-                <div
-                    class="max-h-64 space-y-2 overflow-y-auto scrollbar scrollbar-thumb-slate-600 scrollbar-track-slate-800">
-                    <RadioGroup v-model="currentAnimation" class="flex gap-2 flex-col">
-                        <RadioGroupOption v-for="anim in animations" :key="anim" :value="anim"
-                            v-slot="{ active, checked }" as="template">
-                            <div @click="checked ? null : $emit('playAnimation', anim)" :class="[
-                                'group select-none flex cursor-pointer items-center justify-between rounded-xl border p-3 transition-all duration-200',
-                                checked
-                                    ? 'border-slate-500 bg-slate-700/60 shadow-lg'
-                                    : 'border-slate-700/50 bg-slate-800/50 hover:border-slate-600 hover:bg-slate-700/50',
-                                active ? 'ring-1 ring-slate-600' : ''
-                            ]">
-                                <RadioGroupLabel as="span" :class="[
-                                    'truncate text-sm font-medium',
-                                    checked ? 'text-slate-100' : 'text-slate-200'
+                    <div
+                        class="max-h-64 space-y-2 overflow-y-auto scrollbar scrollbar-thumb-slate-600 scrollbar-track-slate-800">
+                        <RadioGroup v-model="currentAnimation" class="flex gap-2 flex-col">
+                            <RadioGroupOption v-for="anim in animations" :key="anim" :value="anim"
+                                v-slot="{ active, checked }" as="template">
+                                <div @click="checked ? null : $emit('playAnimation', anim)" :class="[
+                                    'group select-none flex cursor-pointer items-center justify-between rounded-xl border p-3 transition-all duration-200',
+                                    checked
+                                        ? 'border-slate-500 bg-slate-700/60 shadow-lg'
+                                        : 'border-slate-700/50 bg-slate-800/50 hover:border-slate-600 hover:bg-slate-700/50',
+                                    active ? 'ring-1 ring-slate-600' : ''
                                 ]">
-                                    {{ anim }}
-                                </RadioGroupLabel>
+                                    <RadioGroupLabel as="span" :class="[
+                                        'truncate text-sm font-medium',
+                                        checked ? 'text-slate-100' : 'text-slate-200'
+                                    ]">
+                                        {{ anim }}
+                                    </RadioGroupLabel>
 
-                                <div class="flex gap-2 align-center justify-center items-center">
-                                    <!-- <button @click.stop="addToQueue(anim)"
+                                    <div class="flex gap-2 align-center justify-center items-center">
+                                        <!-- <button @click.stop="addToQueue(anim)"
                                         class="text-xs flex items-center gap-1 cursor-pointer text-gray-300 hover:text-gray-400 p-2 rounded-full transition-colors bg-slate-700 h-full w-full"
                                         title="Add to Queue">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960"
@@ -240,21 +245,21 @@ onMounted(() => {
                                         Queue
                                     </button> -->
 
-                                    <div v-show="checked" class="shrink-0">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" height="24px"
-                                            width="24px" fill="currentColor">
-                                            <path d="M400-304 240-464l56-56 104 104 264-264 56 56-320 320Z" />
-                                        </svg>
+                                        <div v-show="checked" class="shrink-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
+                                                height="24px" width="24px" fill="currentColor">
+                                                <path d="M400-304 240-464l56-56 104 104 264-264 56 56-320 320Z" />
+                                            </svg>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </RadioGroupOption>
-                    </RadioGroup>
+                            </RadioGroupOption>
+                        </RadioGroup>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Queue Section -->
-            <!-- <div class="space-y-4">
+                <!-- Queue Section -->
+                <!-- <div class="space-y-4">
                 <div class="flex items-center justify-between">
                     <h4 class="text-sm font-medium text-slate-300 uppercase tracking-wide">Queue</h4>
                     <div class="flex gap-2">
@@ -310,30 +315,49 @@ onMounted(() => {
                 </div>
             </div> -->
 
-            <!-- Actions Section -->
-            <div class="space-y-4">
-                <h4 class="text-sm font-medium text-slate-300 uppercase tracking-wide">Actions</h4>
-                <div class="grid grid-cols-1 gap-3">
-                    <button @click="$emit('selectFolder')"
-                        class="flex cursor-pointer items-center justify-center gap-2 bg-gradient-to-l from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white font-medium py-3 px-4 rounded-xl transition-all duration-200 shadow-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                            fill="#e3e3e3">
-                            <path
-                                d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h240l80 80h320q33 0 56.5 23.5T880-640v400q0 33-23.5 56.5T800-160H160Zm0-80h640v-400H447l-80-80H160v480Zm0 0v-480 480Z" />
-                        </svg>
-                        Select Folder
-                    </button>
-                    <button @click="$emit('openLogs')"
-                        class="flex cursor-pointer items-center justify-center gap-2 bg-gradient-to-l from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white font-medium py-3 px-4 rounded-xl transition-all duration-200 shadow-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                            fill="#e3e3e3">
-                            <path
-                                d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z" />
-                        </svg>
-                        Open Logs
-                    </button>
+                <!-- Actions Section -->
+                <div class="space-y-4">
+                    <h4 class="text-sm font-medium text-slate-300 uppercase tracking-wide">Actions</h4>
+                    <div class="grid grid-cols-1 gap-3">
+                        <button @click="$emit('selectFolder')" class="flex cursor-pointer items-center justify-center gap-2 
+       bg-slate-600 hover:bg-slate-700 
+       text-white font-medium py-3 px-4 rounded-xl 
+       transition-colors duration-200 shadow-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                                fill="#e3e3e3">
+                                <path
+                                    d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h240l80 80h320q33 0 56.5 23.5T880-640v400q0 33-23.5 56.5T800-160H160Zm0-80h640v-400H447l-80-80H160v480Zm0 0v-480 480Z" />
+                            </svg>
+                            Select Folder
+                        </button>
+                        <button @click="$emit('openHistory')" class="flex cursor-pointer items-center justify-center gap-2 
+       bg-slate-600 hover:bg-slate-700 
+       text-white font-medium py-3 px-4 rounded-xl 
+       transition-colors duration-200 shadow-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                                fill="#e3e3e3">
+                                <path
+                                    d="M480-120q-138 0-240.5-91.5T122-440h82q14 104 92.5 172T480-200q117 0 198.5-81.5T760-480q0-117-81.5-198.5T480-760q-69 0-129 32t-101 88h110v80H120v-240h80v94q51-64 124.5-99T480-840q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-480q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-120Zm112-192L440-464v-216h80v184l128 128-56 56Z" />
+                            </svg>
+                            View History
+                        </button>
+                        <button @click="$emit('openLogs')" class="flex cursor-pointer items-center justify-center gap-2 
+       bg-slate-600 hover:bg-slate-700 
+       text-white font-medium py-3 px-4 rounded-xl 
+       transition-colors duration-200 shadow-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                                fill="#e3e3e3">
+                                <path
+                                    d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z" />
+                            </svg>
+                            Open Logs
+                        </button>
+                    </div>
                 </div>
             </div>
+            <p class="text-gray-400 text-medium text-xs text-center">
+                BD2ModPreview V0.2.0
+            </p>
         </div>
     </Transition>
 </template>

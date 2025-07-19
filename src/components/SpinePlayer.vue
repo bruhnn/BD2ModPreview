@@ -126,6 +126,8 @@ async function loadSpineFromFolder(folderPath: string): Promise<void> {
             return;
         }
 
+        // assetData.raw_data[assetData.atlas_filename] = decodeBase64Text(assetData.raw_data[assetData.atlas_filename])
+
         logMessage("Successfully received asset data from backend");
         logMessage(`Skeleton: ${assetData.skeleton_filename}`);
         logMessage(`Atlas: ${assetData.atlas_filename}`);
@@ -151,7 +153,7 @@ async function loadSpineFromUrls(skeletonUrl: string, atlasUrl: string): Promise
         skeleton_filename: skeletonUrl,
         atlas_filename: atlasUrl
     });
-    
+
     await initializePlayer(playerConfig);
 }
 
@@ -208,7 +210,7 @@ async function initializePlayer(config: any): Promise<void> {
     }
 
     await cleanupPlayer();
-    
+
     playerContainer.value.innerText = '';
     logMessage("Initializing new SpinePlayer instance");
 
@@ -233,14 +235,14 @@ async function cleanupPlayer(): Promise<void> {
 //camera
 function initializeCamera(player: SpinePlayer): void {
     const camera = player.sceneRenderer.camera;
-    
+
     userCamera = new spine.OrthoCamera(camera.viewportWidth, camera.viewportHeight);
     userCamera.zoom = camera.zoom * 2;
-    
+
     defaultCameraState.x = userCamera.position.x;
     defaultCameraState.y = userCamera.position.y;
     defaultCameraState.zoom = userCamera.zoom;
-    
+
     new spine.CameraController(player.canvas, userCamera);
 }
 
@@ -264,11 +266,11 @@ function getAnimationNames(player: SpinePlayer): string[] {
 function findDefaultAnimation(animations: string[]): string | null {
     const lowerAnims = animations.map(name => name.toLowerCase());
     const allAnimationIndex = lowerAnims.indexOf("all");
-    
+
     if (allAnimationIndex !== -1) {
         return animations[allAnimationIndex];
     }
-    
+
     return animations.length > 0 ? animations[0] : null;
 }
 
@@ -313,12 +315,13 @@ function onPlayerSuccess(player: SpinePlayer): void {
 
     const animationNames = getAnimationNames(player);
     emit('animationsLoaded', animationNames);
-    
+
     logMessage(`Animations found: ${animationNames.join(', ')}`, "info");
 
     player.play();
-    
+
     const defaultAnimation = findDefaultAnimation(animationNames);
+
     if (defaultAnimation) {
         if (defaultAnimation.toLowerCase() === "all") {
             logMessage(`Animation named "${defaultAnimation}" found. Playing.`, "info");
@@ -326,7 +329,21 @@ function onPlayerSuccess(player: SpinePlayer): void {
             logMessage("Playing the first animation.", "info");
         }
         setPlayerAnimation(defaultAnimation);
-        emit("success", defaultAnimation);
+    }
+
+    console.log(player.config)
+
+    if (currentSpineFolder.value) {
+        emit("success", {
+            folderPath: currentSpineFolder.value,
+            currentAnimation: defaultAnimation
+        });
+    } else if (currentSkeletonUrl.value) {
+        // only folder for now
+        // emit("success", {
+        //     skeletonPath: currentSkeletonUrl.value,
+        //     currentAnimation: defaultAnimation
+        // });
     }
 }
 
@@ -424,13 +441,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div 
-        ref="player-container" 
-        id="player-container" 
-        class="w-full h-full"
-        tabindex="0"
-        @keydown="handleKeydown"
-    />
+    <div ref="player-container" id="player-container" class="w-full h-full" tabindex="0" @keydown="handleKeydown" />
 </template>
 
 <style scoped>

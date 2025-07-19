@@ -20,12 +20,12 @@ const { logs } = useLogger()
 <template>
   <TransitionRoot :show="show" as="template" enter="duration-300 ease-out" enter-from="opacity-0" enter-to="opacity-100"
     leave="duration-200 ease-in" leave-from="opacity-100" leave-to="opacity-0">
-    <Dialog as="div" class="relative z-50 " @close="$emit('close')">
+    <Dialog as="div" class="relative z-50" @close="$emit('close')">
       <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
       <div class="fixed inset-0 flex w-screen items-center justify-center ">
         <DialogPanel class="flex flex-col max-w-xl rounded bg-gray-800 p-4 max-h-[90vh]">          
           <div class="flex flex-row justify-between mb-4 text-2xl text-gray-400">
-            <DialogTitle class=" font-semibold">
+            <DialogTitle class="font-semibold">
               Logs
             </DialogTitle>
             <button
