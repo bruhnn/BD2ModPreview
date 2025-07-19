@@ -1,13 +1,13 @@
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 use base64::{engine::general_purpose::STANDARD, Engine as _};
+use reqwest::blocking::get;
+use serde::Serialize;
+use std::io::Read;
 use std::{
     collections::HashMap,
     fs,
     path::{Path, PathBuf},
 };
-use reqwest::blocking::get;
-use serde::Serialize;
-use std::io::Read;
 use tauri::{AppHandle, Emitter};
 
 #[derive(serde::Serialize, Clone)]
@@ -30,13 +30,13 @@ enum Error {
     DirectoryReadError(String),
     IOError(String),
 }
-// const ASSETS_URL: &str = "https://github.com/myssal/Brown-Dust-2-Asset/tree/master/spine/";
+// const ASSETS_URL: &str = "https://github.com/bruhnn/Brown-Dust-2-Asset/tree/master/spine/";
 const CUTSCENE_URL: &str = "https://raw.githubusercontent.com/myssal/Brown-Dust-2-Asset/refs/heads/master/spine/cutscenes/";
-const IDLE_URL: &str = "https://raw.githubusercontent.com/myssal/Brown-Dust-2-Asset/refs/heads/master/spine/char/";
-const NPC_URL: &str = "https://raw.githubusercontent.com/myssal/Brown-Dust-2-Asset/refs/heads/master/spine/npc/";
-const ILLUST_DATING_URL: &str = "https://raw.githubusercontent.com/myssal/Brown-Dust-2-Asset/refs/heads/master/spine/illust/illust_dating/";
-const ILLUST_SPECIAL_URL: &str = "https://raw.githubusercontent.com/myssal/Brown-Dust-2-Asset/refs/heads/master/spine/illust/illust_special/";
-const ILLUST_TALK_URL: &str = "https://raw.githubusercontent.com/myssal/Brown-Dust-2-Asset/refs/heads/master/spine/illust/illust_talk/";
+const IDLE_URL: &str = "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/spine/char/";
+const NPC_URL: &str = "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/spine/npc/";
+const ILLUST_DATING_URL: &str = "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/spine/illust/illust_dating/";
+const ILLUST_SPECIAL_URL: &str = "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/spine/illust/illust_special/";
+const ILLUST_TALK_URL: &str = "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/spine/illust/illust_talk/";
 
 fn file_to_data_uri(file_path: &Path) -> Result<(String, String), Error> {
     let file_name = file_path
@@ -49,8 +49,9 @@ fn file_to_data_uri(file_path: &Path) -> Result<(String, String), Error> {
 
     let (mime_type, encoded_data) = match ext {
         Some("json") | Some("atlas") => {
-            let content = fs::read_to_string(file_path)
-                .map_err(|e| Error::IOError(format!("Failed to read file '{}': {}", file_name, e)))?;
+            let content = fs::read_to_string(file_path).map_err(|e| {
+                Error::IOError(format!("Failed to read file '{}': {}", file_name, e))
+            })?;
             let mime_type = if ext == Some("json") {
                 "application/json"
             } else {
@@ -60,13 +61,15 @@ fn file_to_data_uri(file_path: &Path) -> Result<(String, String), Error> {
             (mime_type, encoded_data)
         }
         Some("png") => {
-            let bytes = fs::read(file_path)
-                .map_err(|e| Error::IOError(format!("Failed to read file '{}': {}", file_name, e)))?;
+            let bytes = fs::read(file_path).map_err(|e| {
+                Error::IOError(format!("Failed to read file '{}': {}", file_name, e))
+            })?;
             ("image/png", STANDARD.encode(&bytes))
         }
         Some("skel") | _ => {
-            let bytes = fs::read(file_path)
-                .map_err(|e| Error::IOError(format!("Failed to read file '{}': {}", file_name, e)))?;
+            let bytes = fs::read(file_path).map_err(|e| {
+                Error::IOError(format!("Failed to read file '{}': {}", file_name, e))
+            })?;
             ("application/octet-stream", STANDARD.encode(&bytes))
         }
     };
@@ -87,8 +90,9 @@ fn get_spine_assets(folder_path: String) -> Result<SpineAssetData, Error> {
         return Err(Error::DirectoryNotFound);
     }
 
-    let entries = fs::read_dir(dir_path)
-        .map_err(|e| Error::DirectoryReadError(format!("Error reading directory '{}': {}", folder_path, e)))?;
+    let entries = fs::read_dir(dir_path).map_err(|e| {
+        Error::DirectoryReadError(format!("Error reading directory '{}': {}", folder_path, e))
+    })?;
 
     for entry in entries.filter_map(Result::ok) {
         let path = entry.path();
@@ -129,7 +133,7 @@ fn get_spine_assets(folder_path: String) -> Result<SpineAssetData, Error> {
         .and_then(|s| s.to_str())
         .ok_or(Error::InvalidAtlasFileName)?
         .to_string();
-    
+
     Ok(SpineAssetData {
         skeleton_filename,
         atlas_filename,
@@ -152,7 +156,7 @@ fn extract_character_id(filename: &str, prefix: &str) -> Option<String> {
     if filename.starts_with(prefix) && filename.ends_with(".modfile") {
         let without_prefix = &filename[prefix.len()..];
         let without_suffix = &without_prefix[..without_prefix.len() - 8]; // Remove ".modfile"
-        
+
         // Handle cases like "123" or "123_456"
         if let Some(underscore_pos) = without_suffix.find('_') {
             without_suffix[..underscore_pos].to_string().into()
@@ -183,7 +187,9 @@ fn detect_folder_type(folder_path: String) -> (BD2ModType, Option<String>) {
                     let filename_lower = filename.to_lowercase();
                     if filename_lower.ends_with(".modfile") {
                         for (mod_type, prefix) in &patterns {
-                            if let Some(character_id) = extract_character_id(&filename_lower, prefix) {
+                            if let Some(character_id) =
+                                extract_character_id(&filename_lower, prefix)
+                            {
                                 return (mod_type.clone(), Some(character_id));
                             }
                         }
@@ -247,11 +253,19 @@ fn download_missing_skeleton(app: AppHandle, folder_path: String) -> Result<(), 
     let skel_file_path = dir_path.join(&local_filename);
 
     if !skel_file_path.exists() {
-        download_file(app.clone(), &format!("{}{}", base_url, remote_path), &skel_file_path)?;
+        download_file(
+            app.clone(),
+            &format!("{}{}", base_url, remote_path),
+            &skel_file_path,
+        )?;
 
-        app.emit("download-finished", DownloadFinished {
-            folder_path: folder_path
-        }).map_err(|e| format!("Failed to emit download-finished event: {}", e))?;
+        app.emit(
+            "download-finished",
+            DownloadFinished {
+                folder_path: folder_path,
+            },
+        )
+        .map_err(|e| format!("Failed to emit download-finished event: {}", e))?;
     }
 
     Ok(())
@@ -281,25 +295,35 @@ use std::fs::File;
 use std::io::Write;
 
 fn download_file(app: AppHandle, url: &str, dest_path: &Path) -> Result<(), String> {
-    app.emit("download-started", DownloadStarted {
-        destination_path: dest_path.to_string_lossy().to_string()
-    }).map_err(|e| format!("Failed to emit download-started event: {}", e))?;
+    app.emit(
+        "download-started",
+        DownloadStarted {
+            destination_path: dest_path.to_string_lossy().to_string(),
+        },
+    )
+    .map_err(|e| format!("Failed to emit download-started event: {}", e))?;
 
     let response = get(url).map_err(|e| format!("Failed to download from {}: {}", url, e))?;
 
     if !response.status().is_success() {
         let err_msg = match response.status().as_u16() {
-        404 => "Oops! The skeleton asset is missing from the GitHub repository.".to_string(),
-        _ => format!("Failed to download file: Server responded with {}", response.status()),
+            404 => "Oops! The skeleton asset is missing from the GitHub repository.".to_string(),
+            _ => format!(
+                "Failed to download file: Server responded with {}",
+                response.status()
+            ),
         };
 
         return Err(err_msg);
     }
 
-    let total_size = response.content_length().ok_or("Failed to get content length")?;
+    let total_size = response
+        .content_length()
+        .ok_or("Failed to get content length")?;
     let mut downloaded: u64 = 0;
     let mut stream = response;
-    let mut dest = File::create(dest_path).map_err(|e| format!("Failed to create file '{:?}': {}", dest_path, e))?;
+    let mut dest = File::create(dest_path)
+        .map_err(|e| format!("Failed to create file '{:?}': {}", dest_path, e))?;
 
     let mut buffer = [0; 4096];
 
@@ -310,14 +334,19 @@ fn download_file(app: AppHandle, url: &str, dest_path: &Path) -> Result<(), Stri
             Err(e) => return Err(format!("Failed to read chunk: {}", e)),
         };
 
-        dest.write_all(&buffer[..chunk_size]).map_err(|e| format!("Failed to write to '{:?}': {}", dest_path, e))?;
+        dest.write_all(&buffer[..chunk_size])
+            .map_err(|e| format!("Failed to write to '{:?}': {}", dest_path, e))?;
         downloaded += chunk_size as u64;
 
-        app.emit("download-progress", DownloadProgress {
-            bytes_downloaded: downloaded,
-            total_bytes: total_size,
-            destination_path: dest_path.to_string_lossy().to_string(),
-        }).map_err(|e| format!("Failed to emit download-progress event: {}", e))?;
+        app.emit(
+            "download-progress",
+            DownloadProgress {
+                bytes_downloaded: downloaded,
+                total_bytes: total_size,
+                destination_path: dest_path.to_string_lossy().to_string(),
+            },
+        )
+        .map_err(|e| format!("Failed to emit download-progress event: {}", e))?;
     }
     Ok(())
 }
@@ -325,7 +354,7 @@ fn download_file(app: AppHandle, url: &str, dest_path: &Path) -> Result<(), Stri
 #[cfg(windows)]
 fn attach_to_parent_console() {
     use windows::Win32::System::Console::{AttachConsole, ATTACH_PARENT_PROCESS};
-   
+
     unsafe {
         let _ = AttachConsole(ATTACH_PARENT_PROCESS);
     }
@@ -334,7 +363,7 @@ fn attach_to_parent_console() {
 #[cfg(windows)]
 fn free_console() {
     use windows::Win32::System::Console::FreeConsole;
-    
+
     unsafe {
         let _ = FreeConsole();
     }
@@ -343,31 +372,35 @@ fn free_console() {
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     let args: Vec<String> = std::env::args().collect();
-    
+
     if args.len() > 1 {
         if let Some("--version") = args.get(1).map(|s| s.as_str()) {
             #[cfg(windows)]
             {
                 attach_to_parent_console();
             }
-           
+
             println!("{}", env!("CARGO_PKG_VERSION"));
-            
+
             #[cfg(windows)]
             {
                 free_console();
             }
-            
+
             std::process::exit(0);
         }
     }
 
     tauri::Builder::default()
+        .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_cli::init())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![get_spine_assets, download_missing_skeleton])
+        .invoke_handler(tauri::generate_handler![
+            get_spine_assets,
+            download_missing_skeleton
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
