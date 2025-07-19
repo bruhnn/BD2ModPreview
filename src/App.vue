@@ -51,7 +51,8 @@ interface LoadSpineOptions {
 }
 
 interface HistoryItem {
-  path: string
+  path: string,
+  timestamp: string
 }
 
 const DEFAULT_CONFIG = {
@@ -240,6 +241,7 @@ async function addToHistory(item: string) {
 
     history.value.push({
       path: item,
+      timestamp: new Date().toISOString()
     });
 
     localStorage.setItem("spine-history", JSON.stringify(history.value))
@@ -438,8 +440,6 @@ onMounted(async () => {
     initializeDownloadListeners(),
     loadHistory()
   ])
-
-  
 
   logMessage('Application initialized successfully')  
 })

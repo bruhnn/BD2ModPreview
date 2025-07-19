@@ -14,8 +14,35 @@ defineEmits([
 ])
 
 const historyReversed = computed(() => {
-     return props.history ? [...props.history].reverse() : []
+    return props.history ? [...props.history].reverse() : []
 })
+
+
+function getTimedString(date_string: string) {
+    const now = new Date();
+    const date = new Date(date_string)
+    const seconds = Math.floor((now - date) / 1000);
+
+    const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
+
+    const intervals = [
+        { unit: 'year', seconds: 31536000 },
+        { unit: 'month', seconds: 2592000 },
+        { unit: 'day', seconds: 86400 },
+        { unit: 'hour', seconds: 3600 },
+        { unit: 'minute', seconds: 60 },
+        { unit: 'second', seconds: 1 },
+    ];
+
+    for (const interval of intervals) {
+        const count = Math.floor(seconds / interval.seconds);
+        if (count >= 1) {
+            return rtf.format(-count, interval.unit);
+        }
+    }
+
+    return 'just now';
+}
 
 // const history = ref([
 //     {
@@ -48,7 +75,8 @@ const historyReversed = computed(() => {
                             </svg>
                         </button>
                     </div>
-                    <DialogDescription class="flex flex-col overflow-y-auto px-1 pr-2 text-gray-100 scrollbar overflow-y-auto">
+                    <DialogDescription
+                        class="flex flex-col overflow-y-auto px-1 pr-2 text-gray-100 scrollbar overflow-y-auto">
                         <div v-if="historyReversed.length === 0" class="text-center text-gray-500 py-8 ">
                             No recent history
                         </div>
@@ -56,10 +84,9 @@ const historyReversed = computed(() => {
                             class="flex items-center justify-between border-b gap-32 border-gray-700 py-2">
                             <div class="flex flex-col text-sm">
                                 <span class="font-medium break-all">{{ item.path }}</span>
-                                <span class="text-xs text-gray-400">20 minutes ago</span>
+                                <span class="text-xs text-gray-400">{{ getTimedString(item.timestamp) }}</span>
                             </div>
-                            <button
-                            @click="$emit('spineSelected', item.path)"
+                            <button @click="$emit('spineSelected', item.path)"
                                 class="cursor-pointer text-sm bg-gray-600 text-white px-3 py-1 rounded hover:bg-gray-500 transition">
                                 Load
                             </button>
