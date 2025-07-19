@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, useTemplateRef, watchEffect, watch, reactive, computed } from "vue"
+import { ref, onMounted, onUnmounted, useTemplateRef, watchEffect, watch, reactive, computed, Ref } from "vue"
 import { TransitionChild, TransitionRoot } from "@headlessui/vue"
 import { listen, UnlistenFn } from '@tauri-apps/api/event'
 import { invoke } from "@tauri-apps/api/core"
@@ -50,6 +50,10 @@ interface LoadSpineOptions {
   atlas_url?: string
 }
 
+interface HistoryItem {
+  path: string
+}
+
 const DEFAULT_CONFIG = {
   PREMULTIPLIED_ALPHA: false,
   BACKGROUND_COLOR:"#0F172A"
@@ -69,7 +73,7 @@ const showHistory = ref(false)
 const showControls = ref(false)
 const showFolderSelection = ref(false)
 const showCharactersList = ref(false)
-const history = ref([])
+const history: Ref<HistoryItem[]> = ref([])
 const isDownloadingSkeleton = ref(false)
 const downloadProgress = ref(0)
 const currentFolderPath = ref<string | null>(null)
@@ -197,18 +201,23 @@ function handleAnimationsLoaded(animations: string[]): void {
   logMessage(`Loaded ${animations.length} animations: ${animations.join(', ')}`, 'info')
 }
 
-function onSpineSuccess(data: object): void {
+interface SpineData {
+  currentAnimation: string;
+  folderPath: string;
+}
+
+function onSpineSuccess(data: SpineData): void {
   console.log(data);
 
   spineError.value = null
-  spineCurrentAnimation.value = data.currentAnimation
+  spineCurrentAnimation.value = data?.currentAnimation
   logMessage('Spine animation loaded successfully', 'success')
   
   addToHistory(data.folderPath)
 }
 
 
-async function loadHistory(): void {
+async function loadHistory(): Promise<void> {
   try {
     const raw = localStorage.getItem("spine-history")
     const data = raw? JSON.parse(raw).slice(-10): []
@@ -222,7 +231,7 @@ async function loadHistory(): void {
 
 async function addToHistory(item: string) {
   try {
-    const index = history.value.findIndex(h => h.path === item);
+    const index = history.value.findIndex(hist_item => hist_item.path === item);
 
     if (index !== -1) {
       console.log("removing")
