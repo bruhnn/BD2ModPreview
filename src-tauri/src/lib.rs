@@ -1,5 +1,4 @@
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-use regex::Regex;
 use base64::{engine::general_purpose::STANDARD, Engine as _};
 use std::{
     collections::HashMap,
@@ -46,25 +45,35 @@ fn file_to_data_uri(file_path: &Path) -> Result<(String, String), Error> {
         .ok_or_else(|| Error::InvalidFileName(format!("{:?}", file_path)))?
         .to_string();
 
-    let bytes = fs::read(file_path)
-        .map_err(|e| Error::IOError(format!("Failed to read file '{}': {}", file_name, e)))?;
-    
-    let encoded_data = STANDARD.encode(&bytes);
+    let ext = file_path.extension().and_then(|s| s.to_str());
 
-    let mime_type = match file_path.extension().and_then(|s| s.to_str()) {
-        Some("json") => "application/json",
-        Some("skel") => "application/octet-stream", // Binary skeleton
-        Some("atlas") => "text/plain", // Atlas files are plain text
-        Some("png") => "image/png",
-        _ => "application/octet-stream",
+    let (mime_type, encoded_data) = match ext {
+        Some("json") | Some("atlas") => {
+            let content = fs::read_to_string(file_path)
+                .map_err(|e| Error::IOError(format!("Failed to read file '{}': {}", file_name, e)))?;
+            let mime_type = if ext == Some("json") {
+                "application/json"
+            } else {
+                "text/plain"
+            };
+            let encoded_data = STANDARD.encode(content.as_bytes());
+            (mime_type, encoded_data)
+        }
+        Some("png") => {
+            let bytes = fs::read(file_path)
+                .map_err(|e| Error::IOError(format!("Failed to read file '{}': {}", file_name, e)))?;
+            ("image/png", STANDARD.encode(&bytes))
+        }
+        Some("skel") | _ => {
+            let bytes = fs::read(file_path)
+                .map_err(|e| Error::IOError(format!("Failed to read file '{}': {}", file_name, e)))?;
+            ("application/octet-stream", STANDARD.encode(&bytes))
+        }
     };
 
     let data_uri = format!("data:{};base64,{}", mime_type, encoded_data);
-
-    
     Ok((file_name, data_uri))
 }
-
 
 #[tauri::command]
 fn get_spine_assets(folder_path: String) -> Result<SpineAssetData, Error> {
@@ -139,30 +148,43 @@ pub enum BD2ModType {
     NPC,
     UNKNOWN,
 }
+fn extract_character_id(filename: &str, prefix: &str) -> Option<String> {
+    if filename.starts_with(prefix) && filename.ends_with(".modfile") {
+        let without_prefix = &filename[prefix.len()..];
+        let without_suffix = &without_prefix[..without_prefix.len() - 8]; // Remove ".modfile"
+        
+        // Handle cases like "123" or "123_456"
+        if let Some(underscore_pos) = without_suffix.find('_') {
+            without_suffix[..underscore_pos].to_string().into()
+        } else {
+            without_suffix.to_string().into()
+        }
+    } else {
+        None
+    }
+}
 
 fn detect_folder_type(folder_path: String) -> (BD2ModType, Option<String>) {
     if let Ok(entries) = fs::read_dir(folder_path) {
-        let type_patterns = [
-            (BD2ModType::IDLE, Regex::new(r"^char(\d+)\.modfile$").unwrap()),
-            (BD2ModType::CUTSCENE, Regex::new(r"^cutscene_char(\d+)\.modfile$").unwrap()),
-            (BD2ModType::ILLUSTDATING, Regex::new(r"^illust_dating(\d+)\.modfile$").unwrap()),
-            // (BD2ModType::ILLUSTSPECIAL, Regex::new(r"^(?:specialillust|illust_special)(\d+)(?:_?\d+)?\.modfile$").unwrap()),
-            (BD2ModType::ILLUSTSPECIAL, Regex::new(r"^illust_special(\d+)(?:_?\d+)?\.modfile$").unwrap()),
-            (BD2ModType::SPECIALILLUST, Regex::new(r"^specialillust(\d+)(?:_?\d+)?\.modfile$").unwrap()),
-            (BD2ModType::ILLUSTTALK, Regex::new(r"^illust_talk(\d+)\.modfile$").unwrap()),
-            (BD2ModType::NPC, Regex::new(r"^npc(\d+)\.modfile$").unwrap()),
+        let patterns = [
+            (BD2ModType::IDLE, "char"),
+            (BD2ModType::CUTSCENE, "cutscene_char"),
+            (BD2ModType::ILLUSTDATING, "illust_dating"),
+            (BD2ModType::ILLUSTSPECIAL, "illust_special"),
+            (BD2ModType::SPECIALILLUST, "specialillust"),
+            (BD2ModType::ILLUSTTALK, "illust_talk"),
+            (BD2ModType::NPC, "npc"),
         ];
 
         for entry in entries.flatten() {
             let path = entry.path();
             if path.is_file() {
                 if let Some(filename) = path.file_name().and_then(|s| s.to_str()) {
-                    if filename.ends_with(".modfile") {
-                        for (mod_type, pattern) in &type_patterns {
-                            if let Some(captures) = pattern.captures(filename) {
-                                if let Some(character_id) = captures.get(1).map(|m| m.as_str().to_string()) {
-                                    return (mod_type.clone(), Some(character_id));
-                                }
+                    let filename_lower = filename.to_lowercase();
+                    if filename_lower.ends_with(".modfile") {
+                        for (mod_type, prefix) in &patterns {
+                            if let Some(character_id) = extract_character_id(&filename_lower, prefix) {
+                                return (mod_type.clone(), Some(character_id));
                             }
                         }
                     }
@@ -178,6 +200,9 @@ fn detect_folder_type(folder_path: String) -> (BD2ModType, Option<String>) {
 fn download_missing_skeleton(app: AppHandle, folder_path: String) -> Result<(), String> {
     let (mod_type, char_id_option) = detect_folder_type(folder_path.clone());
     let char_id = char_id_option.ok_or("Could not determine character ID from .modfile.")?;
+
+    println!("{:?}", mod_type);
+    println!("{}", char_id);
 
     let (base_url, remote_path, local_filename) = match mod_type {
         BD2ModType::IDLE => (
@@ -256,7 +281,6 @@ use std::fs::File;
 use std::io::Write;
 
 fn download_file(app: AppHandle, url: &str, dest_path: &Path) -> Result<(), String> {
-    println!("{}",url);
     app.emit("download-started", DownloadStarted {
         destination_path: dest_path.to_string_lossy().to_string()
     }).map_err(|e| format!("Failed to emit download-started event: {}", e))?;
@@ -264,7 +288,12 @@ fn download_file(app: AppHandle, url: &str, dest_path: &Path) -> Result<(), Stri
     let response = get(url).map_err(|e| format!("Failed to download from {}: {}", url, e))?;
 
     if !response.status().is_success() {
-        return Err(format!("Failed to download file: Server responded with {}", response.status()));
+        let err_msg = match response.status().as_u16() {
+        404 => "Oops! The skeleton asset is missing from the GitHub repository.".to_string(),
+        _ => format!("Failed to download file: Server responded with {}", response.status()),
+        };
+
+        return Err(err_msg);
     }
 
     let total_size = response.content_length().ok_or("Failed to get content length")?;
@@ -272,7 +301,7 @@ fn download_file(app: AppHandle, url: &str, dest_path: &Path) -> Result<(), Stri
     let mut stream = response;
     let mut dest = File::create(dest_path).map_err(|e| format!("Failed to create file '{:?}': {}", dest_path, e))?;
 
-    let mut buffer = [0; 8192]; // 8KB buffer
+    let mut buffer = [0; 4096];
 
     loop {
         let chunk_size = match stream.read(&mut buffer) {
@@ -290,19 +319,6 @@ fn download_file(app: AppHandle, url: &str, dest_path: &Path) -> Result<(), Stri
             destination_path: dest_path.to_string_lossy().to_string(),
         }).map_err(|e| format!("Failed to emit download-progress event: {}", e))?;
     }
-
-    println!("success");
-    Ok(())
-}
-
-#[tauri::command]
-fn test_download(app: AppHandle) -> Result<(), String> {
-    app.emit("download-started", DownloadStarted {
-        destination_path: String::from("th")
-    });
-
-
-
     Ok(())
 }
 
@@ -351,7 +367,7 @@ pub fn run() {
         .plugin(tauri_plugin_cli::init())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![get_spine_assets, download_missing_skeleton, test_download])
+        .invoke_handler(tauri::generate_handler![get_spine_assets, download_missing_skeleton])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
