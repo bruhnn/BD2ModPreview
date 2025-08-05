@@ -30,7 +30,7 @@ const charactersStore = useCharactersStore()
 
 const typeSelected = ref("standing");
 const searchValue = ref('');
-const sortValue = ref('oldest'); // 'oldest', 'newest', 'a-z', 'z-a'
+const sortValue = ref('newest'); // 'oldest', 'newest', 'a-z', 'z-a'
 
 const characterTypeMap = {
     standing: { key: 'standing', image: 'character_image' },
