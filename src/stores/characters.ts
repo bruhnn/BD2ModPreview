@@ -32,7 +32,7 @@ export const useCharactersStore = defineStore("characters", () => {
 
     async function loadCharacters() {
         await loadLocalCharacters()
-        return
+
         loadRemoteCharacters().then((success) => {
             if (success) {
                 logMessage("Characters loaded successfully from remote repository", "info");
@@ -45,7 +45,6 @@ export const useCharactersStore = defineStore("characters", () => {
     }
 
     async function loadLocalCharacters() {
-        // TODO: load from github for the latest characters
         try {
             const response = await fetch('/data/characters.json');
             if (!response.ok) {
@@ -64,7 +63,6 @@ export const useCharactersStore = defineStore("characters", () => {
     }
 
     async function loadRemoteCharacters() {
-        // TODO: load from github for the latest characters
         try {
             const response = await fetch(CHARACTERS_URL, {
                 method: "GET",
