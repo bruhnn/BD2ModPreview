@@ -22,7 +22,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char000202_3.png",
             "skill_preview_image": "illust_skill_char000202_3.png",
-            "release_date": "2023-10-11"
+            "release_date": "2023-06-22"
         },
         {
             "id": "000203",
@@ -58,7 +58,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char002401_58.png",
             "skill_preview_image": "illust_skill_char002401_58.png",
-            "release_date": "2023-10-25"
+            "release_date": "2023-10-26"
         },
         {
             "id": "000506",
@@ -70,7 +70,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char000506_107.png",
             "skill_preview_image": "illust_skill_char000506_107.png",
-            "release_date": "2024-12-04"
+            "release_date": "2024-12-05"
         },
         {
             "id": "000801",
@@ -82,7 +82,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char000801_21.png",
             "skill_preview_image": "illust_skill_char000801_21.png",
-            "release_date": "2023-08-30"
+            "release_date": "2023-06-22"
         },
         {
             "id": "000301",
@@ -94,7 +94,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char000301_7.png",
             "skill_preview_image": "illust_skill_char000301_7.png",
-            "release_date": "2024-01-31-POSSIBLE"
+            "release_date": "2023-06-22"
         },
         {
             "id": "000304",
@@ -118,7 +118,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char000306_92.png",
             "skill_preview_image": "illust_skill_char000306_92.png",
-            "release_date": "2023-08-09"
+            "release_date": "2023-08-10"
         },
         {
             "id": "000707",
@@ -154,7 +154,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char000504_71.png",
             "skill_preview_image": "illust_skill_char000504_71.png",
-            "release_date": "2024-01-31"
+            "release_date": "2023-06-22"
         },
         {
             "id": "000204",
@@ -178,7 +178,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char000601_14.png",
             "skill_preview_image": "illust_skill_char000601_14.png",
-            "release_date": "2024-11-20"
+            "release_date": "2023-06-22"
         },
         {
             "id": "003401",
@@ -214,7 +214,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char000701_20.png",
             "skill_preview_image": "illust_skill_char000701_20.png",
-            "release_date": "2023-07-20"
+            "release_date": "2023-06-22"
         },
         {
             "id": "003303",
@@ -274,7 +274,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char002406_108.png",
             "skill_preview_image": "illust_skill_char002406_108.png",
-            "release_date": "2024-01-03"
+            "release_date": "2024-01-04"
         },
         {
             "id": "000401",
@@ -286,7 +286,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char000401_10.png",
             "skill_preview_image": "illust_skill_char000401_10.png",
-            "release_date": "2023-11-08"
+            "release_date": "2023-06-22"
         },
         {
             "id": "003402",
@@ -298,7 +298,7 @@
             "dating_id": "2",
             "character_image": "illust_inven_char003402_152.png",
             "skill_preview_image": "illust_skill_char003402_152.png",
-            "release_date": "2024-12-16"
+            "release_date": "2024-12-17"
         },
         {
             "id": "003203",
@@ -346,7 +346,7 @@
             "dating_id": "4",
             "character_image": "illust_inven_char001106_117.png",
             "skill_preview_image": "illust_skill_char001106_117.png",
-            "release_date": "2024-03-13"
+            "release_date": "2024-03-14"
         },
         {
             "id": "003202",
@@ -358,7 +358,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char003202_133.png",
             "skill_preview_image": "illust_skill_char003202_133.png",
-            "release_date": "2024-07-17"
+            "release_date": "2024-07-18"
         },
         {
             "id": "003101",
@@ -370,7 +370,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char003101_122.png",
             "skill_preview_image": "illust_skill_char003101_122.png",
-            "release_date": "2024-04-10"
+            "release_date": "2023-06-22"
         },
         {
             "id": "003801",
@@ -394,7 +394,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char000806_116.png",
             "skill_preview_image": "illust_skill_char000806_116.png",
-            "release_date": "2024-02-21"
+            "release_date": "2024-02-22"
         },
         {
             "id": "020401",
@@ -430,19 +430,19 @@
             "dating_id": null,
             "character_image": "illust_inven_char001207_114.png",
             "skill_preview_image": "illust_skill_char001207_114.png",
-            "release_date": "2024-02-14"
+            "release_date": "2024-02-15"
         },
         {
             "id": "000502",
             "character": "Rou",
-            "costume": "Red Hat",
+            "costume": "Red Riding Hood",
             "is_collab": false,
             "cutscene": true,
             "standing": true,
             "dating_id": null,
             "character_image": "illust_inven_char000502_98.png",
             "skill_preview_image": "illust_skill_char000502_98.png",
-            "release_date": "2023-09-25"
+            "release_date": "2023-09-26"
         },
         {
             "id": "060706",
@@ -454,7 +454,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char060706_118.png",
             "skill_preview_image": "illust_skill_char060706_118.png",
-            "release_date": "2024-03-27"
+            "release_date": "2024-03-28"
         },
         {
             "id": "020101",
@@ -466,7 +466,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char020101_125.png",
             "skill_preview_image": "illust_skill_char020101_125.png",
-            "release_date": "2024-05-22"
+            "release_date": "2024-05-23"
         },
         {
             "id": "000501",
@@ -478,7 +478,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char000501_13.png",
             "skill_preview_image": "illust_skill_char000501_13.png",
-            "release_date": "2023-07-20"
+            "release_date": "2023-06-22"
         },
         {
             "id": "003802",
@@ -502,7 +502,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char001201_23.png",
             "skill_preview_image": "illust_skill_char001201_23.png",
-            "release_date": "2023-09-13"
+            "release_date": "2023-06-22"
         },
         {
             "id": "063301",
@@ -526,7 +526,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char060602_47.png",
             "skill_preview_image": "illust_skill_char060602_47.png",
-            "release_date": "2023-08-03"
+            "release_date": "2023-06-22"
         },
         {
             "id": "061002",
@@ -538,7 +538,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char061002_26.png",
             "skill_preview_image": "illust_skill_char061002_26.png",
-            "release_date": "2023-07-05"
+            "release_date": "2023-06-22"
         },
         {
             "id": "066801",
@@ -562,7 +562,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char020801_162.png",
             "skill_preview_image": "illust_skill_char020801_162.png",
-            "release_date": "2025-05-07"
+            "release_date": "2025-05-08"
         },
         {
             "id": "060501",
@@ -574,7 +574,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char060501_79.png",
             "skill_preview_image": "illust_skill_char060501_79.png",
-            "release_date": "2023-08-30"
+            "release_date": "2023-08-31"
         },
         {
             "id": "060801",
@@ -598,7 +598,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char003703_166.png",
             "skill_preview_image": "illust_skill_char003703_166.png",
-            "release_date": "2025-02-26"
+            "release_date": "2025-02-27"
         },
         {
             "id": "001107",
@@ -622,7 +622,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char020002_127.png",
             "skill_preview_image": "illust_skill_char020002_127.png",
-            "release_date": "2024-06-04"
+            "release_date": "2024-06-05  "
         },
         {
             "id": "003701",
@@ -634,7 +634,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char003701_165.png",
             "skill_preview_image": "illust_skill_char003701_165.png",
-            "release_date": "2025-02-12"
+            "release_date": "2025-02-13"
         },
         {
             "id": "060601",
@@ -658,7 +658,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char020102_126.png",
             "skill_preview_image": "illust_skill_char020102_126.png",
-            "release_date": "2024-05-22"
+            "release_date": "2024-05-23"
         },
         {
             "id": "020301",
@@ -682,7 +682,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char000201_2.png",
             "skill_preview_image": "illut_skill_char000201_2.png",
-            "release_date": "2023-09-25"
+            "release_date": "2023-06-22"
         },
         {
             "id": "065802",
@@ -694,7 +694,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char065802_103.png",
             "skill_preview_image": "illust_skill_char065802_103.png",
-            "release_date": "2023-12-13"
+            "release_date": "2023-12-14"
         },
         {
             "id": "000406",
@@ -718,7 +718,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char061101_84.png",
             "skill_preview_image": "illust_skill_char061101_84.png",
-            "release_date": "2023-07-05"
+            "release_date": "2023-06-22"
         },
         {
             "id": "060502",
@@ -730,7 +730,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char060502_46.png",
             "skill_preview_image": "illust_skill_char060502_46.png",
-            "release_date": "2023-08-30"
+            "release_date": "2023-08-31"
         },
         {
             "id": "061404",
@@ -742,7 +742,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char061404_172.png",
             "skill_preview_image": "illust_skill_char061404_172.png",
-            "release_date": "2025-07-02"
+            "release_date": "2025-07-03"
         },
         {
             "id": "061302",
@@ -754,7 +754,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char061302_104.png",
             "skill_preview_image": "illust_skill_char061302_104.png",
-            "release_date": "2023-12-06"
+            "release_date": "2023-12-07"
         },
         {
             "id": "060402",
@@ -766,7 +766,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char060402_28.png",
             "skill_preview_image": "illust_skill_char060402_28.png",
-            "release_date": "2023-09-25"
+            "release_date": "2023-06-22"
         },
         {
             "id": "020601",
@@ -778,7 +778,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char020601_160.png",
             "skill_preview_image": "illust_skill_char020601_160.png",
-            "release_date": "2025-05-07"
+            "release_date": "2025-05-08"
         },
         {
             "id": "003501",
@@ -790,7 +790,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char003501_131.png",
             "skill_preview_image": "illust_skill_char003501_131.png",
-            "release_date": "2024-07-03"
+            "release_date": "2024-07-04"
         },
         {
             "id": "066403",
@@ -802,7 +802,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char066403_96.png",
             "skill_preview_image": "illust_skill_char066403_96.png",
-            "release_date": "2023-09-20"
+            "release_date": "2023-09-21"
         },
         {
             "id": "000706",
@@ -814,7 +814,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char000706_106.png",
             "skill_preview_image": "illust_skill_char000706_106.png",
-            "release_date": "2023-12-20"
+            "release_date": "2023-12-21"
         },
         {
             "id": "020001",
@@ -826,7 +826,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char020001_124.png",
             "skill_preview_image": "illust_skill_char020001_124.png",
-            "release_date": "2024-06-04"
+            "release_date": "2024-06-05"
         },
         {
             "id": "061001",
@@ -838,7 +838,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char061001_83.png",
             "skill_preview_image": "illust_skill_char061001_83.png",
-            "release_date": "2023-07-05"
+            "release_date": "2023-06-22"
         },
         {
             "id": "001001",
@@ -850,7 +850,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char001001_22.png",
             "skill_preview_image": "illust_skill_char001001_22.png",
-            "release_date": "2023-08-16"
+            "release_date": "2023-06-22"
         },
         {
             "id": "061402",
@@ -862,7 +862,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char061402_101.png",
             "skill_preview_image": "illust_skill_char061402_101.png",
-            "release_date": "2023-10-25"
+            "release_date": "2023-10-26"
         },
         {
             "id": "001101",
@@ -874,7 +874,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char001101_57.png",
             "skill_preview_image": "illust_skill_char001101_57.png",
-            "release_date": "2023-08-02-POSSIBLE-BASEGAME"
+            "release_date": "2023-06-22"
         },
         {
             "id": "060701",
@@ -886,7 +886,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char060701_81.png",
             "skill_preview_image": "illust_skill_char060701_81.png",
-            "release_date": "2023-12-06-POSSIBLE"
+            "release_date": "2023-06-22"
         },
         {
             "id": "061102",
@@ -898,7 +898,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char061102_27.png",
             "skill_preview_image": "illust_skill_char061102_27.png",
-            "release_date": "2023-07-05"
+            "release_date": "2023-06-22"
         },
         {
             "id": "003403",
@@ -910,7 +910,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char003403_169.png",
             "skill_preview_image": "illust_skill_char003403_169.png",
-            "release_date": "2025-04-23"
+            "release_date": "2025-04-24"
         },
         {
             "id": "066402",
@@ -922,7 +922,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char066402_95.png",
             "skill_preview_image": "illust_skill_char066402_95.png",
-            "release_date": "2023-08-16"
+            "release_date": "2023-08-17"
         },
         {
             "id": "020701",
@@ -934,7 +934,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char020701_161.png",
             "skill_preview_image": "illust_skill_char020701_161.png",
-            "release_date": "2025-05-07"
+            "release_date": "2025-05-08"
         },
         {
             "id": "065102",
@@ -970,7 +970,7 @@
             "dating_id": "5",
             "character_image": "illust_inven_char060802_50.png",
             "skill_preview_image": "illust_skill_char060802_50.png",
-            "release_date": "2024-02-28"
+            "release_date": "2023-06-22"
         },
         {
             "id": "060403",
@@ -982,7 +982,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char060403_109.png",
             "skill_preview_image": "illust_skill_char060403_109.png",
-            "release_date": "2023-12-27"
+            "release_date": "2023-12-28"
         },
         {
             "id": "000804",
@@ -1006,7 +1006,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char067102_112.png",
             "skill_preview_image": "illust_skill_char067102_112.png",
-            "release_date": "2024-01-24"
+            "release_date": "2024-01-25"
         },
         {
             "id": "066902",
@@ -1054,7 +1054,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char067101_113.png",
             "skill_preview_image": "illust_skill_char067101_113.png",
-            "release_date": "2024-02-28"
+            "release_date": "2024-02-29"
         },
         {
             "id": "100501",
@@ -1066,7 +1066,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char100501_9.png",
             "skill_preview_image": "illust_skill_char100501_9.png",
-            "release_date": "2023-09-27"
+            "release_date": "2023-06-22"
         },
         {
             "id": "067002",
@@ -1114,7 +1114,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char101101_67.png",
             "skill_preview_image": "illust_skill_char101101_67.png",
-            "release_date": "2023-08-16"
+            "release_date": "2023-06-22"
         },
         {
             "id": "061305",
@@ -1126,7 +1126,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char061305_128.png",
             "skill_preview_image": "illust_skill_char061305_128.png",
-            "release_date": "2024-06-19"
+            "release_date": "2024-06-20"
         },
         {
             "id": "101301",
@@ -1210,7 +1210,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char003201_123.png",
             "skill_preview_image": "illust_skill_char003201_123.png",
-            "release_date": "2024-05-08"
+            "release_date": "2024-05-09"
         },
         {
             "id": "003603",
@@ -1222,7 +1222,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char003603_175.png",
             "skill_preview_image": "illust_skill_char003603_175.png",
-            "release_date": "2025-07-16"
+            "release_date": "2025-07-17"
         },
         {
             "id": "101401",
@@ -1294,7 +1294,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char067201_129.png",
             "skill_preview_image": "illust_skill_char067201_129.png",
-            "release_date": "2024-06-04"
+            "release_date": "2024-06-20"
         },
         {
             "id": "100201",
@@ -1390,7 +1390,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char000104_69.png",
             "skill_preview_image": "illust_skill_char000104_69.png",
-            "release_date": "2024-02-28"
+            "release_date": "2023-06-22"
         },
         {
             "id": "067303",
@@ -1474,7 +1474,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char000303_43.png",
             "skill_preview_image": "illust_skill_char000303_43.png",
-            "release_date": "2023-12-06"
+            "release_date": "2023-06-22"
         },
         {
             "id": "065103",
@@ -1486,7 +1486,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char065103_110.png",
             "skill_preview_image": "illust_skill_char065103_110.png",
-            "release_date": "2024-01-17"
+            "release_date": "2024-01-18"
         },
         {
             "id": "067301",
@@ -1503,14 +1503,14 @@
         {
             "id": "000105",
             "character": "Lathel",
-            "costume": "Promise of Vengance",
+            "costume": "Promise of Vengeance",
             "is_collab": false,
             "cutscene": false,
             "standing": true,
             "dating_id": null,
             "character_image": "illust_inven_char000105_42.png",
             "skill_preview_image": "illust_skill_char000105_42.png",
-            "release_date": "2024-09-12"
+            "release_date": "2025-02-12"
         },
         {
             "id": "067603",
@@ -1522,7 +1522,7 @@
             "dating_id": "6",
             "character_image": "illust_inven_char067603_171.png",
             "skill_preview_image": "illust_skill_char067603_171.png",
-            "release_date": "2025-06-18"
+            "release_date": "2025-06-19"
         },
         {
             "id": "103701",
@@ -1558,7 +1558,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char003601_138.png",
             "skill_preview_image": "illust_skill_char003601_138.png",
-            "release_date": "2025-07-16"
+            "release_date": "UNRELEASED"
         },
         {
             "id": "066906",
@@ -1570,7 +1570,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char066906_119.png",
             "skill_preview_image": "illust_skill_char066906_119.png",
-            "release_date": "2024-03-20"
+            "release_date": "2024-03-21"
         },
         {
             "id": "067302",
@@ -1630,7 +1630,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char067403_168.png",
             "skill_preview_image": "illust_skill_char067403_168.png",
-            "release_date": "2025-03-26"
+            "release_date": "2025-03-27"
         },
         {
             "id": "060702",
@@ -1642,7 +1642,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char060702_49.png",
             "skill_preview_image": "illust_skill_char060702_49.png",
-            "release_date": "2023-11-22"
+            "release_date": "2023-06-22"
         },
         {
             "id": "101302",
@@ -1762,7 +1762,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char101601_78.png",
             "skill_preview_image": "illust_skill_char101601_78.png",
-            "release_date": "2023-10-25"
+            "release_date": "2023-06-22"
         },
         {
             "id": "063001",
@@ -1798,7 +1798,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char067003_111.png",
             "skill_preview_image": "illust_skill_char067003_111.png",
-            "release_date": "2024-01-31"
+            "release_date": "2024-02-01"
         },
         {
             "id": "000604",
@@ -1810,7 +1810,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char000604_72.png",
             "skill_preview_image": "illust_skill_char000604_72.png",
-            "release_date": "2023-11-15"
+            "release_date": "2023-11-16"
         },
         {
             "id": "000402",
@@ -1822,7 +1822,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char000402_24.png",
             "skill_preview_image": "illust_skill_char000402_24.png",
-            "release_date": "2023-08-03"
+            "release_date": "2023-06-05"
         },
         {
             "id": "066401",
@@ -1858,7 +1858,7 @@
             "dating_id": null,
             "character_image": "illust_inven_char003602_176.png",
             "skill_preview_image": "illust_skill_char003602_176.png",
-            "release_date": "2025-07-30"
+            "release_date": "2025-07-31"
         }
     ],
     "dating": {
