@@ -16,4 +16,5 @@ export interface Character {
     standing?: boolean,
     cutscene?: boolean,
     dating_id?: string,
+    release_date?: string,
 }

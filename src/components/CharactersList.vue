@@ -58,18 +58,15 @@ const filteredCharacters = computed(() => {
 
     if (sortValue.value === 'oldest') {
         filtered.sort((a, b) => {
-            // TODO: migrate to release_date
-
-            // illust_inven_char000708_170.png
-            const aN = parseInt(a.character_image.match(/illust_inven_char\d+_(\d+)\.png$/)?.[1] || '0');
-            const bN = parseInt(b.character_image.match(/illust_inven_char\d+_(\d+)\.png$/)?.[1] || '0');
-            return aN - bN; // oldest first
+            const aDate = a.release_date ? new Date(a.release_date) : new Date('9999-12-31');
+            const bDate = b.release_date ? new Date(b.release_date) : new Date('9999-12-31');
+            return aDate - bDate;
         });
     } else if (sortValue.value === 'newest') {
         filtered.sort((a, b) => {
-            const aN = parseInt(a.character_image.match(/illust_inven_char\d+_(\d+)\.png$/)?.[1] || '0');
-            const bN = parseInt(b.character_image.match(/illust_inven_char\d+_(\d+)\.png$/)?.[1] || '0');
-            return bN - aN; // newest first
+            const aDate = a.release_date ? new Date(a.release_date) : new Date('1900-01-01');
+            const bDate = b.release_date ? new Date(b.release_date) : new Date('1900-01-01');
+            return bDate - aDate;
         });
     } else if (sortValue.value === 'a-z') {
         filtered.sort((a, b) => a.character.localeCompare(b.character));
