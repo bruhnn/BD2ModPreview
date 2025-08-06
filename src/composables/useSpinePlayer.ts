@@ -529,7 +529,7 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
         const shouldTryFallback = (
             message.includes("404") ||
             message.includes("403") ||
-            message.includes("429") ||
+            message.includes("429") || // Too many requests
             message.includes("413") || // Payload too large
             message.includes("502") || // Bad gateway  
             message.includes("503") || // Service unavailable
@@ -947,17 +947,15 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
         }
     }
 
-    function setBackgroundImage(imageUrl: string): void {
-        backgroundImage.value = imageUrl;
-
+    async function setBackgroundImage(imageUrl: string): Promise<void> {
         if (!playerInstance) {
             logMessage("Cannot set background image: Player not initialized", "warning");
             return;
         }
 
-        playerInstance.bg.setFromString(imageUrl);
-
         logMessage(`Background image set to: ${imageUrl}`, "info");
+
+        await reloadCurrentSpine()
     }
 
     // --------------------------
@@ -983,9 +981,10 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
         setPremultipliedAlpha(value);
     })
 
-    watch(backgroundImage, (imageUrl) => {
+    watch(backgroundImage, async (imageUrl) => {
         if (!imageUrl) {
-            logMessage("Invalid image URL provided", "error");
+            // reset background image
+            await reloadCurrentSpine()
             return;
         }
         setBackgroundImage(imageUrl);
