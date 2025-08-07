@@ -19,7 +19,7 @@ const uiStore = useUIStore();
             v-draggable-resizable 
             v-show="uiStore.showControls" 
             ref="controlsRef"
-            class="fixed overflow-hidden z-50 left-8 bg-gradient-to-br pointer-events-auto max-h-[100vh] from-slate-900 to-slate-800 backdrop-blur-xl border border-slate-700/50 text-slate-200 rounded-2xl w-96 flex flex-col shadow-2xl scrollbar scrollbar-thumb-slate-600 scrollbar-track-slate-800"
+            class="fixed overflow-hidden z-800 left-8 bg-gradient-to-br pointer-events-auto max-h-[100vh] from-slate-900 to-slate-800 backdrop-blur-xl border border-slate-700/50 text-slate-200 rounded-2xl w-96 flex flex-col shadow-2xl scrollbar scrollbar-thumb-slate-600 scrollbar-track-slate-800"
         >
             <BaseControls />
         </div>

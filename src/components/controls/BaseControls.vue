@@ -96,9 +96,9 @@ function getFolderName(path: string | null | undefined): string {
         <div class="flex items-center justify-between h-[60px] drag-handle p-4 gap-2">
             <div class="flex-1 min-w-0 flex-col">
                 <h3 class="text-lg font-semibold text-white select-none">Controls</h3>
-                <TransitionRoot :show="spineStore.source?.type === 'folder'" enter="transition-opacity duration-200" enter-from="opacity-0"
-                    enter-to="opacity-100" leave="transition-opacity duration-200" leave-from="opacity-100"
-                    leave-to="opacity-0">
+                <TransitionRoot :show="spineStore.source?.type === 'folder'" enter="transition-opacity duration-200"
+                    enter-from="opacity-0" enter-to="opacity-100" leave="transition-opacity duration-200"
+                    leave-from="opacity-100" leave-to="opacity-0">
                     <p class="text-xs text-slate-400 truncate block overflow-hidden whitespace-nowrap"
                         :title="displayPath || 'No source!'">
                         {{ getFolderName(displayPath) }}
@@ -121,6 +121,29 @@ function getFolderName(path: string | null | undefined): string {
                     </svg>
                 </button>
             </div>
+        </div>
+
+        <div class="flex w-full text-xs justify-evenly py-0 text-slate-300">
+            <a href="https://github.com/bruhnn/BD2ModPreview/issues" target="_blank" rel="noopener noreferrer"
+                class="flex gap-2 justify-center items-center group hover:text-slate-100 cursor-pointer transition-colors"
+                aria-label="Suggest a new feature">
+                <svg class="w-5 h-5 text-orange-200 transform group-hover:scale-105 transition-all"
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
+                    <path
+                        d="M760-360q12-12 28.5-12t28.5 12l63 64q12 12 12 28t-12 28q-12 12-28 12t-28-12l-64-63q-12-12-12-28.5t12-28.5Zm40-480q12 12 12 28.5T800-783l-63 63q-12 12-28.5 12T680-720q-12-12-12-28.5t12-28.5l64-63q12-12 28-12t28 12Zm-640 0q12-12 28.5-12t28.5 12l63 64q12 12 12 28t-12 28q-12 12-28.5 12T223-720l-63-63q-12-12-12-28.5t12-28.5Zm40 480q12 12 12 28.5T200-303l-63 63q-12 12-28.5 12T80-240q-12-12-12-28.5T80-297l64-63q12-12 28-12t28 12Zm154 73 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143Zm126-194Zm0 212L314-169q-11 7-23 6t-21-8q-9-7-14-17.5t-2-23.5l44-189-147-127q-10-9-12.5-20.5T140-571q4-11 12-18t22-9l194-17 75-178q5-12 15.5-18t21.5-6q11 0 21.5 6t15.5 18l75 178 194 17q14 2 22 9t12 18q4 11 1.5 22.5T809-528L662-401l44 189q3 13-2 23.5T690-171q-9 7-21 8t-23-6L480-269Z" />
+                </svg>
+                Suggest a Feature
+            </a>
+            <a href="https://github.com/bruhnn/BD2ModPreview/issues" target="_blank" rel="noopener noreferrer"
+                class="flex gap-2 justify-center items-center group hover:text-slate-100 cursor-pointer transition-colors"
+                aria-label="Report a technical issue">
+                <svg class="w-5 h-5 text-red-200 transform group-hover:scale-105 transition-all"
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
+                    <path
+                        d="M480-120q-65 0-120.5-32T272-240h-72q-17 0-28.5-11.5T160-280q0-17 11.5-28.5T200-320h44q-3-20-3.5-40t-.5-40h-40q-17 0-28.5-11.5T160-440q0-17 11.5-28.5T200-480h40q0-20 .5-40t3.5-40h-44q-17 0-28.5-11.5T160-600q0-17 11.5-28.5T200-640h72q14-23 31.5-43t40.5-35l-37-38q-11-11-11-27.5t12-28.5q11-11 28-11t28 11l58 58q28-9 57-9t57 9l60-59q11-11 27.5-11t28.5 12q11 11 11 28t-11 28l-38 38q23 15 41.5 34.5T688-640h72q17 0 28.5 11.5T800-600q0 17-11.5 28.5T760-560h-44q3 20 3.5 40t.5 40h40q17 0 28.5 11.5T800-440q0 17-11.5 28.5T760-400h-40q0 20-.5 40t-3.5 40h44q17 0 28.5 11.5T800-280q0 17-11.5 28.5T760-240h-72q-32 56-87.5 88T480-120Zm0-80q66 0 113-47t47-113v-160q0-66-47-113t-113-47q-66 0-113 47t-47 113v160q0 66 47 113t113 47Zm-40-120h80q17 0 28.5-11.5T560-360q0-17-11.5-28.5T520-400h-80q-17 0-28.5 11.5T400-360q0 17 11.5 28.5T440-320Zm0-160h80q17 0 28.5-11.5T560-520q0-17-11.5-28.5T520-560h-80q-17 0-28.5 11.5T400-520q0 17 11.5 28.5T440-480Zm40 40Z" />
+                </svg>
+                Report an Issue
+            </a>
         </div>
 
         <div class="p-4 flex flex-col gap-6 overflow-y-auto scrollbar h-full">
@@ -148,7 +171,7 @@ function getFolderName(path: string | null | undefined): string {
                         <div
                             class="absolute inset-0 rounded-lg pointer-events-none bg-gradient-to-r from-transparent via-white/5 to-transparent">
                         </div>
-                        <button class="p-2 bg-gray-600 rounded-md cursor-pointer"
+                        <button class="p-2 bg-slate-600 rounded-md cursor-pointer"
                             @click="spineStore.setBackgroundColor(defaultBackgroundColor)">
                             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                                 fill="#e3e3e3">
@@ -386,10 +409,10 @@ function getFolderName(path: string | null | undefined): string {
                 <div class="grid grid-cols-1 gap-3">
                     <button @click="uiStore.openHistory" class="flex cursor-pointer items-center justify-center gap-2 
        bg-slate-700 hover:bg-slate-600 
-       text-white font-medium py-3 px-4 rounded-xl 
-       transition-colors duration-200 shadow-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                            fill="#e3e3e3">
+       text-slate-300 font-medium py-3 px-4 rounded-xl 
+       transition-colors duration-200 shadow-lg text-sm">
+                        <svg class="text-slate-300 w-5 h-5" xmlns="http://www.w3.org/2000/svg" height="24px"
+                            viewBox="0 -960 960 960" width="24px" fill="currentColor">
                             <path
                                 d="M480-120q-138 0-240.5-91.5T122-440h82q14 104 92.5 172T480-200q117 0 198.5-81.5T760-480q0-117-81.5-198.5T480-760q-69 0-129 32t-101 88h110v80H120v-240h80v94q51-64 124.5-99T480-840q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-480q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-120Zm112-192L440-464v-216h80v184l128 128-56 56Z" />
                         </svg>
@@ -397,10 +420,10 @@ function getFolderName(path: string | null | undefined): string {
                     </button>
                     <button @click="uiStore.openLogs" class="flex cursor-pointer items-center justify-center gap-2 
        bg-slate-700 hover:bg-slate-600 
-       text-white font-medium py-3 px-4 rounded-xl 
-       transition-colors duration-200 shadow-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                            fill="#e3e3e3">
+       text-slate-300 font-medium py-3 px-4 rounded-xl 
+       transition-colors duration-200 shadow-lg text-sm">
+                        <svg class="text-slate-300 w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
+                            fill="currentColor">
                             <path
                                 d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z" />
                         </svg>
