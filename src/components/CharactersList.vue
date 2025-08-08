@@ -137,12 +137,6 @@ function characterClicked(char: Character) {
 
     if (!urls) {
         logMessage(`Invalid Character Data. Could not find ${typeSelected.value} data for the selected character.`, "error")
-        // const error = createSpineError(
-        //     'InvalidCharacterData',
-        //     'Invalid Character Data',
-        //     `Could not find ${type} data for the selected character.`
-        // )
-        // onSpineError(error)
         return
     }
 

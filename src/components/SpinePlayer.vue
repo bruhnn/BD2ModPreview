@@ -30,20 +30,21 @@ function handleKeydown(event: KeyboardEvent): void {
   }
 }
 
-onMounted(async () => {
-  if (spineStore.source) {
-    if (!spineStore.source) {
-      logMessage("No spineStore.source set. Can not load.", "warning");
-      return;
-    }
+// onMounted(async () => {
+//   if (spineStore.source) {
+//     if (!spineStore.source) {
+//       logMessage("No spineStore.source set. Can not load.", "warning");
+//       return;
+//     }
 
-    await handleSource(spineStore.source);
-  }
-});
+//     await handleSource(spineStore.source);
+//   }
+// });
 
-onUnmounted(() => {
+onUnmounted(async () => {
   window.removeEventListener("keydown", handleKeydown);
-  destroyPlayer();
+  await destroyPlayer();
+  spineStore.setIsPlayerLoading(false)
 });
 
 async function handleOpenFolder() {

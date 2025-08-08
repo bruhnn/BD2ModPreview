@@ -122,10 +122,9 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
         loopAnimation
     } = storeToRefs(spineStore);
 
-    const currentRetryAttempt = ref<number>(0);
-    const maxRetryAttempts = 2;
-
     const currentSource = ref<SpineSource | null>(null);
+    const isRetryingFallback = ref<boolean>(false);
+    const fallbackAttempted = ref<boolean>(false);
 
     const spineError = ref<SpineError | null>(null);
 
@@ -180,7 +179,7 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
                 title: t('errors.SkeletonNotFound.title'),
                 message: t('errors.SkeletonNotFound.message'),
                 showRetry: false,
-            },  
+            },
             CharacterIdNotFound: {
                 title: t('errors.CharacterIdNotFound.title'),
                 message: t('errors.CharacterIdNotFound.message'),
@@ -217,11 +216,6 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
         logMessage(`${mappedError.title}: ${details || mappedError.message}`, "error");
     }
 
-    function clearError(): void {
-        spineError.value = null;
-        currentRetryAttempt.value = 0;
-    }
-
     async function loadSpineFromFolder(folderPath: string): Promise<{
         success: boolean,
         charId?: string,
@@ -233,8 +227,6 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
         }
 
         spineStore.setIsPlayerLoading(true);
-
-        currentRetryAttempt.value = 0;
 
         logMessage(`Loading Spine assets from: ${folderPath}`);
 
@@ -301,7 +293,6 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
         logMessage(`Loading Spine assets from URL: ${skeletonUrl} and ${atlasUrl}`);
 
         spineStore.setIsPlayerLoading(true);
-        currentRetryAttempt.value = 0;
 
         const assetInfo = BD2ModDetector.detect(skeletonUrl);
 
@@ -384,14 +375,7 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
             return false;
         }
 
-        currentRetryAttempt.value++;
-
-        if (currentRetryAttempt.value > maxRetryAttempts) {
-            logMessage("Maximum retry attempts reached", "error");
-            return false;
-        }
-
-        logMessage(`Attempting fallback (attempt ${currentRetryAttempt.value}/${maxRetryAttempts})`, "info");
+        logMessage("Attempting fallback URLs", "info");
 
         const fallbackSkeleton = currentSource.value.skeletonUrlFallback;
         const fallbackAtlas = currentSource.value.atlasUrlFallback;
@@ -399,15 +383,31 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
         logMessage(`Fallback skeleton: ${fallbackSkeleton}`, "info");
         logMessage(`Fallback atlas: ${fallbackAtlas}`, "info");
 
-        loadSpineFromUrl(fallbackSkeleton, fallbackAtlas)
-        // spineStore.setSpineUrl(fallbackSkeleton, fallbackAtlas);
+        try {
+            const result = await loadSpineFromUrl(fallbackSkeleton, fallbackAtlas);
 
-        return true;
+            if (!result?.success) {
+                logMessage("Failed to load spine from fallback URLs.", "error");
+                return false;
+            } else {
+                logMessage(`Successfully loaded spine from fallback URLs: ${result.charId}`, "success");
+                addToHistory(
+                    currentSource.value,
+                    result.charId,
+                    result.modType,
+                );
+                return true;
+            }
+        } catch (error) {
+            logMessage(`Error during fallback loading: ${error}`, "error");
+            return false;
+        }
     }
 
     async function initializePlayer(config: any): Promise<void> {
         if (!playerContainer.value) {
             logMessage("Critical Error: 'player-container' element not found", "error");
+            await destroyPlayer()
             return;
         }
 
@@ -439,24 +439,30 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
     }
 
     async function destroyPlayer(): Promise<void> {
-        if (playerInstance) {
-            logMessage("Destroying up the player.", "warning");
+        logMessage("Destroying the player.", "info");
 
+        if (playerInstance) {
             try {
                 playerInstance.dispose();
             } catch (error) {
-                logMessage(`Error disposing player: ${error}`, "warning");
+                logMessage(`Error disposing player: ${error}`, "error");
+            } finally {
+                playerInstance = null;
+                userCamera = null;
             }
+        } else {
+            logMessage("No player instance to destroy.", "info");
+            // spineStore.setIsPlayerLoading(false);
+        }
 
-            playerInstance = null;
-            userCamera = null;
-
-            // animations.value = []
-            // currentAnimation.value = null;
+        try {
+            clearError();
+            resetFallbackState();
             spineStore.setAnimations([]);
             spineStore.setCurrentAnimation(null);
-
             spineStore.setIsPlayerInitialized(false);
+        } catch (error) {
+            logMessage(`Error clearing state: ${error}`, "warning");
         }
     }
 
@@ -465,8 +471,6 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
 
         spineStore.setIsPlayerInitialized(true);
         spineStore.setIsPlayerLoading(false);
-
-        currentRetryAttempt.value = 0; // Reset retry counter on success
 
         if (!player) {
             logMessage("Player instance is null in success callback", "error");
@@ -510,6 +514,11 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
     async function onPlayerError(player: SpinePlayer, message: string): Promise<void> {
         spineStore.setIsPlayerLoading(false);
 
+        if (isRetryingFallback.value) {
+            console.log('Fallback already in progress, ignoring error:', message);
+            return;
+        }
+
         function parseErrorJson(message: string): { failedUrls: string[], errorData: any } | null {
             const jsonMatch = message.match(/\{.*\}/);
             if (!jsonMatch) return null;
@@ -531,32 +540,43 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
 
         const parsedError = parseErrorJson(message);
 
-        // Check if we should attempt fallback
         const shouldTryFallback = (
-            message.includes("404") ||
-            message.includes("403") ||
-            message.includes("429") || // Too many requests
-            message.includes("413") || // Payload too large
-            message.includes("502") || // Bad gateway  
-            message.includes("503") || // Service unavailable
-            /Error: Assets could not be loaded\./.test(message)
+            !fallbackAttempted.value &&
+            (message.includes("404") ||
+                message.includes("403") ||
+                message.includes("429") ||
+                message.includes("413") ||
+                message.includes("502") ||
+                message.includes("503") ||
+                /Error: Assets could not be loaded\./.test(message))
         );
 
-        if (shouldTryFallback && currentRetryAttempt.value < maxRetryAttempts) {
+        if (shouldTryFallback) {
             logMessage(`Asset loading failed. Attempting fallback... (${message.substring(0, 100)})`, "warning");
 
-            const fallbackAttempted = await tryFallbackUrls();
+            isRetryingFallback.value = true;
+            fallbackAttempted.value = true;
 
-            if (fallbackAttempted) {
-                await nextTick();
-                await reloadCurrentSpine();
-                return; // Don't show error yet, retry with fallback first
+            try {
+                const fallbackSuccess = await tryFallbackUrls();
+
+                if (!fallbackSuccess) {
+                    handleFinalError(message, parsedError);
+                }
+            } catch (error) {
+                logMessage(`Fallback attempt failed: ${error}`, "error");
+                handleFinalError(message, parsedError);
+            } finally {
+                isRetryingFallback.value = false;
             }
+
+            return;
         }
 
-        // If we reach here, either no fallback available or all attempts failed
+        handleFinalError(message, parsedError);
+    }
 
-        // Handle specific error types
+    function handleFinalError(message: string, parsedError: any): void {
         if (/Error: Assets could not be loaded\./.test(message)) {
             if (message.includes("404")) {
                 handleError('AssetNotFoundError', 'Assets not found on both primary and fallback sources', {
@@ -791,11 +811,20 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
         return false
     }
 
-    async function handleSource(source: SpineSource): Promise<void> {
-        // clear error
-        clearError()
 
-        // wait for playerContainer 
+    function clearError(): void {
+        spineError.value = null;
+    }
+
+    function resetFallbackState(): void {
+        fallbackAttempted.value = false;
+        isRetryingFallback.value = false;
+    }
+
+    async function handleSource(source: SpineSource): Promise<void> {
+        clearError()
+        resetFallbackState();
+
         await nextTick();
 
         if (!playerContainer.value) {
@@ -966,22 +995,15 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
 
     // --------------------------
     // from store to composable
-    watch(backgroundColor, (newColor) => {
-        if (!newColor) {
-            logMessage("Invalid background color provided", "error");
-            return;
-        }
-
-        setBackgroundColor(newColor);
-    });
 
     watch(source, async (source) => {
-        if (!source) {
-            logMessage("No source provided. Cannot set source.", "warning");
+        if (source === null || source === undefined) {
+            logMessage("Source is empty. Destroying the player.", "warning");
+            await destroyPlayer()
             return;
         }
         await handleSource(source);
-    })
+    }, {immediate: true});
 
     watch(premultipliedAlpha, (value) => {
         setPremultipliedAlpha(value);
