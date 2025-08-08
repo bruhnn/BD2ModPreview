@@ -451,6 +451,156 @@ const messages = {
             }
         }
     },
+    ko: {
+    common: {
+        viewLogs: '로그 보기',
+        openFolder: '폴더 열기',
+        retry: '다시 시도',
+        goBack: '돌아가기',
+        close: '닫기'
+    },
+    app: {
+        backToHome: '뒤로',
+        toggleControls: '컨트롤',
+    },
+    homePage: {
+        title: '모드 미리보기',
+        subtitle: '폴더를 드래그 앤 드롭하거나 선택하세요',
+        recentFoldersLabel: '최근 폴더',
+        recentFoldersEmpty: '최근 폴더를 찾을 수 없습니다.',
+        openFolderButton: '폴더 찾아보기',
+    },
+    characterList: {
+        searchPlaceholder: '캐릭터 검색...',
+        noCharactersFound: '캐릭터를 찾을 수 없습니다.',
+        loadingCharacters: '캐릭터 로딩 중...',
+        tabs: {
+            standing: '기본',
+            cutscene: '컷신',
+            dating: '데이트'
+        },
+        sort: {
+            newest: '최신순',
+            oldest: '오래된 순',
+            a_z: '가나다순',
+            z_a: '가나다역순'
+        },
+        loadingCharacter: '캐릭터 로딩 중...',
+        information: '캐릭터 에셋은 GitHub 저장소에서 로드됩니다'
+    },
+    error: {
+        title: '문제가 발생했습니다',
+        message: '예상치 못한 오류가 발생했습니다. 다시 시도해 주세요.',
+        noInternet: {
+            title: '인터넷 연결 없음',
+            message: '인터넷 연결 없이는 캐릭터 에셋을 로드할 수 없습니다.',
+            checking: '확인 중...',
+        }
+    },
+    controls: {
+        title: "컨트롤",
+        noSource: "소스 없음!",
+        links: {
+            suggestFeature: "기능 제안하기",
+            reportIssue: "문제 신고하기"
+        },
+        render: {
+            title: "렌더링",
+            premultipliedAlpha: "미리 곱셈된 알파",
+            backgroundColor: "배경색",
+            backgroundImage: "배경 이미지",
+            chooseImage: "이미지 선택"
+        },
+        animations: {
+            title: "애니메이션",
+            available: "{count}개 사용 가능",
+            loopAnimation: "애니메이션 반복",
+            noAnimations: "사용 가능한 애니메이션이 없습니다"
+        },
+        actions: {
+            title: "작업",
+            viewHistory: "히스토리 보기",
+            openLogs: "로그 열기"
+        },
+        appSettings: {
+            title: "앱 설정",
+            language: "언어"
+        },
+        version: "BD2ModPreview v{version}"
+    },
+    historyDialog: {
+        title: '히스토리 ({count})',
+        noHistory: '최근 히스토리 없음',
+        unknownCharacter: '알 수 없음',
+        unknownModType: '알 수 없음',
+        sourceTypes: {
+            github: 'Github',
+            folder: '폴더'
+        },
+        modTypes: {
+            standing: '기본',
+            cutscene: '컷신',
+            npc: 'NPC',
+            scene: '장면',
+            dating: '데이트'
+        },
+        actions: {
+            remove: '히스토리에서 제거',
+            loadAnimation: '애니메이션 로드'
+        }
+    },
+    errors: {
+        DirectoryNotFound: {
+            title: '디렉토리를 찾을 수 없음',
+            message: '선택한 폴더를 찾을 수 없습니다.'
+        },
+        MissingSkeletonOrJson: {
+            title: '스켈레톤 파일 누락',
+            message: '선택한 폴더에 필요한 스켈레톤 .json 또는 .skel 파일이 없습니다.',
+            actionLabel: 'Github에서 원본 스켈레톤 다운로드'
+        },
+        AssetLoadingError: {
+            title: '에셋 로딩 오류',
+            message: 'Spine 에셋 로딩에 실패했습니다.'
+        },
+        AssetNotFoundError: {
+            title: '에셋을 찾을 수 없음',
+            message: '에셋을 찾을 수 없습니다.'
+        },
+        AssetTooManyRequestsError: {
+            title: '너무 많은 요청',
+            message: '너무 많은 요청을 했습니다. 나중에 다시 시도해 주세요.'
+        },
+        InitializationError: {
+            title: '초기화 오류',
+            message: 'Spine 플레이어 초기화에 실패했습니다.'
+        },
+        PlayerError: {
+            title: '플레이어 오류',
+            message: 'Spine 플레이어에서 오류가 발생했습니다.'
+        },
+        SkeletonError: {
+            title: '스켈레톤 오류',
+            message: '스켈레톤(.skel 또는 .json) 로드에 실패했습니다. 스켈레톤이 손상되었거나 아틀라스와 스켈레톤 파일 간에 불일치가 있을 수 있습니다.'
+        },
+        SkeletonNotFound: {
+            title: '스켈레톤을 찾을 수 없음',
+            message: '앗! GitHub 저장소에서 스켈레톤 에셋을 찾을 수 없습니다.'
+        },
+        CharacterIdNotFound: {
+            title: '캐릭터 ID를 찾을 수 없음',
+            message: '폴더에서 캐릭터 ID를 확인할 수 없습니다.'
+        },
+        DirectoryInvalidError: {
+            title: '잘못된 디렉토리',
+            message: '선택한 디렉토리가 잘못되었거나 Spine 에셋이 포함되어 있지 않습니다.'
+        },
+        UnknownError: {
+            title: "예상치 못한 오류가 발생했습니다",
+            message: "예상치 못한 오류가 발생했습니다. 자세한 정보는 로그를 확인하세요."
+        }
+    }
+}
 }
 
 export const i18n = createI18n({

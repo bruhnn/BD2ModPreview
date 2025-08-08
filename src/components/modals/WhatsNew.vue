@@ -69,6 +69,7 @@ defineEmits(['close'])
                                             class="inline-block px-2 py-0.5 text-xs font-medium rounded border border-slate-600 bg-slate-700 text-slate-300 select-none">Current</span>
                                     </h3>
                                     <ul class="list-disc list-inside space-y-1 mt-2">
+                                        <li class="text-slate-200">Added Korean language support</li>
                                         <li class="text-slate-200">
                                             Fixed loading character indicator in character list not disappearing when an
                                             error occurs while loading spine data from a folder </li>
