@@ -4,8 +4,8 @@ import { defineStore } from 'pinia'
 import { ref, readonly } from 'vue'
 
 export const useUIStore = defineStore('ui', () => {
-  const controlsPosition = useLocalStorage<'floating' | 'sidebar'>('CONTROLS_POSITION', 'floating');
-  
+  const controlsPosition = useLocalStorage<'floating' | 'sidebar'>('CONTROLS_POSITION', 'sidebar');
+
   const showControlsSidebar = useLocalStorage('SHOW_CONTROLS_SIDEBAR', false);
   
   const showControls = ref(false);
