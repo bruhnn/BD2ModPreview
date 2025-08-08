@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Dialog, DialogDescription, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue';
+import { useI18n } from 'vue-i18n';
 import { useHistory } from '../../composables/useHistory';
 import { useSpineStore } from '../../stores/spine';
 import { useCharactersStore } from '../../stores/characters';
@@ -14,6 +15,7 @@ defineEmits([
     "close"
 ])
 
+const { t } = useI18n();
 const { history, removeFromHistory } = useHistory();
 const spineStore = useSpineStore();
 const charactersStore = useCharactersStore();
@@ -32,22 +34,27 @@ function getCharacterInfo(item: HistoryItem) {
         return `${character?.character} - ${character?.costume}`
     }
 
-    return "Unknown";
+    return t('historyDialog.unknownCharacter');
 }
 
 const modTypeMap = {
-    idle: "Standing",
-    cutscene: "Cutscene",
-    npc: "NPC",
-    illustspecial: "Scene",
-    dating: "Dating"
+    idle: "historyDialog.modTypes.standing",
+    cutscene: "historyDialog.modTypes.cutscene",
+    npc: "historyDialog.modTypes.npc",
+    illustspecial: "historyDialog.modTypes.scene",
+    dating: "historyDialog.modTypes.dating"
 }
 
+function getModTypeLabel(modType: string) {
+    const translationKey = modTypeMap[modType];
+    return translationKey ? t(translationKey) : modType;
+}
 </script>
+
 <template>
     <TransitionRoot :show="show" as="template" enter="duration-300 ease-out" enter-from="opacity-0"
         enter-to="opacity-100" leave="duration-200 ease-in" leave-from="opacity-100" leave-to="opacity-0">
-        <Dialog as="div" class="relative z-50 " @close="$emit('close')">
+        <Dialog as="div" class="relative z-9999" @close="$emit('close')">
             <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
                 leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
                 <div class="fixed inset-0 bg-black/30" />
@@ -60,11 +67,12 @@ const modTypeMap = {
                     <DialogPanel class="flex flex-col w-full max-w-4xl mx-4 rounded bg-gray-800 p-4 max-h-[90vh]">
                         <div class="flex flex-row justify-between text-2xl text-gray-400 py-2">
                             <DialogTitle class="font-semibold">
-                                History ({{ history.length }})
+                                {{ t('historyDialog.title', { count: history.length }) }}
                             </DialogTitle>
                             <button
                                 class="border-0 inset-0 transition-colors duration-200 hover:text-gray-300 cursor-pointer outline-none"
-                                @click="$emit('close')">
+                                @click="$emit('close')"
+                                :aria-label="t('common.close')">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960"
                                     width="32px" fill="currentColor">
                                     <path
@@ -75,14 +83,15 @@ const modTypeMap = {
                         <DialogDescription
                             class="flex flex-col overflow-y-auto px-1 pr-2 text-gray-100 scrollbar overflow-y-auto">
                             <div v-if="history.length === 0" class="text-center text-gray-500 py-8 ">
-                                No recent history
+                                {{ t('historyDialog.noHistory') }}
                             </div>
                             <div v-else v-for="item in history" :key="item.timestamp"
                                 class="flex items-center justify-between border-b gap-4 border-gray-700 py-3">
                                 <div class="flex items-center gap-3 flex-1 min-w-0">
                                     <!-- icon -->
                                     <div v-if="item.source.type === 'url'"
-                                        class="w-12 h-12 bg-gray-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                        class="w-12 h-12 bg-gray-600 rounded-full flex items-center justify-center flex-shrink-0"
+                                        :title="t('historyDialog.sourceTypes.github')">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-400"
                                             fill="currentColor" viewBox="0 0 24 24">
                                             <path
@@ -90,7 +99,8 @@ const modTypeMap = {
                                         </svg>
                                     </div>
                                     <div v-else
-                                        class="w-12 h-12 bg-gray-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                        class="w-12 h-12 bg-gray-600 rounded-full flex items-center justify-center flex-shrink-0"
+                                        :title="t('historyDialog.sourceTypes.folder')">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-400"
                                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -106,11 +116,10 @@ const modTypeMap = {
                                         </div>
 
                                         <div class="flex items-center gap-2 text-xs text-gray-400">
-                                            <span v-if="item.source.type == 'url'">Github</span>
-                                            <span v-else>Folder</span>
+                                            <span v-if="item.source.type == 'url'">{{ t('historyDialog.sourceTypes.github') }}</span>
+                                            <span v-else>{{ t('historyDialog.sourceTypes.folder') }}</span>
                                             <span>•</span>
-                                            <span>{{ item.modType ? modTypeMap[item.modType] || item.modType : "Unknown"
-                                            }}</span>
+                                            <span>{{ item.modType ? getModTypeLabel(item.modType) : t('historyDialog.unknownModType') }}</span>
                                             <span>•</span>
                                             <span>{{ formatTimeAgo(new Date(item.timestamp)) }}</span>
                                         </div>
@@ -119,7 +128,9 @@ const modTypeMap = {
 
                                 <div class="flex items-center gap-2 flex-shrink-0">
                                     <button @click="removeFromHistory(item.id)"
-                                        class="cursor-pointer text-sm text-gray-400 hover:text-red-400 transition p-1">
+                                        class="cursor-pointer text-sm text-gray-400 hover:text-red-400 transition p-1"
+                                        :title="t('historyDialog.actions.remove')"
+                                        :aria-label="t('historyDialog.actions.remove')">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -128,7 +139,7 @@ const modTypeMap = {
                                     </button>
                                     <button @click="handleSelect(item)"
                                         class="cursor-pointer text-sm bg-slate-600 text-slate-200 px-3 py-1 rounded hover:bg-slate-500 transition">
-                                        Load Animation
+                                        {{ t('historyDialog.actions.loadAnimation') }}
                                     </button>
                                 </div>
                             </div>
@@ -139,6 +150,7 @@ const modTypeMap = {
         </Dialog>
     </TransitionRoot>
 </template>
+
 <style scoped>
 * {
     user-select: auto;

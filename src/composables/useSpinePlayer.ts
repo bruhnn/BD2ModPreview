@@ -13,6 +13,7 @@ import { BD2ModDetector } from "../utils/spineAssetDetector";
 import { useSpineStore } from "../stores/spine";
 import { useHistory } from "./useHistory";
 import { storeToRefs } from "pinia";
+import { useI18n } from "vue-i18n";
 
 // interface AnimationQueueItem {
 //     animation: string;
@@ -128,87 +129,92 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
 
     const spineError = ref<SpineError | null>(null);
 
-    const errorConfigs = {
-        DirectoryNotFound: {
-            title: 'Directory Not Found',
-            message: 'The selected folder was not found.',
-            showRetry: true
-        },
-        MissingSkeletonOrJson: {
-            title: 'Missing Skeleton File',
-            message: 'The selected folder is missing the required skeleton .json or .skel file.',
-            showRetry: true,
-            actionLabel: 'Download Original Skeleton from Github',
-            actionCallback: downloadMissingSkeleton,
-        },
-        AssetLoadingError: {
-            title: 'Asset Loading Error',
-            message: 'Failed to load Spine assets.',
-            showRetry: true,
-        },
-        AssetNotFoundError: {
-            title: 'Asset Not Found',
-            message: 'The asset was not found.',
-            showRetry: true,
-        },
-        AssetTooManyRequestsError: {
-            title: 'Too Many Requests',
-            message: 'You have made too many requests. Please try again later.',
-            showRetry: true
-        },
-        InitializationError: {
-            title: 'Initialization Error',
-            message: 'Failed to initialize the Spine player.',
-            showRetry: true,
-        },
-        PlayerError: {
-            title: 'Player Error',
-            message: 'An error occurred in the Spine player.',
-            showRetry: true,
-        },
-        SkeletonError: {
-            title: 'Skeleton Error',
-            message: 'Failed to load skeleton (.skel or .json). Skeleton might be corrupted or there is a mismatch between atlas and skeleton files.',
-            showRetry: true,
-        },
+    const { t } = useI18n()
 
-        // Download Errors
-        SkeletonNotFound: {
-            title: 'Skeleton Not Found',
-            message: 'Oops! The skeleton asset is missing from the GitHub repository.',
-            showRetry: false,
-        },
-        CharacterIdNotFound: {
-            title: 'Character ID Not Found',
-            message: 'Could not resolve character ID from the folder.',
-            showRetry: false,
-        },
-        DirectoryInvalidError: {
-            title: 'Invalid Directory',
-            message: 'The selected directory is invalid or does not contain Spine assets.',
-            showRetry: true,
-        }
+    const getErrorConfig = (errorType: string) => {
+        const errorConfigs = {
+            DirectoryNotFound: {
+                title: t('errors.DirectoryNotFound.title'),
+                message: t('errors.DirectoryNotFound.message'),
+                showRetry: true
+            },
+            MissingSkeletonOrJson: {
+                title: t('errors.MissingSkeletonOrJson.title'),
+                message: t('errors.MissingSkeletonOrJson.message'),
+                showRetry: true,
+                actionLabel: t('errors.MissingSkeletonOrJson.actionLabel'),
+                actionCallback: downloadMissingSkeleton,
+            },
+            AssetLoadingError: {
+                title: t('errors.AssetLoadingError.title'),
+                message: t('errors.AssetLoadingError.message'),
+                showRetry: true,
+            },
+            AssetNotFoundError: {
+                title: t('errors.AssetNotFoundError.title'),
+                message: t('errors.AssetNotFoundError.message'),
+                showRetry: true,
+            },
+            AssetTooManyRequestsError: {
+                title: t('errors.AssetTooManyRequestsError.title'),
+                message: t('errors.AssetTooManyRequestsError.message'),
+                showRetry: true
+            },
+            InitializationError: {
+                title: t('errors.InitializationError.title'),
+                message: t('errors.InitializationError.message'),
+                showRetry: true,
+            },
+            PlayerError: {
+                title: t('errors.PlayerError.title'),
+                message: t('errors.PlayerError.message'),
+                showRetry: true,
+            },
+            SkeletonError: {
+                title: t('errors.SkeletonError.title'),
+                message: t('errors.SkeletonError.message'),
+                showRetry: true,
+            },
+            // Download Errors
+            SkeletonNotFound: {
+                title: t('errors.SkeletonNotFound.title'),
+                message: t('errors.SkeletonNotFound.message'),
+                showRetry: false,
+            },  
+            CharacterIdNotFound: {
+                title: t('errors.CharacterIdNotFound.title'),
+                message: t('errors.CharacterIdNotFound.message'),
+                showRetry: false,
+            },
+            DirectoryInvalidError: {
+                title: t('errors.DirectoryInvalidError.title'),
+                message: t('errors.DirectoryInvalidError.message'),
+                showRetry: true,
+            }
+        };
+
+        return errorConfigs[errorType] || {
+            title: t('errors.UnknownError.title'),
+            message: t('errors.UnknownError.message'),
+            showRetry: true
+        };
     };
 
     function handleError(errorType: string, details?: string, additionalData?: any): void {
-        const config = errorConfigs[errorType] || {
-            title: 'Unknown Error',
-            message: 'An unexpected error occurred.',
-            showRetry: true
-        };
+        const mappedError = getErrorConfig(errorType);
 
         spineError.value = {
             type: errorType,
-            title: config.title,
-            message: config.message,
+            title: mappedError.title,
+            message: mappedError.message,
             details: details,
-            showRetry: config.showRetry,
-            actionLabel: config.actionLabel,
-            actionCallback: config.actionCallback,
+            showRetry: mappedError.showRetry,
+            actionLabel: mappedError.actionLabel,
+            actionCallback: mappedError.actionCallback,
             ...additionalData
         };
 
-        logMessage(`${config.title}: ${details || config.message}`, "error");
+        logMessage(`${mappedError.title}: ${details || mappedError.message}`, "error");
     }
 
     function clearError(): void {
@@ -243,7 +249,7 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
                 return
             }
 
-            logMessage("Spine asset data loaded successfully.");
+            logMessage("Spine asset data loaded successfully.", 'success');
             logMessage(`Skeleton: ${assetData.skeletonFilename}`);
             logMessage(`Atlas: ${assetData.atlasFilename}`);
 

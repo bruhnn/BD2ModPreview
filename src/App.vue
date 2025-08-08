@@ -16,6 +16,7 @@ import { useUIStore } from "./stores/ui"
 import { useCharactersStore } from "./stores/characters"
 import SidebarControls from "./components/Controls/SidebarControls.vue"
 import FloatingControls from "./components/Controls/FloatingControls.vue"
+import { useI18n } from "vue-i18n"
 
 saveWindowState(StateFlags.ALL);
 
@@ -75,6 +76,8 @@ function cleanupEventListeners(): void {
   }
 }
 
+const { locale } = useI18n()
+
 onMounted(async () => {
   clearLogs()
   logMessage('Application starting...')
@@ -87,6 +90,8 @@ onMounted(async () => {
   ])
 
   logMessage('Application initialized successfully.', "success");
+
+  locale.value = uiStore.language
 })
 
 onUnmounted(async () => {
@@ -117,32 +122,6 @@ onUnmounted(async () => {
 
       <!-- controsl button -->
 
-      <!-- <div class="absolute top-8 left-8 z-50" :class="{ 'top-12': spineStore.source }">
-        <button v-if="!uiStore.showControls && !spineStore.isPlayerInitialized" @click="uiStore.toggleControls"
-          class="p-4 bg-black rounded-full hover:opacity-100 cursor-pointer transition-all duration-200 hover:scale-110"
-          aria-label="Settings">
-          <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
-            <path
-              d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm112-260q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Z" />
-          </svg>
-        </button>
-      </div> -->
-
-      <!-- <div class="absolute top-0 left-0 z-50">
-        <button v-if="!uiStore.showControls && !spineStore.isPlayerInitialized" @click="uiStore.toggleControls" class="w-auto cursor-pointer mt-0 rounded-br-md rounded-tr-md flex items-center gap-2 px-3 py-2 text-xs font-medium 
-           bg-slate-800/50 text-slate-200
-           hover:bg-slate-700/80 hover:text-white
-           border border-slate-600/50
-           backdrop-blur-sm shadow-sm
-           transition-all duration-200
-           focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500" aria-label="Toggle settings">
-          <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
-            <path
-              d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z" />
-          </svg>
-          Settings
-        </button>
-      </div> -->
       <div v-if="!spineStore.source && !uiStore.showControls" class="absolute top-10 left-10 z-50">
         <button @click="uiStore.toggleControls"
           class="p-3 bg-slate-800/40 cursor-pointer hover:bg-slate-700/80 rounded-full border border-slate-600/20 backdrop-blur-sm transition-all duration-200 text-slate-400 hover:text-slate-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500"
@@ -158,13 +137,15 @@ onUnmounted(async () => {
       <FloatingControls v-if="uiStore.controlsPosition === 'floating'" />
 
       <!-- characters List btn -->
-      <div class="absolute top-32 right-0 z-40">
+      <div class="absolute top-4 right-0 z-40">
         <button @click="toggleCharactersList"
-          class="opacity-40 flex items-center gap-2 border-b border-x border-slate-700/80 bg-slate-800 backdrop-blur-sm py-1 px-3 rounded-b-xl text-slate-300 hover:text-white hover:bg-slate-700/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 transition-all duration-300 cursor-pointer hover:py-2 hover:opacity-100 rotate-90 origin-top-right"
+          class="opacity-60 font-mono text-center flex items-center rounded-l-xl border-l border-bt border-slate-700/80 bg-slate-700/90 backdrop-blur-sm py-1.5 px-2 text-slate-300 hover:text-white hover:bg-slate-700/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 transition-all duration-300 cursor-pointer hover:py-2 hover:opacity-100"
+          style="writing-mode: vertical-lr; text-orientation: upright;letter-spacing: -0.2em;"
           aria-label="Toggle characters list">
-          CHARACTERS
+          {{ 'CHARACTERS' }}
         </button>
       </div>
+
 
       <div class="w-full h-full max-w-full overflow-hidden">
         <!-- doesnt have source; show home page -->
@@ -180,7 +161,7 @@ onUnmounted(async () => {
                 fill="currentColor">
                 <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
               </svg>
-              Back
+              {{ $t('app.backToHome') }}
             </button>
 
             <button v-if="!uiStore.showControls" @click="uiStore.toggleControls" class="w-auto cursor-pointer mt-0 rounded-br-md rounded-tr-md flex items-center gap-2 px-3 py-2 text-xs font-medium 
@@ -194,7 +175,7 @@ onUnmounted(async () => {
                 <path
                   d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z" />
               </svg>
-              Settings
+              {{ $t('app.toggleControls') }}
             </button>
           </div>
 

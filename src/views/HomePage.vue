@@ -14,7 +14,7 @@ const { logMessage } = useLogger();
 const isRecentFoldersExpanded = useLocalStorage('IS_RECENT_FOLDERS_EXPANDED', false);
 
 const recentFolders = computed(() => {
-    return history.value.filter((historyItem) => historyItem.source.type === "folder").slice(0, 5);
+    return history.value.filter((historyItem) => historyItem.source.type === "folder").slice(0, 10);
 });
 
 const hasRecentFolders = computed(() => recentFolders.value.length > 0);
@@ -45,8 +45,6 @@ function onRecentFolderClicked(folder: any): void {
         logMessage(`Error selecting recent folder: ${error}`, 'error');
     }
 }
-
-
 </script>
 
 <template>
@@ -63,11 +61,11 @@ function onRecentFolderClicked(folder: any): void {
 
             <div class="gap-2 flex flex-col items-center text-center">
                 <div class="font-bold text-xl md:text-2xl text-emerald-500">
-                    Mod Preview
+                    {{ $t('homePage.title') }}
                 </div>
                 
                 <div class="text-sm md:text-base font-medium text-gray-400">
-                    Drag & Drop or Choose a Folder
+                    {{ $t('homePage.subtitle') }}
                 </div>
             </div>
 
@@ -75,7 +73,7 @@ function onRecentFolderClicked(folder: any): void {
                 <button type="button"
                     class="cursor-pointer inline-flex justify-center rounded-md border border-transparent bg-gray-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2 dark:border-gray-700"
                     @click="openFolderDialog">
-                    Browse Folder
+                    {{ $t('homePage.openFolderButton') }}
                 </button>
             </div>
         </div>
@@ -85,7 +83,7 @@ function onRecentFolderClicked(folder: any): void {
                 <button @click="toggleRecentFolders"
                     class="w-full cursor-pointer flex items-center justify-between p-3 text-left bg-slate-800/50 hover:bg-slate-700/50 rounded-lg transition-colors duration-200 focus:outline-none mb-3">
                     <div class="flex items-center gap-2">
-                        <span class="text-md font-semibold text-white">Recent Folders</span>
+                        <span class="text-md font-semibold text-white">{{ $t('homePage.recentFoldersLabel') }}</span>
                         <span class="text-xs text-gray-500 hidden sm:inline">({{ recentFolders.length }})</span>
                     </div>
                     <svg class="w-5 h-5 text-gray-400 transition-transform duration-200"
@@ -99,7 +97,7 @@ function onRecentFolderClicked(folder: any): void {
                     'max-h-0 opacity-0': !isRecentFoldersExpanded,
                     'max-h-[40vh] opacity-100': isRecentFoldersExpanded
                 }">
-                    <div class="overflow-y-auto max-h-[40vh] pr-2 scrollbar">
+                    <div class="overflow-y-auto max-h-[40vh]  scrollbar">
                         <div class="flex flex-col gap-2">
                             <RecentFolderItem v-for="folder in recentFolders" :key="folder.timestamp" :folderHistory="folder" @clicked="onRecentFolderClicked"></RecentFolderItem>
                         </div>

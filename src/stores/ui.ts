@@ -68,13 +68,15 @@ export const useUIStore = defineStore('ui', () => {
     }
   }
 
+  const language = useLocalStorage<string>('APP_LANGUAGE', 'en');
+
   return {
     controlsPosition: readonly(controlsPosition),
     setControlsToFloating,
     setControlsToSidebar,
 
     showControls: readonly(showControls),
-    showLogs: readonly(showLogs), 
+    showLogs: readonly(showLogs),
     showHistory: readonly(showHistory),
 
     openControls,
@@ -85,6 +87,12 @@ export const useUIStore = defineStore('ui', () => {
     closeControls,
     closeAllModals,
 
-    toggleControls
+    toggleControls,
+
+    
+    language,
+    setLanguage(newLanguage: string) {
+      language.value = newLanguage;
+    }
   }
 })

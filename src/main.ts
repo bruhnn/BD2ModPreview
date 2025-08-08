@@ -4,6 +4,7 @@ import interact from "interactjs";
 import App from "./App.vue";
 
 import './styles/main.css'
+import { createI18n } from "vue-i18n";
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -56,6 +57,10 @@ app.directive("draggable-resizable", {
       });
   }
 })
+
+import { i18n } from "./i18n";
+app.use(i18n);
+
 
 app.mount("#app");
 
