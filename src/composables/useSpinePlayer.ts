@@ -125,6 +125,7 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
     const currentSource = ref<SpineSource | null>(null);
     const isRetryingFallback = ref<boolean>(false);
     const fallbackAttempted = ref<boolean>(false);
+    const isSourceFallback = ref<boolean>(false);
 
     const spineError = ref<SpineError | null>(null);
 
@@ -280,7 +281,7 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
         return;
     }
 
-    async function loadSpineFromUrl(skeletonUrl: string, atlasUrl: string): Promise<{
+    async function loadSpineFromUrl(skeletonUrl: string, atlasUrl: string, isFallback: boolean = false): Promise<{
         success: boolean,
         charId?: string,
         modType?: string | null
@@ -293,6 +294,8 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
         logMessage(`Loading Spine assets from URL: ${skeletonUrl} and ${atlasUrl}`);
 
         spineStore.setIsPlayerLoading(true);
+
+        isSourceFallback.value = isFallback;
 
         const assetInfo = BD2ModDetector.detect(skeletonUrl);
 
@@ -319,7 +322,10 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
             atlasFilename: atlasUrl
         });
 
-        await initializePlayer(playerConfig);
+        await initializePlayer({
+            ...playerConfig,
+            isFallback
+        });
 
         return {
             success: true,
@@ -384,7 +390,7 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
         logMessage(`Fallback atlas: ${fallbackAtlas}`, "info");
 
         try {
-            const result = await loadSpineFromUrl(fallbackSkeleton, fallbackAtlas);
+            const result = await loadSpineFromUrl(fallbackSkeleton, fallbackAtlas, true);
 
             if (!result?.success) {
                 logMessage("Failed to load spine from fallback URLs.", "error");
@@ -539,6 +545,15 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
         }
 
         const parsedError = parseErrorJson(message);
+        
+        console.log(player.config.isFallback)
+
+        if (player.config.isFallback) {
+            // fallback failed too
+            logMessage("An error occurred on fallback URLs.", "error");
+            handleFinalError(message, parsedError);
+            return;
+        }
 
         const shouldTryFallback = (
             !fallbackAttempted.value &&
@@ -1003,7 +1018,7 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
             return;
         }
         await handleSource(source);
-    }, {immediate: true});
+    }, { immediate: true });
 
     watch(premultipliedAlpha, (value) => {
         setPremultipliedAlpha(value);
