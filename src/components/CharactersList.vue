@@ -74,6 +74,11 @@ const filteredCharacters = computed(() => {
         filtered.sort((a, b) => {
             const aDate = a.release_date ? new Date(a.release_date) : new Date('1900-01-01');
             const bDate = b.release_date ? new Date(b.release_date) : new Date('1900-01-01');
+
+            // if release_date is "UNRELEASED", put on top
+            if (a.release_date === 'UNRELEASED') return -1;
+            if (b.release_date === 'UNRELEASED') return 1;
+
             return bDate - aDate;
         });
     } else if (sortValue.value === 'a-z') {
