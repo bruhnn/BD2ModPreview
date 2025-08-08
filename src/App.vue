@@ -156,7 +156,7 @@ onUnmounted(async () => {
         <!-- spine playe -->
         <div v-else class="relative w-full h-full">
           <div class="absolute top-0 left-0 z-50 flex flex-col gap-1 items-start">
-            <button v-if="true" @click="spineStore.clearSource"
+            <button  @click="spineStore.clearSource"
               class="flex text-xs font-bold items-center gap-2 px-3 py-2 bg-slate-800/30 hover:bg-slate-700/80 rounded-br-lg border-b border-r cursor-pointer border-slate-600/50  text-slate-300 hover:text-white backdrop-blur-sm transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500"
               aria-label="Go back to home">
               <svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px"

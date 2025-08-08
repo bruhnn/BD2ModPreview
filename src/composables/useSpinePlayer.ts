@@ -237,6 +237,7 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
             console.log("Received spine assets data:", assetData);
 
             if (!assetData.skeletonFilename || !assetData.atlasFilename) {
+                spineStore.setIsPlayerLoading(false);
                 handleError('MissingSkeletonOrJson', 'Received incomplete spine assets data');
                 logMessage("Received incomplete spine assets data.", "error");
                 return
@@ -268,6 +269,7 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
                 modType: assetData.modType
             };
         } catch (error) {
+            spineStore.setIsPlayerLoading(false);
             logMessage(`Error loading spine assets from folder: ${JSON.stringify(error)}`, "error");
 
             if (error.type === 'DirectoryInvalidError') {
@@ -545,9 +547,7 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
         }
 
         const parsedError = parseErrorJson(message);
-        
-        console.log(player.config.isFallback)
-
+    
         if (player.config.isFallback) {
             // fallback failed too
             logMessage("An error occurred on fallback URLs.", "error");

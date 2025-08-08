@@ -70,6 +70,9 @@ defineEmits(['close'])
                                     </h3>
                                     <ul class="list-disc list-inside space-y-1 mt-2">
                                         <li class="text-slate-200">
+                                            Fixed loading character indicator in character list not disappearing when an
+                                            error occurs while loading spine data from a folder </li>
+                                        <li class="text-slate-200">
                                             Removed "Olivier - White Witch" from the cutscene tab in the character list
                                         </li>
                                         <li class="text-slate-200">
