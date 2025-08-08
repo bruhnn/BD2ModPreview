@@ -1553,7 +1553,7 @@
             "character": "Olivier",
             "costume": "White Witch",
             "is_collab": false,
-            "cutscene": true,
+            "cutscene": false,
             "standing": true,
             "dating_id": null,
             "character_image": "illust_inven_char003601_138.png",
