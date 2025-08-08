@@ -24,9 +24,6 @@ export const useUIStore = defineStore('ui', () => {
   }
 
   function openLogs() {
-    if (controlsPosition.value === 'floating') {
-      closeAllModals()
-    }
     showLogs.value = true
   }
 
@@ -35,12 +32,8 @@ export const useUIStore = defineStore('ui', () => {
   }
 
   function openHistory() {
-    if (controlsPosition.value === 'floating') {
-      closeAllModals()
-    }
-
     showHistory.value = true
-  }  
+  }
 
   function closeHistory() {
     showHistory.value = false
