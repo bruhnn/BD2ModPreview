@@ -1,6 +1,6 @@
 [package]
 name = "bd2modpreview"
-version = "0.4.0"
+version = "0.4.1"
 description = "A minimal Spine animation viewer used internally by BD2ModManager."
 authors = ["bruhnn"]
 edition = "2021"
