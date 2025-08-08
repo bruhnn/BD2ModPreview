@@ -13,6 +13,8 @@ defineProps({
 })
 
 defineEmits(['close'])
+
+// TODO: move from hardcoded
 </script>
 
 <template>
@@ -30,7 +32,7 @@ defineEmits(['close'])
                     <DialogPanel
                         class="relative w-full max-w-4xl max-h-[90vh] bg-slate-800 rounded-xl shadow-2xl border border-slate-700/50 flex flex-col overflow-hidden">
                         <div class="relative px-6 py-4 border-b border-slate-700/50">
-                            <DialogTitle class="text-xl font-medium text-slate-100 text-center pr-8">
+                            <DialogTitle class="text-xl font-medium text-slate-100 text-center">
                                 What's New
                             </DialogTitle>
 
@@ -42,76 +44,56 @@ defineEmits(['close'])
                                 </svg>
                             </button>
                         </div>
-
                         <div class="text-slate-400 px-6 py-4 flex flex-col gap-2">
                             <span>
-                                Have feedback or ideas? I'd love to hear from you! Open an issue on GitHub and I'll do
-                                my best to include your suggestions in future updates.
+                                Have feedback or ideas? I'd love to hear from you! Open an issue
+                                on GitHub and I'll do my best to include your suggestions in
+                                future updates.
                             </span>
                             <span>
                                 有反馈或想法吗？欢迎在 GitHub 上分享！我很乐意听取你的建议并在未来的更新中实现。
                             </span>
                         </div>
 
-                        <DialogDescription class="flex-1 overflow-y-auto px-6 pb-6 text-slate-300 gap-2">
-                            <div class="space-y-4">
-                                <ul class="space-y-3">
-                                    <li class="flex items-start space-x-2">
-                                        <span class="text-slate-500 text-sm mt-0.5">•</span>
-                                        <span class="text-slate-200">Added Home Page with recent folders</span>
-                                    </li>
+                        <DialogDescription class="flex-1 overflow-y-auto px-6 pb-6 text-slate-300 gap-6">
+                            <p class="mb-4 text-slate-300 font-semibold">
 
-                                    <li class="flex items-start space-x-2">
-                                        <span class="text-slate-500 text-sm mt-0.5">•</span>
-                                        <span class="text-slate-200">Added sidebar controls (you can change between
-                                            floating and sidebar)</span>
-                                    </li>
+                            </p>
+                            <div class="space-y-8">
+                                <div>
+                                    <h3 class="text-lg font-semibold text-slate-100 flex items-center gap-2">
+                                        <span>
+                                            Version 0.4.1
+                                        </span>
+                                        <span
+                                            class="inline-block px-2 py-0.5 text-xs font-medium rounded border border-slate-600 bg-slate-700 text-slate-300 select-none">Current</span>
+                                    </h3>
+                                    <ul class="list-disc list-inside space-y-1 mt-2">
+                                        <li class="text-slate-200">
+                                            Removed "Olivier - White Witch" from character list cutscene list
+                                        </li>
+                                        <li class="text-slate-200">
+                                            Prevented infinite retry on spine source fallback failure
+                                        </li>
+                                        <li class="text-slate-200">
+                                            Show unreleased characters first when sorting by newest
+                                        </li>
+                                    </ul>
+                                </div>
 
-                                    <li class="flex items-start space-x-2">
-                                        <span class="text-slate-500 text-sm mt-0.5">•</span>
-                                        <div class="space-y-2">
-                                            <span class="text-slate-200">Character List improvements:</span>
-                                            <ul class="ml-4 space-y-1.5">
-                                                <li class="flex items-start space-x-2">
-                                                    <span class="text-slate-500 text-xs mt-1">–</span>
-                                                    <span class="text-slate-300 text-sm">Added sorting options (newest,
-                                                        oldest, A-Z, Z-A)</span>
-                                                </li>
-                                                <li class="flex items-start space-x-2">
-                                                    <span class="text-slate-500 text-xs mt-1">–</span>
-                                                    <span class="text-slate-300 text-sm">Improved asset loading with CDN
-                                                        for better performance</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-
-                                    <li class="flex items-start space-x-2">
-                                        <span class="text-slate-500 text-sm mt-0.5">•</span>
-                                        <div class="space-y-2">
-                                            <span class="text-slate-200">Added language support:</span>
-                                            <ul class="ml-4 space-y-1.5">
-                                                <li class="flex items-start space-x-2">
-                                                    <span class="text-slate-500 text-xs mt-1">–</span>
-                                                    <span class="text-slate-300 text-sm">cn Chinese</span>
-                                                </li>
-                                                <li class="flex items-start space-x-2">
-                                                    <span class="text-slate-500 text-xs mt-1">–</span>
-                                                    <span class="text-slate-300 text-sm">ja Japanese</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-
-                                    <li class="flex items-start space-x-2">
-                                        <span class="text-slate-500 text-sm mt-0.5">•</span>
-                                        <span class="text-slate-200">Improved history modal</span>
-                                    </li>
-                                    <li class="flex items-start space-x-2">
-                                        <span class="text-slate-500 text-sm mt-0.5">•</span>
-                                        <span class="text-slate-200">Added "What's New" modal</span>
-                                    </li>
-                                </ul>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-slate-100">Version 0.4.0</h3>
+                                    <ul class="list-disc list-inside space-y-1">
+                                        <li class="text-slate-200">Added Home Page with recent folders</li>
+                                        <li class="text-slate-200">Added sidebar controls (you can change between
+                                            floating and sidebar)</li>
+                                        <li class="text-slate-200">Character List improvements: sorting options,
+                                            improved CDN asset loading</li>
+                                        <li class="text-slate-200">Added language support: cn Chinese, ja Japanese</li>
+                                        <li class="text-slate-200">Improved history modal</li>
+                                        <li class="text-slate-200">Added "What's New" modal</li>
+                                    </ul>
+                                </div>
                             </div>
                         </DialogDescription>
 
@@ -144,6 +126,7 @@ defineEmits(['close'])
         </Dialog>
     </TransitionRoot>
 </template>
+
 
 <style scoped>
 ::-webkit-scrollbar {
