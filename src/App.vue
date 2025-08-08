@@ -16,6 +16,7 @@ import { useUIStore } from "./stores/ui"
 import { useCharactersStore } from "./stores/characters"
 import SidebarControls from "./components/Controls/SidebarControls.vue"
 import FloatingControls from "./components/Controls/FloatingControls.vue"
+import WhatsNew from "./components/modals/WhatsNew.vue"
 import { useI18n } from "vue-i18n"
 
 saveWindowState(StateFlags.ALL);
@@ -85,8 +86,8 @@ onMounted(async () => {
   await Promise.all([
     loadFromCli(),
     initializeDragAndDrop(),
-
-    charactersStore.loadCharacters()
+    charactersStore.loadCharacters(),
+    uiStore.shouldShowWhatsNew()
   ])
 
   logMessage('Application initialized successfully.', "success");
@@ -105,6 +106,7 @@ onUnmounted(async () => {
     <!-- mmodals -->
     <Logging :show="uiStore.showLogs" @close="uiStore.closeLogs" />
     <History :show="uiStore.showHistory" @close="uiStore.closeHistory" />
+    <WhatsNew :show="uiStore.showWhatsNew" @close="uiStore.closeWhatsNew" />
 
     <div class="fixed top-0 left-0 h-full z-30 transition-transform duration-200 ease-out" :class="{
       'translate-x-0': uiStore.controlsPosition === 'sidebar' && uiStore.showControls,

@@ -1,17 +1,26 @@
-import { show } from '@tauri-apps/api/app';
 import { useLocalStorage } from '@vueuse/core';
 import { defineStore } from 'pinia'
-import { ref, readonly } from 'vue'
+import { ref, readonly, shallowRef } from 'vue'
+
+import { getVersion } from '@tauri-apps/api/app';
 
 export const useUIStore = defineStore('ui', () => {
   const controlsPosition = useLocalStorage<'floating' | 'sidebar'>('CONTROLS_POSITION', 'sidebar');
 
   const showControlsSidebar = useLocalStorage('SHOW_CONTROLS_SIDEBAR', false);
-  
+
   const showControls = ref(false);
-  
+
   const showLogs = ref(false)
-  const showHistory = ref(false) 
+  const showHistory = ref(false)
+
+  const showWhatsNew = ref(false)
+
+  async function shouldShowWhatsNew() {
+    const dontShowWhatsNewForVersion = localStorage.getItem('DONT_SHOW_WHATS_NEW_FOR_VERSION');
+    const currentVersion = await getVersion();
+    showWhatsNew.value = !(dontShowWhatsNewForVersion && dontShowWhatsNewForVersion === currentVersion);
+  }
 
   if (controlsPosition.value === 'sidebar') {
     showControls.value = showControlsSidebar.value;
@@ -53,10 +62,16 @@ export const useUIStore = defineStore('ui', () => {
     }
   }
 
+  async function closeWhatsNew() {
+    showWhatsNew.value = false;
+
+    localStorage.setItem('DONT_SHOW_WHATS_NEW_FOR_VERSION', await getVersion());
+  }
+
   const setControlsToFloating = () => {
     controlsPosition.value = 'floating'
   }
-  
+
   const setControlsToSidebar = () => {
     controlsPosition.value = 'sidebar'
   }
@@ -78,6 +93,8 @@ export const useUIStore = defineStore('ui', () => {
     showControls: readonly(showControls),
     showLogs: readonly(showLogs),
     showHistory: readonly(showHistory),
+    showWhatsNew: readonly(showWhatsNew),
+    shouldShowWhatsNew,
 
     openControls,
     openLogs,
@@ -86,6 +103,7 @@ export const useUIStore = defineStore('ui', () => {
     closeHistory,
     closeControls,
     closeAllModals,
+    closeWhatsNew,
 
     toggleControls,
 
