@@ -1859,6 +1859,30 @@
             "character_image": "illust_inven_char003602_176.png",
             "skill_preview_image": "illust_skill_char003602_176.png",
             "release_date": "2025-07-31"
+        },
+        {
+            "id": "001006",
+            "character": "Sylvia",
+            "costume": "Bikini Agent",
+            "is_collab": false,
+            "cutscene": true,
+            "standing": true,
+            "dating_id": "8",
+            "character_image": "illust_inven_char001006_177.png",
+            "skill_preview_image": "illust_skill_char001006_177.png",
+            "release_date": "2025-08-14"
+        },
+        {
+            "id": "001197",
+            "character": "Teresse",
+            "costume": "Milky Bikini",
+            "is_collab": false,
+            "cutscene": true,
+            "standing": true,
+            "dating_id": "9",
+            "character_image": "illust_inven_char001197_179.png",
+            "skill_preview_image": "illust_skill_char001197_179.png",
+            "release_date": "2025-08-14"
         }
     ],
     "dating": {
@@ -1868,6 +1892,8 @@
         "4": "001106",
         "5": "060802",
         "6": "067603",
-        "7": "000296"
+        "7": "000296",
+        "8": "001006",
+        "9": "001197"
     }
 }
