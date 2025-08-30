@@ -1883,6 +1883,18 @@
             "character_image": "illust_inven_char001197_179.png",
             "skill_preview_image": "illust_skill_char001197_179.png",
             "release_date": "2025-08-14"
+        },
+        {
+            "id": "000807",
+            "character": "Rubia",
+            "costume": "Bikini Agent",
+            "is_collab": false,
+            "cutscene": true,
+            "standing": true,
+            "dating_id": null,
+            "character_image": "illust_inven_char000807_178.png",
+            "skill_preview_image": "illust_skill_char000807_178.png",
+            "release_date": "2025-08-28"
         }
     ],
     "dating": {
