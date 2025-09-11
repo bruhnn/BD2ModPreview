@@ -1637,7 +1637,7 @@
             "character": "Rafina",
             "costume": "Code Name A",
             "is_collab": false,
-            "cutscene": false,
+            "cutscene": true,
             "standing": true,
             "dating_id": null,
             "character_image": "illust_inven_char060702_49.png",
@@ -1895,6 +1895,42 @@
             "character_image": "illust_inven_char000807_178.png",
             "skill_preview_image": "illust_skill_char000807_178.png",
             "release_date": "2025-08-28"
+        },
+        {
+            "id": "004001",
+            "character": "Darian",
+            "costume": "Prophetic Dream",
+            "is_collab": false,
+            "cutscene": false,
+            "standing": true,
+            "dating_id": null,
+            "character_image": null,
+            "skill_preview_image": null,
+            "release_date": "UNRELEASED"
+        },
+        {
+            "id": "004101",
+            "character": "Tyr",
+            "costume": "Starlight Guardian",
+            "is_collab": false,
+            "cutscene": false,
+            "standing": true,
+            "dating_id": null,
+            "character_image": null,
+            "skill_preview_image": null,
+            "release_date": "UNRELEASED"
+        },
+        {
+            "id": "003901",
+            "character": "Sonya",
+            "costume": "Shadow Dream",
+            "is_collab": false,
+            "cutscene": true,
+            "standing": true,
+            "dating_id": null,
+            "character_image": "illust_inven_char003901_180.png",
+            "skill_preview_image": "illust_skill_char003901_180.png",
+            "release_date": "2025-09-11"
         }
     ],
     "dating": {
