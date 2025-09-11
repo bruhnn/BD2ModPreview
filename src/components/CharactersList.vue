@@ -158,8 +158,8 @@ function getThumbnail(character: any) {
     const baseUrl = "https://cdn.jsdelivr.net/gh/bruhnn/Brown-Dust-2-Asset@master/ui/illust";
 
     if (!imageKey || !character[imageKey.image]) {
-        logMessage(`Invalid Character Data. Could not find image for ${typeSelected.value} type.`, "error")
-        return ''
+        logMessage(`Invalid Character Data. Could not find image for ${character.character} - ${character.costume} (${character.id}) ${typeSelected.value} type.`, "error")
+        return `${baseUrl}/illust_simple_char/illust_simple_char000201_2.png`
     }
     // standind and dating show the character image
     // cutscene shows the skill preview image
