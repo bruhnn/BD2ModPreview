@@ -63,39 +63,14 @@ defineEmits(['close'])
                                 <div>
                                     <h3 class="text-lg font-semibold text-slate-100 flex items-center gap-2">
                                         <span>
-                                            Version 0.4.1
+                                            Version 0.4.2
                                         </span>
                                         <span
                                             class="inline-block px-2 py-0.5 text-xs font-medium rounded border border-slate-600 bg-slate-700 text-slate-300 select-none">Current</span>
                                     </h3>
                                     <ul class="list-disc list-inside space-y-1 mt-2">
-                                        <li class="text-slate-200">Added Korean language support</li>
-                                        <li class="text-slate-200">
-                                            Fixed loading character indicator in character list not disappearing when an
-                                            error occurs while loading spine data from a folder </li>
-                                        <li class="text-slate-200">
-                                            Removed "Olivier - White Witch" from the cutscene tab in the character list
+                                        <li class="text-slate-200">Added an image placeholder to the characters list
                                         </li>
-                                        <li class="text-slate-200">
-                                            Prevented infinite retry on spine source fallback failure
-                                        </li>
-                                        <li class="text-slate-200">
-                                            Show unreleased characters first when sorting by newest
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div>
-                                    <h3 class="text-lg font-semibold text-slate-100">Version 0.4.0</h3>
-                                    <ul class="list-disc list-inside space-y-1">
-                                        <li class="text-slate-200">Added Home Page with recent folders</li>
-                                        <li class="text-slate-200">Added sidebar controls (you can change between
-                                            floating and sidebar)</li>
-                                        <li class="text-slate-200">Character List improvements: sorting options,
-                                            improved CDN asset loading</li>
-                                        <li class="text-slate-200">Added language support: cn Chinese, ja Japanese</li>
-                                        <li class="text-slate-200">Improved history modal</li>
-                                        <li class="text-slate-200">Added "What's New" modal</li>
                                     </ul>
                                 </div>
                             </div>
