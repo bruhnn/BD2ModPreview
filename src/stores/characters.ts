@@ -44,47 +44,54 @@ export const useCharactersStore = defineStore("characters", () => {
         });
     }
 
-    async function loadLocalCharacters() {
-        try {
-            const response = await fetch('/data/characters.json');
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json() as CharactersJson
-
-            characters.value = data.characters;
-            datingMap.value = data.dating
-
-            console.log("Local characters loaded:", characters.value.length);
-        } catch (error) {
-            console.error("Failed to load characters from public folder:", error);
-        }
-    }
-
-    async function loadRemoteCharacters() {
-        try {
-            const response = await fetch(CHARACTERS_URL, {
-                method: "GET",
-            });
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json() as CharactersJson
-
-            characters.value = data.characters;
-            datingMap.value = data.dating
-
-            console.log("Remote characters loaded:", characters.value.length);
-
-            return true
-        } catch (error) {
-            console.error(`Failed to load characters from ${CHARACTERS_URL}:`, error);
+async function loadLocalCharacters() {
+    try {
+        const response = await fetch('/data/characters.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        return false;
+        const data = await response.json() as CharactersJson;
+
+         const existingIds = new Set(characters.value.map(c => c.id));
+        const newCharacters = data.characters.filter(c => !existingIds.has(c.id));
+
+        characters.value = [...characters.value, ...newCharacters];
+        datingMap.value = { ...datingMap.value, ...data.dating };
+
+        console.log("Local characters loaded:", data.characters.length);
+    } catch (error) {
+        console.error("Failed to load characters from public folder:", error);
     }
+}
+
+async function loadRemoteCharacters() {
+    try {
+        const response = await fetch(CHARACTERS_URL, {
+            method: "GET",
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json() as CharactersJson;
+
+        const existingIds = new Set(characters.value.map(c => c.id));
+        const newCharacters = data.characters.filter(c => !existingIds.has(c.id));
+
+        characters.value = [...characters.value, ...newCharacters];
+        datingMap.value = { ...datingMap.value, ...data.dating };
+
+        console.log("Remote characters loaded:", data.characters.length);
+
+        return true;
+    } catch (error) {
+        console.error(`Failed to load characters from ${CHARACTERS_URL}:`, error);
+    }
+
+    return false;
+}
+
 
     return {
         characters: readonly(characters),
