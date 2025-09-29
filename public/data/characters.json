@@ -1901,24 +1901,24 @@
             "character": "Darian",
             "costume": "Prophetic Dream",
             "is_collab": false,
-            "cutscene": false,
+            "cutscene": true,
             "standing": true,
             "dating_id": null,
             "character_image": null,
             "skill_preview_image": null,
-            "release_date": "UNRELEASED"
+            "release_date": "2025-09-25"
         },
         {
             "id": "004101",
             "character": "Tyr",
             "costume": "Starlight Guardian",
             "is_collab": false,
-            "cutscene": false,
+            "cutscene": true,
             "standing": true,
             "dating_id": null,
             "character_image": null,
             "skill_preview_image": null,
-            "release_date": "UNRELEASED"
+            "release_date": "2025-09-25"
         },
         {
             "id": "003901",
