@@ -799,7 +799,7 @@
             "is_collab": false,
             "cutscene": true,
             "standing": true,
-            "dating_id": null,
+            "dating_id": "10",
             "character_image": "illust_inven_char066403_96.png",
             "skill_preview_image": "illust_skill_char066403_96.png",
             "release_date": "2023-09-21"
@@ -1551,14 +1551,14 @@
         {
             "id": "003601",
             "character": "Olivier",
-            "costume": "White Witch",
+            "costume": "Faithful Wings",
             "is_collab": false,
             "cutscene": false,
             "standing": true,
             "dating_id": null,
             "character_image": "illust_inven_char003601_138.png",
             "skill_preview_image": "illust_skill_char003601_138.png",
-            "release_date": "UNRELEASED"
+            "release_date": "2025-07-17"
         },
         {
             "id": "066906",
@@ -1904,8 +1904,8 @@
             "cutscene": true,
             "standing": true,
             "dating_id": null,
-            "character_image": null,
-            "skill_preview_image": null,
+            "character_image": "illust_inven_char004001_181.png",
+            "skill_preview_image": "illust_skill_char004001_181.png",
             "release_date": "2025-09-25"
         },
         {
@@ -1916,8 +1916,8 @@
             "cutscene": true,
             "standing": true,
             "dating_id": null,
-            "character_image": null,
-            "skill_preview_image": null,
+            "character_image": "illust_inven_char004101_182.png",
+            "skill_preview_image": "illust_skill_char004101_182.png",
             "release_date": "2025-09-25"
         },
         {
@@ -1931,6 +1931,30 @@
             "character_image": "illust_inven_char003901_180.png",
             "skill_preview_image": "illust_skill_char003901_180.png",
             "release_date": "2025-09-11"
+        },
+        {
+            "id": "003902",
+            "character": "Sonya",
+            "costume": "Little Pumpkin Girl",
+            "is_collab": false,
+            "cutscene": true,
+            "standing": true,
+            "dating_id": null,
+            "character_image": "illust_inven_char003902_184.png",
+            "skill_preview_image": "illust_skill_char003902_184.png",
+            "release_date": "2025-10-23"
+        },
+        {
+            "id": "067103",
+            "character": "Granhildr",
+            "costume": "Boo Ghost",
+            "is_collab": false,
+            "cutscene": true,
+            "standing": true,
+            "dating_id": null,
+            "character_image": "illust_inven_char067103_183.png",
+            "skill_preview_image": "illust_skill_char067103_183.png",
+            "release_date": "2025-10-23"
         }
     ],
     "dating": {
@@ -1942,6 +1966,7 @@
         "6": "067603",
         "7": "000296",
         "8": "001006",
-        "9": "001197"
+        "9": "001197",
+        "10": "066403"
     }
 }
