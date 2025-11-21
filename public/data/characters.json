@@ -1553,12 +1553,12 @@
             "character": "Olivier",
             "costume": "Faithful Wings",
             "is_collab": false,
-            "cutscene": false,
+            "cutscene": true,
             "standing": true,
             "dating_id": null,
             "character_image": "illust_inven_char003601_138.png",
             "skill_preview_image": "illust_skill_char003601_138.png",
-            "release_date": "2025-07-17"
+            "release_date": "2025-11-20"
         },
         {
             "id": "066906",
