@@ -1955,6 +1955,54 @@
             "character_image": "illust_inven_char067103_183.png",
             "skill_preview_image": "illust_skill_char067103_183.png",
             "release_date": "2025-10-23"
+        },
+        {
+            "id": "004002",
+            "character": "Darian",
+            "costume": "Bittersweet Bunny",
+            "is_collab": false,
+            "cutscene": true,
+            "standing": true,
+            "dating_id": null,
+            "character_image": "illust_inven_char004002_185.png",
+            "skill_preview_image": "illust_skill_char004002_185.png",
+            "release_date": "2025-12-16"
+        },
+        {
+            "id": "061103",
+            "character": "Eleaneer",
+            "costume": "Shadow Bunny",
+            "is_collab": false,
+            "cutscene": true,
+            "standing": true,
+            "dating_id": null,
+            "character_image": "illust_inven_char061103_187.png",
+            "skill_preview_image": "illust_skill_char061103_187.png",
+            "release_date": "2025-12-16"
+        },
+        {
+            "id": "067604",
+            "character": "Wilhelmina",
+            "costume": "Frozen Queen",
+            "is_collab": false,
+            "cutscene": true,
+            "standing": true,
+            "dating_id": null,
+            "character_image": "illust_inven_char067604_189.png",
+            "skill_preview_image": "illust_skill_char067604_189.png",
+            "release_date": "2025-12-16"
+        },
+        {
+            "id": "061492",
+            "character": "Zenith",
+            "costume": "Stranger Bunny",
+            "is_collab": false,
+            "cutscene": true,
+            "standing": true,
+            "dating_id": "12",
+            "character_image": "illust_inven_char061492_188.png",
+            "skill_preview_image": "illust_skill_char061492_188.png",
+            "release_date": "2025-12-16"
         }
     ],
     "dating": {
@@ -1967,6 +2015,7 @@
         "7": "000296",
         "8": "001006",
         "9": "001197",
-        "10": "066403"
+        "10": "066403",
+        "12": "061492"
     }
 }
