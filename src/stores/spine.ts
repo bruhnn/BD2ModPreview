@@ -59,6 +59,12 @@ export const useSpineStore = defineStore('spine', () => {
         animationTrigger.value += 1;
     }
 
+    const playAllAnimations = () => {
+        // The actual cycling logic is handled in useSpinePlayer composable
+        // This just triggers the animation change
+        return true;
+    }
+
     // const addAnimationToQueue = (animation: string) => {
     //     animationQueue.value.push({
     //         animation: animation,
@@ -138,6 +144,7 @@ export const useSpineStore = defineStore('spine', () => {
 
         setAnimations,
         setCurrentAnimation,
+        playAllAnimations,
 
         // addAnimationToQueue,
         // removeAnimationFromQueue,
