@@ -39,7 +39,13 @@ function handleBackgroundImageChange(event: Event) {
 }
 
 function selectAnimation(animation: string) {
-    spineStore.setCurrentAnimation(animation);
+    if (animation === 'All') {
+        // Play all animations in sequence
+        spineStore.setCurrentAnimation('All');
+        spineStore.playAllAnimations();
+    } else {
+        spineStore.setCurrentAnimation(animation);
+    }
 }
 
 // function addToQueue(animation: string) {
@@ -64,6 +70,17 @@ function selectAnimation(animation: string) {
 // }
 
 const displayPath = ref<string | null>(null);
+
+// Computed property to add "All" option
+const animationsWithCombined = computed(() => {
+    if (!spineStore.animations || spineStore.animations.length === 0) {
+        return [];
+    }
+    if (spineStore.animations.length <= 1) {
+        return spineStore.animations;
+    }
+    return [...spineStore.animations, 'All'];
+});
 
 watch(
     () => spineStore.source?.path,
@@ -259,7 +276,7 @@ watch(locale, (newLocale) => {
 
                 <div>
                     <!-- no animations   -->
-                    <div v-if="!spineStore.animations || spineStore.animations.length === 0"
+                    <div v-if="!animationsWithCombined || animationsWithCombined.length === 0"
                         class="flex flex-col items-center justify-center py-2 px-4 text-center">
                         <h3 class="text-sm font-medium text-slate-300">{{ t('controls.animations.noAnimations') }}</h3>
                     </div>
@@ -286,7 +303,7 @@ watch(locale, (newLocale) => {
                                     <ListboxOptions
                                         class="absolute z-50 mt-1 mb-2 w-full max-h-64 overflow-y-auto scrollbar rounded-xl border border-slate-700/50 bg-slate-800/95 backdrop-blur-sm overflow-hidden text-sm shadow-lg ring-1 ring-slate-700/50 focus:outline-none">
                                         <ListboxOption v-slot="{ active, selected }"
-                                            v-for="anim in spineStore.animations" :key="anim" :value="anim"
+                                            v-for="anim in animationsWithCombined" :key="anim" :value="anim"
                                             as="template">
                                             <li :class="[
                                                 active ? 'bg-slate-700/60 text-slate-100' : 'text-slate-200',

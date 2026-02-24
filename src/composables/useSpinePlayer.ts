@@ -106,6 +106,9 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
 
     let playerInstance: SpinePlayer | null;
     let userCamera: any | null = null;
+    let currentAnimationIndex = 0;
+    let isAllAnimationsMode = false;
+    let cutAnimationsCache: string[] = [];  // Cache the filtered animations
 
     const defaultCameraState: CameraState = {
         x: 0,
@@ -448,6 +451,11 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
 
     async function destroyPlayer(): Promise<void> {
         logMessage("Destroying the player.", "info");
+
+        // Reset animation cycling state
+        isAllAnimationsMode = false;
+        currentAnimationIndex = 0;
+        cutAnimationsCache = [];
 
         if (playerInstance) {
             try {
@@ -802,7 +810,26 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
 
             const trackEntry = playerInstance.animationState.setAnimation(0, animationName, loopAnimation);
 
-            if (!loopAnimation) {
+            // Set up completion listener based on mode
+            if (isAllAnimationsMode && !loopAnimation) {
+                // In "All" mode, cycle to next animation when current one completes
+                trackEntry.listener = {
+                    complete: () => {
+                        if (playerInstance && isAllAnimationsMode && cutAnimationsCache.length > 1) {
+                            // Only cycle if loop is still enabled (global loop setting controls cycling)
+                            if (spineStore.loopAnimation) {
+                                currentAnimationIndex = (currentAnimationIndex + 1) % cutAnimationsCache.length;
+                                const nextAnimation = cutAnimationsCache[currentAnimationIndex];
+                                setPlayerAnimation(nextAnimation, false); // Keep non-looping for cycling
+                            } else {
+                                // Loop is OFF: stop cycling and pause
+                                playerInstance.pause();
+                            }
+                        }
+                    }
+                };
+            } else if (!loopAnimation && !isAllAnimationsMode) {
+                // Standard non-loop behavior - pause when complete
                 trackEntry.listener = {
                     complete: () => {
                         if (playerInstance) {
@@ -1035,13 +1062,61 @@ export function useSpinePlayer(playerContainer: Ref<HTMLElement | null>) {
 
     watch([currentAnimation, animationTrigger], ([animation]) => {
         if (typeof animation === 'string') {
-            setPlayerAnimation(animation, loopAnimation.value);
+            if (animation === 'All') {
+                // Handle "All" - cycle through cut animations
+                const allAnimations = spineStore.animations;
+                const cutAnimations = allAnimations.filter(anim => 
+                    anim.includes('cut')
+                );
+                
+                if (cutAnimations.length > 0) {
+                    isAllAnimationsMode = true;
+                    cutAnimationsCache = cutAnimations;
+                    currentAnimationIndex = 0;
+                    const firstAnimation = cutAnimations[0];
+                    
+                    // Start with non-looping so we get completion events for cycling
+                    setPlayerAnimation(firstAnimation, false);
+                    logMessage(`Starting animation cycle with ${cutAnimations.length} animations`, "info");
+                } else {
+                    // Fallback: use all animations if no cut animations found
+                    if (allAnimations.length > 0) {
+                        isAllAnimationsMode = true;
+                        cutAnimationsCache = allAnimations;
+                        currentAnimationIndex = 0;
+                        const firstAnimation = allAnimations[0];
+                        setPlayerAnimation(firstAnimation, false);
+                        logMessage(`No cut animations found, cycling through all ${allAnimations.length} animations`, "info");
+                    }
+                }
+            } else {
+                // Individual animation selected - exit "All" mode
+                isAllAnimationsMode = false;
+                cutAnimationsCache = [];
+                setPlayerAnimation(animation, loopAnimation.value);
+            }
         }
     })
 
     watch(loopAnimation, (shouldLoop) => {
         if (playerInstance && currentAnimation.value) {
-            logMessage(`Looping changed to ${shouldLoop}. Re-applying animation.`, "info");
+            if (isAllAnimationsMode) {
+                if (shouldLoop) {
+                    // Loop ON: Resume cycling through all cut animations
+                    if (cutAnimationsCache.length > 0) {
+                        const currentAnim = cutAnimationsCache[currentAnimationIndex] || cutAnimationsCache[0];
+                        setPlayerAnimation(currentAnim, false); // Keep non-looping for cycling
+                    }
+                } else {
+                    // Loop OFF: Stop cycling, stay on current animation and let it finish
+                    if (cutAnimationsCache.length > 0) {
+                        const currentAnim = cutAnimationsCache[currentAnimationIndex] || cutAnimationsCache[0];
+                        setPlayerAnimation(currentAnim, false); // Non-looping, will stop when complete
+                    }
+                }
+                return;
+            }
+            
             setPlayerAnimation(currentAnimation.value, shouldLoop);
         }
     })
