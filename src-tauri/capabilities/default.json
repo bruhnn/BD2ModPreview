@@ -16,6 +16,7 @@
             "path": "**"
         }
       ]
-    }
+    },
+    "core:window:allow-set-always-on-top"
   ]
 }

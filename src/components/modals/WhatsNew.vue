@@ -56,15 +56,11 @@ defineEmits(['close'])
                         </div>
 
                         <DialogDescription class="flex-1 overflow-y-auto px-6 pb-6 text-slate-300 gap-6">
-                            <p class="mb-4 text-slate-300 font-semibold">
-
-                            </p>
+                            <p class="mb-4 text-slate-300 font-semibold"></p>
                             <div class="space-y-8">
                                 <div>
                                     <h3 class="text-lg font-semibold text-slate-100 flex items-center gap-2">
-                                        <span>
-                                            Version 0.4.3
-                                        </span>
+                                        <span>Version 0.4.4</span>
                                         <span
                                             class="inline-block px-2 py-0.5 text-xs font-medium rounded border border-slate-600 bg-slate-700 text-slate-300 select-none">
                                             Current
@@ -72,10 +68,7 @@ defineEmits(['close'])
                                     </h3>
                                     <ul class="list-disc list-inside space-y-1 mt-2">
                                         <li class="text-slate-200">
-                                            Added “All” dropdown option to cycle through all cutscene animations
-                                        </li>
-                                        <li class="text-slate-400 text-sm">
-                                            Thanks to @mariogomezr for the contribution!
+                                            Added "Always on Top" toggle in App Settings
                                         </li>
                                     </ul>
                                 </div>

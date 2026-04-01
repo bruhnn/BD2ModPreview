@@ -7,6 +7,7 @@ import {
 } from '@headlessui/vue'
 import { onMounted, ref, computed, watch } from 'vue';
 import { getVersion } from '@tauri-apps/api/app';
+import { getCurrentWindow } from '@tauri-apps/api/window';
 
 import { useSpineStore } from "../../stores/spine"
 import { useUIStore } from '../../stores/ui';
@@ -29,6 +30,12 @@ const toggleAction = computed(() =>
     isFloating.value ? uiStore.setControlsToSidebar : uiStore.setControlsToFloating
 )
 
+const alwaysOnTop = ref(false)
+
+watch(alwaysOnTop, (val) => {
+    getCurrentWindow().setAlwaysOnTop(val)
+})
+
 function handleBackgroundImageChange(event: Event) {
     const target = event.target as HTMLInputElement;
     const file = target.files?.[0];
@@ -40,7 +47,6 @@ function handleBackgroundImageChange(event: Event) {
 
 function selectAnimation(animation: string) {
     if (animation === 'All') {
-        // Play all animations in sequence
         spineStore.setCurrentAnimation('All');
         spineStore.playAllAnimations();
     } else {
@@ -48,30 +54,8 @@ function selectAnimation(animation: string) {
     }
 }
 
-// function addToQueue(animation: string) {
-//     //
-//     spineStore.addAnimationToQueue(animation);
-// }
-
-// function removeFromQueue(index: number) {
-//     spineStore.removeAnimationFromQueue(index);
-// }
-
-// function playQueue() {
-//     spineStore.playAnimationQueue();
-// }
-
-// function stopQueue() {
-//     spineStore.stopAnimationQueue();
-// }
-
-// function clearQueue() {
-//     spineStore.clearAnimationQueue();
-// }
-
 const displayPath = ref<string | null>(null);
 
-// Computed property to add "All" option
 const animationsWithCombined = computed(() => {
     if (!spineStore.animations || spineStore.animations.length === 0) {
         return [];
@@ -125,6 +109,8 @@ const { t, availableLocales, locale } = useI18n();
 watch(locale, (newLocale) => {
     uiStore.setLanguage(newLocale);
 });
+
+
 </script>
 <template>
     <div class="h-full flex flex-col">
@@ -198,7 +184,7 @@ watch(locale, (newLocale) => {
                                 class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform" />
                         </Switch>
                         <SwitchLabel class="mr-4 cursor-pointer select-none">{{ t('controls.render.premultipliedAlpha')
-                            }}</SwitchLabel>
+                        }}</SwitchLabel>
                     </div>
                 </SwitchGroup>
 
@@ -258,7 +244,8 @@ watch(locale, (newLocale) => {
                         t('controls.animations.title') }}</h4>
                     <span class="text-xs text-slate-500">{{ t('controls.animations.available', {
                         count:
-                            spineStore.animations.length }) }}</span>
+                            spineStore.animations.length
+                    }) }}</span>
                 </div>
 
                 <SwitchGroup>
@@ -270,12 +257,11 @@ watch(locale, (newLocale) => {
                                 class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform" />
                         </Switch>
                         <SwitchLabel class="mr-4 cursor-pointer select-none">{{ t('controls.animations.loopAnimation')
-                            }}</SwitchLabel>
+                        }}</SwitchLabel>
                     </div>
                 </SwitchGroup>
 
                 <div>
-                    <!-- no animations   -->
                     <div v-if="!animationsWithCombined || animationsWithCombined.length === 0"
                         class="flex flex-col items-center justify-center py-2 px-4 text-center">
                         <h3 class="text-sm font-medium text-slate-300">{{ t('controls.animations.noAnimations') }}</h3>
@@ -367,9 +353,23 @@ watch(locale, (newLocale) => {
                 </div>
             </div>
 
+            <!-- App Settings -->
             <div class="space-y-4">
                 <h4 class="text-sm font-medium text-slate-300 uppercase tracking-wide">{{
                     t('controls.appSettings.title') }}</h4>
+                
+                
+                <SwitchGroup>
+                    <div class="flex items-center gap-2">
+                        <Switch v-model="alwaysOnTop"
+                            :class='alwaysOnTop ? "bg-slate-500" : "bg-gray-600"'
+                            class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none cursor-pointer">
+                            <span :class='alwaysOnTop ? "translate-x-6" : "translate-x-1"'
+                                class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform" />
+                        </Switch>
+                        <SwitchLabel class="mr-4 cursor-pointer select-none">{{ t('controls.appSettings.alwaysOnTop') }}</SwitchLabel>
+                    </div>
+                </SwitchGroup>
 
                 <div class="space-y-2">
                     <label class="text-xs font-medium text-slate-400 uppercase tracking-wide select-none">{{

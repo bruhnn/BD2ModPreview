@@ -10,7 +10,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000708_170.png",
             "skill_preview_image": "illust_skill_char000708_170.png",
-            "release_date": "2025-06-19"
+            "release_date": "2025-06-19",
+            "gender": "female"
         },
         {
             "id": "000202",
@@ -22,7 +23,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000202_3.png",
             "skill_preview_image": "illust_skill_char000202_3.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "000203",
@@ -34,7 +36,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000203_41.png",
             "skill_preview_image": "illust_skill_char000203_41.png",
-            "release_date": "2024-02-07"
+            "release_date": "2024-02-07",
+            "gender": "female"
         },
         {
             "id": "000106",
@@ -46,7 +49,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000106_90.png",
             "skill_preview_image": "illust_skill_char000106_90.png",
-            "release_date": "2023-08-02"
+            "release_date": "2023-08-02",
+            "gender": "male"
         },
         {
             "id": "002401",
@@ -58,7 +62,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char002401_58.png",
             "skill_preview_image": "illust_skill_char002401_58.png",
-            "release_date": "2023-10-26"
+            "release_date": "2023-10-26",
+            "gender": "female"
         },
         {
             "id": "000506",
@@ -70,7 +75,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000506_107.png",
             "skill_preview_image": "illust_skill_char000506_107.png",
-            "release_date": "2024-12-05"
+            "release_date": "2024-12-05",
+            "gender": "female"
         },
         {
             "id": "000801",
@@ -82,7 +88,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000801_21.png",
             "skill_preview_image": "illust_skill_char000801_21.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "000301",
@@ -94,7 +101,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000301_7.png",
             "skill_preview_image": "illust_skill_char000301_7.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "000304",
@@ -106,7 +114,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000304_48.png",
             "skill_preview_image": "illust_skill_char000304_48.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "000306",
@@ -118,7 +127,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000306_92.png",
             "skill_preview_image": "illust_skill_char000306_92.png",
-            "release_date": "2023-08-10"
+            "release_date": "2023-08-10",
+            "gender": "female"
         },
         {
             "id": "000707",
@@ -130,7 +140,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000707_134.png",
             "skill_preview_image": "illust_skill_char000707_134.png",
-            "release_date": "2024-09-05"
+            "release_date": "2024-09-05",
+            "gender": "female"
         },
         {
             "id": "000403",
@@ -142,7 +153,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000403_70.png",
             "skill_preview_image": "illust_skill_char000403_70.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "male"
         },
         {
             "id": "000504",
@@ -154,7 +166,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000504_71.png",
             "skill_preview_image": "illust_skill_char000504_71.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "000204",
@@ -166,7 +179,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000204_15.png",
             "skill_preview_image": "illust_skill_char000204_15.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "000601",
@@ -178,7 +192,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000601_14.png",
             "skill_preview_image": "illust_skill_char000601_14.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "male"
         },
         {
             "id": "003401",
@@ -190,7 +205,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char003401_136.png",
             "skill_preview_image": "illust_skill_char003401_136.png",
-            "release_date": "2024-08-22"
+            "release_date": "2024-08-22",
+            "gender": "female"
         },
         {
             "id": "001004",
@@ -202,7 +218,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char001004_73.png",
             "skill_preview_image": "illust_skill_char001004_73.png",
-            "release_date": "2023-08-23"
+            "release_date": "2023-08-23",
+            "gender": "female"
         },
         {
             "id": "000701",
@@ -214,7 +231,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000701_20.png",
             "skill_preview_image": "illust_skill_char000701_20.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "003303",
@@ -226,7 +244,8 @@
             "dating_id": "1",
             "character_image": "illust_inven_char003303_149.png",
             "skill_preview_image": "illust_skill_char003303_149.png",
-            "release_date": "2024-12-05"
+            "release_date": "2024-12-05",
+            "gender": "female"
         },
         {
             "id": "020201",
@@ -238,7 +257,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char020201_140.png",
             "skill_preview_image": "illust_skill_char020201_140.png",
-            "release_date": "2024-10-02"
+            "release_date": "2024-10-02",
+            "gender": "female"
         },
         {
             "id": "020501",
@@ -250,7 +270,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char020501_143.png",
             "skill_preview_image": "illust_skill_char020501_143.png",
-            "release_date": "2024-10-02"
+            "release_date": "2024-10-02",
+            "gender": "female"
         },
         {
             "id": "003301",
@@ -262,7 +283,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char003301_146.png",
             "skill_preview_image": "illust_skill_char003301_146.png",
-            "release_date": "2024-09-26"
+            "release_date": "2024-09-26",
+            "gender": "female"
         },
         {
             "id": "002406",
@@ -274,7 +296,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char002406_108.png",
             "skill_preview_image": "illust_skill_char002406_108.png",
-            "release_date": "2024-01-04"
+            "release_date": "2024-01-04",
+            "gender": "female"
         },
         {
             "id": "000401",
@@ -286,7 +309,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000401_10.png",
             "skill_preview_image": "illust_skill_char000401_10.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "male"
         },
         {
             "id": "003402",
@@ -298,7 +322,8 @@
             "dating_id": "2",
             "character_image": "illust_inven_char003402_152.png",
             "skill_preview_image": "illust_skill_char003402_152.png",
-            "release_date": "2024-12-17"
+            "release_date": "2024-12-17",
+            "gender": "female"
         },
         {
             "id": "003203",
@@ -310,7 +335,8 @@
             "dating_id": "3",
             "character_image": "illust_inven_char003203_153.png",
             "skill_preview_image": "illust_skill_char003203_153.png",
-            "release_date": "2024-12-17"
+            "release_date": "2024-12-17",
+            "gender": "female"
         },
         {
             "id": "001206",
@@ -322,7 +348,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char001206_97.png",
             "skill_preview_image": "illust_skill_char001206_97.png",
-            "release_date": "2023-09-13"
+            "release_date": "2023-09-13",
+            "gender": "female"
         },
         {
             "id": "000101",
@@ -334,7 +361,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000101_1.png",
             "skill_preview_image": "illust_skill_char000101_1.png",
-            "release_date": "2023-09-13"
+            "release_date": "2023-09-13",
+            "gender": "male"
         },
         {
             "id": "001106",
@@ -346,7 +374,8 @@
             "dating_id": "4",
             "character_image": "illust_inven_char001106_117.png",
             "skill_preview_image": "illust_skill_char001106_117.png",
-            "release_date": "2024-03-14"
+            "release_date": "2024-03-14",
+            "gender": "female"
         },
         {
             "id": "003202",
@@ -358,7 +387,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char003202_133.png",
             "skill_preview_image": "illust_skill_char003202_133.png",
-            "release_date": "2024-07-18"
+            "release_date": "2024-07-18",
+            "gender": "female"
         },
         {
             "id": "003101",
@@ -370,7 +400,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char003101_122.png",
             "skill_preview_image": "illust_skill_char003101_122.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "003801",
@@ -382,7 +413,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char003801_164.png",
             "skill_preview_image": "illust_skill_char003801_164.png",
-            "release_date": "2025-03-13"
+            "release_date": "2025-03-13",
+            "gender": "female"
         },
         {
             "id": "000806",
@@ -394,7 +426,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000806_116.png",
             "skill_preview_image": "illust_skill_char000806_116.png",
-            "release_date": "2024-02-22"
+            "release_date": "2024-02-22",
+            "gender": "female"
         },
         {
             "id": "020401",
@@ -406,7 +439,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char020401_142.png",
             "skill_preview_image": "illust_skill_char020401_142.png",
-            "release_date": "2024-10-17"
+            "release_date": "2024-10-17",
+            "gender": "female"
         },
         {
             "id": "063401",
@@ -418,7 +452,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char063401_64.png",
             "skill_preview_image": "illust_skill_char063401_64.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "001207",
@@ -430,7 +465,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char001207_114.png",
             "skill_preview_image": "illust_skill_char001207_114.png",
-            "release_date": "2024-02-15"
+            "release_date": "2024-02-15",
+            "gender": "female"
         },
         {
             "id": "000502",
@@ -442,7 +478,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000502_98.png",
             "skill_preview_image": "illust_skill_char000502_98.png",
-            "release_date": "2023-09-26"
+            "release_date": "2023-09-26",
+            "gender": "female"
         },
         {
             "id": "060706",
@@ -454,7 +491,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char060706_118.png",
             "skill_preview_image": "illust_skill_char060706_118.png",
-            "release_date": "2024-03-28"
+            "release_date": "2024-03-28",
+            "gender": "female"
         },
         {
             "id": "020101",
@@ -466,7 +504,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char020101_125.png",
             "skill_preview_image": "illust_skill_char020101_125.png",
-            "release_date": "2024-05-23"
+            "release_date": "2024-05-23",
+            "gender": "female"
         },
         {
             "id": "000501",
@@ -478,7 +517,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000501_13.png",
             "skill_preview_image": "illust_skill_char000501_13.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "003802",
@@ -490,7 +530,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char003802_159.png",
             "skill_preview_image": "illust_skill_char003802_159.png",
-            "release_date": "2025-01-31"
+            "release_date": "2025-01-31",
+            "gender": "female"
         },
         {
             "id": "001201",
@@ -502,7 +543,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char001201_23.png",
             "skill_preview_image": "illust_skill_char001201_23.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "063301",
@@ -514,7 +556,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char063301_63.png",
             "skill_preview_image": "illust_skill_char063301_63.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "060602",
@@ -526,7 +569,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char060602_47.png",
             "skill_preview_image": "illust_skill_char060602_47.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "061002",
@@ -538,7 +582,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char061002_26.png",
             "skill_preview_image": "illust_skill_char061002_26.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "066801",
@@ -550,7 +595,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char066801_120.png",
             "skill_preview_image": "illust_skill_char066801_120.png",
-            "release_date": "2024-05-01"
+            "release_date": "2024-05-01",
+            "gender": "female"
         },
         {
             "id": "020801",
@@ -562,7 +608,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char020801_162.png",
             "skill_preview_image": "illust_skill_char020801_162.png",
-            "release_date": "2025-05-08"
+            "release_date": "2025-05-08",
+            "gender": "female"
         },
         {
             "id": "060501",
@@ -574,7 +621,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char060501_79.png",
             "skill_preview_image": "illust_skill_char060501_79.png",
-            "release_date": "2023-08-31"
+            "release_date": "2023-08-31",
+            "gender": "female"
         },
         {
             "id": "060801",
@@ -586,7 +634,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char060801_82.png",
             "skill_preview_image": "illust_skill_char060801_82.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "003703",
@@ -598,7 +647,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char003703_166.png",
             "skill_preview_image": "illust_skill_char003703_166.png",
-            "release_date": "2025-02-27"
+            "release_date": "2025-02-27",
+            "gender": "female"
         },
         {
             "id": "001107",
@@ -610,7 +660,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char001107_135.png",
             "skill_preview_image": "illust_skill_char001107_135.png",
-            "release_date": "2024-08-14"
+            "release_date": "2024-08-14",
+            "gender": "female"
         },
         {
             "id": "020002",
@@ -622,7 +673,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char020002_127.png",
             "skill_preview_image": "illust_skill_char020002_127.png",
-            "release_date": "2024-06-05  "
+            "release_date": "2024-06-05  ",
+            "gender": "female"
         },
         {
             "id": "003701",
@@ -634,7 +686,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char003701_165.png",
             "skill_preview_image": "illust_skill_char003701_165.png",
-            "release_date": "2025-02-13"
+            "release_date": "2025-02-13",
+            "gender": "female"
         },
         {
             "id": "060601",
@@ -646,7 +699,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char060601_80.png",
             "skill_preview_image": "illust_skill_char060601_80.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "020102",
@@ -658,7 +712,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char020102_126.png",
             "skill_preview_image": "illust_skill_char020102_126.png",
-            "release_date": "2024-05-23"
+            "release_date": "2024-05-23",
+            "gender": "female"
         },
         {
             "id": "020301",
@@ -670,7 +725,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char020301_141.png",
             "skill_preview_image": "illust_skill_char020301_141.png",
-            "release_date": "2024-10-02"
+            "release_date": "2024-10-02",
+            "gender": "female"
         },
         {
             "id": "000201",
@@ -682,7 +738,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000201_2.png",
             "skill_preview_image": "illut_skill_char000201_2.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "065802",
@@ -694,7 +751,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char065802_103.png",
             "skill_preview_image": "illust_skill_char065802_103.png",
-            "release_date": "2023-12-14"
+            "release_date": "2023-12-14",
+            "gender": "female"
         },
         {
             "id": "000406",
@@ -706,7 +764,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000406_93.png",
             "skill_preview_image": "illust_skill_char000406_93.png",
-            "release_date": "2023-08-02"
+            "release_date": "2023-08-02",
+            "gender": "male"
         },
         {
             "id": "061101",
@@ -718,7 +777,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char061101_84.png",
             "skill_preview_image": "illust_skill_char061101_84.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "060502",
@@ -730,7 +790,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char060502_46.png",
             "skill_preview_image": "illust_skill_char060502_46.png",
-            "release_date": "2023-08-31"
+            "release_date": "2023-08-31",
+            "gender": "female"
         },
         {
             "id": "061404",
@@ -742,7 +803,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char061404_172.png",
             "skill_preview_image": "illust_skill_char061404_172.png",
-            "release_date": "2025-07-03"
+            "release_date": "2025-07-03",
+            "gender": "female"
         },
         {
             "id": "061302",
@@ -754,7 +816,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char061302_104.png",
             "skill_preview_image": "illust_skill_char061302_104.png",
-            "release_date": "2023-12-07"
+            "release_date": "2023-12-07",
+            "gender": "female"
         },
         {
             "id": "060402",
@@ -766,19 +829,21 @@
             "dating_id": null,
             "character_image": "illust_inven_char060402_28.png",
             "skill_preview_image": "illust_skill_char060402_28.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "020601",
             "character": "Goblin Slayer",
             "costume": "Orcbolg",
-            "is_collab": false,
+            "is_collab": true,
             "cutscene": true,
             "standing": true,
             "dating_id": null,
             "character_image": "illust_inven_char020601_160.png",
             "skill_preview_image": "illust_skill_char020601_160.png",
-            "release_date": "2025-05-08"
+            "release_date": "2025-05-08",
+            "gender": "female"
         },
         {
             "id": "003501",
@@ -790,7 +855,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char003501_131.png",
             "skill_preview_image": "illust_skill_char003501_131.png",
-            "release_date": "2024-07-04"
+            "release_date": "2024-07-04",
+            "gender": "female"
         },
         {
             "id": "066403",
@@ -802,7 +868,8 @@
             "dating_id": "10",
             "character_image": "illust_inven_char066403_96.png",
             "skill_preview_image": "illust_skill_char066403_96.png",
-            "release_date": "2023-09-21"
+            "release_date": "2023-09-21",
+            "gender": "female"
         },
         {
             "id": "000706",
@@ -811,10 +878,11 @@
             "is_collab": false,
             "cutscene": true,
             "standing": true,
-            "dating_id": null,
+            "dating_id": "11",
             "character_image": "illust_inven_char000706_106.png",
             "skill_preview_image": "illust_skill_char000706_106.png",
-            "release_date": "2023-12-21"
+            "release_date": "2023-12-21",
+            "gender": "female"
         },
         {
             "id": "020001",
@@ -826,7 +894,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char020001_124.png",
             "skill_preview_image": "illust_skill_char020001_124.png",
-            "release_date": "2024-06-05"
+            "release_date": "2024-06-05",
+            "gender": "female"
         },
         {
             "id": "061001",
@@ -838,7 +907,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char061001_83.png",
             "skill_preview_image": "illust_skill_char061001_83.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "001001",
@@ -850,7 +920,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char001001_22.png",
             "skill_preview_image": "illust_skill_char001001_22.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "061402",
@@ -862,7 +933,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char061402_101.png",
             "skill_preview_image": "illust_skill_char061402_101.png",
-            "release_date": "2023-10-26"
+            "release_date": "2023-10-26",
+            "gender": "female"
         },
         {
             "id": "001101",
@@ -874,7 +946,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char001101_57.png",
             "skill_preview_image": "illust_skill_char001101_57.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "060701",
@@ -886,7 +959,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char060701_81.png",
             "skill_preview_image": "illust_skill_char060701_81.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "061102",
@@ -898,7 +972,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char061102_27.png",
             "skill_preview_image": "illust_skill_char061102_27.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "003403",
@@ -910,7 +985,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char003403_169.png",
             "skill_preview_image": "illust_skill_char003403_169.png",
-            "release_date": "2025-04-24"
+            "release_date": "2025-04-24",
+            "gender": "female"
         },
         {
             "id": "066402",
@@ -922,7 +998,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char066402_95.png",
             "skill_preview_image": "illust_skill_char066402_95.png",
-            "release_date": "2023-08-17"
+            "release_date": "2023-08-17",
+            "gender": "female"
         },
         {
             "id": "020701",
@@ -934,7 +1011,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char020701_161.png",
             "skill_preview_image": "illust_skill_char020701_161.png",
-            "release_date": "2025-05-08"
+            "release_date": "2025-05-08",
+            "gender": "female"
         },
         {
             "id": "065102",
@@ -946,7 +1024,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char065102_105.png",
             "skill_preview_image": "illust_skill_char065102_105.png",
-            "release_date": "2023-11-30"
+            "release_date": "2023-11-30",
+            "gender": "female"
         },
         {
             "id": "060302",
@@ -958,7 +1037,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char060302_56.png",
             "skill_preview_image": "illust_skill_char060302_56.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "male"
         },
         {
             "id": "060802",
@@ -970,7 +1050,8 @@
             "dating_id": "5",
             "character_image": "illust_inven_char060802_50.png",
             "skill_preview_image": "illust_skill_char060802_50.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "060403",
@@ -982,7 +1063,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char060403_109.png",
             "skill_preview_image": "illust_skill_char060403_109.png",
-            "release_date": "2023-12-28"
+            "release_date": "2023-12-28",
+            "gender": "female"
         },
         {
             "id": "000804",
@@ -994,7 +1076,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000804_74.png",
             "skill_preview_image": "illust_skill_char000804_74.png",
-            "release_date": "2023-09-06"
+            "release_date": "2023-09-06",
+            "gender": "female"
         },
         {
             "id": "067102",
@@ -1006,7 +1089,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char067102_112.png",
             "skill_preview_image": "illust_skill_char067102_112.png",
-            "release_date": "2024-01-25"
+            "release_date": "2024-01-25",
+            "gender": "female"
         },
         {
             "id": "066902",
@@ -1018,7 +1102,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char066902_100.png",
             "skill_preview_image": "illust_skill_char066902_100.png",
-            "release_date": "2023-09-25"
+            "release_date": "2023-09-25",
+            "gender": "female"
         },
         {
             "id": "101103",
@@ -1030,7 +1115,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char101103_150.png",
             "skill_preview_image": "illust_skill_char101103_150.png",
-            "release_date": "2024-10-31"
+            "release_date": "2024-10-31",
+            "gender": "female"
         },
         {
             "id": "101201",
@@ -1042,7 +1128,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char101201_75.png",
             "skill_preview_image": "illust_skill_char101201_75.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "male"
         },
         {
             "id": "067101",
@@ -1054,7 +1141,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char067101_113.png",
             "skill_preview_image": "illust_skill_char067101_113.png",
-            "release_date": "2024-02-29"
+            "release_date": "2024-02-29",
+            "gender": "female"
         },
         {
             "id": "100501",
@@ -1066,7 +1154,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char100501_9.png",
             "skill_preview_image": "illust_skill_char100501_9.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "male"
         },
         {
             "id": "067002",
@@ -1078,7 +1167,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char067002_99.png",
             "skill_preview_image": "illust_skill_char067002_99.png",
-            "release_date": "2023-10-11"
+            "release_date": "2023-10-11",
+            "gender": "female"
         },
         {
             "id": "067004",
@@ -1087,10 +1177,11 @@
             "is_collab": false,
             "cutscene": true,
             "standing": true,
-            "dating_id": null,
+            "dating_id": "15",
             "character_image": "illust_inven_char067004_157.png",
             "skill_preview_image": "illust_skill_char067004_157.png",
-            "release_date": "2025-01-16"
+            "release_date": "2025-01-16",
+            "gender": "female"
         },
         {
             "id": "001002",
@@ -1102,7 +1193,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char001002_102.png",
             "skill_preview_image": "illust_skill_char001002_102.png",
-            "release_date": "2023-11-23"
+            "release_date": "2023-11-23",
+            "gender": "female"
         },
         {
             "id": "101101",
@@ -1114,7 +1206,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char101101_67.png",
             "skill_preview_image": "illust_skill_char101101_67.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "061305",
@@ -1126,7 +1219,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char061305_128.png",
             "skill_preview_image": "illust_skill_char061305_128.png",
-            "release_date": "2024-06-20"
+            "release_date": "2024-06-20",
+            "gender": "female"
         },
         {
             "id": "101301",
@@ -1138,7 +1232,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char101301_61.png",
             "skill_preview_image": "illust_skill_char101301_61.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "100401",
@@ -1150,7 +1245,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char100401_8.png",
             "skill_preview_image": "illust_skill_char100401_8.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "male"
         },
         {
             "id": "066802",
@@ -1162,7 +1258,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char066802_121.png",
             "skill_preview_image": "illust_skill_char066802_121.png",
-            "release_date": "2024-04-25"
+            "release_date": "2024-04-25",
+            "gender": "female"
         },
         {
             "id": "103601",
@@ -1174,7 +1271,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char103601_35.png",
             "skill_preview_image": "illust_skill_char103601_35.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "101202",
@@ -1186,7 +1284,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char101202_18.png",
             "skill_preview_image": "illust_skill_char101202_18.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "male"
         },
         {
             "id": "103401",
@@ -1198,7 +1297,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char103401_33.png",
             "skill_preview_image": "illust_skill_char103401_33.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "003201",
@@ -1210,7 +1310,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char003201_123.png",
             "skill_preview_image": "illust_skill_char003201_123.png",
-            "release_date": "2024-05-09"
+            "release_date": "2024-05-09",
+            "gender": "female"
         },
         {
             "id": "003603",
@@ -1222,7 +1323,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char003603_175.png",
             "skill_preview_image": "illust_skill_char003603_175.png",
-            "release_date": "2025-07-17"
+            "release_date": "2025-07-17",
+            "gender": "female"
         },
         {
             "id": "101401",
@@ -1234,7 +1336,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char101401_66.png",
             "skill_preview_image": "illust_skill_char101401_66.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "103201",
@@ -1246,7 +1349,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char103201_31.png",
             "skill_preview_image": "illust_skill_char103201_31.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "male"
         },
         {
             "id": "101402",
@@ -1258,7 +1362,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char101402_16.png",
             "skill_preview_image": "illust_skill_char101402_16.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "100101",
@@ -1270,7 +1375,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char100101_4.png",
             "skill_preview_image": "illust_skill_char100101_4.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "male"
         },
         {
             "id": "067502",
@@ -1282,7 +1388,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char067502_148.png",
             "skill_preview_image": "illust_skill_char067502_148.png",
-            "release_date": "2024-11-07"
+            "release_date": "2024-11-07",
+            "gender": "female"
         },
         {
             "id": "067201",
@@ -1294,7 +1401,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char067201_129.png",
             "skill_preview_image": "illust_skill_char067201_129.png",
-            "release_date": "2024-06-20"
+            "release_date": "2024-06-20",
+            "gender": "female"
         },
         {
             "id": "100201",
@@ -1306,7 +1414,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char100201_5.png",
             "skill_preview_image": "illust_skill_char100201_5.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "male"
         },
         {
             "id": "103301",
@@ -1318,7 +1427,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char103301_32.png",
             "skill_preview_image": "illust_skill_char103301_32.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "100301",
@@ -1330,7 +1440,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char100301_6.png",
             "skill_preview_image": "illust_skill_char100301_6.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "000102",
@@ -1342,7 +1453,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000102_44.png",
             "skill_preview_image": "illust_skill_char000102_44.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "male"
         },
         {
             "id": "100601",
@@ -1354,7 +1466,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char100601_11.png",
             "skill_preview_image": "illust_skill_char100601_11.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "000206",
@@ -1366,7 +1479,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000206_91.png",
             "skill_preview_image": "illust_skill_char000206_91.png",
-            "release_date": "2023-08-02"
+            "release_date": "2023-08-02",
+            "gender": "female"
         },
         {
             "id": "000103",
@@ -1378,7 +1492,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000103_59.png",
             "skill_preview_image": "illust_skill_char000103_59.png",
-            "release_date": "2023-09-13"
+            "release_date": "2023-09-13",
+            "gender": "male"
         },
         {
             "id": "000104",
@@ -1390,7 +1505,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000104_69.png",
             "skill_preview_image": "illust_skill_char000104_69.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "male"
         },
         {
             "id": "067303",
@@ -1402,7 +1518,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char067303_154.png",
             "skill_preview_image": "illust_skill_char067303_154.png",
-            "release_date": "2024-12-17"
+            "release_date": "2024-12-17",
+            "gender": "female"
         },
         {
             "id": "100502",
@@ -1414,7 +1531,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char100502_45.png",
             "skill_preview_image": "illust_skill_char100502_45.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "male"
         },
         {
             "id": "062002",
@@ -1426,7 +1544,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char062002_51.png",
             "skill_preview_image": "illust_skill_char062002_51.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "male"
         },
         {
             "id": "101502",
@@ -1438,7 +1557,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char101502_17.png",
             "skill_preview_image": "illust_skill_char101502_17.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "male"
         },
         {
             "id": "000296",
@@ -1450,7 +1570,8 @@
             "dating_id": "7",
             "character_image": "illust_inven_char000296_174.png",
             "skill_preview_image": "illust_skill_char000296_174.png",
-            "release_date": "2025-06-16"
+            "release_date": "2025-06-16",
+            "gender": "female"
         },
         {
             "id": "067202",
@@ -1462,7 +1583,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char067202_147.png",
             "skill_preview_image": "illust_skill_char067202_147.png",
-            "release_date": "2024-12-05"
+            "release_date": "2024-12-05",
+            "gender": "female"
         },
         {
             "id": "000303",
@@ -1474,7 +1596,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000303_43.png",
             "skill_preview_image": "illust_skill_char000303_43.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "065103",
@@ -1486,7 +1609,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char065103_110.png",
             "skill_preview_image": "illust_skill_char065103_110.png",
-            "release_date": "2024-01-18"
+            "release_date": "2024-01-18",
+            "gender": "female"
         },
         {
             "id": "067301",
@@ -1498,7 +1622,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char067301_132.png",
             "skill_preview_image": "illust_skill_char067301_132.png",
-            "release_date": "2024-07-25"
+            "release_date": "2024-07-25",
+            "gender": "female"
         },
         {
             "id": "000105",
@@ -1510,7 +1635,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000105_42.png",
             "skill_preview_image": "illust_skill_char000105_42.png",
-            "release_date": "2025-02-12"
+            "release_date": "2025-02-12",
+            "gender": "male"
         },
         {
             "id": "067603",
@@ -1522,7 +1648,8 @@
             "dating_id": "6",
             "character_image": "illust_inven_char067603_171.png",
             "skill_preview_image": "illust_skill_char067603_171.png",
-            "release_date": "2025-06-19"
+            "release_date": "2025-06-19",
+            "gender": "female"
         },
         {
             "id": "103701",
@@ -1534,7 +1661,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char103701_36.png",
             "skill_preview_image": "illust_skill_char103701_36.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "100801",
@@ -1546,19 +1674,21 @@
             "dating_id": null,
             "character_image": "illust_inven_char100801_12.png",
             "skill_preview_image": "illust_skill_char100801_12.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "003601",
             "character": "Olivier",
             "costume": "Faithful Wings",
             "is_collab": false,
-            "cutscene": true,
+            "cutscene": false,
             "standing": true,
             "dating_id": null,
             "character_image": "illust_inven_char003601_138.png",
             "skill_preview_image": "illust_skill_char003601_138.png",
-            "release_date": "2025-11-20"
+            "release_date": "2025-11-20",
+            "gender": "female"
         },
         {
             "id": "066906",
@@ -1570,7 +1700,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char066906_119.png",
             "skill_preview_image": "illust_skill_char066906_119.png",
-            "release_date": "2024-03-21"
+            "release_date": "2024-03-21",
+            "gender": "female"
         },
         {
             "id": "067302",
@@ -1582,7 +1713,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char067302_139.png",
             "skill_preview_image": "illust_skill_char067302_139.png",
-            "release_date": "2024-09-12"
+            "release_date": "2024-09-12",
+            "gender": "female"
         },
         {
             "id": "101102",
@@ -1594,7 +1726,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char101102_25.png",
             "skill_preview_image": "illust_skill_char101102_25.png",
-            "release_date": "2023-07-20"
+            "release_date": "2023-07-20",
+            "gender": "female"
         },
         {
             "id": "003001",
@@ -1606,7 +1739,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char003001_77.png",
             "skill_preview_image": "illust_skill_char003001_77.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "101501",
@@ -1618,7 +1752,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char101501_65.png",
             "skill_preview_image": "illust_skill_char101501_65.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "male"
         },
         {
             "id": "067403",
@@ -1630,7 +1765,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char067403_168.png",
             "skill_preview_image": "illust_skill_char067403_168.png",
-            "release_date": "2025-03-27"
+            "release_date": "2025-03-27",
+            "gender": "female"
         },
         {
             "id": "060702",
@@ -1642,7 +1778,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char060702_49.png",
             "skill_preview_image": "illust_skill_char060702_49.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "101302",
@@ -1654,7 +1791,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char101302_19.png",
             "skill_preview_image": "illust_skill_char101302_19.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "067402",
@@ -1666,7 +1804,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char067402_151.png",
             "skill_preview_image": "illust_skill_char067402_151.png",
-            "release_date": "2024-11-21"
+            "release_date": "2024-11-21",
+            "gender": "female"
         },
         {
             "id": "067401",
@@ -1678,7 +1817,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char067401_137.png",
             "skill_preview_image": "illust_skill_char067401_137.png",
-            "release_date": "2024-08-29"
+            "release_date": "2024-08-29",
+            "gender": "female"
         },
         {
             "id": "020901",
@@ -1690,7 +1830,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char020901_163.png",
             "skill_preview_image": "illust_skill_char020901_163.png",
-            "release_date": "2025-05-22"
+            "release_date": "2025-05-22",
+            "gender": "female"
         },
         {
             "id": "003302",
@@ -1702,7 +1843,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char003302_130.png",
             "skill_preview_image": "illust_skill_char003302_130.png",
-            "release_date": "2024-06-27"
+            "release_date": "2024-06-27",
+            "gender": "female"
         },
         {
             "id": "062001",
@@ -1714,7 +1856,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char062001_68.png",
             "skill_preview_image": "illust_skill_char062001_68.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "male"
         },
         {
             "id": "103501",
@@ -1726,7 +1869,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char103501_34.png",
             "skill_preview_image": "illust_skill_char103501_34.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "067503",
@@ -1738,7 +1882,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char067503_155.png",
             "skill_preview_image": "illust_skill_char067503_155.png",
-            "release_date": "2025-01-02"
+            "release_date": "2025-01-02",
+            "gender": "female"
         },
         {
             "id": "066803",
@@ -1750,7 +1895,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char066803_173.png",
             "skill_preview_image": "illust_skill_char066803_173.png",
-            "release_date": "2025-06-26"
+            "release_date": "2025-06-26",
+            "gender": "female"
         },
         {
             "id": "101601",
@@ -1762,7 +1908,21 @@
             "dating_id": null,
             "character_image": "illust_inven_char101601_78.png",
             "skill_preview_image": "illust_skill_char101601_78.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
+        },
+        {
+            "id": "060401",
+            "character": "Celia",
+            "costume": "The Curse (NPC)",
+            "is_collab": false,
+            "cutscene": false,
+            "standing": true,
+            "dating_id": null,
+            "character_image": "illust_inven_char101601_78.png",
+            "skill_preview_image": "illust_skill_char101601_78.png",
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "063001",
@@ -1774,7 +1934,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char063001_62.png",
             "skill_preview_image": "illust_skill_char063001_62.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "female"
         },
         {
             "id": "060301",
@@ -1786,7 +1947,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char060301_60.png",
             "skill_preview_image": "illust_skill_char060301_60.png",
-            "release_date": "2023-06-22"
+            "release_date": "2023-06-22",
+            "gender": "male"
         },
         {
             "id": "067003",
@@ -1798,7 +1960,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char067003_111.png",
             "skill_preview_image": "illust_skill_char067003_111.png",
-            "release_date": "2024-02-01"
+            "release_date": "2024-02-01",
+            "gender": "female"
         },
         {
             "id": "000604",
@@ -1810,7 +1973,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000604_72.png",
             "skill_preview_image": "illust_skill_char000604_72.png",
-            "release_date": "2023-11-16"
+            "release_date": "2023-11-16",
+            "gender": "male"
         },
         {
             "id": "000402",
@@ -1822,7 +1986,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000402_24.png",
             "skill_preview_image": "illust_skill_char000402_24.png",
-            "release_date": "2023-06-05"
+            "release_date": "2023-06-05",
+            "gender": "male"
         },
         {
             "id": "066401",
@@ -1834,7 +1999,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char066401_94.png",
             "skill_preview_image": "illust_skill_char066401_94.png",
-            "release_date": "2023-10-11"
+            "release_date": "2023-10-11",
+            "gender": "female"
         },
         {
             "id": "067601",
@@ -1846,7 +2012,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char067601_167.png",
             "skill_preview_image": "illust_skill_char067601_167.png",
-            "release_date": "2025-04-10"
+            "release_date": "2025-04-10",
+            "gender": "female"
         },
         {
             "id": "003602",
@@ -1858,7 +2025,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char003602_176.png",
             "skill_preview_image": "illust_skill_char003602_176.png",
-            "release_date": "2025-07-31"
+            "release_date": "2025-07-31",
+            "gender": "female"
         },
         {
             "id": "001006",
@@ -1870,7 +2038,8 @@
             "dating_id": "8",
             "character_image": "illust_inven_char001006_177.png",
             "skill_preview_image": "illust_skill_char001006_177.png",
-            "release_date": "2025-08-14"
+            "release_date": "2025-08-14",
+            "gender": "female"
         },
         {
             "id": "001197",
@@ -1882,7 +2051,8 @@
             "dating_id": "9",
             "character_image": "illust_inven_char001197_179.png",
             "skill_preview_image": "illust_skill_char001197_179.png",
-            "release_date": "2025-08-14"
+            "release_date": "2025-08-14",
+            "gender": "female"
         },
         {
             "id": "000807",
@@ -1894,7 +2064,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char000807_178.png",
             "skill_preview_image": "illust_skill_char000807_178.png",
-            "release_date": "2025-08-28"
+            "release_date": "2025-08-28",
+            "gender": "female"
         },
         {
             "id": "004001",
@@ -1905,8 +2076,9 @@
             "standing": true,
             "dating_id": null,
             "character_image": "illust_inven_char004001_181.png",
-            "skill_preview_image": "illust_skill_char004001_181.png",
-            "release_date": "2025-09-25"
+            "skill_preview_image": null,
+            "release_date": "2025-09-25",
+            "gender": "female"
         },
         {
             "id": "004101",
@@ -1917,8 +2089,9 @@
             "standing": true,
             "dating_id": null,
             "character_image": "illust_inven_char004101_182.png",
-            "skill_preview_image": "illust_skill_char004101_182.png",
-            "release_date": "2025-09-25"
+            "skill_preview_image": null,
+            "release_date": "2025-09-25",
+            "gender": "female"
         },
         {
             "id": "003901",
@@ -1930,55 +2103,8 @@
             "dating_id": null,
             "character_image": "illust_inven_char003901_180.png",
             "skill_preview_image": "illust_skill_char003901_180.png",
-            "release_date": "2025-09-11"
-        },
-        {
-            "id": "003902",
-            "character": "Sonya",
-            "costume": "Little Pumpkin Girl",
-            "is_collab": false,
-            "cutscene": true,
-            "standing": true,
-            "dating_id": null,
-            "character_image": "illust_inven_char003902_184.png",
-            "skill_preview_image": "illust_skill_char003902_184.png",
-            "release_date": "2025-10-23"
-        },
-        {
-            "id": "067103",
-            "character": "Granhildr",
-            "costume": "Boo Ghost",
-            "is_collab": false,
-            "cutscene": true,
-            "standing": true,
-            "dating_id": null,
-            "character_image": "illust_inven_char067103_183.png",
-            "skill_preview_image": "illust_skill_char067103_183.png",
-            "release_date": "2025-10-23"
-        },
-        {
-            "id": "004002",
-            "character": "Darian",
-            "costume": "Bittersweet Bunny",
-            "is_collab": false,
-            "cutscene": true,
-            "standing": true,
-            "dating_id": null,
-            "character_image": "illust_inven_char004002_185.png",
-            "skill_preview_image": "illust_skill_char004002_185.png",
-            "release_date": "2025-12-16"
-        },
-        {
-            "id": "061103",
-            "character": "Eleaneer",
-            "costume": "Shadow Bunny",
-            "is_collab": false,
-            "cutscene": true,
-            "standing": true,
-            "dating_id": null,
-            "character_image": "illust_inven_char061103_187.png",
-            "skill_preview_image": "illust_skill_char061103_187.png",
-            "release_date": "2025-12-16"
+            "release_date": "2025-09-11",
+            "gender": "female"
         },
         {
             "id": "067604",
@@ -1990,7 +2116,164 @@
             "dating_id": null,
             "character_image": "illust_inven_char067604_189.png",
             "skill_preview_image": "illust_skill_char067604_189.png",
-            "release_date": "2025-12-16"
+            "release_date": "2025-12-16",
+            "gender": "female"
+        },
+        {
+            "id": "002403",
+            "character": "Diana",
+            "costume": "Magical Innovator",
+            "is_collab": false,
+            "cutscene": true,
+            "standing": true,
+            "dating_id": null,
+            "character_image": "illust_inven_char002403_195.png",
+            "skill_preview_image": "illust_skill_char002403.png",
+            "release_date": "2026-02-12",
+            "gender": "female"
+        },
+        {
+            "id": "003604",
+            "character": "Olivier",
+            "costume": "Retired Legend",
+            "is_collab": false,
+            "cutscene": true,
+            "standing": true,
+            "dating_id": "16",
+            "character_image": "illust_inven_char003604_196.png",
+            "skill_preview_image": "illust_skill_char003604.png",
+            "release_date": "2026-02-26",
+            "gender": "female"
+        },
+        {
+            "id": "003702",
+            "character": "Blade",
+            "costume": "Onsen Swordfighter",
+            "is_collab": false,
+            "cutscene": true,
+            "standing": true,
+            "dating_id": null,
+            "character_image": "illust_inven_char003702_158.png",
+            "skill_preview_image": "illust_skill_char003702.png",
+            "release_date": "2026-01-29",
+            "gender": "female"
+        },
+        {
+            "id": "003902",
+            "character": "Sonya",
+            "costume": "Little Pumpkin Girl",
+            "is_collab": false,
+            "cutscene": true,
+            "standing": true,
+            "dating_id": null,
+            "character_image": "illust_inven_char003902_184.png",
+            "skill_preview_image": "illust_skill_char003902.png",
+            "release_date": "2025-10-23",
+            "gender": "female"
+        },
+        {
+            "id": "004002",
+            "character": "Darian",
+            "costume": "Bittersweet Bunny",
+            "is_collab": false,
+            "cutscene": true,
+            "standing": true,
+            "dating_id": null,
+            "character_image": "illust_inven_char004002_185.png",
+            "skill_preview_image": "illust_skill_char004002.png",
+            "release_date": "2025-12-16",
+            "gender": "female"
+        },
+        {
+            "id": "004102",
+            "character": "Tyr",
+            "costume": "Innocent Bunny",
+            "is_collab": false,
+            "cutscene": true,
+            "standing": true,
+            "dating_id": "13",
+            "character_image": "illust_inven_char004102_186.png",
+            "skill_preview_image": "illust_skill_char004102.png",
+            "release_date": "2025-09-25",
+            "gender": "female"
+        },
+        {
+            "id": "004201",
+            "character": "Palette",
+            "costume": "Shattered Dream",
+            "is_collab": false,
+            "cutscene": true,
+            "standing": true,
+            "dating_id": null,
+            "character_image": "illust_inven_char004201_191.png",
+            "skill_preview_image": "illust_skill_char004201.png",
+            "release_date": "2026-03-12",
+            "gender": "female"
+        },
+        {
+            "id": "061103",
+            "character": "Eleaneer",
+            "costume": "Shadow Bunny",
+            "is_collab": false,
+            "cutscene": true,
+            "standing": true,
+            "dating_id": null,
+            "character_image": "illust_inven_char061103_187.png",
+            "skill_preview_image": "illust_skill_char061103.png",
+            "release_date": "2025-12-16",
+            "gender": "female"
+        },
+        {
+            "id": "067103",
+            "character": "Granhildr",
+            "costume": "Boo Ghost",
+            "is_collab": false,
+            "cutscene": true,
+            "standing": true,
+            "dating_id": null,
+            "character_image": "illust_inven_char067103_183.png",
+            "skill_preview_image": "illust_skill_char067103.png",
+            "release_date": "2025-10-23",
+            "gender": "female"
+        },
+        {
+            "id": "067701",
+            "character": "Granadair",
+            "costume": "Shrine Maiden of Purification",
+            "is_collab": false,
+            "cutscene": true,
+            "standing": true,
+            "dating_id": null,
+            "character_image": "illust_inven_char067701_193.png",
+            "skill_preview_image": "illust_skill_char067701.png",
+            "release_date": "2026-01-15",
+            "gender": "female"
+        },
+        {
+            "id": "067702",
+            "character": "Granadair",
+            "costume": "Queen of Gluttis",
+            "is_collab": false,
+            "cutscene": true,
+            "standing": true,
+            "dating_id": null,
+            "character_image": "illust_inven_char067702_194.png",
+            "skill_preview_image": "illust_skill_char067702.png",
+            "release_date": "2026-01-15",
+            "gender": "female"
+        },
+        {
+            "id": "003892",
+            "character": "Liberta",
+            "costume": "Hedonist",
+            "is_collab": false,
+            "cutscene": true,
+            "standing": true,
+            "dating_id": "14",
+            "character_image": "illust_inven_char003892_190.png",
+            "skill_preview_image": "illust_skill_char003892_190.png",
+            "release_date": "2026-02-08",
+            "gender": "female"
         },
         {
             "id": "061492",
@@ -2002,7 +2285,34 @@
             "dating_id": "12",
             "character_image": "illust_inven_char061492_188.png",
             "skill_preview_image": "illust_skill_char061492_188.png",
-            "release_date": "2025-12-16"
+            "release_date": "2025-12-16",
+            "gender": "female"
+        },
+        {
+            "id": "067801",
+            "character": "Mamonir",
+            "costume": "Night of Death",
+            "is_collab": false,
+            "cutscene": true,
+            "standing": true,
+            "dating_id": null,
+            "character_image": "illust_inven_char067801_192.png",
+            "skill_preview_image": "illust_skill_char067801_192.png",
+            "release_date": "2026-03-26",
+            "gender": "female"
+        },
+        {
+            "id": "061092",
+            "character": "Helena",
+            "costume": "Rising Star",
+            "is_collab": false,
+            "cutscene": true,
+            "standing": true,
+            "dating_id": null,
+            "character_image": "illust_inven_char061092_203.png",
+            "skill_preview_image": "illust_skill_char061092_203.png",
+            "release_date": "2026-03-26",
+            "gender": "female"
         }
     ],
     "dating": {
@@ -2016,6 +2326,11 @@
         "8": "001006",
         "9": "001197",
         "10": "066403",
-        "12": "061492"
+        "11": "000706",
+        "12": "061492",
+        "13": "004102",
+        "14": "003892",
+        "15": "067004",
+        "16": "003604"
     }
 }
