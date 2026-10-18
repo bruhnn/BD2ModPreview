@@ -69,6 +69,7 @@ async function loadRemoteCharacters() {
     try {
         const response = await fetch(CHARACTERS_URL, {
             method: "GET",
+            cache: "no-store",
         });
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -76,11 +77,8 @@ async function loadRemoteCharacters() {
 
         const data = await response.json() as CharactersJson;
 
-        const existingIds = new Set(characters.value.map(c => c.id));
-        const newCharacters = data.characters.filter(c => !existingIds.has(c.id));
-
-        characters.value = [...characters.value, ...newCharacters];
-        datingMap.value = { ...datingMap.value, ...data.dating };
+        characters.value = data.characters;
+        datingMap.value = data.dating;
 
         console.log("Remote characters loaded:", data.characters.length);
 
