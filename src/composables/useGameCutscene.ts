@@ -195,11 +195,7 @@ export function useGameCutscene() {
     // Replay clip boundaries when seeking, using the game's mixer settings.
     while (eventIndex < events.length && events[eventIndex].time <= time) {
       const event = events[eventIndex++];
-      for (const [node, state] of states) {
-        state.update(event.time - animationTime);
-        state.apply(skeletons.get(node));
-      }
-      animationTime = event.time;
+      advanceAnimations(event.time);
       const track = scene.tracks[event.track];
       const state = states.get(track.node);
       const skeleton = skeletons.get(track.node);
@@ -210,11 +206,13 @@ export function useGameCutscene() {
         const duration = settings?.customDuration
           ? settings.useBlendDuration ? Math.max(clip.blendIn ?? 0, clip.easeIn ?? 0) : settings.mixDuration
           : null;
+        let entry;
         if (!state.getCurrent(index) && duration !== null && duration > 0) {
           state.setEmptyAnimation(index, 0);
-          state.apply(skeleton);
+          entry = state.addAnimation(index, clip.name, clip.loop ?? false, 0);
+        } else {
+          entry = state.setAnimation(index, clip.name, clip.loop ?? false);
         }
-        const entry = state.setAnimation(index, clip.name, clip.loop ?? false);
         entry.trackTime = clip.clipIn * clip.speed;
         entry.timeScale = clip.speed;
         if (duration !== null) entry.mixDuration = duration;
@@ -235,13 +233,22 @@ export function useGameCutscene() {
           else state.setEmptyAnimation(index, duration);
         }
       }
+      state.update(0);
       state.apply(skeleton);
     }
-    for (const [node, state] of states) {
-      state.update(time - animationTime);
-      state.apply(skeletons.get(node));
+    advanceAnimations(time);
+  }
+
+  function advanceAnimations(target: number) {
+    // Apply intermediate poses so seeking preserves Spine's mixing state.
+    while (animationTime < target) {
+      const next = Math.min(target, animationTime + 1 / 60);
+      for (const [node, state] of states) {
+        state.update(next - animationTime);
+        state.apply(skeletons.get(node));
+      }
+      animationTime = next;
     }
-    animationTime = time;
   }
 
   function sample(curve: Curve) {
@@ -264,6 +271,13 @@ export function useGameCutscene() {
     applyAnimations();
     const nodes = scene.nodes.map(node => ({ ...node, position: { ...node.position }, scale: { ...node.scale },
       anchorMin: { ...node.anchorMin }, anchorMax: { ...node.anchorMax }, quaternion: { ...(node.quaternion ?? { x: 0, y: 0, z: 0, w: 1 }) }, euler: { ...(node.euler ?? { x: 0, y: 0, z: node.rotation ?? 0 }) }, groupAlpha: node.groupAlpha ?? 1, rotated: false, matrix: new spine.Matrix4(), localZ: null as number | null, localX: null as number | null, localY: null as number | null, pivot: { ...node.pivot }, size: { ...node.size }, color: { ...node.color } }));
+    // The game resets the loaded cutscene before playback.
+    for (const node of nodes) {
+      if (node.parent >= 0) continue;
+      node.position = { x: 0, y: 0 };
+      node.depth = 0;
+      node.scale = { x: 1, y: 1, z: 1 };
+    }
     for (const curve of scene.curves) {
       const node = nodes.find(node => node.path === curve.path);
       if (!node || (curve.start !== undefined && time < curve.start) || (curve.end !== undefined && time > curve.end)) continue;
@@ -289,7 +303,7 @@ export function useGameCutscene() {
     }
     for (const activation of scene.activations ?? []) {
       const node = nodes[activation.node];
-      const visible = activation.clips.some(clip => time >= clip.start && time <= clip.start + clip.duration);
+      const visible = activation.clips.some(clip => time >= clip.start && time < clip.start + clip.duration);
       node.active = visible;
     }
     for (const node of nodes) {

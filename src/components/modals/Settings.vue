@@ -23,8 +23,7 @@ const { logMessage } = useLogger()
 const alwaysOnTop = ref(false)
 
 const languages: Record<string, string> = {
-  en: 'English', pt: 'Português', es: 'Español', fr: 'Français',
-  de: 'Deutsch', zh: '中文', ja: '日本語', ko: '한국어', ru: 'Русский',
+  en_US: 'English', zh_CN: '简体中文', ja_JP: '日本語', ko_KR: '한국어',
 }
 
 async function changeAlwaysOnTop(event: Event) {

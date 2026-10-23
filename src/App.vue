@@ -106,7 +106,6 @@ async function loadFromCli(): Promise<void> {
     }
 
 
-    // [TODO] use the same language code as the bd2mod manager
     if (langArg) {
       uiStore.language = langArg
     }

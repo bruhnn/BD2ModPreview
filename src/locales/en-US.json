@@ -1,0 +1,278 @@
+{
+    "whatsNew": {
+        "characters": "Updated character data and improved drag-and-drop support.",
+        "interface": "Redesigned settings, character list, history, and logs.",
+        "layers": "Choose skins and show or hide individual layers.",
+        "modManager": "Enable or disable mods from the preview when connected to BD2ModManager.",
+        "dating": "Added dating interactions for supporters, including clicking, dragging, and holding.",
+        "datingCache": "Dating interaction data is cached for up to seven days, so verified supporters can keep using it offline while the cache is valid.",
+        "cutscenes": "Play supported cutscenes using timing from the game.",
+        "title": "What's New",
+        "version": "Version {version}",
+        "current": "Current",
+        "feedback": "Have feedback or ideas? Share them on GitHub.",
+        "issue": "Open an issue on GitHub",
+        "done": "Got it!",
+        "grid": "Preview multiple mods side by side. Drag to rearrange them and resize each preview.",
+        "controls": "Control all previews together or choose animations separately.",
+        "sequences": "Create and save animation sequences.",
+        "folders": "Open multiple folders at once and reopen previews from recent folders.",
+        "themes": "Added themes and translated character names."
+    },
+    "preview": {
+        "datingInteractions": "Dating Interactions (Supporter Only)",
+        "showInteractionAreas": "Show interaction areas",
+        "gameCutscene": "In-game cutscene (Experimental)",
+        "cutsceneIncomplete": "Some cutscene elements are missing.",
+        "datingTool": "Tool {id}",
+        "noTool": "No tool",
+        "datingGauge": "Interaction gauge",
+        "managerDisconnected": "Open BD2ModManager to manage this mod",
+        "managerUnknown": "This folder is not in ModManager's mod list",
+        "managerModErrors": "This mod has errors and cannot be changed",
+        "managerEnable": "Enable mod in BD2ModManager",
+        "darkTheme": "Dark {number}",
+        "lightTheme": "Light {number}",
+        "fullPath": "Full path",
+        "newPreview": "New preview",
+        "originalTitle": "[Original] {character} - {costume}",
+        "loading": "Loading preview...",
+        "loadFailed": "Could not load this preview.",
+        "missingAssets": "The folder is missing a skeleton or atlas.",
+        "unsupportedSkeleton": "Unsupported skeleton file format.",
+        "chooseFolder": "Choose a folder to preview",
+        "openFolder": "Open folder",
+        "recentFolders": "Recent folders",
+        "fit": "Fit character",
+        "center": "Center character",
+        "resetCamera": "Reset camera",
+        "skin": "Skin",
+        "none": "none",
+        "background": "Background",
+        "selectColor": "Select color",
+        "selectImage": "Select image",
+        "chooseImage": "Choose image",
+        "modBackgrounds": "Mod backgrounds",
+        "noBackgrounds": "No images in textures/",
+        "backgroundsFailed": "Could not load mod backgrounds.",
+        "resetBackground": "Reset background",
+        "removeImage": "Remove image",
+        "color": "Color",
+        "createSequence": "Create sequence",
+        "editSequence": "Edit sequence",
+        "newSequence": "New sequence",
+        "saveSequence": "Save sequence",
+        "name": "Name",
+        "animation": "Animation",
+        "startAfter": "Start after",
+        "playFor": "Play for",
+        "auto": "Auto",
+        "addAnimation": "Add animation",
+        "addStep": "Add step",
+        "step": "Step {number}",
+        "sequenceHelp": "Steps play in order. Animations in a step play together. Start after is relative to the step. Auto uses the original duration. Loop repeats an animation for its selected duration.",
+        "restart": "Restart preview",
+        "play": "Play",
+        "pause": "Pause",
+        "playPreview": "Play preview",
+        "pausePreview": "Pause preview",
+        "restartAll": "Restart all previews",
+        "playAll": "Play all previews",
+        "pauseAll": "Pause all previews",
+        "loopAll": "Loop all previews",
+        "loop": "Loop animation",
+        "noAnimations": "No animations",
+        "noAnimation": "No animation",
+        "global": "Global ({animation})",
+        "layers": "Layers",
+        "showAllLayers": "Show all",
+        "hideAllLayers": "Hide all",
+        "resetLayers": "Reset",
+        "searchLayers": "Search layers...",
+        "noLayers": "No layers found.",
+        "settings": "Settings",
+        "characters": "Characters",
+        "application": "Application",
+        "theme": "Theme",
+        "rendering": "Rendering",
+        "onTopHelp": "Keep the preview above other windows.",
+        "alphaHelp": "Use premultiplied alpha for textures.",
+        "help": "Help",
+        "close": "Close",
+        "options": "Preview options",
+        "addRight": "Add preview to the right",
+        "addBottom": "Add preview below",
+        "rearrange": "Rearrange preview",
+        "dragMove": "Drag between previews or rows to move",
+        "closePreview": "Close preview",
+        "progress": "Animation progress",
+        "previewAnimation": "Preview animation",
+        "previewLayers": "Layers for this preview",
+        "closeLayers": "Close layers",
+        "searchLayersLabel": "Search layers",
+        "closeSettings": "Close settings",
+        "closeEditor": "Close sequence editor",
+        "sequenceSteps": "Sequence steps",
+        "loopDuration": "Loop for the selected duration",
+        "resize": "Drag to resize.",
+        "resizeCharacters": "Resize Characters",
+        "edit": "Edit {name}",
+        "delete": "Delete {name}",
+        "animationNumber": "Animation {number}",
+        "closeStep": "Close step {number}",
+        "reorderAnimation": "Reorder animation {number}",
+        "loopNumber": "Loop animation {number}",
+        "delayNumber": "Start after for animation {number}",
+        "durationNumber": "Play for animation {number}",
+        "removeAnimation": "Remove animation {number}"
+    },
+    "common": {
+        "viewLogs": "View Logs",
+        "openFolder": "Open Folder",
+        "retry": "Retry",
+        "goBack": "Go Back",
+        "close": "Close"
+    },
+    "app": {
+        "backToHome": "Back",
+        "toggleControls": "Controls"
+    },
+    "homePage": {
+        "title": "Mod Preview",
+        "subtitle": "Drag & Drop or Choose a Folder",
+        "recentFoldersLabel": "Recent Folders",
+        "recentFoldersEmpty": "No recent folders found.",
+        "openFolderButton": "Browse Folder"
+    },
+    "characterList": {
+        "searchPlaceholder": "Search characters...",
+        "noCharactersFound": "No characters found.",
+        "loadingCharacters": "Loading characters...",
+        "tabs": {
+            "standing": "Standing",
+            "cutscene": "Cutscene",
+            "dating": "Dating"
+        },
+        "sort": {
+            "newest": "Newest",
+            "oldest": "Oldest",
+            "a_z": "A-Z",
+            "z_a": "Z-A"
+        },
+        "loadingCharacter": "Loading character...",
+        "information": "Character assets are loaded from GitHub repository"
+    },
+    "error": {
+        "title": "Something went wrong",
+        "message": "An unexpected error occurred. Please try again.",
+        "noInternet": {
+            "title": "No Internet Connection",
+            "message": "Character assets cannot be loaded without an internet connection.",
+            "checking": "Checking..."
+        }
+    },
+    "controls": {
+        "title": "Controls",
+        "noSource": "No source!",
+        "links": {
+            "suggestFeature": "Suggest a Feature",
+            "reportIssue": "Report an Issue"
+        },
+        "render": {
+            "title": "Render",
+            "premultipliedAlpha": "Premultiplied Alpha",
+            "backgroundColor": "Background Color",
+            "backgroundImage": "Background Image",
+            "chooseImage": "Choose Image"
+        },
+        "animations": {
+            "title": "Animations",
+            "available": "{count} available",
+            "loopAnimation": "Loop Animation",
+            "noAnimations": "No animations available"
+        },
+        "actions": {
+            "title": "Actions",
+            "viewHistory": "View History",
+            "openLogs": "Open Logs"
+        },
+        "appSettings": {
+            "title": "App Settings",
+            "language": "Language",
+            "alwaysOnTop": "Always on Top"
+        },
+        "version": "BD2ModPreview v{version}"
+    },
+    "historyDialog": {
+        "title": "History ({count})",
+        "noHistory": "No recent history",
+        "unknownCharacter": "Unknown",
+        "unknownModType": "Unknown",
+        "sourceTypes": {
+            "github": "Github",
+            "folder": "Folder"
+        },
+        "modTypes": {
+            "standing": "Standing",
+            "cutscene": "Cutscene",
+            "npc": "NPC",
+            "scene": "Scene",
+            "dating": "Dating"
+        },
+        "actions": {
+            "remove": "Remove from history",
+            "loadAnimation": "Load Animation"
+        }
+    },
+    "errors": {
+        "DirectoryNotFound": {
+            "title": "Directory Not Found",
+            "message": "The selected folder was not found."
+        },
+        "MissingSkeletonOrJson": {
+            "title": "Missing Skeleton File",
+            "message": "The selected folder is missing the required skeleton .json or .skel file.",
+            "actionLabel": "Download Original Skeleton from Github"
+        },
+        "AssetLoadingError": {
+            "title": "Asset Loading Error",
+            "message": "Failed to load Spine assets."
+        },
+        "AssetNotFoundError": {
+            "title": "Asset Not Found",
+            "message": "The asset was not found."
+        },
+        "AssetTooManyRequestsError": {
+            "title": "Too Many Requests",
+            "message": "You have made too many requests. Please try again later."
+        },
+        "InitializationError": {
+            "title": "Initialization Error",
+            "message": "Failed to initialize the Spine player."
+        },
+        "PlayerError": {
+            "title": "Player Error",
+            "message": "An error occurred in the Spine player."
+        },
+        "SkeletonError": {
+            "title": "Skeleton Error",
+            "message": "Failed to load skeleton (.skel or .json). Skeleton might be corrupted or there is a mismatch between atlas and skeleton files."
+        },
+        "SkeletonNotFound": {
+            "title": "Skeleton Not Found",
+            "message": "Oops! The skeleton asset is missing from the GitHub repository."
+        },
+        "CharacterIdNotFound": {
+            "title": "Character ID Not Found",
+            "message": "Could not resolve character ID from the folder."
+        },
+        "DirectoryInvalidError": {
+            "title": "Invalid Directory",
+            "message": "The selected directory is invalid or does not contain Spine assets."
+        },
+        "UnknownError": {
+            "title": "An unexpected error occurred",
+            "message": "An unexpected error occurred. More information in the logs."
+        }
+    }
+}

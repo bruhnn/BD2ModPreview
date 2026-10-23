@@ -10,7 +10,7 @@ export const useUIStore = defineStore('ui', () => {
   const { locale } = useI18n()
 
   const theme = useLocalStorage('APP_THEME', 'dark-3')
-  const language = useLocalStorage<string>('APP_LANGUAGE', 'en')
+  const language = useLocalStorage<string>('APP_LANGUAGE', 'en_US')
 
   const machineId = ref<string | null>(null)
 
@@ -64,7 +64,13 @@ export const useUIStore = defineStore('ui', () => {
   }
 
   watch(theme, value => { document.documentElement.dataset.theme = value; }, { immediate: true });
-  watch(language, value => { locale.value = value; }, { immediate: true });
+  watch(language, value => {
+    // Keep saved languages and older command-line arguments working.
+    const previousCodes: Record<string, string> = { en: 'en_US', zh: 'zh_CN', ja: 'ja_JP', ko: 'ko_KR' }
+    const code = previousCodes[value] ?? value.replace('-', '_')
+    if (value !== code) language.value = code
+    locale.value = code
+  }, { immediate: true });
 
   return {
     machineId,

@@ -38,7 +38,7 @@ export const useCharactersStore = defineStore("characters", () => {
 
 	function getLocalizedName(names: LocalizedName) {
 		const language: Record<string, keyof LocalizedName> = {
-			en: "en", zh: "cn", ja: "jp", ko: "kr", "zh-TW": "tw",
+			en_US: "en", zh_CN: "cn", ja_JP: "jp", ko_KR: "kr", zh_TW: "tw",
 		}
 		return names[language[locale.value] ?? "en"] || names.en
 	}

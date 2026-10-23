@@ -1,299 +1,29 @@
 import { createI18n } from 'vue-i18n'
+import en_US from './locales/en-US.json'
 
 // [TODO] improve the keys, remove preview, etc.
 const messages = {
-    en: {
+    en_US: en_US,
+    zh_CN: {
         whatsNew: {
-            "modManager": "Enable or disable mods directly from the preview when connected to BD2ModManager.",
-            "dating": "Supporters can use dating interactions on supported characters, with clickable areas, dragging, holding and tools.",
-            "datingCache": "Dating interaction data is cached for up to seven days, so verified supporters can keep using it offline while the cache is valid.",
-            "cutscenes": "Play supported cutscenes using animation timing extracted from the game.",
-            "title": "What's New",
-            "version": "Version {version}",
-            "current": "Current",
-            "feedback": "Have feedback or ideas? Share them on GitHub.",
-            "issue": "Open an issue on GitHub",
-            "done": "Got it!",
-            "grid": "Compare multiple previews in a grid. Drag to rearrange them and resize the panels.",
-            "controls": "Choose animations, layers, skins and backgrounds for each preview.",
-            "sequences": "Create animation sequences with overlapping animations, delays and durations. Sequences are saved for each source.",
-            "folders": "Open multiple folders at once and reopen previews from recent folders.",
-            "themes": "Choose a theme in Settings."
-        },
-        preview: {
-            datingInteractions: "Dating Interactions (Supporter Only)",
-            showInteractionAreas: "Show interaction areas",
-      gameCutscene: "In-game cutscene (preview)",
-      cutsceneIncomplete: "Some cutscene elements are missing.",
-            datingTool: "Tool {id}",
-            noTool: "No tool",
-            datingGauge: "Interaction gauge",
-            managerDisconnected: "Open BD2ModManager to manage this mod",
-            managerUnknown: "This folder is not in ModManager's mod list",
-            managerModErrors: "This mod has errors and cannot be changed",
-            managerEnable: "Enable mod in BD2ModManager",
-            "darkTheme": "Dark {number}",
-            "lightTheme": "Light {number}",
-            "fullPath": "Full path",
-            "newPreview": "New preview",
-            "originalTitle": "[Original] {character} - {costume}",
-            "loading": "Loading preview...",
-            "loadFailed": "Could not load this preview.",
-            "missingAssets": "The folder is missing a skeleton or atlas.",
-            "unsupportedSkeleton": "Unsupported skeleton file format.",
-            "chooseFolder": "Choose a folder to preview",
-            "openFolder": "Open folder",
-            "recentFolders": "Recent folders",
-            "fit": "Fit character",
-            "center": "Center character",
-            "resetCamera": "Reset camera",
-            "skin": "Skin",
-            "none": "none",
-            "background": "Background",
-            "selectColor": "Select color",
-            "selectImage": "Select image",
-            "chooseImage": "Choose image",
-            "modBackgrounds": "Mod backgrounds",
-            "noBackgrounds": "No images in textures/.",
-            "backgroundsFailed": "Could not load mod backgrounds.",
-            "resetBackground": "Reset background",
-            "removeImage": "Remove image",
-            "color": "Color",
-            "createSequence": "Create sequence",
-            "editSequence": "Edit sequence",
-            "newSequence": "New sequence",
-            "saveSequence": "Save sequence",
-            "name": "Name",
-            "animation": "Animation",
-            "startAfter": "Start after",
-            "playFor": "Play for",
-            "auto": "Auto",
-            "addAnimation": "Add animation",
-            "addStep": "Add step",
-            "step": "Step {number}",
-            "sequenceHelp": "Steps play in order. Animations in a step play together. Start after is relative to the step. Auto uses the original duration. Loop repeats an animation for its selected duration.",
-            "restart": "Restart preview",
-            "play": "Play",
-            "pause": "Pause",
-            "playPreview": "Play preview",
-            "pausePreview": "Pause preview",
-            "restartAll": "Restart all previews",
-            "playAll": "Play all previews",
-            "pauseAll": "Pause all previews",
-            "loopAll": "Loop all previews",
-            "loop": "Loop animation",
-            "noAnimations": "No animations",
-            "noAnimation": "No animation",
-            "global": "Global ({animation})",
-            "layers": "Layers",
-            "showAllLayers": "Show all",
-            "hideAllLayers": "Hide all",
-            "resetLayers": "Reset",
-            "searchLayers": "Search layers...",
-            "noLayers": "No layers found.",
-            "settings": "Settings",
-            "characters": "Characters",
-            "application": "Application",
-            "theme": "Theme",
-            "rendering": "Rendering",
-            "onTopHelp": "Keep the preview above other windows.",
-            "alphaHelp": "Use premultiplied alpha for textures.",
-            "help": "Help",
-            "close": "Close",
-            "options": "Preview options",
-            "addRight": "Add preview to the right",
-            "addBottom": "Add preview below",
-            "rearrange": "Rearrange preview",
-            "dragMove": "Drag between previews or rows to move",
-            "closePreview": "Close preview",
-            "progress": "Animation progress",
-            "previewAnimation": "Preview animation",
-            "previewLayers": "Layers for this preview",
-            "closeLayers": "Close layers",
-            "searchLayersLabel": "Search layers",
-            "closeSettings": "Close settings",
-            "closeEditor": "Close sequence editor",
-            "sequenceSteps": "Sequence steps",
-            "loopDuration": "Loop for the selected duration",
-            "resize": "Drag to resize.",
-            "resizeCharacters": "Resize Characters",
-            "edit": "Edit {name}",
-            "delete": "Delete {name}",
-            "animationNumber": "Animation {number}",
-            "closeStep": "Close step {number}",
-            "reorderAnimation": "Reorder animation {number}",
-            "loopNumber": "Loop animation {number}",
-            "delayNumber": "Start after for animation {number}",
-            "durationNumber": "Play for animation {number}",
-            "removeAnimation": "Remove animation {number}"
-        },
-        common: {
-            viewLogs: 'View Logs',
-            openFolder: 'Open Folder',
-            retry: 'Retry',
-            goBack: 'Go Back',
-            close: 'Close'
-        },
-        app: {
-            backToHome: 'Back',
-            toggleControls: 'Controls',
-        },
-        homePage: {
-            title: 'Mod Preview',
-            subtitle: 'Drag & Drop or Choose a Folder',
-            recentFoldersLabel: 'Recent Folders',
-            recentFoldersEmpty: 'No recent folders found.',
-            openFolderButton: 'Browse Folder',
-        },
-        characterList: {
-            searchPlaceholder: 'Search characters...',
-            noCharactersFound: 'No characters found.',
-            loadingCharacters: 'Loading characters...',
-            tabs: {
-                standing: 'Standing',
-                cutscene: 'Cutscene',
-                dating: 'Dating'
-            },
-            sort: {
-                newest: 'Newest',
-                oldest: 'Oldest',
-                a_z: 'A-Z',
-                z_a: 'Z-A'
-            },
-            loadingCharacter: 'Loading character...',
-            information: 'Character assets are loaded from GitHub repository'
-        },
-        error: {
-            title: 'Something went wrong',
-            message: 'An unexpected error occurred. Please try again.',
-            noInternet: {
-                title: 'No Internet Connection',
-                message: 'Character assets cannot be loaded without an internet connection.',
-                checking: 'Checking...',
-            }
-        },
-        controls: {
-            title: "Controls",
-            noSource: "No source!",
-            links: {
-                suggestFeature: "Suggest a Feature",
-                reportIssue: "Report an Issue"
-            },
-            render: {
-                title: "Render",
-                premultipliedAlpha: "Premultiplied Alpha",
-                backgroundColor: "Background Color",
-                backgroundImage: "Background Image",
-                chooseImage: "Choose Image"
-            },
-            animations: {
-                title: "Animations",
-                available: "{count} available",
-                loopAnimation: "Loop Animation",
-                noAnimations: "No animations available"
-            },
-            actions: {
-                title: "Actions",
-                viewHistory: "View History",
-                openLogs: "Open Logs"
-            },
-            appSettings: {
-                title: "App Settings",
-                language: "Language",
-                alwaysOnTop: "Always on Top"
-            },
-            version: "BD2ModPreview v{version}"
-        },
-        historyDialog: {
-            title: 'History ({count})',
-            noHistory: 'No recent history',
-            unknownCharacter: 'Unknown',
-            unknownModType: 'Unknown',
-            sourceTypes: {
-                github: 'Github',
-                folder: 'Folder'
-            },
-            modTypes: {
-                standing: 'Standing',
-                cutscene: 'Cutscene',
-                npc: 'NPC',
-                scene: 'Scene',
-                dating: 'Dating'
-            },
-            actions: {
-                remove: 'Remove from history',
-                loadAnimation: 'Load Animation'
-            }
-        },
-        errors: {
-            DirectoryNotFound: {
-                title: 'Directory Not Found',
-                message: 'The selected folder was not found.'
-            },
-            MissingSkeletonOrJson: {
-                title: 'Missing Skeleton File',
-                message: 'The selected folder is missing the required skeleton .json or .skel file.',
-                actionLabel: 'Download Original Skeleton from Github'
-            },
-            AssetLoadingError: {
-                title: 'Asset Loading Error',
-                message: 'Failed to load Spine assets.'
-            },
-            AssetNotFoundError: {
-                title: 'Asset Not Found',
-                message: 'The asset was not found.'
-            },
-            AssetTooManyRequestsError: {
-                title: 'Too Many Requests',
-                message: 'You have made too many requests. Please try again later.'
-            },
-            InitializationError: {
-                title: 'Initialization Error',
-                message: 'Failed to initialize the Spine player.'
-            },
-            PlayerError: {
-                title: 'Player Error',
-                message: 'An error occurred in the Spine player.'
-            },
-            SkeletonError: {
-                title: 'Skeleton Error',
-                message: 'Failed to load skeleton (.skel or .json). Skeleton might be corrupted or there is a mismatch between atlas and skeleton files.'
-            },
-            SkeletonNotFound: {
-                title: 'Skeleton Not Found',
-                message: 'Oops! The skeleton asset is missing from the GitHub repository.'
-            },
-            CharacterIdNotFound: {
-                title: 'Character ID Not Found',
-                message: 'Could not resolve character ID from the folder.'
-            },
-            DirectoryInvalidError: {
-                title: 'Invalid Directory',
-                message: 'The selected directory is invalid or does not contain Spine assets.'
-            },
-            UnknownError: {
-                title: "An unexpected error occurred",
-                message: "An unexpected error occurred. More information in the logs."
-            }
-        }
-    },
-    zh: {
-        whatsNew: {
-            "modManager": "连接 BD2ModManager 后，可直接在预览中启用或禁用模组。",
-            "dating": "赞助者可在支持的角色上使用约会互动，包括点击区域、拖动、长按和工具。",
+            "characters": "更新角色数据并改进拖放支持。",
+            "interface": "重新设计了设置、角色列表、历史记录和日志。",
+            "layers": "选择皮肤，并显示或隐藏单独的图层。",
+            "modManager": "连接 BD2ModManager 后，可在预览中启用或禁用模组。",
+            "dating": "为赞助者添加约会互动，包括点击、拖动和长按。",
             "datingCache": "约会互动数据最多缓存七天，已验证的赞助者可在缓存有效期内离线使用。",
-            "cutscenes": "使用从游戏中提取的动画时序播放支持的过场动画。",
+            "cutscenes": "使用游戏中的时序播放支持的过场动画。",
             "title": "更新内容",
             "version": "版本 {version}",
             "current": "当前版本",
             "feedback": "有反馈或想法？欢迎在 GitHub 上分享。",
             "issue": "在 GitHub 上提交问题",
             "done": "知道了！",
-            "grid": "在网格中对比多个预览，拖动以重新排列并调整面板大小。",
-            "controls": "为每个预览选择动画、图层、皮肤和背景。",
-            "sequences": "创建包含重叠动画、延迟和持续时间的动画序列。序列会按来源保存。",
+            "grid": "并排预览多个模组，拖动以重新排列并调整每个预览的大小。",
+            "controls": "同时控制所有预览，或分别选择动画。",
+            "sequences": "创建并保存动画序列。",
             "folders": "一次打开多个文件夹，并从最近的文件夹中重新打开预览。",
-            "themes": "在设置中选择主题。"
+            "themes": "添加主题和角色名称翻译。"
         },
         preview: {
             datingInteractions: "约会互动（仅限赞助者）",
@@ -552,23 +282,26 @@ const messages = {
             }
         }
     },
-    ja: {
+    ja_JP: {
         whatsNew: {
-            "modManager": "BD2ModManager に接続すると、プレビューから直接 MOD を有効・無効にできます。",
-            "dating": "支援者は、対応キャラクターでクリック、ドラッグ、長押し、ツールを使ったデートのインタラクションを利用できます。",
+            "characters": "キャラクターデータを更新し、ドラッグ＆ドロップを改善しました。",
+            "interface": "設定、キャラクター一覧、履歴、ログをリニューアルしました。",
+            "layers": "スキンの選択や、レイヤーごとの表示・非表示を切り替えられます。",
+            "modManager": "BD2ModManager に接続すると、プレビューから MOD を有効・無効にできます。",
+            "dating": "支援者向けに、クリック、ドラッグ、長押しによるデートのインタラクションを追加しました。",
             "datingCache": "デートのインタラクションデータは最大7日間キャッシュされます。認証済みの支援者は、有効期間中はオフラインでも利用できます。",
-            "cutscenes": "ゲームから抽出したアニメーションのタイミングで、対応するカットシーンを再生できます。",
+            "cutscenes": "ゲームのタイミングに合わせて、対応するカットシーンを再生できます。",
             "title": "更新内容",
             "version": "バージョン {version}",
             "current": "現在のバージョン",
             "feedback": "ご意見やアイデアを GitHub でお寄せください。",
             "issue": "GitHub で問題を報告",
             "done": "閉じる",
-            "grid": "複数のプレビューをグリッドで比較できます。ドラッグで並べ替え、パネルのサイズも変更できます。",
-            "controls": "プレビューごとにアニメーション、レイヤー、スキン、背景を選択できます。",
-            "sequences": "アニメーションの重ね合わせ、遅延、再生時間を指定してシーケンスを作成できます。シーケンスはソースごとに保存されます。",
+            "grid": "複数の MOD を並べてプレビューできます。ドラッグで並べ替え、各プレビューのサイズを変更できます。",
+            "controls": "すべてのプレビューをまとめて操作したり、個別にアニメーションを選択したりできます。",
+            "sequences": "アニメーションシーケンスを作成して保存できます。",
             "folders": "複数のフォルダーを一度に開き、最近使ったフォルダーからプレビューを再度開けます。",
-            "themes": "設定でテーマを選択できます。"
+            "themes": "テーマとキャラクター名の翻訳を追加しました。"
         },
         preview: {
             datingInteractions: "デートのインタラクション（支援者限定）",
@@ -827,23 +560,26 @@ const messages = {
             }
         }
     },
-    ko: {
+    ko_KR: {
         whatsNew: {
-            "modManager": "BD2ModManager에 연결하면 미리보기에서 직접 모드를 활성화하거나 비활성화할 수 있습니다.",
-            "dating": "후원자는 지원되는 캐릭터의 데이트에서 영역 클릭, 드래그, 길게 누르기 및 도구를 이용한 상호작용을 사용할 수 있습니다.",
+            "characters": "캐릭터 데이터를 업데이트하고 드래그 앤 드롭을 개선했습니다.",
+            "interface": "설정, 캐릭터 목록, 기록, 로그를 새롭게 디자인했습니다.",
+            "layers": "스킨을 선택하고 개별 레이어를 표시하거나 숨길 수 있습니다.",
+            "modManager": "BD2ModManager에 연결하면 미리보기에서 모드를 활성화하거나 비활성화할 수 있습니다.",
+            "dating": "후원자를 위한 클릭, 드래그, 길게 누르기 데이트 상호작용을 추가했습니다.",
             "datingCache": "데이트 상호작용 데이터는 최대 7일간 캐시됩니다. 인증된 후원자는 캐시가 유효한 동안 오프라인에서도 사용할 수 있습니다.",
-            "cutscenes": "게임에서 추출한 애니메이션 타이밍으로 지원되는 컷신을 재생할 수 있습니다.",
+            "cutscenes": "게임의 타이밍에 맞춰 지원되는 컷신을 재생할 수 있습니다.",
             "title": "새로운 기능",
             "version": "버전 {version}",
             "current": "현재 버전",
             "feedback": "의견이나 아이디어를 GitHub에서 공유해 주세요.",
             "issue": "GitHub에 문제 보고",
             "done": "확인",
-            "grid": "여러 미리보기를 격자로 비교하세요. 드래그로 순서를 바꾸고 패널 크기를 조절할 수 있습니다.",
-            "controls": "미리보기마다 애니메이션, 레이어, 스킨과 배경을 선택할 수 있습니다.",
-            "sequences": "애니메이션 중첩, 지연 시간과 재생 시간을 지정하여 시퀀스를 만드세요. 시퀀스는 소스별로 저장됩니다.",
+            "grid": "여러 모드를 나란히 미리 보세요. 드래그로 순서를 바꾸고 각 미리보기의 크기를 조절할 수 있습니다.",
+            "controls": "모든 미리보기를 함께 제어하거나 애니메이션을 개별적으로 선택할 수 있습니다.",
+            "sequences": "애니메이션 시퀀스를 만들고 저장할 수 있습니다.",
             "folders": "여러 폴더를 한 번에 열고 최근 폴더에서 미리보기를 다시 열 수 있습니다.",
-            "themes": "설정에서 테마를 선택할 수 있습니다."
+            "themes": "테마와 캐릭터 이름 번역을 추가했습니다."
         },
         preview: {
             datingInteractions: "데이트 상호작용 (후원자 전용)",
@@ -1106,7 +842,7 @@ const messages = {
 
 export const i18n = createI18n({
     legacy: false,
-    locale: 'en',
-    fallbackLocale: 'en',
+    locale: 'en_US',
+    fallbackLocale: 'en_US',
     messages
 })

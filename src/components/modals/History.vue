@@ -2,7 +2,7 @@
     setup
     lang="ts"
 >
-import { Folder, Globe, Trash2, X } from "@lucide/vue"
+import { Clock3, Folder, Globe, Trash2, X } from "@lucide/vue"
 import { Dialog, DialogDescription, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { useI18n } from 'vue-i18n'
 
@@ -101,14 +101,12 @@ function getModTypeLabel(modType: string) {
                                         </div>
 
                                         <div class="history-metadata">
-                                            <span v-if="item.source.type == 'url'">{{
-                                                t('historyDialog.sourceTypes.github') }}</span>
-                                            <span v-else>{{ t('historyDialog.sourceTypes.folder') }}</span>
-                                            <span>•</span>
-                                            <span>{{ item.modType ? getModTypeLabel(item.modType) :
+                                            <span class="history-type">{{ item.modType ? getModTypeLabel(item.modType) :
                                                 t('historyDialog.unknownModType') }}</span>
-                                            <span>•</span>
-                                            <span>{{ formatTimeAgo(new Date(item.timestamp)) }}</span>
+                                            <span class="history-time">
+                                                <Clock3 :size="13" aria-hidden="true" />
+                                                {{ formatTimeAgo(new Date(item.timestamp)) }}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -142,12 +140,14 @@ function getModTypeLabel(modType: string) {
 
 .history-backdrop {
     position: fixed;
+    z-index: 10000;
     inset: 0;
     background: rgb(0 0 0 / .55);
 }
 
 .history-container {
     position: fixed;
+    z-index: 10000;
     inset: 0;
     display: flex;
     align-items: center;
@@ -246,6 +246,18 @@ function getModTypeLabel(modType: string) {
     line-height: 1.5;
     color: var(--text-secondary);
     overflow-wrap: anywhere;
+}
+
+.history-type {
+    padding: 1px 6px;
+    border-radius: 3px;
+    background: color-mix(in srgb, var(--text-primary) 12%, var(--surface-app));
+}
+
+.history-time {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .history-actions {

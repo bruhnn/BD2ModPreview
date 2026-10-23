@@ -5,6 +5,7 @@
 import { version } from "../../../package.json"
 
 import { useI18n } from "vue-i18n"
+import { openUrl } from '@tauri-apps/plugin-opener'
 import { X, Info } from "@lucide/vue"
 import {
     Dialog,
@@ -61,7 +62,7 @@ const { t } = useI18n()
                                         </span>
                                     </h3>
                                     <ul class="updates-list">
-                                        <li v-for="item in ['grid', 'controls', 'sequences', 'modManager', 'dating', 'datingCache', 'cutscenes', 'folders', 'themes']"
+                                        <li v-for="item in ['grid', 'controls', 'sequences', 'layers', 'cutscenes', 'dating', 'modManager', 'interface', 'themes', 'characters']"
                                             :key="item" class="update-item">
                                             {{ t('whatsNew.' + item) }}
                                         </li>
@@ -75,10 +76,10 @@ const { t } = useI18n()
                                 <div class="footer-link">
                                     <Info class="github-icon" />
                                     <p class="github-text">
-                                        <a href="https://github.com/bruhnn/BD2ModPreview/issues" target="_blank"
+                                        <button type="button" @click="openUrl('https://github.com/bruhnn/BD2ModPreview/issues')"
                                             class="github-link">
                                             {{ t('whatsNew.issue') }}
-                                        </a>
+                                        </button>
                                     </p>
                                 </div>
 
@@ -245,6 +246,7 @@ const { t } = useI18n()
 }
 
 .github-link {
+    cursor: pointer;
     color: var(--accent);
     text-decoration: underline;
     text-decoration-color: color-mix(in srgb, var(--accent) 50%, transparent);
