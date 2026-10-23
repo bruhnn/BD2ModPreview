@@ -400,8 +400,9 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
       class="player-container" @contextmenu.prevent="openContext" @pointerdown.capture="playerContainer?.focus()"
       @keydown="onPreviewKeydown" @keydown.shift.f10.prevent="openContext" />
     <div v-if="datingEnabled && datingGaugeRange" class="dating-gauge" :aria-label="t('preview.datingGauge')">
+      <span>{{ datingGaugeRange.y }}</span>
       <progress :value="datingGauge - datingGaugeRange.x" :max="datingGaugeRange.y - datingGaugeRange.x" />
-      <span>{{ Math.round(datingGauge) }} / {{ datingGaugeRange.y }}</span>
+      <span>{{ Math.round(datingGauge) }}</span>
     </div>
     <input v-if="settings" ref="colorInput" type="color" hidden
       :value="settings.background.type === 'color' ? settings.background.color : '#000000'"
@@ -441,7 +442,7 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
             <button v-for="item in datingTools" :key="item.id" type="button" role="menuitemradio"
               :aria-checked="datingTool === item.id" @click="selectDatingTool(item.id)">
               <Hand :size="16" /><span>{{ item.id === 0 ? t('preview.noTool') : t('preview.datingTool', { id: item.id })
-                }}{{ item.skin ? ' (' + item.skin + ')' : '' }}</span>
+              }}{{ item.skin ? ' (' + item.skin + ')' : '' }}</span>
               <Check v-if="datingTool === item.id" :size="16" />
             </button>
           </template>
@@ -513,9 +514,8 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
         <Play v-if="paused" :size="16" aria-hidden="true" />
         <Pause v-else :size="16" aria-hidden="true" />
       </button>
-      <button type="button" :aria-label="t('preview.loop')" :title="t('preview.loop')"
-        :aria-pressed="loopAnimation" :disabled="!allAnimations.length"
-        @click="loopAnimation = !loopAnimation">
+      <button type="button" :aria-label="t('preview.loop')" :title="t('preview.loop')" :aria-pressed="loopAnimation"
+        :disabled="!allAnimations.length" @click="loopAnimation = !loopAnimation">
         <Repeat :size="16" aria-hidden="true" />
       </button>
       <input type="range" min="0" :max="duration" step="0.01" :value="playbackTime" :disabled="!duration"
@@ -1333,9 +1333,11 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
 
 .dating-gauge {
   position: absolute;
-  top: 12px;
+  top: 50%;
   left: 12px;
+  transform: translateY(-50%);
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 8px;
   padding: 6px 8px;
@@ -1348,8 +1350,22 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
 }
 
 .dating-gauge progress {
-  width: 100px;
-  height: 6px;
-  accent-color: var(--accent);
+    width: 6px;
+    height: 100px;
+    writing-mode: vertical-lr;
+    direction: rtl;
+    appearance: none;
+    border: none;
+    background: transparent;
+}
+
+.dating-gauge progress::-webkit-progress-bar {
+    background: var(--surface-input);
+    border-radius: 3px;
+}
+
+.dating-gauge progress::-webkit-progress-value {
+    background: var(--accent);
+    border-radius: 3px;
 }
 </style>
