@@ -4,8 +4,6 @@
         "interface": "Redesigned settings, character list, history, and logs.",
         "layers": "Choose skins and show or hide individual layers.",
         "modManager": "Enable or disable mods from the preview when connected to BD2ModManager.",
-        "dating": "Added dating interactions for supporters, including clicking, dragging, and holding.",
-        "datingCache": "Dating interaction data is cached for up to seven days, so verified supporters can keep using it offline while the cache is valid.",
         "cutscenes": "Play supported cutscenes using timing from the game.",
         "title": "What's New",
         "version": "Version {version}",
@@ -17,7 +15,11 @@
         "controls": "Control all previews together or choose animations separately.",
         "sequences": "Create and save animation sequences.",
         "folders": "Open multiple folders at once and reopen previews from recent folders.",
-        "themes": "Added themes and translated character names."
+        "themes": "Added themes and translated character names.",
+        "datingInteractions": "Dating Interactions",
+        "dating": "Added dating interactions, including clicking, dragging, and holding.",
+        "supporterMessage": "This feature is exclusive to supporters. If you'd like to support development and gain access, you can support me on",
+        "otherImprovements": "Other Improvements"
     },
     "preview": {
         "syncGroups": "Sync group",

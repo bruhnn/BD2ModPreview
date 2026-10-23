@@ -44,7 +44,7 @@ function openLogs() {
 
 async function openIssues() {
   try {
-    await openUrl('https://github.com/bruhnn/BD2ModPreview/issues')
+    await openUrl('https://github.com/bruhnn/BD2ModManager/issues')
   } catch (error) {
     logMessage(`Failed to open GitHub issues: ${error}`, 'error')
   }
