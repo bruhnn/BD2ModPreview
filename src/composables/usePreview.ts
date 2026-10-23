@@ -1,121 +1,119 @@
 import { computed, onUnmounted, ref, Ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-
 import { invoke } from "@tauri-apps/api/core";
-
-import { usePreviewerStore } from "../stores/previewer";
-
+import { usePreviewerStore, type PreviewControl } from "../stores/previewer";
 import { useHistory } from "./useHistory";
 import { useLogger } from "./useLogger";
-
 import { useGameCutscene } from "./useGameCutscene";
 import { useDatingInteractions } from "./useDatingInteractions";
-
 import type {
 	SpineAssetsData,
 	SpinePlayer,
 	AnimationSequence,
 } from "../types/spine";
-
 declare const spine: any;
-
 export function usePreview(
 	id: string,
 	playerContainer: Ref<HTMLElement | null>,
 ) {
 	const previewerStore = usePreviewerStore();
-
 	const { logMessage } = useLogger();
-
 	const { addToHistory } = useHistory();
-
 	const { t, te } = useI18n();
-
 	const cutscene = useGameCutscene();
-
 	const datingInteraction = useDatingInteractions((animation) => {
 		if (!settings.value) return;
 		settings.value.followGlobalAnimation = false;
 		settings.value.currentAnimation = animation;
-	});
-
+	}, (player) => {
+		if (!preview.value) return;
+		preview.value.allAnimations = player.skeleton.data.animations.map((animation: any) => animation.name);
+		layers.value = player.skeleton.data.slots.map((slot: any) => slot.name);
+		skins.value = player.skeleton.data.skins.map((skin: any) => skin.name);
+		skin.value = player.skeleton.data.defaultSkin?.name ?? "";
+		hiddenLayers.value = [];
+		highlightedLayer.value = "";
+		hiddenAttachments.clear();
+	}, (message) => logMessage(message, "error"));
 	const error = ref("");
-
 	const retryCount = ref(0);
-
 	const activeSequence = ref<AnimationSequence | null>(null);
-
 	const playbackTime = ref(0);
-
 	const duration = ref(0);
-
 	const layers = ref<string[]>([]);
-
 	const highlightedLayer = ref("");
-
 	const hiddenLayers = ref<string[]>([]);
-
 	const skins = ref<string[]>([]);
-
 	const skin = ref("");
-
 	const hiddenAttachments = new Map<any, any>();
-
 	let loadId = 0;
-
 	let spinePlayer: SpinePlayer | null = null;
-
 	let previousCamera: typeof camera = null;
-
 	let camera: { x: number; y: number; zoom: number } | null = null;
-
 	let initialCamera: { x: number; y: number; zoom: number } | null = null;
-
 	let defaultZoom = 1;
-
 	let cameraListeners: AbortController | null = null;
-
 	const preview = computed(() => previewerStore.getPreview(id));
-
 	const isLoading = computed(() => preview.value?.isLoading ?? false);
-
 	const title = computed(() => preview.value?.title ?? "");
-
 	const source = computed(() => preview.value?.source ?? null);
-
 	const settings = computed(() => preview.value?.settings ?? null);
-
 	const currentAnimation = computed(
 		() => preview.value?.settings.currentAnimation ?? null,
 	);
-
 	const allAnimations = computed(() => preview.value?.allAnimations ?? []);
-
 	const paused = computed({
 		get: () => settings.value?.paused ?? false,
-		set: (value: boolean) => {
-			if (settings.value) settings.value.paused = value;
-		},
+		set: (value: boolean) => runControl({ type: "pause", value }),
 	});
-
 	const animationSelection = computed({
 		get: () =>
 			settings.value?.followGlobalAnimation
 				? ""
 				: (currentAnimation.value ?? ""),
-		set: (value: string) => {
-			if (!settings.value) return;
-			stopGameCutscene();
-			stopSequence();
-			settings.value.followGlobalAnimation = value === "";
-			const animation =
-				value ||
-				previewerStore.globalAnimation ||
-				allAnimations.value[0];
-			if (allAnimations.value.includes(animation))
-				settings.value.currentAnimation = animation;
-		},
+		set: (value: string) => runControl({ type: "animation", value }),
 	});
+	const loopAnimation = computed({
+		get: () => settings.value?.loopAnimation ?? true,
+		set: (value: boolean) => runControl({ type: "loop", value }),
+	});
+	function runControl(control: PreviewControl) {
+		applyControl(control);
+		previewerStore.broadcastControl(id, control);
+	}
+	function applyControl(control: PreviewControl) {
+		if (!spinePlayer || !settings.value) return;
+		switch (control.type) {
+			case "pause":
+				settings.value.paused = control.value;
+				break;
+			case "loop":
+				settings.value.loopAnimation = control.value;
+				break;
+			case "animation": {
+				if (datingInteraction.enabled.value) return;
+				const animation = control.value || previewerStore.globalAnimation || allAnimations.value[0];
+				if (!allAnimations.value.includes(animation)) return;
+				stopGameCutscene();
+				stopSequence();
+				settings.value.followGlobalAnimation = control.value === "";
+				settings.value.currentAnimation = animation;
+				restart();
+				break;
+			}
+			case "seek": seekTo(control.time); break;
+			case "restart": restart(); break;
+			case "fit": fitCharacter(); break;
+			case "center": centerCharacter(); break;
+			case "resetCamera": resetCamera(); break;
+			case "cutscene": playGameCutscene(); break;
+			case "stopSequence": stopSequence(); break;
+			case "sequence":
+				if (control.sequence.steps.every(step => step.every(entry => allAnimations.value.includes(entry.animation))))
+					playSequence(control.sequence);
+				break;
+		}
+	}
 
 	const sequenceKey = computed(() => {
 		const value = source.value;
@@ -128,11 +126,9 @@ export function usePreview(
 						.toLowerCase()
 			: "url:" + JSON.stringify([value.skeletonUrl, value.atlasUrl]);
 	});
-
 	const sequences = computed(
 		() => previewerStore.savedSequences[sequenceKey.value] ?? [],
 	);
-
 	function playGameCutscene() {
 		if (!spinePlayer || !settings.value || !cutscene.available.value)
 			return;
@@ -154,16 +150,14 @@ export function usePreview(
 		cutscene.start();
 		playbackTime.value = 0;
 		duration.value = cutscene.duration;
-		paused.value = false;
+		settings.value!.paused = false;
 	}
-
 	function stopGameCutscene() {
 		if (!cutscene.active.value) return;
 		cutscene.active.value = false;
 		camera = previousCamera;
 		previousCamera = null;
 	}
-
 	function playSequence(sequence: AnimationSequence) {
 		if (!spinePlayer || !settings.value) return;
 		datingInteraction.enabled.value = false;
@@ -173,10 +167,9 @@ export function usePreview(
 		spinePlayer.animationState.clearTracks();
 		playbackTime.value = 0;
 		applySequence(0);
-		paused.value = false;
+		settings.value!.paused = false;
 		spinePlayer.play();
 	}
-
 	function stopSequence() {
 		if (!activeSequence.value) return;
 		activeSequence.value = null;
@@ -188,7 +181,6 @@ export function usePreview(
 			applyPose();
 		}
 	}
-
 	function applySequence(time: number) {
 		if (!spinePlayer || !activeSequence.value) return;
 		const skeleton = spinePlayer.skeleton;
@@ -242,7 +234,6 @@ export function usePreview(
 		}
 		skeleton.updateWorldTransform();
 	}
-
 	function fitCharacter() {
 		if (!spinePlayer) return;
 		const offset = new spine.Vector2();
@@ -262,7 +253,6 @@ export function usePreview(
 			zoom: defaultZoom,
 		};
 	}
-
 	function centerCharacter() {
 		if (!spinePlayer || !camera) return;
 		const offset = new spine.Vector2();
@@ -271,14 +261,12 @@ export function usePreview(
 		camera.x = offset.x + size.x / 2;
 		camera.y = offset.y + size.y / 2;
 	}
-
 	function resetCamera() {
 		if (initialCamera) {
 			camera = { ...initialCamera };
 			defaultZoom = initialCamera.zoom;
 		}
 	}
-
 	function setupCamera(player: SpinePlayer) {
 		fitCharacter();
 		initialCamera = camera ? { ...camera } : null;
@@ -295,7 +283,7 @@ export function usePreview(
 					!activeSequence.value &&
 					datingInteraction.pointerDown(event)
 				) {
-					paused.value = false;
+					settings.value!.paused = false;
 					player.play();
 					return;
 				}
@@ -314,10 +302,22 @@ export function usePreview(
 			(event) => {
 				if (datingInteraction.pointerMove(event)) return;
 				if (!camera || !drag || drag.id !== event.pointerId) return;
-				camera.x -= (event.clientX - drag.x) * camera.zoom;
-				camera.y += (event.clientY - drag.y) * camera.zoom;
+				const dx = event.clientX - drag.x;
+				const dy = event.clientY - drag.y;
+				camera.x -= dx * camera.zoom;
+				camera.y += dy * camera.zoom;
 				drag.x = event.clientX;
 				drag.y = event.clientY;
+				const width = canvas.clientWidth;
+				const height = canvas.clientHeight;
+				if (width && height)
+					previewerStore.broadcastCameraChange(id, {
+						zoomRatio: 1,
+						dx: dx / width,
+						dy: dy / height,
+						anchorX: 0,
+						anchorY: 0,
+					});
 			},
 			{ signal },
 		);
@@ -372,28 +372,41 @@ export function usePreview(
 					),
 				);
 				// Keep the point under the cursor in place.
-				camera.x += x * (camera.zoom - zoom);
-				camera.y += y * (camera.zoom - zoom);
+				const oldZoom = camera.zoom;
+				camera.x += x * (oldZoom - zoom);
+				camera.y += y * (oldZoom - zoom);
 				camera.zoom = zoom;
+				if (
+					rect.width &&
+					rect.height &&
+					oldZoom > 0 &&
+					zoom !== oldZoom
+				) {
+					previewerStore.broadcastCameraChange(id, {
+						zoomRatio: zoom / oldZoom,
+						dx: 0,
+						dy: 0,
+						anchorX: x / rect.width,
+						anchorY: y / rect.height,
+					});
+				}
 			},
 			{ signal, passive: false },
 		);
 		canvas.addEventListener(
 			"dblclick",
 			() => {
-				if (!datingInteraction.enabled.value) fitCharacter();
+				if (!datingInteraction.enabled.value) runControl({ type: "fit" });
 			},
 			{ signal },
 		);
 	}
-
 	function applyPose() {
 		if (!spinePlayer) return;
 		spinePlayer.skeleton.setToSetupPose();
 		spinePlayer.animationState.apply(spinePlayer.skeleton);
 		spinePlayer.skeleton.updateWorldTransform();
 	}
-
 	function restart() {
 		if (!spinePlayer) return;
 		datingInteraction.reset();
@@ -418,13 +431,12 @@ export function usePreview(
 		applyPose();
 		playbackTime.value = 0;
 	}
-
-	function seek(event: Event) {
+	function seekTo(value: number) {
 		if (!spinePlayer || !duration.value) return;
 		datingInteraction.reset();
-		paused.value = true;
+		settings.value!.paused = true;
 		spinePlayer.pause();
-		const time = Number((event.target as HTMLInputElement).value);
+		const time = Math.max(0, Math.min(value, duration.value));
 		if (cutscene.active.value) {
 			cutscene.seek(time);
 			playbackTime.value = time;
@@ -444,7 +456,6 @@ export function usePreview(
 		applyPose();
 		playbackTime.value = time;
 	}
-
 	function onPlayerUpdate(player: SpinePlayer, delta: number) {
 		if (activeSequence.value) applySequence(playbackTime.value + delta);
 		if (camera) {
@@ -474,7 +485,6 @@ export function usePreview(
 			playbackTime.value = track?.getAnimationTime() ?? 0;
 		}
 	}
-
 	function showError(reason: unknown, request: number) {
 		if (request !== loadId) return;
 		const detail = reason as { type?: string; message?: unknown };
@@ -492,7 +502,6 @@ export function usePreview(
 			"error",
 		);
 	}
-
 	async function loadSpineFromFolder(path: string, request: number) {
 		const assets = await invoke<SpineAssetsData>("get_spine_assets", {
 			folderPath: path,
@@ -500,9 +509,13 @@ export function usePreview(
 		if (request !== loadId) return;
 		if (!assets.skeletonFilename || !assets.atlasFilename)
 			throw new Error(t("preview.missingAssets"));
+		const firstPart = Object.keys(assets.rawData ?? {}).sort().find((name) => /^illust_dating\d+_1\.(skel|json)$/i.test(name));
+		if (firstPart && assets.rawData?.[firstPart.replace(/\.(skel|json)$/i, ".atlas")]) {
+			assets.skeletonFilename = firstPart;
+			assets.atlasFilename = firstPart.replace(/\.(skel|json)$/i, ".atlas");
+		}
 		initializePlayer(createPlayerConfig(assets), request);
 	}
-
 	function loadSpineFromUrl(
 		skeletonUrl: string,
 		atlasUrl: string,
@@ -526,17 +539,13 @@ export function usePreview(
 		};
 		initializePlayer(config, request);
 	}
-
 	function createPlayerConfig(assetsData: SpineAssetsData) {
 		const config: any = {
 			atlasUrl: assetsData.atlasFilename,
-
 			showControls: false,
 			alpha: true,
 			showLoading: true,
-
 			premultipliedAlpha: settings.value?.premultipliedAlpha,
-
 			draw: (player: SpinePlayer) => {
 				// Hide layers only while drawing; keep the animation's attachments.
 				for (const [slot, attachment] of hiddenAttachments)
@@ -582,12 +591,10 @@ export function usePreview(
 				renderer.end();
 			},
 		};
-
 		config.backgroundColor =
 			settings.value?.background.type === "color"
 				? settings.value.background.color
 				: "#00000000";
-
 		if (assetsData.skeletonFilename.endsWith(".json")) {
 			config.jsonUrl = assetsData.skeletonFilename;
 		} else if (assetsData.skeletonFilename.endsWith(".skel")) {
@@ -595,17 +602,13 @@ export function usePreview(
 		} else {
 			throw new Error(t("preview.unsupportedSkeleton"));
 		}
-
 		if (assetsData.rawData) {
 			config.rawDataURIs = assetsData.rawData;
 		}
-
 		return config;
 	}
-
 	function initializePlayer(config: any, request: number) {
 		if (!playerContainer.value) return;
-
 		destroyPlayer();
 		const onError = config.error;
 		config.success = (player: SpinePlayer) => {
@@ -631,21 +634,15 @@ export function usePreview(
 				onPlayerUpdate(player, delta);
 			}
 		};
-
 		playerContainer.value.innerHTML = "";
-
 		spinePlayer = new spine.SpinePlayer(playerContainer.value, config);
 	}
-
 	function onPlayerSuccess(player: SpinePlayer) {
 		spinePlayer = player;
-
 		const animations = player.skeleton.data.animations.map(
 			(animation: any) => animation.name,
 		);
-
 		if (!preview.value) return;
-
 		preview.value.allAnimations = animations;
 		layers.value = player.skeleton.data.slots.map((slot: any) => slot.name);
 		skins.value = player.skeleton.data.skins.map((skin: any) => skin.name);
@@ -653,7 +650,6 @@ export function usePreview(
 			player.skeleton.skin?.name ??
 			player.skeleton.data.defaultSkin?.name ??
 			"";
-
 		const animation =
 			(preview.value.settings.followGlobalAnimation &&
 			animations.includes(previewerStore.globalAnimation)
@@ -661,16 +657,13 @@ export function usePreview(
 				: preview.value.settings.currentAnimation) ??
 			animations[0] ??
 			null;
-
 		if (animation) {
 			preview.value.settings.currentAnimation = animation;
-
 			player.setAnimation(
 				animation,
 				preview.value.settings.loopAnimation,
 			);
 		}
-
 		applyPose();
 		setupCamera(player);
 		datingInteraction.load(
@@ -680,15 +673,11 @@ export function usePreview(
 		cutscene
 			.load(player, player.config.skelUrl ?? player.config.jsonUrl ?? "")
 			.catch((error) =>
-				logMessage(
-					`Cutscene could not be loaded: ${error}`,
-					"error",
-				),
+				logMessage(`Cutscene could not be loaded: ${error}`, "error"),
 			);
 		if (paused.value) player.pause();
 		else player.play();
 	}
-
 	function destroyPlayer() {
 		cutscene.dispose();
 		previousCamera = null;
@@ -709,7 +698,41 @@ export function usePreview(
 		playbackTime.value = 0;
 		duration.value = 0;
 	}
-
+	watch(
+		() => previewerStore.controlChange,
+		(change) => {
+			if (!change || change.sourceId === id || preview.value?.syncGroup !== change.groupId) return;
+			applyControl(change.control as PreviewControl);
+		},
+		{ flush: "sync" },
+	);
+	// Relative camera updates are applied locally, never re-broadcast.
+	watch(
+		() => previewerStore.cameraChange,
+		(change) => {
+			if (!change || !camera || !spinePlayer || change.sourceId === id)
+				return;
+			if (
+				!preview.value?.syncGroup ||
+				preview.value.syncGroup !== change.groupId
+			)
+				return;
+			const width = spinePlayer.canvas.clientWidth;
+			const height = spinePlayer.canvas.clientHeight;
+			if (!width || !height) return;
+			const oldZoom = camera.zoom;
+			const zoom = Math.min(
+				defaultZoom * 100,
+				Math.max(defaultZoom * 0.001, oldZoom * change.zoomRatio),
+			);
+			camera.x += width * change.anchorX * (oldZoom - zoom);
+			camera.y += height * change.anchorY * (oldZoom - zoom);
+			camera.zoom = zoom;
+			camera.x -= change.dx * width * zoom;
+			camera.y += change.dy * height * zoom;
+		},
+		{ flush: "sync" },
+	);
 	watch(
 		sequenceKey,
 		(key) => {
@@ -718,7 +741,6 @@ export function usePreview(
 		},
 		{ immediate: true, flush: "sync" },
 	);
-
 	watch(
 		() => sequences.value.slice(),
 		(values) => {
@@ -726,16 +748,13 @@ export function usePreview(
 				stopSequence();
 		},
 	);
-
 	watch(skin, (name) => {
 		if (!spinePlayer || !skins.value.includes(name)) return;
 		spinePlayer.skeleton.setSkinByName(name);
 		if (activeSequence.value) applySequence(playbackTime.value);
 		else applyPose();
 	});
-
 	watch(() => previewerStore.restartCount, restart);
-
 	watch(currentAnimation, (animation) => {
 		stopGameCutscene();
 		if (
@@ -760,12 +779,10 @@ export function usePreview(
 			applyPose();
 		}
 	});
-
 	watch(paused, (paused) => {
 		if (paused) spinePlayer?.pause();
 		else spinePlayer?.play();
 	});
-
 	watch(
 		() => settings.value?.loopAnimation,
 		(loop) => {
@@ -775,7 +792,6 @@ export function usePreview(
 			});
 		},
 	);
-
 	watch(
 		() => settings.value?.background,
 		(background) => {
@@ -788,14 +804,12 @@ export function usePreview(
 		},
 		{ deep: true },
 	);
-
 	watch(
 		() => settings.value?.premultipliedAlpha,
 		(value) => {
 			if (spinePlayer) spinePlayer.config.premultipliedAlpha = value;
 		},
 	);
-
 	watch(
 		[source, playerContainer, retryCount],
 		async ([source, container], _previous, onCleanup) => {
@@ -810,9 +824,7 @@ export function usePreview(
 				preview.value.settings.currentAnimation = null;
 				preview.value.isLoading = !!source && !!container;
 			}
-
 			if (!source || !container) return;
-
 			try {
 				if (source.type === "folder") {
 					await loadSpineFromFolder(source.path, request);
@@ -834,9 +846,7 @@ export function usePreview(
 			flush: "post",
 		},
 	);
-
 	onUnmounted(destroyPlayer);
-
 	return {
 		error,
 		isLoading,
@@ -844,7 +854,7 @@ export function usePreview(
 		cutsceneAvailable: cutscene.available,
 		cutsceneActive: cutscene.active,
 		cutsceneIncomplete: cutscene.incomplete,
-		playGameCutscene,
+		playGameCutscene: () => runControl({ type: "cutscene" }),
 		datingTools: datingInteraction.tools,
 		datingTool: datingInteraction.tool,
 		selectDatingTool: datingInteraction.selectTool,
@@ -856,22 +866,23 @@ export function usePreview(
 		showDatingPoints: datingInteraction.showPoints,
 		sequences,
 		activeSequence,
-		playSequence,
-		stopSequence,
+		playSequence: (sequence: AnimationSequence) => runControl({ type: "sequence", sequence }),
+		stopSequence: () => runControl({ type: "stopSequence" }),
 		title,
 		source,
 		settings,
 		currentAnimation,
 		allAnimations,
 		paused,
+		loopAnimation,
 		animationSelection,
 		playbackTime,
 		duration,
-		seek,
-		restart,
-		resetCamera,
-		fitCharacter,
-		centerCharacter,
+		seek: (event: Event) => runControl({ type: "seek", time: Number((event.target as HTMLInputElement).value) }),
+		restart: () => runControl({ type: "restart" }),
+		resetCamera: () => runControl({ type: "resetCamera" }),
+		fitCharacter: () => runControl({ type: "fit" }),
+		centerCharacter: () => runControl({ type: "center" }),
 		skins,
 		skin,
 		layers,

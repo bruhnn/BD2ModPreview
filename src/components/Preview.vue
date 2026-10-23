@@ -1,4 +1,7 @@
-<script setup lang="ts">
+<script
+  setup
+  lang="ts"
+>
 import { useI18n } from "vue-i18n"
 import { GripVertical, PanelRightClose, PanelBottomClose, Play, Pause, Repeat, Hand, Eye, EyeOff, Check, ChevronDown, ChevronRight, FolderOpen, Focus, Image, Layers, Maximize, Palette, Shirt, Pencil, Plus, RotateCcw, SkipBack, Trash2, X } from "@lucide/vue"
 import { autoUpdate, flip, offset, shift, useFloating } from "@floating-ui/vue"
@@ -52,6 +55,7 @@ const {
   settings,
   allAnimations,
   paused,
+  loopAnimation,
   animationSelection,
   playbackTime,
   duration,
@@ -194,11 +198,11 @@ function onPreviewKeydown(event: KeyboardEvent) {
   if (!allAnimations.value.length) return
   switch (event.key.toLowerCase()) {
     case "f": fitCharacter()
-     break
+      break
     case "c": centerCharacter()
-     break
+      break
     case "r": resetCamera()
-     break
+      break
     case "s":
       if (!event.shiftKey) return
       closeContext()
@@ -307,7 +311,9 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
   <SequenceEditor v-if="sequenceEditorOpen" :animations="allAnimations"
     :sequence="editingSequence === null ? null : sequences[editingSequence]" @close="sequenceEditorOpen = false"
     @save="saveSequence" />
-  <div :data-preview-id="props.previewId" class="preview-panel" :class="{ dragging: isDragging }" :style="settings?.background.type === 'image' ? {
+  <div :data-preview-id="props.previewId" class="preview-panel" :class="{
+    dragging: isDragging,
+  }" :style="settings?.background.type === 'image' ? {
     backgroundImage: `url('${settings.background.path}')`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
@@ -330,6 +336,12 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
       <span v-if="managerMod && modManager.errors[managerMod.name]" class="mod-error" role="alert"
         :title="modManager.errors[managerMod.name]">{{ modManager.errors[managerMod.name] }}</span>
       <span :title="title" class="preview-name">{{ title }}</span>
+      <div class="preview-sync-groups" role="group" :aria-label="t('preview.syncGroups')">
+        <button v-for="group in [1, 2, 3]" :key="group" type="button" class="preview-titlebar-action"
+          :aria-pressed="previewerStore.getPreview(props.previewId)?.syncGroup === group"
+          :title="t('preview.syncGroup', { group })" :aria-label="t('preview.syncGroup', { group })"
+          @click="previewerStore.toggleSyncGroup(props.previewId, group)">{{ group }}</button>
+      </div>
       <button v-if="canAddRight" :disabled="previewerStore.previewLimitReached" type="button"
         :title="t('preview.addRight')" :aria-label="t('preview.addRight')" class="preview-titlebar-action"
         @click="addPreview('right')">
@@ -429,7 +441,7 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
             <button v-for="item in datingTools" :key="item.id" type="button" role="menuitemradio"
               :aria-checked="datingTool === item.id" @click="selectDatingTool(item.id)">
               <Hand :size="16" /><span>{{ item.id === 0 ? t('preview.noTool') : t('preview.datingTool', { id: item.id })
-              }}{{ item.skin ? ' (' + item.skin + ')' : '' }}</span>
+                }}{{ item.skin ? ' (' + item.skin + ')' : '' }}</span>
               <Check v-if="datingTool === item.id" :size="16" />
             </button>
           </template>
@@ -502,8 +514,8 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
         <Pause v-else :size="16" aria-hidden="true" />
       </button>
       <button type="button" :aria-label="t('preview.loop')" :title="t('preview.loop')"
-        :aria-pressed="settings.loopAnimation" :disabled="!allAnimations.length"
-        @click="settings.loopAnimation = !settings.loopAnimation">
+        :aria-pressed="loopAnimation" :disabled="!allAnimations.length"
+        @click="loopAnimation = !loopAnimation">
         <Repeat :size="16" aria-hidden="true" />
       </button>
       <input type="range" min="0" :max="duration" step="0.01" :value="playbackTime" :disabled="!duration"
@@ -980,6 +992,24 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
 .preview-titlebar-action:hover {
   background: var(--state-hover);
   color: var(--text-primary);
+}
+
+.preview-sync-groups {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.preview-sync-groups .preview-titlebar-action {
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.preview-sync-groups .preview-titlebar-action[aria-pressed="true"] {
+  background: var(--accent);
+  color: var(--text-on-accent);
 }
 
 .preview-playback {

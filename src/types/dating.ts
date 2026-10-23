@@ -11,6 +11,8 @@ export type DatingScenes = {
 export interface DatingGroup {
   id: number
   animation: string
+  skeleton?: string | null
+  switchAnimation?: string
   keepTool: boolean
   tools: DatingTool[]
   gauge: DatingGauge

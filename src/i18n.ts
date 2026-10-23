@@ -26,6 +26,8 @@ const messages = {
             "themes": "添加主题和角色名称翻译。"
         },
         preview: {
+            syncGroups: "同步组",
+            syncGroup: "同步组 {group}。编号相同的预览共享控制，再次点击可取消同步。",
             datingInteractions: "约会互动（仅限赞助者）",
             showInteractionAreas: "显示互动区域",
       gameCutscene: "游戏过场动画（预览）",
@@ -304,6 +306,8 @@ const messages = {
             "themes": "テーマとキャラクター名の翻訳を追加しました。"
         },
         preview: {
+            syncGroups: "同期グループ",
+            syncGroup: "同期グループ {group}。同じ番号のプレビューは操作を共有します。もう一度クリックすると解除します。",
             datingInteractions: "デートのインタラクション（支援者限定）",
             showInteractionAreas: "操作エリアを表示",
       gameCutscene: "ゲーム内カットシーン（プレビュー）",
@@ -582,6 +586,8 @@ const messages = {
             "themes": "테마와 캐릭터 이름 번역을 추가했습니다."
         },
         preview: {
+            syncGroups: "동기화 그룹",
+            syncGroup: "동기화 그룹 {group}. 같은 번호의 미리보기는 조작을 공유합니다. 다시 클릭하면 해제됩니다.",
             datingInteractions: "데이트 상호작용 (후원자 전용)",
             showInteractionAreas: "상호작용 영역 표시",
       gameCutscene: "게임 컷신 (미리보기)",

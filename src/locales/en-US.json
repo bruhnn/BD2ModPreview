@@ -20,6 +20,8 @@
         "themes": "Added themes and translated character names."
     },
     "preview": {
+        "syncGroups": "Sync group",
+        "syncGroup": "Sync group {group}. Previews with the same number share controls. Click again to unlink.",
         "datingInteractions": "Dating Interactions (Supporter Only)",
         "showInteractionAreas": "Show interaction areas",
         "gameCutscene": "In-game cutscene (Experimental)",

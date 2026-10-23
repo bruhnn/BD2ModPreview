@@ -15,6 +15,7 @@ import { useCharactersStore } from '../stores/characters'
 import NoInternetState from './NoInternetState.vue'
 import { useNetworkStatus } from '../composables/useNetworkStatus'
 import { Character } from '../types/character'
+import datingAssets from '../data/dating-assets.json'
 
 import { useI18n } from 'vue-i18n'
 
@@ -145,9 +146,12 @@ function getCharacterUrl(character: Character, type: keyof typeof ENDPOINTS): { 
 		case 'cutscene':
 			filename = `cutscene_char${character.id}/cutscene_char${character.id}`
 			break
-		case 'dating':
-			filename = `illust_dating${character.dating_id}/illust_dating${character.dating_id}`
+		case 'dating': {
+			const name = `illust_dating${character.dating_id}`
+			const skeleton = (datingAssets as Record<string, string[]>)[name]?.[0] ?? name
+			filename = `${skeleton}/${skeleton}`
 			break
+		}
 	}
 
 	if (!filename) {
