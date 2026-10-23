@@ -1,4 +1,11 @@
-<script setup lang="ts">
+<script
+    setup
+    lang="ts"
+>
+import { version } from "../../../package.json"
+
+import { useI18n } from "vue-i18n"
+import { X, Info } from "@lucide/vue"
 import {
     Dialog,
     DialogPanel,
@@ -14,87 +21,69 @@ defineProps({
 
 defineEmits(['close'])
 
-// TODO: move from hardcoded
+const { t } = useI18n()
 </script>
 
 <template>
     <TransitionRoot :show="show" as="template">
-        <Dialog as="div" class="relative z-50" @close="$emit('close')">
-            <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
-                leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
-                <div class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm" />
+        <Dialog as="div" class="updates-modal" @close="$emit('close')">
+            <TransitionChild as="template" enter="dialog-enter" enter-from="dialog-hidden" enter-to="dialog-visible"
+                leave="dialog-leave" leave-from="dialog-visible" leave-to="dialog-hidden">
+                <div class="updates-backdrop" />
             </TransitionChild>
 
-            <div class="fixed inset-0 flex items-center justify-center p-4">
-                <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0 scale-95"
-                    enter-to="opacity-100 scale-100" leave="ease-in duration-200" leave-from="opacity-100 scale-100"
-                    leave-to="opacity-0 scale-95">
-                    <DialogPanel
-                        class="relative w-full max-w-4xl max-h-[90vh] bg-slate-800 rounded-xl shadow-2xl border border-slate-700/50 flex flex-col overflow-hidden">
-                        <div class="relative px-6 py-4 border-b border-slate-700/50">
-                            <DialogTitle class="text-xl font-medium text-slate-100 text-center">
-                                What's New
+            <div class="updates-container">
+                <TransitionChild as="template" enter="dialog-enter" enter-from="panel-hidden" enter-to="panel-visible"
+                    leave="dialog-leave" leave-from="panel-visible" leave-to="panel-hidden">
+                    <DialogPanel class="updates-panel">
+                        <div class="updates-header">
+                            <DialogTitle class="updates-title">
+                                {{ t('whatsNew.title') }}
                             </DialogTitle>
 
-                            <button @click="$emit('close')"
-                                class="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-200 transition-colors duration-200">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12" />
-                                </svg>
+                            <button type="button" :aria-label="t('common.close')" @click="$emit('close')"
+                                class="preview-close-button updates-close">
+                                <X :size="16" aria-hidden="true" />
                             </button>
                         </div>
-                        <div class="text-slate-400 px-6 py-4 flex flex-col gap-2">
-                            <span>
-                                Have feedback or ideas? I'd love to hear from you! Open an issue
-                                on GitHub and I'll do my best to include your suggestions in
-                                future updates.
-                            </span>
-                            <span>
-                                有反馈或想法吗？欢迎在 GitHub 上分享！我很乐意听取你的建议并在未来的更新中实现。
-                            </span>
+                        <div class="updates-intro">
+                            <span>{{ t('whatsNew.feedback') }}</span>
                         </div>
 
-                        <DialogDescription class="flex-1 overflow-y-auto px-6 pb-6 text-slate-300 gap-6">
-                            <p class="mb-4 text-slate-300 font-semibold"></p>
-                            <div class="space-y-8">
+                        <DialogDescription class="updates-content">
+                            <p class="updates-summary"></p>
+                            <div class="updates-sections">
                                 <div>
-                                    <h3 class="text-lg font-semibold text-slate-100 flex items-center gap-2">
-                                        <span>Version 0.4.4</span>
-                                        <span
-                                            class="inline-block px-2 py-0.5 text-xs font-medium rounded border border-slate-600 bg-slate-700 text-slate-300 select-none">
-                                            Current
+                                    <h3 class="section-title">
+                                        <span>{{ t('whatsNew.version', { version }) }}</span>
+                                        <span class="version-badge">
+                                            {{ t('whatsNew.current') }}
                                         </span>
                                     </h3>
-                                    <ul class="list-disc list-inside space-y-1 mt-2">
-                                        <li class="text-slate-200">
-                                            Added "Always on Top" toggle in App Settings
+                                    <ul class="updates-list">
+                                        <li v-for="item in ['grid', 'controls', 'sequences', 'modManager', 'dating', 'datingCache', 'cutscenes', 'folders', 'themes']"
+                                            :key="item" class="update-item">
+                                            {{ t('whatsNew.' + item) }}
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                         </DialogDescription>
 
-                        <div class="bg-slate-800/50 px-6 py-4 border-t border-slate-600/30 backdrop-blur-sm">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center space-x-2">
-                                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    <p class="text-sm text-slate-400">
-                                        Got a suggestion or bug?
+                        <div class="updates-footer">
+                            <div class="footer-content">
+                                <div class="footer-link">
+                                    <Info class="github-icon" />
+                                    <p class="github-text">
                                         <a href="https://github.com/bruhnn/BD2ModPreview/issues" target="_blank"
-                                            class="text-blue-400 hover:text-blue-300 underline decoration-blue-400/50 hover:decoration-blue-300 underline-offset-2 transition-colors ml-1">
-                                            Open an issue on GitHub
+                                            class="github-link">
+                                            {{ t('whatsNew.issue') }}
                                         </a>
                                     </p>
                                 </div>
 
-                                <button @click="$emit('close')"
-                                    class="px-4 cursor-pointer py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 hover:text-white rounded-lg transition-colors duration-200 text-sm font-medium">
-                                    Got it!
+                                <button @click="$emit('close')" class="close-button">
+                                    {{ t('whatsNew.done') }}
                                 </button>
                             </div>
                         </div>
@@ -107,21 +96,206 @@ defineEmits(['close'])
 
 
 <style scoped>
-::-webkit-scrollbar {
-    width: 6px;
+.updates-modal {
+    position: relative;
+    z-index: 50;
 }
 
-::-webkit-scrollbar-track {
-    background: rgb(51 65 85 / 0.3);
-    border-radius: 3px;
+.updates-backdrop {
+    position: fixed;
+    inset: 0;
+    background: color-mix(in srgb, var(--surface-app) 80%, transparent);
+    backdrop-filter: blur(8px);
 }
 
-::-webkit-scrollbar-thumb {
-    background: rgb(100 116 139 / 0.5);
-    border-radius: 3px;
+.updates-container {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background: rgb(100 116 139 / 0.7);
+.updates-panel {
+    position: relative;
+    width: 100%;
+    max-width: 896px;
+    max-height: 90vh;
+    background: var(--surface-dialog);
+    border-radius: 12px;
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / .25);
+    border: 1px solid color-mix(in srgb, var(--border-default) 50%, transparent);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.updates-header {
+    position: relative;
+    padding: 16px 24px;
+    border-bottom: 1px solid color-mix(in srgb, var(--border-default) 50%, transparent);
+}
+
+.updates-title {
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 500;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+.updates-close {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.updates-intro {
+    color: var(--text-secondary);
+    padding: 16px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.updates-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 24px 24px;
+    color: var(--text-secondary);
+    gap: 24px;
+}
+
+.updates-summary {
+    margin-bottom: 16px;
+    font-weight: 600;
+}
+
+.updates-sections>*+* {
+    margin-top: 32px;
+}
+
+.section-title {
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.version-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 500;
+    border-radius: 4px;
+    border: 1px solid var(--border-strong);
+    background: var(--surface-card);
+    color: var(--text-secondary);
+    user-select: none;
+}
+
+.updates-list {
+    list-style: disc inside;
+    margin-top: 8px;
+}
+
+.updates-list>*+* {
+    margin-top: 4px;
+}
+
+.update-item {
+    color: var(--text-primary);
+}
+
+.updates-footer {
+    background: color-mix(in srgb, var(--surface-panel) 50%, transparent);
+    padding: 16px 24px;
+    border-top: 1px solid color-mix(in srgb, var(--border-strong) 30%, transparent);
+    backdrop-filter: blur(8px);
+}
+
+.footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footer-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.github-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--text-secondary);
+}
+
+.github-text {
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--text-secondary);
+}
+
+.github-link {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--accent) 50%, transparent);
+    text-underline-offset: 2px;
+    transition: text-decoration-color 150ms;
+    margin-left: 4px;
+}
+
+.github-link:hover {
+    text-decoration-color: var(--accent);
+}
+
+.close-button {
+    padding: 8px 16px;
+    cursor: pointer;
+    background: var(--surface-card);
+    color: var(--text-primary);
+    border-radius: 8px;
+    transition: background-color 200ms;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+}
+
+.close-button:hover {
+    background: var(--state-hover);
+}
+
+.dialog-enter {
+    transition: opacity 300ms ease-out, transform 300ms ease-out;
+}
+
+.dialog-leave {
+    transition: opacity 200ms ease-in, transform 200ms ease-in;
+}
+
+.dialog-hidden {
+    opacity: 0;
+}
+
+.dialog-visible {
+    opacity: 1;
+}
+
+.panel-hidden {
+    opacity: 0;
+    transform: scale(.95);
+}
+
+.panel-visible {
+    opacity: 1;
+    transform: scale(1);
 }
 </style>

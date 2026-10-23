@@ -5,7 +5,10 @@ use crate::utils::{detect_folder_type, file_to_data_uri};
 use std::collections::HashMap;
 use std::fs;
 use std::path::{Path, PathBuf};
+use sha2::{Sha256, Digest};
 use tauri::{AppHandle, Emitter};
+use winreg::RegKey;
+use winreg::enums::HKEY_LOCAL_MACHINE;
 
 #[tauri::command]
 pub fn get_spine_assets(folder_path: String) -> Result<SpineAssetData, Error> {
@@ -75,6 +78,30 @@ pub fn get_spine_assets(folder_path: String) -> Result<SpineAssetData, Error> {
 }
 
 #[tauri::command]
+pub fn get_mod_backgrounds(folder_path: String) -> Result<Vec<(String, String)>, Error> {
+    let path = Path::new(&folder_path).join("textures");
+    let entries = match fs::read_dir(&path) {
+        Ok(entries) => entries,
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(Vec::new()),
+        Err(error) => return Err(Error::IOError(error.to_string())),
+    };
+    let mut images = Vec::new();
+    for entry in entries {
+        let entry = entry.map_err(|error| Error::IOError(error.to_string()))?;
+        let path = entry.path();
+        if !entry.file_type().map_err(|error| Error::IOError(error.to_string()))?.is_file() {
+            continue;
+        }
+        let extension = path.extension().and_then(|ext| ext.to_str()).unwrap_or("").to_ascii_lowercase();
+        if matches!(extension.as_str(), "png" | "jpg" | "jpeg" | "webp") {
+            images.push(file_to_data_uri(&path)?);
+        }
+    }
+    images.sort_by(|a, b| a.0.cmp(&b.0));
+    Ok(images)
+}
+
+#[tauri::command]
 pub fn download_missing_skeleton(app: AppHandle, folder_path: String) -> Result<(), DownloadError> {
     let (mod_type, char_id_option) = detect_folder_type(folder_path.clone());
     let char_id = char_id_option.ok_or(DownloadError::CharacterIdNotFound)?;
@@ -103,4 +130,32 @@ pub fn download_missing_skeleton(app: AppHandle, folder_path: String) -> Result<
     }
 
     Ok(())
+}
+
+#[tauri::command]
+pub fn get_machine_id() -> Result<String, Error> {
+    let hklm = RegKey::predef(HKEY_LOCAL_MACHINE);
+
+    let key = hklm
+        .open_subkey(r"SOFTWARE\Microsoft\Cryptography")
+        .map_err(|err| {
+            eprint!("Failed to open registry key: {}", err);
+            Error::MachineIdNotFound
+        })?;
+
+    let machine_guid: String = key
+        .get_value("MachineGuid")
+        .map_err(|err| {
+            eprint!("Failed to get MachineGuid value: {}", err);
+            Error::MachineIdNotFound
+        })?;
+
+    let mut hasher = Sha256::new();
+
+    hasher.update(b"BD2ModPreview");
+    hasher.update(machine_guid.trim().to_lowercase().as_bytes());
+
+    let hash = hasher.finalize();
+
+    Ok(hex::encode(hash))
 }

@@ -1,7 +1,7 @@
 {
   "name": "bd2modpreview",
   "private": true,
-  "version": "0.4.4",
+  "version": "1.0.0-beta.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,27 +10,25 @@
     "tauri": "tauri"
   },
   "dependencies": {
-    "@floating-ui/vue": "^1.1.7",
+    "@floating-ui/vue": "^2.0.1",
     "@headlessui/vue": "^1.7.23",
-    "@tailwindcss/vite": "^4.1.11",
-    "@tauri-apps/api": "^2",
-    "@tauri-apps/plugin-cli": "^2.4.0",
-    "@tauri-apps/plugin-dialog": "^2.3.0",
-    "@tauri-apps/plugin-fs": "^2.4.0",
-    "@tauri-apps/plugin-opener": "^2",
-    "@tauri-apps/plugin-window-state": "^2.4.0",
-    "@vueuse/core": "^13.5.0",
-    "interactjs": "^1.10.27",
-    "pinia": "^3.0.3",
-    "tailwindcss": "^4.1.11",
-    "vue": "^3.5.13",
-    "vue-i18n": "^11.1.11"
+    "@lucide/vue": "^1.59.0",
+    "@tauri-apps/api": "^2.12.4",
+    "@tauri-apps/plugin-cli": "^2.5.0",
+    "@tauri-apps/plugin-dialog": "^2.8.3",
+    "@tauri-apps/plugin-fs": "^2.7.1",
+    "@tauri-apps/plugin-opener": "^2.7.2",
+    "@tauri-apps/plugin-window-state": "^2.5.0",
+    "@vueuse/core": "^15.0.0",
+    "pinia": "^4.1.0",
+    "vue": "^3.5.44",
+    "vue-i18n": "^11.4.14"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^2",
-    "@vitejs/plugin-vue": "^5.2.1",
-    "typescript": "~5.6.2",
-    "vite": "^6.0.3",
-    "vue-tsc": "^2.1.10"
+    "@tauri-apps/cli": "^2.12.3",
+    "@vitejs/plugin-vue": "^6.0.10",
+    "typescript": "~5.9.3",
+    "vite": "^8.3.4",
+    "vue-tsc": "^3.3.13"
   }
 }

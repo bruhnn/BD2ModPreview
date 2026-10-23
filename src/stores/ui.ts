@@ -1,116 +1,91 @@
 import { useLocalStorage } from '@vueuse/core';
 import { defineStore } from 'pinia'
-import { ref, readonly, shallowRef } from 'vue'
+import { ref, readonly, watch } from 'vue'
 
 import { getVersion } from '@tauri-apps/api/app';
+import { useI18n } from 'vue-i18n';
+import { invoke } from '@tauri-apps/api/core';
 
 export const useUIStore = defineStore('ui', () => {
-  const controlsPosition = useLocalStorage<'floating' | 'sidebar'>('CONTROLS_POSITION', 'sidebar');
+  const { locale } = useI18n()
 
-  const showControlsSidebar = useLocalStorage('SHOW_CONTROLS_SIDEBAR', false);
+  const theme = useLocalStorage('APP_THEME', 'dark-3')
+  const language = useLocalStorage<string>('APP_LANGUAGE', 'en')
 
-  const showControls = ref(false);
+  const machineId = ref<string | null>(null)
 
-  const showLogs = ref(false)
-  const showHistory = ref(false)
+  async function loadMachineId() {
+    if (!machineId.value) {
+      machineId.value = await invoke<string>('get_machine_id')
+    }
+    return machineId.value
+  }
 
-  const showWhatsNew = ref(false)
+  const isSettingsVisible = ref(false)
+  const isLogsVisible = ref(false)
+  const isHistoryVisible = ref(false)
+  const isWhatsNewVisible = ref(false)
 
   async function shouldShowWhatsNew() {
-    const dontShowWhatsNewForVersion = localStorage.getItem('DONT_SHOW_WHATS_NEW_FOR_VERSION');
-    const currentVersion = await getVersion();
-    showWhatsNew.value = !(dontShowWhatsNewForVersion && dontShowWhatsNewForVersion === currentVersion);
+    const dontShowWhatsNewForVersion = localStorage.getItem('DONT_SHOW_WHATS_NEW_FOR_VERSION')
+    const currentVersion = await getVersion()
+
+    isWhatsNewVisible.value = !(dontShowWhatsNewForVersion && dontShowWhatsNewForVersion === currentVersion)
   }
 
-  if (controlsPosition.value === 'sidebar') {
-    showControls.value = showControlsSidebar.value;
+  function openSettings() {
+    isSettingsVisible.value = true
   }
 
-  function closeAllModals() {
-    closeLogs()
-    closeControls()
-    closeHistory()
+  function closeSettings() {
+    isSettingsVisible.value = false
   }
 
   function openLogs() {
-    showLogs.value = true
+    isLogsVisible.value = true
   }
 
   function closeLogs() {
-    showLogs.value = false
+    isLogsVisible.value = false
   }
 
   function openHistory() {
-    showHistory.value = true
+    isHistoryVisible.value = true
   }
 
   function closeHistory() {
-    showHistory.value = false
-  }
-
-  function openControls() {
-    showControls.value = true
-    if (controlsPosition.value === 'sidebar') {
-      showControlsSidebar.value = true;
-    }
-  }
-
-  function closeControls() {
-    showControls.value = false
-    if (controlsPosition.value === 'sidebar') {
-      showControlsSidebar.value = false;
-    }
+    isHistoryVisible.value = false
   }
 
   async function closeWhatsNew() {
-    showWhatsNew.value = false;
+    isWhatsNewVisible.value = false;
 
     localStorage.setItem('DONT_SHOW_WHATS_NEW_FOR_VERSION', await getVersion());
   }
 
-  const setControlsToFloating = () => {
-    controlsPosition.value = 'floating'
-  }
-
-  const setControlsToSidebar = () => {
-    controlsPosition.value = 'sidebar'
-  }
-
-  const toggleControls = () => {
-    showControls.value = !showControls.value;
-    if (controlsPosition.value === 'sidebar') {
-      showControlsSidebar.value = !showControlsSidebar.value;
-    }
-  }
-
-  const language = useLocalStorage<string>('APP_LANGUAGE', 'en');
+  watch(theme, value => { document.documentElement.dataset.theme = value; }, { immediate: true });
+  watch(language, value => { locale.value = value; }, { immediate: true });
 
   return {
-    controlsPosition: readonly(controlsPosition),
-    setControlsToFloating,
-    setControlsToSidebar,
+    machineId,
+    loadMachineId,
+    
+    theme,
+    language,
 
-    showControls: readonly(showControls),
-    showLogs: readonly(showLogs),
-    showHistory: readonly(showHistory),
-    showWhatsNew: readonly(showWhatsNew),
+    isSettingsVisible: readonly(isSettingsVisible),
+    isLogsVisible: readonly(isLogsVisible),
+    isHistoryVisible: readonly(isHistoryVisible),
+    isWhatsNewVisible: readonly(isWhatsNewVisible),
+
     shouldShowWhatsNew,
-
-    openControls,
+    openSettings,
+    closeSettings,
     openLogs,
     openHistory,
     closeLogs,
-    closeHistory,
-    closeControls,
-    closeAllModals,
     closeWhatsNew,
+    closeHistory,
 
-    toggleControls,
-
-    
-    language,
-    setLanguage(newLanguage: string) {
-      language.value = newLanguage;
-    }
   }
 })

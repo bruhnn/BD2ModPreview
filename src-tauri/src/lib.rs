@@ -1,4 +1,5 @@
 mod commands;
+mod ipc;
 mod download;
 mod errors;
 mod types;
@@ -46,13 +47,18 @@ pub fn run() {
     }
 
     tauri::Builder::default()
+        .manage(ipc::ManagerConnection::default())
         .plugin(tauri_plugin_window_state::Builder::new().build())
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_cli::init())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
+            ipc::connect_to_bd2mm,
+            ipc::enable_mod_on_bd2mm,
+            get_machine_id,
             get_spine_assets,
+            get_mod_backgrounds,
             download_missing_skeleton
         ])
         .run(tauri::generate_context!())

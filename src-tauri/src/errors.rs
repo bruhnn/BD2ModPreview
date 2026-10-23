@@ -10,6 +10,7 @@ pub enum Error {
     InvalidSkeletonFileName,
     InvalidAtlasFileName,
     InvalidFileName(String),
+    MachineIdNotFound,
     IOError(String),
 }
 

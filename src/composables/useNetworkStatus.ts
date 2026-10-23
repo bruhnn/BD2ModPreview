@@ -4,6 +4,7 @@ export function useNetworkStatus() {
   // assume the user is connected by default and then check the connection
   // this is to avoid some delay (~50ms)
   const isConnected = ref(true)
+  const isChecking = ref(false)
 
   const endpoints = [
     "https://www.google.com/generate_204",
@@ -16,10 +17,12 @@ export function useNetworkStatus() {
   ]
 
   const checkConnection = async () => {
+    if (isChecking.value) return
+    isChecking.value = true
     const controller = new AbortController()
 
-    const checkEndpoint = async (url) => {
-      const response = await fetch(url, {
+    const checkEndpoint = async (url: string) => {
+      await fetch(url, {
         method: 'HEAD',
         mode: 'no-cors',
         cache: 'no-cache',
@@ -38,10 +41,13 @@ export function useNetworkStatus() {
       isConnected.value = true
     } catch (error) {
       isConnected.value = false
+    } finally {
+      isChecking.value = false
     }
   }
   return {
     isConnected,
+    isChecking,
     checkConnection
   }
 }

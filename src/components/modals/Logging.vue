@@ -1,4 +1,8 @@
-<script setup lang="ts">
+<script
+  setup
+  lang="ts"
+>
+import { Copy, Trash2, X } from "@lucide/vue"
 import {
   Dialog,
   DialogPanel,
@@ -7,93 +11,74 @@ import {
   TransitionRoot,
   TransitionChild
 } from '@headlessui/vue'
-import { useLogger } from '../../composables/useLogger';
-import { useClipboard } from '@vueuse/core';
+
+import { useLogger } from '../../composables/useLogger'
+
+import { useClipboard } from '@vueuse/core'
 
 const props = defineProps({
   show: Boolean
 })
-
 const emit = defineEmits(["close"])
-
 const { logs, clearLogs } = useLogger()
-
 const { copy } = useClipboard()
 
 function handleCopy() {
-  let stringLogs = (logs.value.map((item) => `${item.timestamp}  ${item.level.toUpperCase()}  ${item.message}`).join("\n"));
-  copy(stringLogs);
+  let stringLogs = (logs.value.map((item) => `${item.timestamp}  ${item.level.toUpperCase()}  ${item.message}`).join("\n"))
+  copy(stringLogs)
 }
 </script>
 <template>
-  <TransitionRoot :show="show" as="template" enter="duration-300 ease-out" enter-from="opacity-0" enter-to="opacity-100"
-    leave="duration-200 ease-in" leave-from="opacity-100" leave-to="opacity-0">
-    <Dialog as="div" class="relative z-9999" @close="$emit('close')">
-      <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
-        leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
-        <div class="fixed inset-0 bg-black/30" />
+  <TransitionRoot :show="show" as="template" enter="dialog-enter" enter-from="dialog-hidden" enter-to="dialog-visible"
+    leave="dialog-leave" leave-from="dialog-visible" leave-to="dialog-hidden">
+    <Dialog as="div" class="logs-modal" @close="$emit('close')">
+      <TransitionChild as="template" enter="dialog-enter" enter-from="dialog-hidden" enter-to="dialog-visible"
+        leave="dialog-leave" leave-from="dialog-visible" leave-to="dialog-hidden">
+        <div class="logs-backdrop" />
       </TransitionChild>
-      <div class="fixed inset-0 flex w-screen items-center justify-center">
-        <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0 scale-95"
-          enter-to="opacity-100 scale-100" leave="ease-in duration-200" leave-from="opacity-100 scale-100"
-          leave-to="opacity-0 scale-95">
-          <DialogPanel class="flex flex-col max-w-4xl m-4 rounded bg-gray-800 p-4 max-h-[90vh]"
-            :class="{ 'w-lg': logs.length == 0 }">
-            <div class="flex flex-row justify-between mb-4 text-2xl text-gray-400">
-              <DialogTitle class="font-semibold">
+      <div class="logs-container">
+        <TransitionChild as="template" enter="dialog-enter" enter-from="panel-hidden" enter-to="panel-visible"
+          leave="dialog-leave" leave-from="panel-visible" leave-to="panel-hidden">
+          <DialogPanel class="logs-panel" :class="{ empty: logs.length == 0 }">
+            <div class="logs-header">
+              <DialogTitle class="logs-title">
                 Logs
               </DialogTitle>
-              <div class="flex gap-2">
-                <button @click="clearLogs"
-                  class="border-0 inset-0 transition-colors duration-200 hover:text-gray-300 cursor-pointer outline-none">
-                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                    fill="currentColor">
-                    <path
-                      d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
-                  </svg>
+              <div class="logs-actions">
+                <button @click="clearLogs" class="logs-action" type="button" title="Clear logs" aria-label="Clear logs">
+                  <Trash2 :size="16" aria-hidden="true" />
                 </button>
-                <button @click="handleCopy"
-                  class="border-0 inset-0 transition-colors duration-200 hover:text-gray-300 cursor-pointer outline-none">
-                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                    fill="currentColor">
-                    <path
-                      d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z" />
-                  </svg>
+                <button @click="handleCopy" class="logs-action" type="button" title="Copy logs" aria-label="Copy logs">
+                  <Copy :size="16" aria-hidden="true" />
                 </button>
-                <button
-                  class="border-0 inset-0 transition-colors duration-200 hover:text-gray-300 cursor-pointer outline-none"
-                  @click="$emit('close')">
-                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                    fill="currentColor">
-                    <path
-                      d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-                  </svg>
+                <button type="button" aria-label="Close" class="preview-close-button" @click="$emit('close')">
+                  <X :size="16" aria-hidden="true" />
                 </button>
               </div>
             </div>
-            <DialogDescription class="flex flex-col gap-2 overflow-y-auto text-gray-200 px-4">
+            <DialogDescription class="logs-content">
               <div v-if="logs.length > 0" ref="logsContent">
-                <div v-for="log in logs" :key="log.timestamp" class="flex gap-2">
-                  <span class="text-gray-500 font-mono">
+                <div v-for="log in logs" :key="log.timestamp" class="log-row">
+                  <span class="log-time">
                     {{ log.timestamp }}
                   </span>
                   <span :class="{
-                    'text-blue-400': log.level === 'info',
-                    'text-green-400': log.level === 'success',
-                    'text-yellow-400': log.level === 'warning',
-                    'text-red-400': log.level === 'error'
-                  }" class="font-mono font-semibold inline-block w-16 text-center">
+                    'log-info': log.level === 'info',
+                    'log-success': log.level === 'success',
+                    'log-warning': log.level === 'warning',
+                    'log-error': log.level === 'error'
+                  }" class="log-level">
                     {{ log.level.toUpperCase() }}
                   </span>
-                  <span class="flex-1 text-gray-200 break-all" :class="{
-                    'text-red-300': log.level === 'error'
+                  <span class="log-message" :class="{
+                    'log-error': log.level === 'error'
                   }">
                     {{ log.message }}
                   </span>
                 </div>
               </div>
               <div v-else>
-                <p class="text-gray-500 text-center">No logs available.</p>
+                <p class="logs-empty">No logs available.</p>
               </div>
             </DialogDescription>
           </DialogPanel>
@@ -103,21 +88,162 @@ function handleCopy() {
   </TransitionRoot>
 </template>
 <style scoped>
-::-webkit-scrollbar {
-  width: 8px;
+.logs-modal {
+  position: relative;
+  z-index: 10000;
+  color: var(--text-primary);
+  font-size: 14px;
 }
 
-::-webkit-scrollbar-track {
-  background: #2d3748;
+.logs-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / .55);
 }
 
-::-webkit-scrollbar-thumb {
-  background-color: #718096;
-  border-radius: 4px;
+.logs-container {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background-color: #a0aec0;
+.logs-panel {
+  display: flex;
+  flex-direction: column;
+  width: 896px;
+  max-width: 100%;
+  max-height: calc(100vh - 40px);
+  background: var(--surface-app);
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+}
+
+.logs-panel.empty {
+  width: 512px;
+}
+
+.logs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  padding: 16px 20px;
+}
+
+.logs-title {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.logs-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.log-row {
+  display: flex;
+  gap: 8px;
+  line-height: 1.5;
+}
+
+.logs-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.logs-action:hover {
+  background: var(--state-hover);
+}
+
+.logs-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 4px 24px 24px;
+  color: var(--text-primary);
+}
+
+.log-time {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.log-level {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  display: inline-block;
+  width: 64px;
+  text-align: center;
+}
+
+.log-message {
+  flex: 1;
+  color: var(--text-primary);
+  word-break: break-all;
+}
+
+.log-info {
+  color: var(--info);
+}
+
+.log-success {
+  color: var(--success);
+}
+
+.log-warning {
+  color: var(--warning);
+}
+
+.log-error {
+  color: var(--error);
+}
+
+.logs-empty {
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 32px 0;
+}
+
+.dialog-enter {
+  transition: opacity 300ms ease-out, transform 300ms ease-out;
+}
+
+.dialog-leave {
+  transition: opacity 200ms ease-in, transform 200ms ease-in;
+}
+
+.dialog-hidden {
+  opacity: 0;
+}
+
+.dialog-visible {
+  opacity: 1;
+}
+
+.panel-hidden {
+  opacity: 0;
+  transform: scale(.95);
+}
+
+.panel-visible {
+  opacity: 1;
+  transform: scale(1);
 }
 
 * {

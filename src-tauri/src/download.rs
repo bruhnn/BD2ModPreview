@@ -6,7 +6,7 @@ use std::io::{Read, Write};
 use std::path::Path;
 use tauri::{AppHandle, Emitter};
 
-const CUTSCENE_URL: &str = "https://raw.githubusercontent.com/myssal/Brown-Dust-2-Asset/refs/heads/master/spine/cutscenes/";
+const CUTSCENE_URL: &str = "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/spine/cutscenes/";
 const IDLE_URL: &str =
     "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/spine/char/";
 const NPC_URL: &str =

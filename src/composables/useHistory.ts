@@ -13,24 +13,14 @@ export function useHistory() {
         return history.value.slice().sort((itemA, itemB) => new Date(itemB.timestamp).getTime() - new Date(itemA.timestamp).getTime())
     })
 
-    function getHistoryItemByPath(path: string) {
-        return history.value.filter((item) => item.source.type === "folder" && item.source.path === path)[0]
-    }
-    function getHistoryItemByUrl(skelUrl: string, atlasUrl: string) {
-        return history.value.filter((item) => item.source.type === "url" && item.source.skeletonUrl === skelUrl && item.source.atlasUrl === atlasUrl)[0]
-    }
+    function addToHistory(source: SpineSource, characterId?: string | null, modType?: string | null, title?: string) {
+        const index = history.value.findIndex(item => source.type === "folder"
+            ? item.source.type === "folder" && item.source.path === source.path
+            : item.source.type === "url" && item.source.skeletonUrl === source.skeletonUrl && item.source.atlasUrl === source.atlasUrl);
 
-    function addToHistory(source: SpineSource, characterId?: string | null, modType?: string | null) {
-        let item: HistoryItem = source.type === "folder"
-            ? getHistoryItemByPath(source.path)
-            : getHistoryItemByUrl(source.skeletonUrl, source.atlasUrl);
-
-        if (item !== undefined) {
-            // update item
-            const index = history.value.findIndex((hItem) => hItem === item);
-            if (index !== -1) {
-                history.value[index] = { ...item, timestamp: new Date().toISOString() };
-            }
+        if (index !== -1) {
+            const item = history.value[index];
+            history.value[index] = { ...item, title: title ?? item.title, timestamp: new Date().toISOString() };
         } else {
             // add item
 
@@ -43,6 +33,7 @@ export function useHistory() {
 
             history.value.push({
                 id: nextId.value,
+                title,
                 source,
                 characterId,
                 modType,
@@ -55,9 +46,7 @@ export function useHistory() {
 
     function removeFromHistory(id: number) {
         const index = history.value.findIndex((hItem) => hItem.id === id);
-        console.log(id, index)
         if (index !== -1) { 
-            console.log('removing')
             history.value.splice(index, 1);
         }
     }

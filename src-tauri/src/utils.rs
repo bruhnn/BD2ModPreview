@@ -10,7 +10,8 @@ pub fn file_to_data_uri(file_path: &Path) -> Result<(String, String), Error> {
         .ok_or_else(|| Error::InvalidFileName(format!("{:?}", file_path)))?
         .to_string();
 
-    let ext = file_path.extension().and_then(|s| s.to_str());
+    let extension = file_path.extension().and_then(|s| s.to_str()).unwrap_or("").to_ascii_lowercase();
+    let ext = Some(extension.as_str());
 
     let (mime_type, encoded_data) = match ext {
         Some("json") | Some("atlas") => {
@@ -25,11 +26,16 @@ pub fn file_to_data_uri(file_path: &Path) -> Result<(String, String), Error> {
             let encoded_data = STANDARD.encode(content.as_bytes());
             (mime_type, encoded_data)
         }
-        Some("png") => {
+        Some("png" | "jpg" | "jpeg" | "webp") => {
             let bytes = fs::read(file_path).map_err(|e| {
                 Error::IOError(format!("Failed to read file '{}': {}", file_name, e))
             })?;
-            ("image/png", STANDARD.encode(&bytes))
+            let mime_type = match ext {
+                Some("jpg" | "jpeg") => "image/jpeg",
+                Some("webp") => "image/webp",
+                _ => "image/png",
+            };
+            (mime_type, STANDARD.encode(&bytes))
         }
         Some("skel") | _ => {
             let bytes = fs::read(file_path).map_err(|e| {
