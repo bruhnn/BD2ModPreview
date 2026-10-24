@@ -165,11 +165,12 @@ const otherUpdates = [
 <style scoped>
 .updates-modal {
     position: relative;
-    z-index: 50;
+    z-index: 10000;
 }
 
 .updates-backdrop {
     position: fixed;
+    z-index: 10000;
     inset: 0;
     background: color-mix(in srgb, var(--surface-app) 80%, transparent);
     backdrop-filter: blur(8px);
@@ -177,6 +178,7 @@ const otherUpdates = [
 
 .updates-container {
     position: fixed;
+    z-index: 10000;
     inset: 0;
     display: flex;
     align-items: center;
