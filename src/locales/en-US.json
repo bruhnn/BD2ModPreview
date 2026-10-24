@@ -1,5 +1,9 @@
 {
     "whatsNew": {
+        "multiplePreviews": "Multiple Previews",
+        "syncGroups": "Assign previews to the same numbered group to zoom, move, and control playback together.",
+        "playbackFixes": "Fixed pausing and restarting previews from the toolbar.",
+        "datingFixes": "Fixed dating interactions starting on an empty animation and added support for dating scenes with multiple parts.",
         "characters": "Updated character data and improved drag-and-drop support.",
         "interface": "Redesigned settings, character list, history, and logs.",
         "layers": "Choose skins and show or hide individual layers.",

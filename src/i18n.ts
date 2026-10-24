@@ -6,6 +6,13 @@ const messages = {
     en_US: en_US,
     zh_CN: {
         whatsNew: {
+            "multiplePreviews": "多个预览",
+            "syncGroups": "将预览分配到相同编号的组，一起缩放、移动和控制播放。",
+            "playbackFixes": "修复了通过工具栏暂停和重新播放预览的问题。",
+            "datingFixes": "修复了约会互动从空动画开始的问题，并支持包含多个部分的约会场景。",
+            "datingInteractions": "约会互动",
+            "otherImprovements": "其他改进",
+            "supporterMessage": "此功能仅限赞助者使用。如想支持开发并获得访问权限，可以通过以下平台赞助：",
             "characters": "更新角色数据并改进拖放支持。",
             "interface": "重新设计了设置、角色列表、历史记录和日志。",
             "layers": "选择皮肤，并显示或隐藏单独的图层。",
@@ -286,6 +293,13 @@ const messages = {
     },
     ja_JP: {
         whatsNew: {
+            "multiplePreviews": "複数のプレビュー",
+            "syncGroups": "同じ番号のグループに設定したプレビューを、一緒にズーム、移動、再生操作できます。",
+            "playbackFixes": "ツールバーからの一時停止と最初からの再生を修正しました。",
+            "datingFixes": "デートのインタラクションが空のアニメーションから始まる問題を修正し、複数パートのデートシーンに対応しました。",
+            "datingInteractions": "デートのインタラクション",
+            "otherImprovements": "その他の改善",
+            "supporterMessage": "この機能は支援者限定です。開発を支援して利用するには、こちらからご支援ください：",
             "characters": "キャラクターデータを更新し、ドラッグ＆ドロップを改善しました。",
             "interface": "設定、キャラクター一覧、履歴、ログをリニューアルしました。",
             "layers": "スキンの選択や、レイヤーごとの表示・非表示を切り替えられます。",
@@ -566,6 +580,13 @@ const messages = {
     },
     ko_KR: {
         whatsNew: {
+            "multiplePreviews": "여러 미리보기",
+            "syncGroups": "미리보기를 같은 번호의 그룹으로 지정하면 확대, 이동, 재생을 함께 제어할 수 있습니다.",
+            "playbackFixes": "도구 모음에서 미리보기를 일시 정지하고 처음부터 재생하는 문제를 수정했습니다.",
+            "datingFixes": "데이트 상호작용이 빈 애니메이션으로 시작하는 문제를 수정하고 여러 부분으로 구성된 데이트 장면을 지원합니다.",
+            "datingInteractions": "데이트 상호작용",
+            "otherImprovements": "기타 개선 사항",
+            "supporterMessage": "이 기능은 후원자 전용입니다. 개발을 후원하고 이용하려면 다음 플랫폼에서 후원해 주세요:",
             "characters": "캐릭터 데이터를 업데이트하고 드래그 앤 드롭을 개선했습니다.",
             "interface": "설정, 캐릭터 목록, 기록, 로그를 새롭게 디자인했습니다.",
             "layers": "스킨을 선택하고 개별 레이어를 표시하거나 숨길 수 있습니다.",

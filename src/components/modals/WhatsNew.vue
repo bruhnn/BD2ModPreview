@@ -39,12 +39,16 @@ const supportLinks = [
 const otherUpdates = [
     "characters",
     "controls",
+    "syncGroups",
     "sequences",
     "layers",
     "cutscenes",
     "modManager",
     "interface",
-    "themes"
+    "themes",
+    "folders",
+    "playbackFixes",
+    "datingFixes"
 ]
 </script>
 
