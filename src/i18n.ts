@@ -33,6 +33,9 @@ const messages = {
             "themes": "添加主题和角色名称翻译。"
         },
         preview: {
+            minigameInteractions: "小游戏互动",
+            minigameFever: "狂热模式",
+            minigameHint: "点击、长按或拖动任意一侧。按住鼠标中键移动镜头。",
             syncGroups: "同步组",
             syncGroup: "同步组 {group}。编号相同的预览共享控制，再次点击可取消同步。",
             datingInteractions: "约会互动（仅限赞助者）",
@@ -149,6 +152,9 @@ const messages = {
             close: '关闭'
         },
         app: {
+            copyMachineId: "复制到剪贴板",
+            copied: "已复制到剪贴板",
+            machineIdNotFound: "无法获取设备 ID",
             backToHome: '返回',
             toggleControls: '控制面板',
         },
@@ -164,6 +170,7 @@ const messages = {
             noCharactersFound: '未找到角色。',
             loadingCharacters: '正在加载角色...',
             tabs: {
+                minigames: "小游戏",
                 standing: '立绘',
                 cutscene: '剧情',
                 dating: '约会'
@@ -320,6 +327,9 @@ const messages = {
             "themes": "テーマとキャラクター名の翻訳を追加しました。"
         },
         preview: {
+            minigameInteractions: "ミニゲームのインタラクション",
+            minigameFever: "フィーバー",
+            minigameHint: "左右どちらかをクリック、長押し、またはドラッグしてください。マウスの中ボタンでカメラを移動できます。",
             syncGroups: "同期グループ",
             syncGroup: "同期グループ {group}。同じ番号のプレビューは操作を共有します。もう一度クリックすると解除します。",
             datingInteractions: "デートのインタラクション（支援者限定）",
@@ -436,6 +446,9 @@ const messages = {
             close: '閉じる'
         },
         app: {
+            copyMachineId: "クリップボードにコピー",
+            copied: "クリップボードにコピーしました",
+            machineIdNotFound: "マシン ID を取得できません",
             backToHome: '戻る',
             toggleControls: 'コントロール',
         },
@@ -451,6 +464,7 @@ const messages = {
             noCharactersFound: 'キャラクターが見つかりません。',
             loadingCharacters: 'キャラクターを読み込み中...',
             tabs: {
+                minigames: "ミニゲーム",
                 standing: 'スタンディング',
                 cutscene: 'カットシーン',
                 dating: 'デート'
@@ -607,6 +621,9 @@ const messages = {
             "themes": "테마와 캐릭터 이름 번역을 추가했습니다."
         },
         preview: {
+            minigameInteractions: "미니게임 상호작용",
+            minigameFever: "피버",
+            minigameHint: "양쪽 중 한쪽을 클릭하거나 길게 누르거나 드래그하세요. 마우스 가운데 버튼으로 카메라를 이동할 수 있습니다.",
             syncGroups: "동기화 그룹",
             syncGroup: "동기화 그룹 {group}. 같은 번호의 미리보기는 조작을 공유합니다. 다시 클릭하면 해제됩니다.",
             datingInteractions: "데이트 상호작용 (후원자 전용)",
@@ -723,6 +740,9 @@ const messages = {
             close: '닫기'
         },
         app: {
+            copyMachineId: "클립보드에 복사",
+            copied: "클립보드에 복사했습니다",
+            machineIdNotFound: "기기 ID를 가져올 수 없습니다",
             backToHome: '뒤로',
             toggleControls: '컨트롤',
         },
@@ -738,6 +758,7 @@ const messages = {
             noCharactersFound: '캐릭터를 찾을 수 없습니다.',
             loadingCharacters: '캐릭터 로딩 중...',
             tabs: {
+                minigames: "미니게임",
                 standing: '기본',
                 cutscene: '컷신',
                 dating: '데이트'
