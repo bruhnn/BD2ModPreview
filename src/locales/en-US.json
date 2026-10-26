@@ -26,6 +26,9 @@
         "otherImprovements": "Other Improvements"
     },
     "preview": {
+        "minigameInteractions": "Minigame interactions",
+        "minigameFever": "Fever",
+        "minigameHint": "Tap, hold, or drag on either side. Use the middle mouse button to move the camera.",
         "syncGroups": "Sync group",
         "syncGroup": "Sync group {group}. Previews with the same number share controls. Click again to unlink.",
         "datingInteractions": "Dating Interactions (Supporter Only)",
@@ -157,6 +160,7 @@
         "noCharactersFound": "No characters found.",
         "loadingCharacters": "Loading characters...",
         "tabs": {
+            "minigames": "Minigames",
             "standing": "Standing",
             "cutscene": "Cutscene",
             "dating": "Dating"

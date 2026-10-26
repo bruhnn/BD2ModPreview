@@ -5,6 +5,7 @@ import { usePreviewerStore, type PreviewControl } from "../stores/previewer";
 import { useHistory } from "./useHistory";
 import { useLogger } from "./useLogger";
 import { useGameCutscene } from "./useGameCutscene";
+import { useMinigameInteractions } from "./useMinigameInteractions";
 import { useDatingInteractions } from "./useDatingInteractions";
 import type {
 	SpineAssetsData,
@@ -21,6 +22,7 @@ export function usePreview(
 	const { addToHistory } = useHistory();
 	const { t, te } = useI18n();
 	const cutscene = useGameCutscene();
+	const minigame = useMinigameInteractions();
 	const datingInteraction = useDatingInteractions((animation) => {
 		if (!settings.value) return;
 		settings.value.followGlobalAnimation = false;
@@ -91,7 +93,7 @@ export function usePreview(
 				settings.value.loopAnimation = control.value;
 				break;
 			case "animation": {
-				if (datingInteraction.enabled.value) return;
+				if (datingInteraction.enabled.value || minigame.enabled.value) return;
 				const animation = control.value || previewerStore.globalAnimation || allAnimations.value[0];
 				if (!allAnimations.value.includes(animation)) return;
 				stopGameCutscene();
@@ -134,6 +136,7 @@ export function usePreview(
 			return;
 		stopSequence();
 		datingInteraction.enabled.value = false;
+		minigame.enabled.value = false;
 		if (!cutscene.active.value)
 			previousCamera = camera ? { ...camera } : null;
 		camera = {
@@ -161,6 +164,7 @@ export function usePreview(
 	function playSequence(sequence: AnimationSequence) {
 		if (!spinePlayer || !settings.value) return;
 		datingInteraction.enabled.value = false;
+		minigame.enabled.value = false;
 		stopGameCutscene();
 		activeSequence.value = sequence;
 		settings.value.followGlobalAnimation = false;
@@ -275,13 +279,14 @@ export function usePreview(
 		const { signal } = cameraListeners;
 		let drag: { id: number; x: number; y: number } | null = null;
 		canvas.style.touchAction = "none";
+		window.addEventListener("blur", () => minigame.cancel(), { signal });
 		canvas.addEventListener(
 			"pointerdown",
 			(event) => {
 				if (event.button !== 0 && event.button !== 1) return;
 				if (
 					!activeSequence.value &&
-					datingInteraction.pointerDown(event)
+					(minigame.pointerDown(event) || datingInteraction.pointerDown(event))
 				) {
 					settings.value!.paused = false;
 					player.play();
@@ -300,7 +305,7 @@ export function usePreview(
 		canvas.addEventListener(
 			"pointermove",
 			(event) => {
-				if (datingInteraction.pointerMove(event)) return;
+				if (minigame.pointerMove(event) || datingInteraction.pointerMove(event)) return;
 				if (!camera || !drag || drag.id !== event.pointerId) return;
 				const dx = event.clientX - drag.x;
 				const dy = event.clientY - drag.y;
@@ -324,7 +329,7 @@ export function usePreview(
 		canvas.addEventListener(
 			"pointerup",
 			(event) => {
-				if (datingInteraction.pointerUp(event)) return;
+				if (minigame.pointerUp(event) || datingInteraction.pointerUp(event)) return;
 				if (drag?.id !== event.pointerId) return;
 				canvas.releasePointerCapture(event.pointerId);
 				drag = null;
@@ -333,7 +338,8 @@ export function usePreview(
 		);
 		canvas.addEventListener(
 			"lostpointercapture",
-			() => {
+			(event) => {
+				minigame.cancel(event.pointerId);
 				drag = null;
 				datingInteraction.cancelHold();
 				datingInteraction.cancelDrag();
@@ -342,7 +348,8 @@ export function usePreview(
 		);
 		canvas.addEventListener(
 			"pointercancel",
-			() => {
+			(event) => {
+				minigame.cancel(event.pointerId);
 				drag = null;
 				datingInteraction.cancelHold();
 				datingInteraction.cancelDrag();
@@ -396,7 +403,7 @@ export function usePreview(
 		canvas.addEventListener(
 			"dblclick",
 			() => {
-				if (!datingInteraction.enabled.value) runControl({ type: "fit" });
+				if (!datingInteraction.enabled.value && !minigame.enabled.value) runControl({ type: "fit" });
 			},
 			{ signal },
 		);
@@ -410,6 +417,10 @@ export function usePreview(
 	function restart() {
 		if (!spinePlayer) return;
 		datingInteraction.reset();
+		if (minigame.enabled.value) {
+			minigame.reset();
+			return;
+		}
 		if (cutscene.active.value) {
 			cutscene.seek(0);
 			playbackTime.value = 0;
@@ -432,7 +443,7 @@ export function usePreview(
 		playbackTime.value = 0;
 	}
 	function seekTo(value: number) {
-		if (!spinePlayer || !duration.value) return;
+		if (!spinePlayer || !duration.value || minigame.enabled.value) return;
 		datingInteraction.reset();
 		settings.value!.paused = true;
 		spinePlayer.pause();
@@ -631,6 +642,7 @@ export function usePreview(
 		config.update = (player: SpinePlayer, delta: number) => {
 			if (request === loadId) {
 				datingInteraction.update(delta);
+				if (!paused.value) minigame.update(delta);
 				onPlayerUpdate(player, delta);
 			}
 		};
@@ -650,7 +662,8 @@ export function usePreview(
 			player.skeleton.skin?.name ??
 			player.skeleton.data.defaultSkin?.name ??
 			"";
-		const animation =
+		const initialAnimation = source.value?.type === "url" ? source.value.initialAnimation : undefined;
+		const animation = initialAnimation && animations.includes(initialAnimation) ? initialAnimation :
 			(preview.value.settings.followGlobalAnimation &&
 			animations.includes(previewerStore.globalAnimation)
 				? previewerStore.globalAnimation
@@ -666,6 +679,7 @@ export function usePreview(
 		}
 		applyPose();
 		setupCamera(player);
+		minigame.load(player);
 		datingInteraction.load(
 			player,
 			player.config.skelUrl ?? player.config.jsonUrl ?? "",
@@ -681,6 +695,7 @@ export function usePreview(
 	function destroyPlayer() {
 		cutscene.dispose();
 		previousCamera = null;
+		minigame.load(null);
 		datingInteraction.load(null);
 		activeSequence.value = null;
 		cameraListeners?.abort();
@@ -748,6 +763,15 @@ export function usePreview(
 				stopSequence();
 		},
 	);
+	watch(minigame.enabled, (value) => {
+		if (!value || !settings.value) return;
+		stopSequence();
+		stopGameCutscene();
+		datingInteraction.enabled.value = false;
+		settings.value.followGlobalAnimation = false;
+		settings.value.paused = false;
+		minigame.reset();
+	});
 	watch(skin, (name) => {
 		if (!spinePlayer || !skins.value.includes(name)) return;
 		spinePlayer.skeleton.setSkinByName(name);
@@ -758,7 +782,7 @@ export function usePreview(
 	watch(currentAnimation, (animation) => {
 		stopGameCutscene();
 		if (
-			datingInteraction.enabled.value
+			datingInteraction.enabled.value || minigame.enabled.value
 			// && spinePlayer?.animationState.getCurrent(0)?.animation.name === animation
 		) {
 			return;
@@ -787,7 +811,7 @@ export function usePreview(
 		() => settings.value?.loopAnimation,
 		(loop) => {
 			spinePlayer?.animationState.tracks.forEach((track: any) => {
-				if (track && !datingInteraction.enabled.value)
+				if (track && !datingInteraction.enabled.value && !minigame.enabled.value)
 					track.loop = loop;
 			});
 		},
@@ -855,6 +879,10 @@ export function usePreview(
 		cutsceneActive: cutscene.active,
 		cutsceneIncomplete: cutscene.incomplete,
 		playGameCutscene: () => runControl({ type: "cutscene" }),
+		minigameAvailable: minigame.available,
+		minigameEnabled: minigame.enabled,
+		minigameFever: minigame.fever,
+		minigameFeverAvailable: minigame.feverAvailable,
 		datingTools: datingInteraction.tools,
 		datingTool: datingInteraction.tool,
 		selectDatingTool: datingInteraction.selectTool,

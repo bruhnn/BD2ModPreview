@@ -16,6 +16,7 @@ import NoInternetState from './NoInternetState.vue'
 import { useNetworkStatus } from '../composables/useNetworkStatus'
 import { Character } from '../types/character'
 import datingAssets from '../data/dating-assets.json'
+import { minigameCatalog, type MinigameEntry } from '../data/minigames/catalog'
 
 import { useI18n } from 'vue-i18n'
 
@@ -42,15 +43,18 @@ const previewerStore = usePreviewerStore()
 const charactersStore = useCharactersStore()
 
 const draggedCharacter = ref<Character | null>(null)
+type MinigameCard = MinigameEntry & { character: Character; title: string; thumbnail: string }
+const draggedMinigame = ref<MinigameCard | null>(null)
 const dragCard = ref({ width: 0, height: 0, x: 0, y: 0, imageWidth: '', imageHeight: '', imageTransform: '', shadow: '' })
 
 const { isDragging, hasDragged, dragPosition, dropTarget, startDrag, moveDrag, finishDrag, cancelDrag } = usePreviewDrag(target => {
-	if (draggedCharacter.value) characterClicked(draggedCharacter.value, target)
+	if (draggedMinigame.value) minigameClicked(draggedMinigame.value, target)
+	else if (draggedCharacter.value) characterClicked(draggedCharacter.value, target)
 }, true)
 
 watch(() => props.visible, visible => { if (!visible) cancelDrag() })
 
-const typeSelected = ref<keyof typeof characterTypeMap>("standing")
+const typeSelected = ref<keyof typeof characterTypeMap | "minigames">("standing")
 const searchValue = ref('')
 const sortValue = ref('newest')
 
@@ -63,6 +67,7 @@ const characterTypeMap = {
 } as const
 
 const filteredCharacters = computed(() => {
+	if (typeSelected.value === "minigames") return []
 	const config = characterTypeMap[typeSelected.value]
 
 	if (!config) {
@@ -109,6 +114,25 @@ const filteredCharacters = computed(() => {
 	return filtered
 })
 
+const filteredMinigames = computed(() => {
+	const search = searchValue.value.trim().toLowerCase()
+	const items = minigameCatalog.flatMap(game => {
+		const character = charactersStore.characters.find(char => char.costume_id === game.costumeId)
+		if (!character) return []
+		const title = `${charactersStore.getLocalizedName(character.character_name)} - ${charactersStore.getLocalizedName(character.costume_name)}`
+		const thumbnail = `https://cdn.jsdelivr.net/gh/bruhnn/Brown-Dust-2-Asset@master/ui/illust/illust_inven_char/${character.assets.character_image}`
+		return `${title} ${game.name}`.toLowerCase().includes(search) ? [{ ...game, character, title, thumbnail }] : []
+	})
+	if (sortValue.value === 'a-z') items.sort((a, b) => a.title.localeCompare(b.title))
+	else if (sortValue.value === 'z-a') items.sort((a, b) => b.title.localeCompare(a.title))
+	else items.sort((a, b) => {
+		const aDate = a.character.release_date ?? ''
+		const bDate = b.character.release_date ?? ''
+		return sortValue.value === 'oldest' ? aDate.localeCompare(bDate) : bDate.localeCompare(aDate)
+	})
+	return items
+})
+
 const JSDELIVR_BASE_URL = "https://cdn.jsdelivr.net/gh/bruhnn/Brown-Dust-2-Asset@master/spine"
 const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/spine'
 const ENDPOINTS = {
@@ -118,6 +142,7 @@ const ENDPOINTS = {
 } as const
 
 function startCharacterDrag(event: PointerEvent, character: Character) {
+	draggedMinigame.value = null
 	if (event.button !== 0) return
 	const card = event.currentTarget as HTMLElement
 	const bounds = card.getBoundingClientRect()
@@ -175,6 +200,7 @@ function getCharacterUrl(character: Character, type: keyof typeof ENDPOINTS): { 
 }
 
 function characterClicked(char: Character, target?: PreviewDropTarget) {
+	if (typeSelected.value === "minigames") return
 	const urls = getCharacterUrl(char, typeSelected.value)
 
 	if (!urls) {
@@ -195,6 +221,7 @@ function characterClicked(char: Character, target?: PreviewDropTarget) {
 }
 
 function getThumbnail(character: Character) {
+	if (typeSelected.value === "minigames") return
 	const imageKey = characterTypeMap[typeSelected.value]
 	const baseUrl = "https://cdn.jsdelivr.net/gh/bruhnn/Brown-Dust-2-Asset@master/ui/illust"
 
@@ -210,6 +237,37 @@ function getThumbnail(character: Character) {
 		return `${baseUrl}/illust_skill_char/${character.assets[imageKey.image]}`
 	}
 }
+
+function minigameClicked(game: MinigameCard, target?: PreviewDropTarget) {
+	const source = {
+		type: 'url' as const,
+		initialAnimation: game.animation,
+		skeletonUrl: `${JSDELIVR_BASE_URL}/${game.skeleton}`,
+		atlasUrl: `${JSDELIVR_BASE_URL}/${game.atlas}`,
+		skeletonUrlFallback: `${GITHUB_BASE_URL}/${game.skeleton}`,
+		atlasUrlFallback: `${GITHUB_BASE_URL}/${game.atlas}`,
+	}
+	if (target) previewerStore.openDroppedPreview(`${game.title} - ${game.name}`, source, target)
+	else previewerStore.openPreview(`${game.title} - ${game.name}`, source)
+}
+
+function startMinigameDrag(event: PointerEvent, game: MinigameCard) {
+	if (event.button !== 0) return
+	const card = event.currentTarget as HTMLElement
+	const bounds = card.getBoundingClientRect()
+	const image = getComputedStyle(card.querySelector('img')!)
+	dragCard.value = {
+		width: bounds.width, height: bounds.height,
+		x: event.clientX - bounds.left, y: event.clientY - bounds.top,
+		imageWidth: image.width, imageHeight: image.height, imageTransform: image.transform,
+		shadow: getComputedStyle(card).boxShadow,
+	}
+	draggedCharacter.value = null
+	draggedMinigame.value = game
+	startDrag(event)
+}
+
+watch(typeSelected, cancelDrag)
 
 onMounted(async () => {
 	await checkConnection()
@@ -237,11 +295,23 @@ onMounted(async () => {
 					<p class="character-costume">{{ charactersStore.getLocalizedName(draggedCharacter.costume_name) }}</p>
 				</div>
 			</div>
+			<div v-if="isDragging && hasDragged && draggedMinigame" class="character-drag-indicator character-ghost"
+				:style="{
+					left: dragPosition.x - dragCard.x + 'px', top: dragPosition.y - dragCard.y + 'px',
+					width: dragCard.width + 'px', height: dragCard.height + 'px', boxShadow: dragCard.shadow,
+				}" aria-hidden="true">
+				<img :src="draggedMinigame.thumbnail" alt="" draggable="false" class="ghost-image"
+					:style="{ width: dragCard.imageWidth, height: dragCard.imageHeight, transform: dragCard.imageTransform }" />
+				<div class="character-caption">
+					<h3 class="character-name">{{ draggedMinigame.title }}</h3>
+					<p class="character-costume">{{ draggedMinigame.name }}</p>
+				</div>
+			</div>
 		</Teleport>
 		<div class="characters-tabs">
 			<RadioGroup v-model="typeSelected">
 				<div class="tabs-row">
-					<RadioGroupOption v-for="tab in ['standing', 'cutscene', 'dating']" :key="tab" :value="tab"
+					<RadioGroupOption v-for="tab in ['standing', 'cutscene', 'dating', 'minigames']" :key="tab" :value="tab"
 						v-slot="{ checked }" class="tab-option">
 						<button class="tab-button" :class="{
 							selected: checked,
@@ -286,6 +356,25 @@ onMounted(async () => {
 
 			<div class="character-scroll scrollbar">
 				<NoInternetState v-if="!isConnected" :is-checking="isChecking" @check-connection="checkConnection" />
+
+				<template v-else-if="typeSelected === 'minigames'">
+					<div v-if="!filteredMinigames.length" class="characters-empty">{{ t('characterList.noCharactersFound') }}</div>
+					<div v-else class="character-grid">
+						<div v-for="game in filteredMinigames" :key="game.id" class="character-card"
+							:class="{ dragging: isDragging && hasDragged && draggedMinigame?.id === game.id }"
+							role="button" tabindex="0" @click="!hasDragged && minigameClicked(game)"
+							@keydown.enter.prevent="minigameClicked(game)" @keydown.space.prevent="minigameClicked(game)"
+							@pointerdown.prevent="startMinigameDrag($event, game)" @pointermove="moveDrag"
+							@pointerup="finishDrag" @pointercancel="cancelDrag" @lostpointercapture="cancelDrag"
+							@keydown.esc="cancelDrag" @dragstart.prevent>
+							<img v-if="visibleOnce" loading="lazy" draggable="false" :src="game.thumbnail" :alt="game.title" class="character-image" />
+							<div class="character-caption">
+								<h3 class="character-name">{{ game.title }}</h3>
+								<p class="character-costume">{{ game.name }}</p>
+							</div>
+						</div>
+					</div>
+				</template>
 
 				<div v-else-if="!charactersStore.characters" class="characters-empty">
 					{{ t('characterList.loadingCharacters') }}

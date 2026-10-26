@@ -16,7 +16,7 @@ export function useHistory() {
     function addToHistory(source: SpineSource, characterId?: string | null, modType?: string | null, title?: string) {
         const index = history.value.findIndex(item => source.type === "folder"
             ? item.source.type === "folder" && item.source.path === source.path
-            : item.source.type === "url" && item.source.skeletonUrl === source.skeletonUrl && item.source.atlasUrl === source.atlasUrl);
+            : item.source.type === "url" && item.source.skeletonUrl === source.skeletonUrl && item.source.atlasUrl === source.atlasUrl && item.source.initialAnimation === source.initialAnimation);
 
         if (index !== -1) {
             const item = history.value[index];

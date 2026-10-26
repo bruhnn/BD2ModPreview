@@ -5,7 +5,7 @@ export interface AnimationSequence {
 
 export type SpineSource =
   | { type: "folder"; path: string }
-  | { type: "url"; skeletonUrl: string; atlasUrl: string, skeletonUrlFallback?: string; atlasUrlFallback?: string };
+  | { type: "url"; initialAnimation?: string; skeletonUrl: string; atlasUrl: string, skeletonUrlFallback?: string; atlasUrlFallback?: string };
 export interface SpineAssetsData {
     modType?: string | null,
     modId?: string | null,

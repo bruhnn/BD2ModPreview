@@ -3,7 +3,7 @@
   lang="ts"
 >
 import { useI18n } from "vue-i18n"
-import { GripVertical, PanelRightClose, PanelBottomClose, Play, Pause, Repeat, Hand, Eye, EyeOff, Check, ChevronDown, ChevronRight, FolderOpen, Focus, Image, Layers, Maximize, Palette, Shirt, Pencil, Plus, RotateCcw, SkipBack, Trash2, X } from "@lucide/vue"
+import { Flame, GripVertical, PanelRightClose, PanelBottomClose, Play, Pause, Repeat, Hand, Eye, EyeOff, Check, ChevronDown, ChevronRight, FolderOpen, Focus, Image, Layers, Maximize, Palette, Shirt, Pencil, Plus, RotateCcw, SkipBack, Trash2, X } from "@lucide/vue"
 import { autoUpdate, flip, offset, shift, useFloating } from "@floating-ui/vue"
 import { onClickOutside } from "@vueuse/core"
 import { computed, nextTick, ref, useTemplateRef, watch } from "vue"
@@ -38,6 +38,10 @@ const {
   cutsceneActive,
   cutsceneIncomplete,
   playGameCutscene,
+  minigameAvailable,
+  minigameEnabled,
+  minigameFever,
+  minigameFeverAvailable,
   datingTools,
   datingTool,
   selectDatingTool,
@@ -399,6 +403,7 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
     <div v-show="source && !error" ref="player-container" :id="`player-container-${props.previewId}`" tabindex="0"
       class="player-container" @contextmenu.prevent="openContext" @pointerdown.capture="playerContainer?.focus()"
       @keydown="onPreviewKeydown" @keydown.shift.f10.prevent="openContext" />
+    <div v-if="minigameEnabled" class="minigame-hint">{{ t('preview.minigameHint') }}</div>
     <div v-if="datingEnabled && datingGaugeRange" class="dating-gauge" :aria-label="t('preview.datingGauge')">
       <span>{{ datingGaugeRange.y }}</span>
       <progress :value="datingGauge - datingGaugeRange.x" :max="datingGaugeRange.y - datingGaugeRange.x" />
@@ -426,6 +431,21 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
         </button>
 
 
+        <template v-if="minigameAvailable">
+          <button type="button" role="menuitemcheckbox" :aria-checked="minigameEnabled" @mouseenter="submenu = null"
+            @click="minigameEnabled = !minigameEnabled; closeContext()">
+            <Hand :size="16" /><span>{{ t('preview.minigameInteractions') }}</span>
+            <Check v-if="minigameEnabled" :size="16" />
+          </button>
+          <template v-if="minigameEnabled">
+            <button type="button" role="menuitemcheckbox" :aria-checked="minigameFever" :disabled="!minigameFeverAvailable"
+              @mouseenter="submenu = null" @click="minigameFever = !minigameFever; closeContext()">
+              <Flame :size="16" /><span>{{ t('preview.minigameFever') }}</span>
+              <Check v-if="minigameFever" :size="16" />
+            </button>
+          </template>
+          <div class="context-separator" />
+        </template>
         <template v-if="isDating">
           <button type="button" role="menuitemcheckbox" :aria-checked="datingEnabled" @mouseenter="submenu = null"
             :disabled="!datingAvailable" @click="stopSequence(); datingEnabled = !datingEnabled; closeContext()">
@@ -518,13 +538,13 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
         :disabled="!allAnimations.length" @click="loopAnimation = !loopAnimation">
         <Repeat :size="16" aria-hidden="true" />
       </button>
-      <input type="range" min="0" :max="duration" step="0.01" :value="playbackTime" :disabled="!duration"
+      <input type="range" min="0" :max="duration" step="0.01" :value="playbackTime" :disabled="!duration || minigameEnabled"
         :aria-label="t('preview.progress')" :title="`${playbackTime.toFixed(2)} / ${duration.toFixed(2)} s`"
         @input="seek" />
 
       <button ref="animationButton" type="button" class="preview-animation-select"
         :aria-label="t('preview.previewAnimation')" aria-haspopup="dialog" :aria-expanded="animationsOpen"
-        :disabled="!allAnimations.length || datingEnabled" @click="animationsOpen = !animationsOpen; layersOpen = false"
+        :disabled="!allAnimations.length || datingEnabled || minigameEnabled" @click="animationsOpen = !animationsOpen; layersOpen = false"
         @keydown.esc="animationsOpen = false">
         <ChevronDown :size="16" aria-hidden="true" />
         <span>{{ (cutsceneActive ? t('preview.gameCutscene') : activeSequence?.name) || animationSelection ||
@@ -1329,6 +1349,21 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
 .context-separator {
   margin: 8px 0;
   border-top: 1px solid var(--border-default);
+}
+
+.minigame-hint {
+  position: absolute;
+  bottom: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: calc(100% - 32px);
+  padding: 6px 10px;
+  border-radius: 4px;
+  background: var(--surface-popover);
+  color: var(--text-secondary);
+  font-size: 12px;
+  text-align: center;
+  pointer-events: none;
 }
 
 .dating-gauge {
