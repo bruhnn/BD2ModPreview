@@ -5,6 +5,7 @@
 import { Bug, CircleQuestionMark, ScrollText, Sparkles, X } from "@lucide/vue"
 import { Dialog, DialogPanel, DialogTitle, Menu, MenuButton, MenuItems, MenuItem, TransitionRoot, TransitionChild } from '@headlessui/vue'
 import { ref, watch } from 'vue'
+import { useTimeoutFn } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
 import { openUrl } from '@tauri-apps/plugin-opener'
 import { getCurrentWindow } from '@tauri-apps/api/window'
@@ -21,6 +22,8 @@ const { availableLocales, t } = useI18n()
 const { logMessage } = useLogger()
 
 const alwaysOnTop = ref(false)
+const copied = ref(false)
+const { start: hideCopied, stop: stopCopied } = useTimeoutFn(() => copied.value = false, 2000, { immediate: false })
 
 const languages: Record<string, string> = {
   en_US: 'English', zh_CN: '简体中文', ja_JP: '日本語', ko_KR: '한국어',
@@ -51,6 +54,8 @@ async function openIssues() {
 }
 
 async function copyMachineId() {
+  copied.value = false
+  stopCopied()
   if (!navigator.clipboard) {
     logMessage('Clipboard API not available', 'error')
     return
@@ -62,6 +67,8 @@ async function copyMachineId() {
   }
   try {
     await navigator.clipboard.writeText(uiStore.machineId)
+    copied.value = true
+    hideCopied()
     logMessage('Machine ID copied to clipboard', 'info')
   } catch (error) {
     logMessage(`Failed to copy Machine ID: ${error}`, 'error')
@@ -69,6 +76,8 @@ async function copyMachineId() {
 }
 
 watch(() => props.show, async (show) => {
+  copied.value = false
+  stopCopied()
   if (show) alwaysOnTop.value = await getCurrentWindow().isAlwaysOnTop()
 })
 </script>
@@ -130,10 +139,12 @@ watch(() => props.show, async (show) => {
               </section>
             </div>
             <footer class="settings-footer">
-              <span v-if="uiStore.machineId" class="machine-id" @click="copyMachineId" title="Copy to Clipboard">
-                {{ uiStore.machineId }}
-                <!-- show a mesg whe copied -->
-              </span>
+              <div v-if="uiStore.machineId" class="machine-id-copy">
+                <button type="button" class="machine-id" @click="copyMachineId" :title="t('app.copyMachineId')">
+                  {{ uiStore.machineId }}
+                </button>
+                <span v-if="copied" class="copy-confirmation" role="status">{{ t('app.copied') }}</span>
+              </div>
               <span v-else class="machine-id">
                 {{ $t("app.machineIdNotFound") }}
               </span>
@@ -318,6 +329,35 @@ select {
   width: 16px;
   height: 16px;
   flex-shrink: 0;
+}
+
+.machine-id-copy {
+  position: relative;
+  min-width: 0;
+  max-width: 40%;
+}
+
+.machine-id-copy .machine-id {
+  display: block;
+  max-width: 100%;
+  padding: 0;
+  color: var(--text-secondary);
+}
+
+.copy-confirmation {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  padding: 6px 10px;
+  border: 1px solid var(--border-default);
+  border-radius: 5px;
+  background: var(--surface-popover);
+  color: var(--text-primary);
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 .machine-id {

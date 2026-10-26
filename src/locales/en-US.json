@@ -145,6 +145,9 @@
         "close": "Close"
     },
     "app": {
+        "copyMachineId": "Copy to clipboard",
+        "copied": "Copied to clipboard",
+        "machineIdNotFound": "Machine ID unavailable",
         "backToHome": "Back",
         "toggleControls": "Controls"
     },
