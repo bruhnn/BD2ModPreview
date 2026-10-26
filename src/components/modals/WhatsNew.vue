@@ -37,6 +37,11 @@ const supportLinks = [
 ]
 
 const otherUpdates = [
+    "minigames",
+    "copyConfirmation",
+    "cutsceneVisibilityFix",
+    "datingAssetsFix",
+    "whatsNewFix",
     "characters",
     "controls",
     "syncGroups",

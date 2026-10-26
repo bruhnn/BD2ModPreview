@@ -6,6 +6,11 @@ const messages = {
     en_US: en_US,
     zh_CN: {
         whatsNew: {
+            minigames: "预览 Slap Slap / Splash Splash 角色，支持点击、长按、拖动和狂热模式互动。",
+            copyConfirmation: "复制 ID 后会显示确认提示。",
+            cutsceneVisibilityFix: "修复了部分过场动画片段结束后仍然显示的问题。",
+            datingAssetsFix: "修复了 Aquila 多部分约会预览缺少资源的问题。",
+            whatsNewFix: "修复了“更新内容”窗口显示在工具栏后面的问题。",
             "multiplePreviews": "多个预览",
             "syncGroups": "将预览分配到相同编号的组，一起缩放、移动和控制播放。",
             "playbackFixes": "修复了通过工具栏暂停和重新播放预览的问题。",
@@ -300,6 +305,11 @@ const messages = {
     },
     ja_JP: {
         whatsNew: {
+            minigames: "Slap Slap / Splash Splash のキャラクターをプレビューし、クリック、長押し、ドラッグ、フィーバーのインタラクションを楽しめます。",
+            copyConfirmation: "ID をコピーしたときに確認メッセージを表示するようにしました。",
+            cutsceneVisibilityFix: "カット終了後も一部の演出が表示されたままになる問題を修正しました。",
+            datingAssetsFix: "Aquila の複数パートからなるデートプレビューで、一部のアセットが読み込まれない問題を修正しました。",
+            whatsNewFix: "「更新内容」がツールバーの後ろに表示される問題を修正しました。",
             "multiplePreviews": "複数のプレビュー",
             "syncGroups": "同じ番号のグループに設定したプレビューを、一緒にズーム、移動、再生操作できます。",
             "playbackFixes": "ツールバーからの一時停止と最初からの再生を修正しました。",
@@ -594,6 +604,11 @@ const messages = {
     },
     ko_KR: {
         whatsNew: {
+            minigames: "Slap Slap / Splash Splash 캐릭터를 미리 보고 클릭, 길게 누르기, 드래그, 피버 상호작용을 사용할 수 있습니다.",
+            copyConfirmation: "ID를 복사하면 확인 메시지가 표시됩니다.",
+            cutsceneVisibilityFix: "컷이 끝난 뒤에도 일부 컷신 요소가 계속 표시되는 문제를 수정했습니다.",
+            datingAssetsFix: "여러 파트로 구성된 Aquila 데이트 미리보기에서 일부 에셋이 누락되는 문제를 수정했습니다.",
+            whatsNewFix: "새로운 기능 창이 도구 모음 뒤에 표시되는 문제를 수정했습니다.",
             "multiplePreviews": "여러 미리보기",
             "syncGroups": "미리보기를 같은 번호의 그룹으로 지정하면 확대, 이동, 재생을 함께 제어할 수 있습니다.",
             "playbackFixes": "도구 모음에서 미리보기를 일시 정지하고 처음부터 재생하는 문제를 수정했습니다.",

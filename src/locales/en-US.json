@@ -1,5 +1,10 @@
 {
     "whatsNew": {
+        "minigames": "Preview Slap Slap / Splash Splash characters with tap, hold, drag, and Fever interactions.",
+        "copyConfirmation": "Added confirmation when copying your ID.",
+        "cutsceneVisibilityFix": "Fixed cutscene parts remaining visible after their cuts ended.",
+        "datingAssetsFix": "Fixed missing assets for Aquila's multipart dating preview.",
+        "whatsNewFix": "Fixed What's New appearing behind the toolbar.",
         "multiplePreviews": "Multiple Previews",
         "syncGroups": "Assign previews to the same numbered group to zoom, move, and control playback together.",
         "playbackFixes": "Fixed pausing and restarting previews from the toolbar.",
