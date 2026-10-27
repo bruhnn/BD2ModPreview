@@ -165,12 +165,24 @@ function getCharacterUrl(character: Character, type: keyof typeof ENDPOINTS): { 
 	let filename: string | null = null
 
 	switch (type) {
-		case 'standing':
-			filename = `char${character.id}/char${character.id}`
+		case 'standing': {
+			const filenames: Record<string, string> = {
+				'065103': 'char065103/Char065103',
+				'067003': 'char067003/Char067003',
+			}
+			filename = filenames[character.id] ?? `char${character.id}/char${character.id}`
 			break
-		case 'cutscene':
-			filename = `cutscene_char${character.id}/cutscene_char${character.id}`
+		}
+		case 'cutscene': {
+			const filenames: Record<string, string> = {
+				'000203': 'cutscene_char000203/CutScene_Char000203',
+				'001201': 'cutscene_char001201/CutScene_Char001201',
+				'061002': 'cutscene_char061002/cutscene_Char061002',
+				'061092': 'cutscene_char061092_a/cutscene_char061092_A',
+			}
+			filename = filenames[character.id] ?? `cutscene_char${character.id}/cutscene_char${character.id}`
 			break
+		}
 		case 'dating': {
 			const name = `illust_dating${character.dating_id}`
 			const skeleton = (datingAssets as Record<string, string[]>)[name]?.[0] ?? name
