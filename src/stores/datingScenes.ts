@@ -117,7 +117,9 @@ export const useDatingScenesStore = defineStore("datingScenes", () => {
 			} catch (error) {
 				logMessage(`Failed to save dating cache: ${error}`, "warning")
 			}
-		})()
+		})().finally(() => {
+			pending = null
+		})
 
 		return pending
 	}

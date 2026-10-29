@@ -5,6 +5,21 @@ import en_US from './locales/en-US.json'
 const messages = {
     en_US: en_US,
     zh_CN: {
+        supporter: {
+            "title": "赞助者权限",
+            "active": "已激活",
+            "thankYou": "感谢你的支持！",
+            "description": "使用 AFDIAN 订单号或 Ko-fi 激活码激活。",
+            "orderNumber": "AFDIAN 订单号或激活码",
+            "placeholder": "粘贴订单号或激活码",
+            "redeem": "激活",
+            "redeeming": "正在激活…",
+            "activated": "赞助者权限已激活。",
+            "activatedRefreshFailed": "权限已激活。请重新打开应用以重试加载互动。",
+            "errors": {"invalidCodeFormat": "请输入有效的 AFDIAN 订单号或激活码。", "orderNotFound": "未找到订单，请检查 AFDIAN 订单号。", "activationCodeNotFound": "未找到激活码。", "activationUnavailable": "此激活已过期、被禁用或已在其他设备上使用。", "orderNotEligible": "此订单不符合激活条件。", "orderVerificationFailed": "无法验证订单，请稍后重试。", "activationFailed": "无法激活，请稍后重试。", "connectionFailed": "无法连接，请检查网络后重试。", "invalidMachineId": "设备 ID 不可用，请重启应用后重试。"},
+            "findOrder": "在哪里找到订单号或激活码？",
+            "orderHelp": "AFDIAN：进入个人中心，打开“我的订单”，然后复制订单号。Ko-fi：输入你收到的激活码，而不是交易编号。"
+        },
         whatsNew: {
             minigames: "预览 Slap Slap / Splash Splash 角色，支持点击、长按、拖动和狂热模式互动。",
             copyConfirmation: "复制 ID 后会显示确认提示。",
@@ -304,6 +319,21 @@ const messages = {
         }
     },
     ja_JP: {
+        supporter: {
+            "title": "サポーター特典",
+            "active": "有効",
+            "thankYou": "ご支援ありがとうございます！",
+            "description": "AFDIAN の注文番号または Ko-fi の有効化コードで有効にします。",
+            "orderNumber": "AFDIAN の注文番号または有効化コード",
+            "placeholder": "注文番号または有効化コードを貼り付け",
+            "redeem": "有効にする",
+            "redeeming": "有効化中…",
+            "activated": "サポーターアクセスを有効化しました。",
+            "activatedRefreshFailed": "有効化しました。アプリを開き直してインタラクションの読み込みを再試行してください。",
+            "errors": {"invalidCodeFormat": "有効な AFDIAN 注文番号または有効化コードを入力してください。", "orderNotFound": "注文が見つかりません。AFDIAN 注文番号を確認してください。", "activationCodeNotFound": "有効化コードが見つかりません。", "activationUnavailable": "この有効化は期限切れ、無効、または別のデバイスで使用済みです。", "orderNotEligible": "この注文は有効化の対象外です。", "orderVerificationFailed": "注文を確認できませんでした。後でもう一度お試しください。", "activationFailed": "有効化できませんでした。後でもう一度お試しください。", "connectionFailed": "接続できませんでした。接続を確認して再試行してください。", "invalidMachineId": "デバイス ID を取得できません。アプリを再起動してください。"},
+            "findOrder": "注文番号やコードはどこにありますか？",
+            "orderHelp": "AFDIAN：ダッシュボードから「マイオーダー」を開き、注文番号をコピーしてください。Ko-fi：取引番号ではなく、受け取った有効化コードを入力してください。"
+        },
         whatsNew: {
             minigames: "Slap Slap / Splash Splash のキャラクターをプレビューし、クリック、長押し、ドラッグ、フィーバーのインタラクションを楽しめます。",
             copyConfirmation: "ID をコピーしたときに確認メッセージを表示するようにしました。",
@@ -603,6 +633,21 @@ const messages = {
         }
     },
     ko_KR: {
+        supporter: {
+            "title": "후원자 기능",
+            "active": "활성",
+            "thankYou": "후원해 주셔서 감사합니다!",
+            "description": "AFDIAN 주문 번호 또는 Ko-fi 활성화 코드로 활성화하세요.",
+            "orderNumber": "AFDIAN 주문 번호 또는 활성화 코드",
+            "placeholder": "주문 번호 또는 활성화 코드 붙여넣기",
+            "redeem": "활성화",
+            "redeeming": "활성화 중…",
+            "activated": "서포터 권한이 활성화되었습니다.",
+            "activatedRefreshFailed": "활성화되었습니다. 앱을 다시 열어 상호작용을 불러오세요.",
+            "errors": {"invalidCodeFormat": "올바른 AFDIAN 주문 번호 또는 활성화 코드를 입력하세요.", "orderNotFound": "주문을 찾을 수 없습니다. AFDIAN 주문 번호를 확인하세요.", "activationCodeNotFound": "활성화 코드를 찾을 수 없습니다.", "activationUnavailable": "만료되었거나 비활성화되었거나 다른 기기에서 사용된 코드입니다.", "orderNotEligible": "활성화할 수 없는 주문입니다.", "orderVerificationFailed": "주문을 확인할 수 없습니다. 나중에 다시 시도하세요.", "activationFailed": "활성화하지 못했습니다. 나중에 다시 시도하세요.", "connectionFailed": "연결할 수 없습니다. 인터넷 연결을 확인하고 다시 시도하세요.", "invalidMachineId": "기기 ID를 사용할 수 없습니다. 앱을 다시 시작하세요."},
+            "findOrder": "주문 번호나 코드는 어디에서 찾나요?",
+            "orderHelp": "AFDIAN: 대시보드에서 내 주문을 열고 주문 번호를 복사하세요. Ko-fi: 거래 번호가 아닌, 받은 활성화 코드를 입력하세요."
+        },
         whatsNew: {
             minigames: "Slap Slap / Splash Splash 캐릭터를 미리 보고 클릭, 길게 누르기, 드래그, 피버 상호작용을 사용할 수 있습니다.",
             copyConfirmation: "ID를 복사하면 확인 메시지가 표시됩니다.",

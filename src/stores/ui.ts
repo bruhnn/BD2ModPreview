@@ -13,6 +13,23 @@ export const useUIStore = defineStore('ui', () => {
   const language = useLocalStorage<string>('APP_LANGUAGE', 'en_US')
 
   const machineId = ref<string | null>(null)
+  const isSupporter = ref(false)
+  const supporterCache = useLocalStorage('SUPPORTER_ACCESS', { machineId: '', expiresAt: 0, valid: false })
+
+  async function checkSupporter() {
+    const id = await loadMachineId()
+    isSupporter.value = supporterCache.value.machineId === id &&
+      supporterCache.value.expiresAt > Date.now() && supporterCache.value.valid
+
+    const response = await fetch('https://shy-waterfall-2797.bruhnn.workers.dev/check', {
+      headers: { 'X-Machine-ID': id },
+      cache: 'no-store',
+    })
+    if (!response.ok) throw new Error(`Failed to check supporter access: ${response.status}`)
+    const data = await response.json()
+    isSupporter.value = data.valid === true
+    supporterCache.value = { machineId: id, expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000, valid: isSupporter.value }
+  }
 
   async function loadMachineId() {
     if (!machineId.value) {
@@ -75,6 +92,8 @@ export const useUIStore = defineStore('ui', () => {
   return {
     machineId,
     loadMachineId,
+    isSupporter,
+    checkSupporter,
     
     theme,
     language,

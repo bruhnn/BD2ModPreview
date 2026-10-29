@@ -1,4 +1,19 @@
 {
+    "supporter": {
+        "title": "Supporter access",
+        "active": "Active",
+        "thankYou": "Thank you for your support!",
+        "description": "Activate with your AFDIAN order number or Ko-fi activation code.",
+        "orderNumber": "AFDIAN order number or activation code",
+        "placeholder": "Paste your order number or activation code",
+        "redeem": "Redeem",
+        "redeeming": "Activating…",
+        "activated": "Supporter access activated.",
+        "activatedRefreshFailed": "Access activated. Reopen the app to retry loading interactions.",
+        "errors": {"invalidCodeFormat": "Enter a valid AFDIAN order number or activation code.", "orderNotFound": "Order not found. Check your AFDIAN order number.", "activationCodeNotFound": "Activation code not found.", "activationUnavailable": "This activation is expired, disabled, or used on another device.", "orderNotEligible": "This order is not eligible for activation.", "orderVerificationFailed": "Could not verify your order. Try again later.", "activationFailed": "Could not activate access. Try again later.", "connectionFailed": "Could not connect. Check your connection and try again.", "invalidMachineId": "Your device ID is unavailable. Restart the app and try again."},
+        "findOrder": "Where do I find my order number or code?",
+        "orderHelp": "AFDIAN: Go to your dashboard, open My orders, and copy the order number. Ko-fi: Enter the activation code you received, not the transaction number."
+    },
     "whatsNew": {
         "minigames": "Preview Slap Slap / Splash Splash characters with tap, hold, drag, and Fever interactions.",
         "copyConfirmation": "Added confirmation when copying your ID.",

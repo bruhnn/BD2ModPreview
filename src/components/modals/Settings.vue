@@ -2,10 +2,9 @@
   setup
   lang="ts"
 >
-import { Bug, CircleQuestionMark, ScrollText, Sparkles, X } from "@lucide/vue"
+import { Bug, Check, ChevronDown, ChevronRight, CircleQuestionMark, Heart, ScrollText, Sparkles, X } from "@lucide/vue"
 import { Dialog, DialogPanel, DialogTitle, Menu, MenuButton, MenuItems, MenuItem, TransitionRoot, TransitionChild } from '@headlessui/vue'
 import { ref, watch } from 'vue'
-import { useTimeoutFn } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
 import { openUrl } from '@tauri-apps/plugin-opener'
 import { getCurrentWindow } from '@tauri-apps/api/window'
@@ -18,15 +17,47 @@ const props = defineProps<{ show: boolean }>()
 const emit = defineEmits<{ close: [] }>()
 const uiStore = useUIStore()
 const previewerStore = usePreviewerStore()
-const { availableLocales, t } = useI18n()
+const { availableLocales, t, te } = useI18n()
 const { logMessage } = useLogger()
 
 const alwaysOnTop = ref(false)
-const copied = ref(false)
-const { start: hideCopied, stop: stopCopied } = useTimeoutFn(() => copied.value = false, 2000, { immediate: false })
+const orderNumber = ref('')
+const redeeming = ref(false)
+const redeemMessage = ref('')
 
 const languages: Record<string, string> = {
   en_US: 'English', zh_CN: '简体中文', ja_JP: '日本語', ko_KR: '한국어',
+}
+
+async function redeem() {
+  if (redeeming.value || !orderNumber.value.trim()) return
+  redeeming.value = true
+  redeemMessage.value = ''
+  try {
+    const machineId = await uiStore.loadMachineId()
+    const response = await fetch('https://shy-waterfall-2797.bruhnn.workers.dev/redeem', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: orderNumber.value.trim(), machineId }),
+    })
+    const data = await response.json()
+    if (!response.ok || data.ok !== true) {
+      const key = `supporter.errors.${data.error}`
+      redeemMessage.value = te(key) ? key : 'supporter.errors.activationFailed'
+      return
+    }
+    orderNumber.value = ''
+    redeemMessage.value = 'supporter.activated'
+    try {
+      await uiStore.checkSupporter()
+    } catch {
+      redeemMessage.value = 'supporter.activatedRefreshFailed'
+    }
+  } catch {
+    redeemMessage.value = 'supporter.errors.connectionFailed'
+  } finally {
+    redeeming.value = false
+  }
 }
 
 async function changeAlwaysOnTop(event: Event) {
@@ -53,31 +84,7 @@ async function openIssues() {
   }
 }
 
-async function copyMachineId() {
-  copied.value = false
-  stopCopied()
-  if (!navigator.clipboard) {
-    logMessage('Clipboard API not available', 'error')
-    return
-  }
-
-  if (!uiStore.machineId) {
-    logMessage('Machine ID is not available', 'error')
-    return
-  }
-  try {
-    await navigator.clipboard.writeText(uiStore.machineId)
-    copied.value = true
-    hideCopied()
-    logMessage('Machine ID copied to clipboard', 'info')
-  } catch (error) {
-    logMessage(`Failed to copy Machine ID: ${error}`, 'error')
-  }
-}
-
 watch(() => props.show, async (show) => {
-  copied.value = false
-  stopCopied()
   if (show) alwaysOnTop.value = await getCurrentWindow().isAlwaysOnTop()
 })
 </script>
@@ -138,17 +145,36 @@ watch(() => props.show, async (show) => {
                 </label>
               </section>
             </div>
-            <footer class="settings-footer">
-              <div v-if="uiStore.machineId" class="machine-id-copy">
-                <button type="button" class="machine-id" @click="copyMachineId" :title="t('app.copyMachineId')">
-                  {{ uiStore.machineId }}
-                </button>
-                <span v-if="copied" class="copy-confirmation" role="status">{{ t('app.copied') }}</span>
+            <section v-if="uiStore.isSupporter" class="supporter-section">
+              <div class="supporter-heading">
+                <span class="supporter-title"><Heart :size="17" />{{ t('supporter.title') }}</span>
+                <span class="supporter-active"><Check :size="17" />{{ t('supporter.active') }}</span>
               </div>
-              <span v-else class="machine-id">
-                {{ $t("app.machineIdNotFound") }}
-              </span>
-
+              <p>{{ t('supporter.thankYou') }}</p>
+            </section>
+            <details v-else class="supporter-section">
+              <summary>
+                <div>
+                  <span class="supporter-title"><Heart :size="17" />{{ t('supporter.title') }}</span>
+                  <p>{{ t('supporter.description') }}</p>
+                </div>
+                <ChevronDown :size="17" class="supporter-chevron" />
+              </summary>
+              <form class="supporter-form" @submit.prevent="redeem">
+                <label for="supporter-order">{{ t('supporter.orderNumber') }}</label>
+                <div class="supporter-input-row">
+                  <input id="supporter-order" v-model="orderNumber" type="text" autocomplete="off"
+                    :placeholder="t('supporter.placeholder')" aria-describedby="supporter-result" :disabled="redeeming" />
+                  <button type="submit" :disabled="redeeming || !orderNumber.trim()">{{ t(redeeming ? 'supporter.redeeming' : 'supporter.redeem') }}</button>
+                </div>
+                <p id="supporter-result" role="status">{{ redeemMessage ? t(redeemMessage) : '' }}</p>
+                <details class="supporter-help">
+                  <summary><ChevronRight :size="14" />{{ t('supporter.findOrder') }}</summary>
+                  <p>{{ t('supporter.orderHelp') }}</p>
+                </details>
+              </form>
+            </details>
+            <footer class="settings-footer">
               <div class="footer-actions">
                 <button type="button" @click="openLogs">
                   <ScrollText :size="16" />
@@ -290,6 +316,126 @@ select {
   }
 }
 
+.supporter-section {
+  margin: 0 0 24px;
+  padding: 18px 24px 0;
+  border-top: 1px solid var(--border-default);
+}
+
+.supporter-section summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  cursor: pointer;
+}
+
+.supporter-section summary::-webkit-details-marker {
+  display: none;
+}
+
+.supporter-section > summary {
+  justify-content: space-between;
+}
+
+.supporter-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.supporter-active {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accent);
+  font-size: 12px;
+}
+
+.supporter-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 500;
+}
+
+.supporter-title svg {
+  color: var(--accent);
+}
+
+.supporter-section svg {
+  flex-shrink: 0;
+}
+
+.supporter-section[open] > summary .supporter-chevron {
+  transform: rotate(180deg);
+}
+
+.supporter-section p {
+  margin: 5px 0 0;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.supporter-form {
+  margin-top: 16px;
+}
+
+.supporter-form > label {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.supporter-input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.supporter-input-row input {
+  flex: 1;
+  min-width: 0;
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--border-default);
+  border-radius: 4px;
+  background: var(--surface-input);
+  color: var(--text-primary);
+  font: inherit;
+}
+
+.supporter-input-row button {
+  padding: 0 12px;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  background: var(--accent);
+  color: var(--text-on-accent);
+  font: inherit;
+  cursor: pointer;
+}
+
+.supporter-input-row button:disabled {
+  opacity: .5;
+  cursor: default;
+}
+
+.supporter-help {
+  margin-top: 12px;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.supporter-help[open] > summary svg {
+  transform: rotate(90deg);
+}
+
+.supporter-help p {
+  margin: 8px 0 0 22px;
+}
+
 .settings-footer {
   display: flex;
   align-items: center;
@@ -300,6 +446,7 @@ select {
 }
 
 .footer-actions {
+  margin-left: auto;
   display: flex;
   gap: 4px;
   flex-wrap: wrap;
@@ -329,60 +476,6 @@ select {
   width: 16px;
   height: 16px;
   flex-shrink: 0;
-}
-
-.machine-id-copy {
-  position: relative;
-  min-width: 0;
-  max-width: 40%;
-}
-
-.machine-id-copy .machine-id {
-  display: block;
-  max-width: 100%;
-  padding: 0;
-  color: var(--text-secondary);
-}
-
-.copy-confirmation {
-  position: absolute;
-  bottom: calc(100% + 6px);
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  padding: 6px 10px;
-  border: 1px solid var(--border-default);
-  border-radius: 5px;
-  background: var(--surface-popover);
-  color: var(--text-primary);
-  font-size: 12px;
-  white-space: nowrap;
-  pointer-events: none;
-}
-
-.machine-id {
-  display: inline;
-  /* padding: 4px 8px; */
-  /* border-radius: 3px; */
-  /* background: var(--surface-input); */
-  color: var(--text-secondary);
-  font-size: 12px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  max-width: 40%;
-  white-space: nowrap;
-  transition: color 0.2s ease-in-out;
-  user-select: none;
-}
-
-.machine-id::before {
-  content: 'ID: ';
-  font-weight: 400;
-}
-
-.machine-id:hover {
-  color: var(--text-primary);
-  cursor: pointer;
 }
 
 .help-menu {

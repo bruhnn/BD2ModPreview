@@ -2,6 +2,7 @@ import { computed, ref, shallowRef, watch } from "vue";
 import type { SpinePlayer } from "../types/spine";
 import { DatingPoint, DatingScene, DatingGroup } from "../types/dating";
 import { useDatingScenesStore } from "../stores/datingScenes";
+import { useUIStore } from "../stores/ui";
 
 declare const spine: any;
 
@@ -11,6 +12,7 @@ export function useDatingInteractions(
 	onError: (message: string) => void = () => {},
 ) {
 	const datingScenesStore = useDatingScenesStore();
+	const uiStore = useUIStore();
 
 	let currentDating: DatingScene | null = null;
 
@@ -101,7 +103,17 @@ export function useDatingInteractions(
 	);
 
 	watch(
-		() => datingScenesStore.scenes,
+		[isDating, () => uiStore.isSupporter],
+		([dating, supporter]) => {
+			if (dating && supporter) {
+				datingScenesStore.load().catch(error => onError(`Failed to load dating interactions: ${error}`));
+			} else if (!supporter) {
+				enabled.value = false;
+			}
+		},
+	);
+	watch(
+		[() => datingScenesStore.scenes, () => uiStore.isSupporter],
 		() => load(player, skeletonFilename),
 	);
 
@@ -144,7 +156,7 @@ export function useDatingInteractions(
 		tool.value = 0;
 		elapsed = 0;
 
-		available.value = !!player && !!scene;
+		available.value = !!player && !!scene && uiStore.isSupporter;
 	}
 
 	function points() {

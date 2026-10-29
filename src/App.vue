@@ -23,7 +23,6 @@ import Preview from "./components/Preview.vue"
 import Logging from "./components/modals/Logging.vue"
 import History from "./components/modals/History.vue"
 import CharactersList from "./components/CharactersList.vue"
-import { useDatingScenesStore } from "./stores/datingScenes.ts"
 
 // [TODO] move to rust
 saveWindowState(StateFlags.ALL)
@@ -34,7 +33,6 @@ const uiStore = useUIStore()
 const modManager = useModManagerStore()
 const charactersStore = useCharactersStore()
 const previewerStore = usePreviewerStore()
-const datingScenesStore = useDatingScenesStore()
 const { t } = useI18n()
 
 const isCharacterListVisible = ref(false)
@@ -185,8 +183,8 @@ onMounted(async () => {
     initializeDragAndDrop(),
     modManager.initialize(),
     charactersStore.loadCharacters(),
-    datingScenesStore.load().catch(error => {
-      logMessage(`Failed to load dating interactions: ${error}`, "error")
+    uiStore.checkSupporter().catch(error => {
+      logMessage(`Failed to check supporter access: ${error}`, "error")
     })
   ])
 
