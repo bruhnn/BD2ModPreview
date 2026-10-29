@@ -302,6 +302,7 @@ export function usePreview(
 			},
 			{ signal },
 		);
+		canvas.addEventListener("pointerleave", datingInteraction.pointerLeave, { signal });
 		canvas.addEventListener(
 			"pointermove",
 			(event) => {
@@ -339,6 +340,7 @@ export function usePreview(
 		canvas.addEventListener(
 			"lostpointercapture",
 			(event) => {
+				datingInteraction.releaseMarker(event);
 				minigame.cancel(event.pointerId);
 				drag = null;
 				datingInteraction.cancelHold();
@@ -349,6 +351,7 @@ export function usePreview(
 		canvas.addEventListener(
 			"pointercancel",
 			(event) => {
+				datingInteraction.releaseMarker(event);
 				minigame.cancel(event.pointerId);
 				drag = null;
 				datingInteraction.cancelHold();
@@ -416,6 +419,11 @@ export function usePreview(
 	}
 	function restart() {
 		if (!spinePlayer) return;
+		if (datingInteraction.enabled.value) {
+			datingInteraction.restart();
+			playbackTime.value = 0;
+			return;
+		}
 		datingInteraction.reset();
 		if (minigame.enabled.value) {
 			minigame.reset();
@@ -563,7 +571,7 @@ export function usePreview(
 					slot.attachment = attachment;
 				hiddenAttachments.clear();
 				if (cutscene.draw()) return;
-				datingInteraction.draw();
+				if (playerContainer.value) datingInteraction.updateMarkers(playerContainer.value.getBoundingClientRect());
 				if (!highlightedLayer.value) return;
 				const slot = player.skeleton.findSlot(highlightedLayer.value);
 				if (!slot?.bone.active || !slot.attachment) return;
@@ -883,6 +891,10 @@ export function usePreview(
 		minigameEnabled: minigame.enabled,
 		minigameFever: minigame.fever,
 		minigameFeverAvailable: minigame.feverAvailable,
+		datingMarkers: datingInteraction.markers,
+		datingGroups: datingInteraction.groups,
+		datingGroup: datingInteraction.group,
+		selectDatingGroup: datingInteraction.selectGroup,
 		datingTools: datingInteraction.tools,
 		datingTool: datingInteraction.tool,
 		selectDatingTool: datingInteraction.selectTool,
@@ -892,6 +904,7 @@ export function usePreview(
 		datingAvailable: datingInteraction.available,
 		datingEnabled: datingInteraction.enabled,
 		showDatingPoints: datingInteraction.showPoints,
+		showDatingAreas: datingInteraction.showAreas,
 		sequences,
 		activeSequence,
 		playSequence: (sequence: AnimationSequence) => runControl({ type: "sequence", sequence }),

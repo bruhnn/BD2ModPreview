@@ -18,6 +18,7 @@ export function useDatingInteractions(
 
 	const group = shallowRef<DatingScene["groups"][number] | null>(null);
 
+	const groups = computed(() => group.value ? currentDating?.groups ?? [] : []);
 	const tools = computed(() => group.value?.tools ?? []);
 	const tool = ref(0);
 
@@ -41,6 +42,17 @@ export function useDatingInteractions(
 	let skeletonFilename = "";
 	const enabled = ref(false);
 	const showPoints = ref(false);
+	const showAreas = ref(false);
+	const markers = shallowRef<{
+		key: string; x: number; y: number; drag: boolean; pressed: boolean;
+		dragging: boolean; hovered: boolean; dx: number; dy: number; pop: number;
+		ripples: number[]; box: { width: string; height: string; transform: string };
+	}[]>([]);
+	let markerPress: {
+		key: string; id: number; drag: boolean; down: boolean; releasedAt: number;
+		startX: number; startY: number; x: number; y: number;
+	} | null = null;
+	const ripples = new Map<string, number[]>();
 	let player: SpinePlayer | null = null;
 	let reaction: any = null;
 	let drag: {
@@ -57,10 +69,16 @@ export function useDatingInteractions(
 	let switching = false;
 	const skeletons = new Map<string, { skeleton: any; state: any }>();
 	const assetManagers: any[] = [];
+	let pointer: PointerEvent | null = null;
 	let previousPoint = "";
 	const clicks = new Map<string, number>();
 
 	function reset() {
+		markers.value = [];
+		pointer = null;
+		markerPress = null;
+		ripples.clear();
+		if (player) player.canvas.style.cursor = "";
 		generation++;
 		switching = false;
 		cancelHold();
@@ -89,6 +107,21 @@ export function useDatingInteractions(
 			player.skeleton.updateWorldTransform();
 		}
 		reaction = null;
+	}
+
+	function selectGroup(id: number) {
+		const next = currentDating?.groups.find((entry) => entry.id === id);
+		if (!enabled.value || !next || next === group.value) return;
+		reset();
+		elapsed = 0;
+		return startGroup(next, "", true);
+	}
+
+	function restart() {
+		reset();
+		if (!enabled.value || !player || !currentDating?.groups.length) return;
+		elapsed = 0;
+		return startGroup(currentDating.groups[0], "", true);
 	}
 
 	watch(
@@ -140,6 +173,7 @@ export function useDatingInteractions(
 			);
 		skeletonFilename = filename;
 		showPoints.value = false;
+		showAreas.value = false;
 
 		const name = filename
 			.match(
@@ -396,6 +430,14 @@ export function useDatingInteractions(
 
 			if (!contains(point.corners, local.x, local.y)) continue;
 
+			pointer = event;
+			const marker = markers.value.find((entry) => entry.key === point.key);
+			markerPress = {
+				key: point.key, id: event.pointerId, drag: point.drag, down: true, releasedAt: 0,
+				startX: event.clientX, startY: event.clientY, x: marker?.x ?? 0, y: marker?.y ?? 0,
+			};
+			if (!point.drag) ripples.set(point.key, [...(ripples.get(point.key) ?? []), performance.now()]);
+			player.canvas.setPointerCapture(event.pointerId);
 			const key = point.key;
 
 			// changing areas reset the previous areas click count
@@ -483,7 +525,12 @@ export function useDatingInteractions(
 		return false;
 	}
 
+	function pointerLeave() {
+		if (!markerPress?.down) pointer = null;
+	}
+
 	function pointerMove(event: PointerEvent) {
+		pointer = event;
 		if (!player || !drag || drag.id !== event.pointerId) return false;
 		if (!drag.started) {
 			if (
@@ -564,13 +611,24 @@ export function useDatingInteractions(
 		}
 	}
 
+	function releaseMarker(event: PointerEvent) {
+		if (markerPress?.id === event.pointerId && markerPress.down) {
+			markerPress.down = false;
+			markerPress.releasedAt = performance.now();
+		}
+	}
+
 	function pointerUp(event: PointerEvent) {
+		releaseMarker(event);
 		if (hold?.id === event.pointerId) {
 			finishHold(elapsed - hold.start >= hold.point.hold.time);
 			cancelDrag();
 			return true;
 		}
-		if (!drag || drag.id !== event.pointerId) return false;
+		if (!drag || drag.id !== event.pointerId) {
+			if (player?.canvas.hasPointerCapture(event.pointerId)) player.canvas.releasePointerCapture(event.pointerId);
+			return false;
+		}
 		const current = drag;
 		cancelDrag();
 		if (current.started) playReaction(current.point.animations[1]);
@@ -847,37 +905,65 @@ export function useDatingInteractions(
 		}
 	}
 
-	function draw() {
-		if (!player || !showPoints.value || !enabled.value) return;
-		const renderer = player.sceneRenderer;
-		const color = new spine.Color(1, 0.8, 0.2, 0.85);
-		const dragColor = new spine.Color(0.2, 0.75, 1, 0.85);
-		renderer.begin();
-		for (const point of points() ?? []) {
-			const bone = player.skeleton.findBone(point.bone);
-			const corners = point.corners.map(([x, y]) =>
-				bone.localToWorld({ x, y }),
-			);
-			for (let i = 0; i < 4; i++) {
-				const a = corners[i],
-					b = corners[(i + 1) % 4];
-				renderer.line(
-					a.x,
-					a.y,
-					b.x,
-					b.y,
-					point.drag ? dragColor : color,
-				);
-			}
+	function updateMarkers(origin: DOMRect) {
+		if (!player || !enabled.value) {
+			if (markers.value.length) markers.value = [];
+			return;
 		}
-		renderer.end();
+		const canvas = player.canvas.getBoundingClientRect();
+		const world = pointer ? position(pointer) : null;
+		const now = performance.now();
+		let cursor = "";
+		// Keep the active point visible while dragging or holding.
+		const activePoint = drag?.point ?? hold?.point;
+		const visiblePoints = activePoint ? [activePoint] : transition || switching ? [] : points() ?? [];
+		markers.value = visiblePoints.map((point) => {
+			const bone = player!.skeleton.findBone(point.bone);
+			const local = world ? bone.worldToLocal({ x: world.x, y: world.y }) : null;
+			const hovered = !!local && contains(point.corners, local.x, local.y);
+			if (!cursor && hovered) cursor = point.drag ? "grab" : "pointer";
+			const corners = point.corners.map(([x, y]) => {
+				const world = bone.localToWorld({ x, y });
+				const screen = player!.sceneRenderer.camera.worldToScreen(new spine.Vector3(world.x, world.y, 0), canvas.width, canvas.height);
+				return { x: screen.x + canvas.left - origin.left, y: canvas.height - screen.y + canvas.top - origin.top };
+			});
+			const center = {
+				x: corners.reduce((sum, corner) => sum + corner.x, 0) / corners.length,
+				y: corners.reduce((sum, corner) => sum + corner.y, 0) / corners.length,
+			};
+			const width = Math.hypot(corners[3].x - corners[0].x, corners[3].y - corners[0].y);
+			const height = Math.hypot(corners[1].x - corners[0].x, corners[1].y - corners[0].y);
+			const press = markerPress?.key === point.key ? markerPress : null;
+			const dragging = !!press?.drag && press.down;
+			const pulses = (ripples.get(point.key) ?? []).filter((time) => now - time < 800);
+			if (pulses.length) ripples.set(point.key, pulses);
+			else ripples.delete(point.key);
+			return {
+				key: point.key, x: dragging ? press.x : center.x, y: dragging ? press.y : center.y,
+				drag: point.drag, dragging, hovered,
+				pressed: !point.drag && !!press && (press.down || now - press.releasedAt < 200),
+				dx: dragging && pointer ? pointer.clientX - press.startX : 0,
+				dy: dragging && pointer ? pointer.clientY - press.startY : 0,
+				pop: pulses.length && now - pulses[pulses.length - 1] < 400 ? pulses[pulses.length - 1] : 0,
+				ripples: pulses,
+				box: {
+					width: `${width}px`, height: `${height}px`,
+					transform: `matrix(${(corners[3].x - corners[0].x) / (width || 1)}, ${(corners[3].y - corners[0].y) / (width || 1)}, ${(corners[1].x - corners[0].x) / (height || 1)}, ${(corners[1].y - corners[0].y) / (height || 1)}, ${corners[0].x}, ${corners[0].y})`,
+				},
+			};
+		});
+		player.canvas.style.cursor = markerPress?.drag && markerPress.down ? "grabbing" : cursor;
 	}
 
 	return {
+		groups,
+		group,
+		selectGroup,
 		isDating,
 		available,
 		enabled,
 		showPoints,
+		showAreas,
 		tools,
 		tool,
 		gauge,
@@ -886,11 +972,15 @@ export function useDatingInteractions(
 		cancelHold,
 		load,
 		reset,
+		restart,
 		pointerDown,
 		pointerMove,
+		pointerLeave,
 		pointerUp,
+		releaseMarker,
 		cancelDrag,
 		update,
-		draw,
+		markers,
+		updateMarkers,
 	};
 }

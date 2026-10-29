@@ -42,6 +42,10 @@ const {
   minigameEnabled,
   minigameFever,
   minigameFeverAvailable,
+  datingMarkers,
+  datingGroups,
+  datingGroup,
+  selectDatingGroup,
   datingTools,
   datingTool,
   selectDatingTool,
@@ -51,6 +55,7 @@ const {
   datingAvailable,
   datingEnabled,
   showDatingPoints,
+  showDatingAreas,
   error,
   isLoading,
   retry,
@@ -400,9 +405,35 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
       </div>
     </div>
     <p v-if="source && isLoading && !error" role="status" class="preview-loading">{{ t('preview.loading') }}</p>
-    <div v-show="source && !error" ref="player-container" :id="`player-container-${props.previewId}`" tabindex="0"
-      class="player-container" @contextmenu.prevent="openContext" @pointerdown.capture="playerContainer?.focus()"
-      @keydown="onPreviewKeydown" @keydown.shift.f10.prevent="openContext" />
+    <div v-show="source && !error" class="preview-stage">
+      <div ref="player-container" :id="`player-container-${props.previewId}`" tabindex="0"
+        class="player-container" @contextmenu.prevent="openContext" @pointerdown.capture="playerContainer?.focus()"
+        @keydown="onPreviewKeydown" @keydown.shift.f10.prevent="openContext" />
+      <TransitionGroup v-if="datingEnabled && !isLoading" name="dating-point-fade" tag="div" class="dating-markers" aria-hidden="true">
+        <div v-for="marker in datingMarkers" :key="marker.key" class="dating-point-layer">
+          <div v-if="showDatingAreas" class="dating-area" :style="marker.box" />
+          <div v-if="showDatingPoints" class="dating-marker" :class="{ pressed: marker.pressed, dragging: marker.dragging, hovered: marker.hovered }"
+            :style="{ left: `${marker.x}px`, top: `${marker.y}px` }">
+            <div class="dating-marker-motion" :style="{ transform: `translate(${marker.dx}px, ${marker.dy}px)` }">
+              <span class="dating-marker-ring" />
+              <span class="dating-marker-dot-position"><span :key="marker.pop" class="dating-marker-dot" :class="{ pop: !!marker.pop }" /></span>
+              <span v-for="time in marker.ripples" :key="time" class="dating-marker-ripple" />
+              <template v-if="marker.drag">
+                <span v-for="rotation in [0, 90, 180, 270]" :key="rotation" class="dating-marker-arrow-axis"
+                  :style="{ transform: `rotate(${rotation}deg)` }">
+                  <span class="dating-marker-arrow-gap">
+                    <svg class="dating-marker-arrow" width="6" height="10" viewBox="0 0 6 10" fill="none"
+                      stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M1 1l4 4-4 4" />
+                    </svg>
+                  </span>
+                </span>
+              </template>
+            </div>
+          </div>
+        </div>
+      </TransitionGroup>
+    </div>
     <div v-if="minigameEnabled" class="minigame-hint">{{ t('preview.minigameHint') }}</div>
     <div v-if="datingEnabled && datingGaugeRange" class="dating-gauge" :aria-label="t('preview.datingGauge')">
       <span>{{ datingGaugeRange.y }}</span>
@@ -454,8 +485,13 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
           </button>
           <button type="button" role="menuitemcheckbox" :aria-checked="showDatingPoints" :disabled="!datingEnabled"
             @mouseenter="submenu = null" @click="showDatingPoints = !showDatingPoints; closeContext()">
-            <Eye :size="16" /><span>{{ t('preview.showInteractionAreas') }}</span>
+            <Eye :size="16" /><span>{{ t('preview.showInteractionPoints') }}</span>
             <Check v-if="showDatingPoints" :size="16" />
+          </button>
+          <button type="button" role="menuitemcheckbox" :aria-checked="showDatingAreas" :disabled="!datingEnabled"
+            @mouseenter="submenu = null" @click="showDatingAreas = !showDatingAreas; closeContext()">
+            <Eye :size="16" /><span>{{ t('preview.showInteractionAreas') }}</span>
+            <Check v-if="showDatingAreas" :size="16" />
           </button>
           <template v-if="datingEnabled && datingTools.length > 1">
             <div class="context-separator" />
@@ -524,9 +560,10 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
       </div>
     </Teleport>
     <div v-if="source && settings" class="preview-playback">
-      <button type="button" :aria-label="t('preview.restart')" :title="t('preview.restart')"
+      <button type="button" :aria-label="t(datingEnabled ? 'preview.resetDating' : 'preview.restart')" :title="t(datingEnabled ? 'preview.resetDating' : 'preview.restart')"
         :disabled="!allAnimations.length" @click="restart">
-        <SkipBack :size="16" aria-hidden="true" />
+        <RotateCcw v-if="datingEnabled" :size="16" aria-hidden="true" />
+        <SkipBack v-else :size="16" aria-hidden="true" />
       </button>
       <button type="button" :aria-label="paused ? t('preview.playPreview') : t('preview.pausePreview')"
         :title="paused ? t('preview.play') : t('preview.pause')" :disabled="!allAnimations.length"
@@ -534,15 +571,38 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
         <Play v-if="paused" :size="16" aria-hidden="true" />
         <Pause v-else :size="16" aria-hidden="true" />
       </button>
-      <button type="button" :aria-label="t('preview.loop')" :title="t('preview.loop')" :aria-pressed="loopAnimation"
+      <button v-if="!datingEnabled" type="button" :aria-label="t('preview.loop')" :title="t('preview.loop')" :aria-pressed="loopAnimation"
         :disabled="!allAnimations.length" @click="loopAnimation = !loopAnimation">
         <Repeat :size="16" aria-hidden="true" />
       </button>
-      <input type="range" min="0" :max="duration" step="0.01" :value="playbackTime" :disabled="!duration || minigameEnabled"
+      <input v-if="!datingEnabled" type="range" min="0" :max="duration" step="0.01" :value="playbackTime" :disabled="!duration || minigameEnabled"
         :aria-label="t('preview.progress')" :title="`${playbackTime.toFixed(2)} / ${duration.toFixed(2)} s`"
         @input="seek" />
 
-      <button ref="animationButton" type="button" class="preview-animation-select"
+      <template v-if="datingEnabled">
+        <select :value="datingGroup?.id" :aria-label="t('preview.datingStageLabel')"
+          @change="selectDatingGroup(Number(($event.target as HTMLSelectElement).value))">
+          <option v-for="(item, index) in datingGroups" :key="item.id" :value="item.id">
+            {{ t('preview.datingStage', { number: index + 1 }) }}
+          </option>
+        </select>
+        <span class="dating-playback-space"></span>
+        <button type="button" class="dating-areas" :aria-pressed="showDatingPoints"
+          @click="showDatingPoints = !showDatingPoints">
+          <Eye :size="16" aria-hidden="true" />{{ t('preview.showInteractionPoints') }}
+        </button>
+        <button type="button" class="dating-areas" :aria-pressed="showDatingAreas"
+          @click="showDatingAreas = !showDatingAreas">
+          <Eye :size="16" aria-hidden="true" />{{ t('preview.showInteractionAreas') }}
+        </button>
+        <select v-if="datingTools.length > 1" :value="datingTool" :aria-label="t('preview.datingToolLabel')"
+          @change="selectDatingTool(Number(($event.target as HTMLSelectElement).value))">
+          <option v-for="item in datingTools" :key="item.id" :value="item.id">
+            {{ item.id === 0 ? t('preview.noTool') : t('preview.datingTool', { id: item.id }) }}
+          </option>
+        </select>
+      </template>
+      <button v-else ref="animationButton" type="button" class="preview-animation-select"
         :aria-label="t('preview.previewAnimation')" aria-haspopup="dialog" :aria-expanded="animationsOpen"
         :disabled="!allAnimations.length || datingEnabled || minigameEnabled" @click="animationsOpen = !animationsOpen; layersOpen = false"
         @keydown.esc="animationsOpen = false">
@@ -1057,6 +1117,21 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
   cursor: pointer;
 }
 
+.dating-playback-space {
+  flex: 1;
+}
+
+.preview-playback .dating-areas {
+  width: auto;
+  gap: 6px;
+  padding: 5px 8px;
+  font-size: 12px;
+}
+
+.preview-playback:has(.dating-areas) {
+  flex-wrap: wrap;
+}
+
 .preview-playback button:hover {
   background: var(--state-hover);
 }
@@ -1402,5 +1477,164 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
 .dating-gauge progress::-webkit-progress-value {
     background: var(--accent);
     border-radius: 3px;
+}
+</style>
+<style scoped>
+.preview-stage {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.dating-markers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.dating-point-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.dating-point-fade-enter-active,
+.dating-point-fade-leave-active {
+  transition: opacity .15s ease-out;
+}
+
+.dating-point-fade-enter-from,
+.dating-point-fade-leave-to {
+  opacity: 0;
+}
+
+.dating-area {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  box-sizing: border-box;
+  border: 1px dashed rgb(255 255 255 / .75);
+  border-radius: 6px;
+  background: rgb(255 255 255 / .1);
+}
+
+.dating-marker {
+  position: absolute;
+  width: 0;
+  height: 0;
+  color: #fff;
+  opacity: .6;
+  transition: opacity .15s ease-out;
+}
+
+.dating-marker.hovered,
+.dating-marker.pressed,
+.dating-marker.dragging {
+  opacity: 1;
+}
+
+.dating-marker-motion {
+  position: absolute;
+  width: 0;
+  height: 0;
+  transition: transform .2s ease-out;
+}
+
+.dating-marker.dragging .dating-marker-motion { transition: none; }
+
+.dating-marker-dot-position {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  transform: translate(-50%, -50%);
+}
+
+.dating-marker-dot {
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 4px 1px rgb(255 255 255 / .7), 0 0 10px 3px rgb(255 255 255 / .25);
+}
+
+.dating-marker-dot.pop { animation: dating-dot-pop .4s ease-out; }
+
+.dating-marker-ring {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  border: 1px solid rgb(255 255 255 / .85);
+  box-shadow: 0 0 8px 1px rgb(255 255 255 / .55), inset 0 0 6px rgb(255 255 255 / .35);
+  transition: transform .3s cubic-bezier(.34, 1.9, .5, 1), border-color .15s, box-shadow .15s, opacity .2s;
+}
+
+.dating-marker.pressed .dating-marker-ring {
+  transform: translate(-50%, -50%) scale(.8);
+  border-color: #fff;
+  box-shadow: 0 0 12px 3px rgb(255 255 255 / .8), inset 0 0 8px rgb(255 255 255 / .6);
+}
+
+.dating-marker.dragging .dating-marker-ring {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(.3);
+}
+
+.dating-marker-ripple {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 10px 2px rgb(255 255 255 / .7);
+  animation: dating-ripple .6s cubic-bezier(.1, .7, .2, 1) both;
+}
+
+.dating-marker-arrow-axis,
+.dating-marker-arrow-gap {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.dating-marker-arrow-gap {
+  transform: translateX(16px);
+  transition: transform .25s cubic-bezier(.3, 1.6, .5, 1), opacity .12s, filter .15s;
+}
+
+.dating-marker-arrow {
+  position: absolute;
+  width: 6px;
+  height: 10px;
+  max-width: none;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 0 3px rgb(255 255 255 / .8));
+}
+
+.dating-marker.dragging .dating-marker-arrow-gap {
+  transform: translateX(24px);
+  animation: dating-nudge 1.2s ease-in-out .3s infinite;
+}
+
+@keyframes dating-dot-pop {
+  0%, 100% { transform: scale(1); }
+  30% { transform: scale(1.8); }
+}
+
+@keyframes dating-ripple {
+  from { opacity: 1; transform: translate(-50%, -50%) scale(.9); border-width: 2px; }
+  to { opacity: 0; transform: translate(-50%, -50%) scale(2.4); border-width: .5px; }
+}
+
+@keyframes dating-nudge {
+  0%, 100% { transform: translateX(24px); }
+  50% { transform: translateX(calc(24px - 1.5px)); }
 }
 </style>
