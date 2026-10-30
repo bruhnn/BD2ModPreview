@@ -7,7 +7,7 @@ export const minigameCatalog = [
   { id: 5, costumeId: "003302" },
 ].map(character => ({
   ...character,
-  name: "Slap Slap / Splash Splash",
+  name: "Slap Slap Slop",
   skeleton: "misc/rhythmhitanim/RhythmHitAnim.skel",
   atlas: "misc/rhythmhitanim/RhythmHitAnim.atlas",
   animation: `_char${String(character.id).padStart(3, "0")}`,

@@ -20,7 +20,7 @@
         "appIcon": "New app icon.",
         "assetLoadingFix": "Fixed character asset filenames that prevented some previews from loading.",
         "groupCameraFix": "Fixed grouped previews sometimes ignoring zoom and movement until the camera was fitted.",
-        "minigames": "Preview Slap Slap / Splash Splash characters with tap, hold, drag, and Fever interactions.",
+        "minigames": "Preview Slap Slap Slop characters with tap, hold, drag, and Fever interactions.",
         "copyConfirmation": "Added confirmation when copying your ID.",
         "cutsceneVisibilityFix": "Fixed cutscene parts remaining visible after their cuts ended.",
         "datingAssetsFix": "Fixed missing assets for Aquila's multipart dating preview.",
