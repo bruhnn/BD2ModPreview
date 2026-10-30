@@ -37,12 +37,11 @@ const supportLinks = [
 ]
 
 const otherUpdates = [
+    "supporterActivation",
+    "datingControls",
+    "assetLoadingFix",
+    "groupCameraFix",
     "minigames",
-    "copyConfirmation",
-    "cutsceneVisibilityFix",
-    "datingAssetsFix",
-    "whatsNewFix",
-    "characters",
     "controls",
     "syncGroups",
     "sequences",
@@ -52,7 +51,8 @@ const otherUpdates = [
     "interface",
     "themes",
     "folders",
-    "playbackFixes",
+    "characters",
+    "cutsceneVisibilityFix",
     "datingFixes"
 ]
 </script>

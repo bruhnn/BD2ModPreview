@@ -177,6 +177,7 @@ onMounted(async () => {
   logMessage('Application starting...')
 
   await loadFromCli()
+  await uiStore.loadLanguage()
 
   // these functions we dont need to wait because they are not critical for the app to start, but we want to run them in parallel to save time
   void Promise.allSettled([

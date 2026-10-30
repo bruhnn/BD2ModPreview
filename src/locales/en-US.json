@@ -15,6 +15,11 @@
         "orderHelp": "AFDIAN: Go to your dashboard, open My orders, and copy the order number. Ko-fi: Enter the activation code you received, not the transaction number."
     },
     "whatsNew": {
+        "supporterActivation": "Activate supporter access in Settings with your AFDIAN order number or Ko-fi activation code.",
+        "datingControls": "Choose a dating pose, reset interactions, and show or hide interaction points and areas.",
+        "appIcon": "New app icon.",
+        "assetLoadingFix": "Fixed character asset filenames that prevented some previews from loading.",
+        "groupCameraFix": "Fixed grouped previews sometimes ignoring zoom and movement until the camera was fitted.",
         "minigames": "Preview Slap Slap / Splash Splash characters with tap, hold, drag, and Fever interactions.",
         "copyConfirmation": "Added confirmation when copying your ID.",
         "cutsceneVisibilityFix": "Fixed cutscene parts remaining visible after their cuts ended.",

@@ -10,7 +10,18 @@ export const useUIStore = defineStore('ui', () => {
   const { locale } = useI18n()
 
   const theme = useLocalStorage('APP_THEME', 'dark-3')
-  const language = useLocalStorage<string>('APP_LANGUAGE', 'en_US')
+  const language = useLocalStorage<string>('APP_LANGUAGE', 'en_US', { writeDefaults: false })
+
+  async function loadLanguage() {
+    if (localStorage.getItem('APP_LANGUAGE')) return
+    try {
+      const systemLocale = await invoke<string>('get_user_locale')
+      const languages: Record<string, string> = { en: 'en_US', zh: 'zh_CN', ja: 'ja_JP', ko: 'ko_KR' }
+      language.value = languages[systemLocale.toLowerCase().split(/[-_]/)[0]] ?? 'en_US'
+    } catch (error) {
+      console.error('Failed to load system language:', error)
+    }
+  }
 
   const machineId = ref<string | null>(null)
   const isSupporter = ref(false)
@@ -74,6 +85,10 @@ export const useUIStore = defineStore('ui', () => {
     isHistoryVisible.value = false
   }
 
+  function openWhatsNew() {
+    isWhatsNewVisible.value = true
+  }
+
   async function closeWhatsNew() {
     isWhatsNewVisible.value = false;
 
@@ -97,6 +112,7 @@ export const useUIStore = defineStore('ui', () => {
     
     theme,
     language,
+    loadLanguage,
 
     isSettingsVisible: readonly(isSettingsVisible),
     isLogsVisible: readonly(isLogsVisible),
@@ -104,6 +120,7 @@ export const useUIStore = defineStore('ui', () => {
     isWhatsNewVisible: readonly(isWhatsNewVisible),
 
     shouldShowWhatsNew,
+    openWhatsNew,
     openSettings,
     closeSettings,
     openLogs,

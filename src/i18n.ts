@@ -21,6 +21,11 @@ const messages = {
             "orderHelp": "AFDIAN：进入个人中心，打开“我的订单”，然后复制订单号。Ko-fi：输入你收到的激活码，而不是交易编号。"
         },
         whatsNew: {
+            supporterActivation: "在设置中使用 AFDIAN 订单号或 Ko-fi 激活码激活赞助者权限。",
+            datingControls: "选择约会姿势、重置互动，并显示或隐藏互动点和区域。",
+            appIcon: "全新应用图标。",
+            assetLoadingFix: "修复了资源文件名错误导致部分角色预览无法加载的问题。",
+            groupCameraFix: "修复了部分同步组预览必须先调整镜头才能响应缩放和移动的问题。",
             minigames: "预览 Slap Slap / Splash Splash 角色，支持点击、长按、拖动和狂热模式互动。",
             copyConfirmation: "复制 ID 后会显示确认提示。",
             cutsceneVisibilityFix: "修复了部分过场动画片段结束后仍然显示的问题。",
@@ -335,6 +340,11 @@ const messages = {
             "orderHelp": "AFDIAN：ダッシュボードから「マイオーダー」を開き、注文番号をコピーしてください。Ko-fi：取引番号ではなく、受け取った有効化コードを入力してください。"
         },
         whatsNew: {
+            supporterActivation: "設定で AFDIAN の注文番号または Ko-fi の有効化コードを入力し、サポーター機能を有効にできます。",
+            datingControls: "デートのポーズを選択し、インタラクションをリセットしたり、操作ポイントや範囲の表示を切り替えたりできます。",
+            appIcon: "アプリアイコンを新しくしました。",
+            assetLoadingFix: "アセットのファイル名が正しくないため、一部のキャラクタープレビューを読み込めない問題を修正しました。",
+            groupCameraFix: "グループ内の一部のプレビューが、キャラクターを画面に合わせるまでズームや移動に反応しない問題を修正しました。",
             minigames: "Slap Slap / Splash Splash のキャラクターをプレビューし、クリック、長押し、ドラッグ、フィーバーのインタラクションを楽しめます。",
             copyConfirmation: "ID をコピーしたときに確認メッセージを表示するようにしました。",
             cutsceneVisibilityFix: "カット終了後も一部の演出が表示されたままになる問題を修正しました。",
@@ -649,6 +659,11 @@ const messages = {
             "orderHelp": "AFDIAN: 대시보드에서 내 주문을 열고 주문 번호를 복사하세요. Ko-fi: 거래 번호가 아닌, 받은 활성화 코드를 입력하세요."
         },
         whatsNew: {
+            supporterActivation: "설정에서 AFDIAN 주문 번호 또는 Ko-fi 활성화 코드로 후원자 기능을 활성화할 수 있습니다.",
+            datingControls: "데이트 포즈를 선택하고, 상호작용을 초기화하거나 상호작용 지점과 영역을 표시하거나 숨길 수 있습니다.",
+            appIcon: "새 앱 아이콘을 적용했습니다.",
+            assetLoadingFix: "잘못된 에셋 파일 이름으로 일부 캐릭터 미리보기를 불러올 수 없던 문제를 수정했습니다.",
+            groupCameraFix: "그룹 내 일부 미리보기가 캐릭터 맞춤을 사용하기 전까지 확대/축소와 이동에 반응하지 않던 문제를 수정했습니다.",
             minigames: "Slap Slap / Splash Splash 캐릭터를 미리 보고 클릭, 길게 누르기, 드래그, 피버 상호작용을 사용할 수 있습니다.",
             copyConfirmation: "ID를 복사하면 확인 메시지가 표시됩니다.",
             cutsceneVisibilityFix: "컷이 끝난 뒤에도 일부 컷신 요소가 계속 표시되는 문제를 수정했습니다.",

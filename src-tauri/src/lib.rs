@@ -57,6 +57,7 @@ pub fn run() {
             ipc::connect_to_bd2mm,
             ipc::enable_mod_on_bd2mm,
             get_machine_id,
+            get_user_locale,
             get_spine_assets,
             get_mod_backgrounds,
             download_missing_skeleton

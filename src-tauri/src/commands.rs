@@ -11,6 +11,11 @@ use winreg::RegKey;
 use winreg::enums::HKEY_LOCAL_MACHINE;
 
 #[tauri::command]
+pub fn get_user_locale() -> String {
+    sys_locale::get_locale().unwrap_or_else(|| String::from("en-US"))
+}
+
+#[tauri::command]
 pub fn get_spine_assets(folder_path: String) -> Result<SpineAssetData, Error> {
     let dir_path = Path::new(&folder_path);
 

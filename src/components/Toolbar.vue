@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { History, Image, Pause, Repeat, RotateCcw, SkipBack, X, Settings, Users } from "@lucide/vue"
+import { History, Sparkles, Image, Pause, Repeat, RotateCcw, SkipBack, X, Settings, Users } from "@lucide/vue"
 import { computed, ref } from "vue"
 import { useI18n } from "vue-i18n"
 import { onClickOutside } from "@vueuse/core"
@@ -89,6 +89,10 @@ function selectBackground(event: Event) {
         <Image :size="16" />
       </button>
       <div class="toolbar-actions">
+        <button class="text-button icon-button" :aria-label="t('whatsNew.title')" :title="t('whatsNew.title')"
+          :aria-expanded="uiStore.isWhatsNewVisible" @click="backgroundOpen = false; uiStore.openWhatsNew()">
+          <Sparkles :size="16" />
+        </button>
         <button class="text-button icon-button" :aria-label="t('controls.actions.viewHistory')" :title="t('controls.actions.viewHistory')"
           :aria-expanded="uiStore.isHistoryVisible" @click="backgroundOpen = false; uiStore.openHistory()">
           <History :size="16" />
