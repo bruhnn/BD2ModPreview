@@ -3,9 +3,9 @@
   lang="ts"
 >
 import { useI18n } from "vue-i18n"
-import { Flame, GripVertical, PanelRightClose, PanelBottomClose, Play, Pause, Repeat, Hand, Eye, EyeOff, Check, ChevronDown, ChevronRight, FolderOpen, Focus, Image, Layers, Maximize, Palette, Shirt, Pencil, Plus, RotateCcw, SkipBack, Trash2, X } from "@lucide/vue"
+import { ExternalLink, Flame, GripVertical, PanelRightClose, PanelBottomClose, Play, Pause, Repeat, Hand, Eye, EyeOff, Check, ChevronDown, ChevronRight, FolderOpen, Focus, Image, Layers, Maximize, Palette, Shirt, Pencil, Plus, RotateCcw, SkipBack, Trash2, X } from "@lucide/vue"
 import { autoUpdate, flip, offset, shift, useFloating } from "@floating-ui/vue"
-import { onClickOutside } from "@vueuse/core"
+import { onClickOutside, useTimeoutFn } from "@vueuse/core"
 import { computed, nextTick, ref, useTemplateRef, watch } from "vue"
 
 import { usePreviewDrag } from "../composables/usePreviewDrag"
@@ -14,8 +14,10 @@ import SequenceEditor from "./modals/SequenceEditor.vue"
 import type { AnimationSequence } from "../types/spine"
 import { useModManagerStore } from "../stores/modManager"
 import { usePreviewerStore } from "../stores/previewer"
+import { useUIStore } from "../stores/ui"
 
 import { open } from "@tauri-apps/plugin-dialog"
+import { openUrl } from "@tauri-apps/plugin-opener"
 import { invoke } from "@tauri-apps/api/core"
 
 import { useLogger } from "../composables/useLogger"
@@ -30,6 +32,19 @@ const props = defineProps<{
   canAddBottom: boolean
 }>()
 const previewerStore = usePreviewerStore()
+const uiStore = useUIStore()
+const datingButton = ref<HTMLElement | null>(null)
+const datingTooltip = ref<HTMLElement | null>(null)
+const datingTooltipOpen = ref(false)
+const { start: closeDatingTooltip, stop: keepDatingTooltip } = useTimeoutFn(() => {
+  datingTooltipOpen.value = false
+}, 150, { immediate: false })
+const { floatingStyles: datingTooltipStyles } = useFloating(datingButton, datingTooltip, {
+  placement: "top-end",
+  strategy: "fixed",
+  middleware: [offset(8), flip(), shift({ padding: 8 })],
+  whileElementsMounted: autoUpdate,
+})
 
 const playerContainer = useTemplateRef("player-container")
 
@@ -434,7 +449,6 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
         </div>
       </TransitionGroup>
     </div>
-    <div v-if="minigameEnabled" class="minigame-hint">{{ t('preview.minigameHint') }}</div>
     <div v-if="datingEnabled && datingGaugeRange" class="dating-gauge" :aria-label="t('preview.datingGauge')">
       <span>{{ datingGaugeRange.y }}</span>
       <progress :value="datingGauge - datingGaugeRange.x" :max="datingGaugeRange.y - datingGaugeRange.x" />
@@ -571,11 +585,11 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
         <Play v-if="paused" :size="16" aria-hidden="true" />
         <Pause v-else :size="16" aria-hidden="true" />
       </button>
-      <button v-if="!datingEnabled" type="button" :aria-label="t('preview.loop')" :title="t('preview.loop')" :aria-pressed="loopAnimation"
+      <button v-if="!datingEnabled && !minigameEnabled" type="button" :aria-label="t('preview.loop')" :title="t('preview.loop')" :aria-pressed="loopAnimation"
         :disabled="!allAnimations.length" @click="loopAnimation = !loopAnimation">
         <Repeat :size="16" aria-hidden="true" />
       </button>
-      <input v-if="!datingEnabled" type="range" min="0" :max="duration" step="0.01" :value="playbackTime" :disabled="!duration || minigameEnabled"
+      <input v-if="!datingEnabled && !minigameEnabled" type="range" min="0" :max="duration" step="0.01" :value="playbackTime" :disabled="!duration"
         :aria-label="t('preview.progress')" :title="`${playbackTime.toFixed(2)} / ${duration.toFixed(2)} s`"
         @input="seek" />
 
@@ -602,7 +616,16 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
           </option>
         </select>
       </template>
-      <button v-else ref="animationButton" type="button" class="preview-animation-select"
+      <span v-else-if="minigameEnabled" class="minigame-hint">{{ t('preview.minigameHint') }}</span>
+      <button v-if="isDating" type="button" :aria-pressed="datingEnabled"
+        :aria-disabled="!datingAvailable" class="dating-interactions-button"
+        @mouseenter="keepDatingTooltip(); datingButton = $event.currentTarget as HTMLElement; datingTooltipOpen = !uiStore.isSupporter" @mouseleave="closeDatingTooltip()"
+        @focus="keepDatingTooltip(); datingButton = $event.currentTarget as HTMLElement; datingTooltipOpen = !uiStore.isSupporter" @blur="closeDatingTooltip()"
+        @keydown.esc="datingTooltipOpen = false"
+        @click="datingAvailable && (stopSequence(), datingEnabled = !datingEnabled)">
+        <Hand :size="16" aria-hidden="true" />{{ t('preview.datingInteractions') }}
+      </button>
+      <button v-if="!datingEnabled && !minigameEnabled" ref="animationButton" type="button" class="preview-animation-select"
         :aria-label="t('preview.previewAnimation')" aria-haspopup="dialog" :aria-expanded="animationsOpen"
         :disabled="!allAnimations.length || datingEnabled || minigameEnabled" @click="animationsOpen = !animationsOpen; layersOpen = false"
         @keydown.esc="animationsOpen = false">
@@ -615,6 +638,23 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
         }}
         </span>
       </button>
+
+      <Teleport to="body">
+        <div v-if="isDating && datingTooltipOpen && !uiStore.isSupporter" ref="datingTooltip"
+          :style="datingTooltipStyles" class="dating-support-tooltip" role="dialog" :aria-label="t('preview.datingInteractions')"
+          @mouseenter="keepDatingTooltip()" @mouseleave="closeDatingTooltip()"
+          @focusin="keepDatingTooltip()" @focusout="closeDatingTooltip()" @keydown.esc="datingTooltipOpen = false">
+          {{ t('preview.datingSupportMessage') }}
+          <div class="dating-support-links">
+            <button type="button" @click="openUrl('https://ko-fi.com/bruhnn')">
+              Ko-fi<ExternalLink :size="12" aria-hidden="true" />
+            </button>
+            <button type="button" @click="openUrl('https://afdian.com/a/bruhnn')">
+              AFDIAN<ExternalLink :size="12" aria-hidden="true" />
+            </button>
+          </div>
+        </div>
+      </Teleport>
 
       <Teleport to="body">
         <div v-if="animationsOpen" ref="animationPopover" :style="animationStyles" class="preview-animation-options"
@@ -1121,7 +1161,8 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
   flex: 1;
 }
 
-.preview-playback .dating-areas {
+.preview-playback .dating-areas,
+.preview-playback .dating-interactions-button {
   width: auto;
   gap: 6px;
   padding: 5px 8px;
@@ -1426,19 +1467,67 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
   border-top: 1px solid var(--border-default);
 }
 
-.minigame-hint {
-  position: absolute;
-  bottom: 48px;
-  left: 50%;
-  transform: translateX(-50%);
-  max-width: calc(100% - 32px);
-  padding: 6px 10px;
-  border-radius: 4px;
+.preview-titlebar .dating-interactions-button {
+  width: auto;
+  gap: 6px;
+  padding: 5px 8px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.preview-titlebar .dating-interactions-button[aria-pressed="true"] {
+  color: var(--accent);
+  background: var(--state-hover);
+}
+
+.preview-titlebar .dating-interactions-button[aria-disabled="true"],
+.preview-playback .dating-interactions-button[aria-disabled="true"] {
+  color: var(--text-secondary);
+  cursor: default;
+}
+
+.dating-support-tooltip {
+  z-index: 10000;
+  width: 300px;
+  max-width: calc(100vw - 16px);
+  padding: 12px;
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
   background: var(--surface-popover);
+  color: var(--text-primary);
+  font-size: 12px;
+  line-height: 1.5;
+  pointer-events: auto;
+}
+
+.dating-support-links {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.dating-support-links button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  font: inherit;
+  cursor: pointer;
+}
+
+.dating-support-links button:hover {
+  text-decoration: underline;
+}
+
+.minigame-hint {
+  flex: 1;
+  min-width: 0;
   color: var(--text-secondary);
   font-size: 12px;
-  text-align: center;
-  pointer-events: none;
+  line-height: 1.4;
 }
 
 .dating-gauge {
