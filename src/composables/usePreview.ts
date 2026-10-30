@@ -256,6 +256,7 @@ export function usePreview(
 			y: offset.y + size.y / 2,
 			zoom: defaultZoom,
 		};
+		if (!initialCamera) initialCamera = { ...camera };
 	}
 	function centerCharacter() {
 		if (!spinePlayer || !camera) return;
@@ -273,7 +274,6 @@ export function usePreview(
 	}
 	function setupCamera(player: SpinePlayer) {
 		fitCharacter();
-		initialCamera = camera ? { ...camera } : null;
 		const canvas = player.canvas;
 		cameraListeners = new AbortController();
 		const { signal } = cameraListeners;
@@ -476,6 +476,7 @@ export function usePreview(
 		playbackTime.value = time;
 	}
 	function onPlayerUpdate(player: SpinePlayer, delta: number) {
+		if (!camera) fitCharacter();
 		if (activeSequence.value) applySequence(playbackTime.value + delta);
 		if (camera) {
 			const rendererCamera = player.sceneRenderer.camera;
