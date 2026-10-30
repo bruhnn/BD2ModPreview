@@ -88,7 +88,7 @@ function handleCopy() {
   </TransitionRoot>
 </template>
 <style scoped>
-.logs-modal {
+:global(.logs-modal) {
   position: relative;
   z-index: 10000;
   color: var(--text-primary);

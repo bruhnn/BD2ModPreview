@@ -148,9 +148,9 @@ function save() {
 </template>
 
 <style scoped>
-.sequence-modal {
+:global(.sequence-modal) {
   position: relative;
-  z-index: 150;
+  z-index: 10000;
 }
 
 .sequence-backdrop {

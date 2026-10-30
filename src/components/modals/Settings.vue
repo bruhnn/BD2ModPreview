@@ -232,7 +232,7 @@ watch(() => props.show, async (show) => {
 </template>
 
 <style scoped>
-.settings-modal {
+:global(.settings-modal) {
   position: relative;
   z-index: 10000;
   color: var(--text-primary);

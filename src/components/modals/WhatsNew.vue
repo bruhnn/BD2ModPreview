@@ -168,7 +168,7 @@ const otherUpdates = [
 </template>
 
 <style scoped>
-.updates-modal {
+:global(.updates-modal) {
     position: relative;
     z-index: 10000;
 }

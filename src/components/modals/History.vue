@@ -131,7 +131,7 @@ function getModTypeLabel(modType: string) {
 </template>
 
 <style scoped>
-.history-modal {
+:global(.history-modal) {
     position: relative;
     z-index: 10000;
     color: var(--text-primary);
