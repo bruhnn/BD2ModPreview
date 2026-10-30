@@ -4,10 +4,11 @@
 >
 import { Bug, Check, ChevronDown, ChevronRight, CircleQuestionMark, Heart, ScrollText, Sparkles, X } from "@lucide/vue"
 import { Dialog, DialogPanel, DialogTitle, Menu, MenuButton, MenuItems, MenuItem, TransitionRoot, TransitionChild } from '@headlessui/vue'
-import { ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { openUrl } from '@tauri-apps/plugin-opener'
 import { getCurrentWindow } from '@tauri-apps/api/window'
+import { getVersion } from "@tauri-apps/api/app"
 
 import { useUIStore } from '../../stores/ui'
 import { usePreviewerStore } from '../../stores/previewer'
@@ -19,6 +20,8 @@ const uiStore = useUIStore()
 const previewerStore = usePreviewerStore()
 const { availableLocales, t, te } = useI18n()
 const { logMessage } = useLogger()
+
+const appVersion = ref('0.0.0')
 
 const alwaysOnTop = ref(false)
 const orderNumber = ref('')
@@ -84,6 +87,12 @@ async function openIssues() {
   }
 }
 
+onMounted(async () => {
+  getVersion().then((v) => {
+    appVersion.value = v
+  })
+})
+
 watch(() => props.show, async (show) => {
   if (show) alwaysOnTop.value = await getCurrentWindow().isAlwaysOnTop()
 })
@@ -147,15 +156,21 @@ watch(() => props.show, async (show) => {
             </div>
             <section v-if="uiStore.isSupporter" class="supporter-section">
               <div class="supporter-heading">
-                <span class="supporter-title"><Heart :size="17" />{{ t('supporter.title') }}</span>
-                <span class="supporter-active"><Check :size="17" />{{ t('supporter.active') }}</span>
+                <span class="supporter-title">
+                  <Heart :size="17" />{{ t('supporter.title') }}
+                </span>
+                <span class="supporter-active">
+                  <Check :size="17" />{{ t('supporter.active') }}
+                </span>
               </div>
               <p>{{ t('supporter.thankYou') }}</p>
             </section>
             <details v-else class="supporter-section">
               <summary>
                 <div>
-                  <span class="supporter-title"><Heart :size="17" />{{ t('supporter.title') }}</span>
+                  <span class="supporter-title">
+                    <Heart :size="17" />{{ t('supporter.title') }}
+                  </span>
                   <p>{{ t('supporter.description') }}</p>
                 </div>
                 <ChevronDown :size="17" class="supporter-chevron" />
@@ -164,17 +179,24 @@ watch(() => props.show, async (show) => {
                 <label for="supporter-order">{{ t('supporter.orderNumber') }}</label>
                 <div class="supporter-input-row">
                   <input id="supporter-order" v-model="orderNumber" type="text" autocomplete="off"
-                    :placeholder="t('supporter.placeholder')" aria-describedby="supporter-result" :disabled="redeeming" />
-                  <button type="submit" :disabled="redeeming || !orderNumber.trim()">{{ t(redeeming ? 'supporter.redeeming' : 'supporter.redeem') }}</button>
+                    :placeholder="t('supporter.placeholder')" aria-describedby="supporter-result"
+                    :disabled="redeeming" />
+                  <button type="submit" :disabled="redeeming || !orderNumber.trim()">{{ t(redeeming ?
+                    'supporter.redeeming' : 'supporter.redeem') }}</button>
                 </div>
                 <p id="supporter-result" role="status">{{ redeemMessage ? t(redeemMessage) : '' }}</p>
                 <details class="supporter-help">
-                  <summary><ChevronRight :size="14" />{{ t('supporter.findOrder') }}</summary>
+                  <summary>
+                    <ChevronRight :size="14" />{{ t('supporter.findOrder') }}
+                  </summary>
                   <p>{{ t('supporter.orderHelp') }}</p>
                 </details>
               </form>
             </details>
             <footer class="settings-footer">
+              <span class="app-version">
+                v{{ appVersion }}
+              </span>
               <div class="footer-actions">
                 <button type="button" @click="openLogs">
                   <ScrollText :size="16" />
@@ -334,7 +356,7 @@ select {
   display: none;
 }
 
-.supporter-section > summary {
+.supporter-section>summary {
   justify-content: space-between;
 }
 
@@ -368,7 +390,7 @@ select {
   flex-shrink: 0;
 }
 
-.supporter-section[open] > summary .supporter-chevron {
+.supporter-section[open]>summary .supporter-chevron {
   transform: rotate(180deg);
 }
 
@@ -383,7 +405,7 @@ select {
   margin-top: 16px;
 }
 
-.supporter-form > label {
+.supporter-form>label {
   display: block;
   margin-bottom: 7px;
   color: var(--text-secondary);
@@ -428,7 +450,7 @@ select {
   font-size: 12px;
 }
 
-.supporter-help[open] > summary svg {
+.supporter-help[open]>summary svg {
   transform: rotate(90deg);
 }
 
@@ -530,5 +552,10 @@ select {
 .panel-visible {
   opacity: 1;
   transform: scale(1);
+}
+
+.app-version {
+  font-size: 12px;
+  color: var(--text-secondary)
 }
 </style>
