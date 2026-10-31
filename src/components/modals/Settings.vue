@@ -2,7 +2,7 @@
   setup
   lang="ts"
 >
-import { Bug, Check, ChevronDown, ChevronRight, CircleQuestionMark, Heart, ScrollText, Sparkles, X } from "@lucide/vue"
+import { RotateCcw, Bug, Check, ChevronDown, ChevronRight, CircleQuestionMark, Heart, ScrollText, Sparkles, X } from "@lucide/vue"
 import { Dialog, DialogPanel, DialogTitle, Menu, MenuButton, MenuItems, MenuItem, TransitionRoot, TransitionChild } from '@headlessui/vue'
 import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -118,81 +118,109 @@ watch(() => props.show, async (show) => {
                 <X :size="16" />
               </button>
             </header>
-            <div class="settings-columns">
-              <section>
-                <h3>{{ t('preview.application') }}</h3>
-                <label class="settings-field">
-                  <span>{{ t('preview.theme') }}</span>
-                  <select v-model="uiStore.theme">
-                    <option v-for="theme in ['dark-1', 'dark-2', 'dark-3', 'dark-4', 'light-1', 'light-2']" :key="theme"
-                      :value="theme">
-                      {{ t(theme.startsWith('dark') ? 'preview.darkTheme' : 'preview.lightTheme', {
-                        number:
-                          theme.split('-')[1]
-                      }) }}
-                    </option>
-                  </select>
-                </label>
-                <label class="settings-field">
-                  <span>{{ t('controls.appSettings.language') }}</span>
-                  <select v-model="uiStore.language">
-                    <option v-for="lang in availableLocales" :key="lang" :value="lang">{{ languages[lang] || lang }}
-                    </option>
-                  </select>
-                </label>
-                <label class="settings-check">
-                  <input type="checkbox" :checked="alwaysOnTop" @change="changeAlwaysOnTop" />
-                  <span>{{ t('controls.appSettings.alwaysOnTop') }}<small>{{ t('preview.onTopHelp') }}</small></span>
-                </label>
-              </section>
-              <section>
-                <h3>{{ t('preview.rendering') }}</h3>
-                <label class="settings-check">
-                  <input v-model="previewerStore.premultipliedAlpha"
-                    @update:model-value="previewerStore.setPremultipliedAlpha" type="checkbox" />
-                  <span>{{ t('controls.render.premultipliedAlpha') }}<small>{{ t('preview.alphaHelp') }}</small></span>
-                </label>
-              </section>
-            </div>
-            <section v-if="uiStore.isSupporter" class="supporter-section">
-              <div class="supporter-heading">
-                <span class="supporter-title">
-                  <Heart :size="17" />{{ t('supporter.title') }}
-                </span>
-                <span class="supporter-active">
-                  <Check :size="17" />{{ t('supporter.active') }}
-                </span>
+            <div class="settings-content">
+              <div class="settings-columns">
+                <section>
+                  <h3>{{ t('preview.application') }}</h3>
+                  <label class="settings-field">
+                    <span>{{ t('preview.theme') }}</span>
+                    <select v-model="uiStore.theme">
+                      <option v-for="theme in ['dark-1', 'dark-2', 'dark-3', 'dark-4', 'light-1', 'light-2']"
+                        :key="theme" :value="theme">
+                        {{ t(theme.startsWith('dark') ? 'preview.darkTheme' : 'preview.lightTheme', {
+                          number:
+                            theme.split('-')[1]
+                        }) }}
+                      </option>
+                    </select>
+                  </label>
+                  <label class="settings-field">
+                    <span>{{ t('controls.appSettings.language') }}</span>
+                    <select v-model="uiStore.language">
+                      <option v-for="lang in availableLocales" :key="lang" :value="lang">{{ languages[lang] || lang }}
+                      </option>
+                    </select>
+                  </label>
+                  <label class="settings-check">
+                    <input type="checkbox" :checked="alwaysOnTop" @change="changeAlwaysOnTop" />
+                    <span>{{ t('controls.appSettings.alwaysOnTop') }}<small>{{ t('preview.onTopHelp') }}</small></span>
+                  </label>
+                </section>
+                <section>
+                  <h3>{{ t('preview.rendering') }}</h3>
+                  <label class="settings-check">
+                    <input v-model="previewerStore.premultipliedAlpha"
+                      @update:model-value="previewerStore.setPremultipliedAlpha" type="checkbox" />
+                    <span>{{ t('controls.render.premultipliedAlpha') }}<small>{{ t('preview.alphaHelp')
+                        }}</small></span>
+                  </label>
+                </section>
               </div>
-              <p>{{ t('supporter.thankYou') }}</p>
-            </section>
-            <details v-else class="supporter-section">
-              <summary>
-                <div>
+              <section class="dating-point-settings">
+                <h3>{{ t('preview.datingInteractions') }}</h3>
+                <label class="point-setting">
+                  <span>{{ t('datingPointSettings.click') }}<small>{{ t('datingPointSettings.colorHelp')
+                      }}</small></span>
+                  <input v-model="uiStore.datingPointStyle.clickColor" type="color" />
+                </label>
+                <label class="point-setting">
+                  <span>{{ t('datingPointSettings.drag') }}<small>{{ t('datingPointSettings.colorHelp')
+                      }}</small></span>
+                  <input v-model="uiStore.datingPointStyle.dragColor" type="color" />
+                </label>
+                <label class="point-setting">
+                  <span>{{ t('datingPointSettings.size') }}<small>{{ t('datingPointSettings.sizeHelp') }}</small></span>
+                  <span class="point-size-control">
+                    <input v-model.number="uiStore.datingPointStyle.size" type="range" min="50" max="200" step="5"
+                      :style="{ '--point-size-progress': `${(uiStore.datingPointStyle.size - 50) / 150 * 100}%` }" />
+                    <output>{{ uiStore.datingPointStyle.size }}%</output>
+                  </span>
+                </label>
+                <button type="button" class="point-reset"
+                  @click="uiStore.datingPointStyle = { clickColor: '#ffffff', dragColor: '#ffffff', size: 100 }">
+                  <RotateCcw :size="16" />{{ t('datingPointSettings.reset') }}
+                </button>
+              </section>
+              <section v-if="uiStore.isSupporter" class="supporter-section">
+                <div class="supporter-heading">
                   <span class="supporter-title">
                     <Heart :size="17" />{{ t('supporter.title') }}
                   </span>
-                  <p>{{ t('supporter.description') }}</p>
+                  <span class="supporter-active">
+                    <Check :size="17" />{{ t('supporter.active') }}
+                  </span>
                 </div>
-                <ChevronDown :size="17" class="supporter-chevron" />
-              </summary>
-              <form class="supporter-form" @submit.prevent="redeem">
-                <label for="supporter-order">{{ t('supporter.orderNumber') }}</label>
-                <div class="supporter-input-row">
-                  <input id="supporter-order" v-model="orderNumber" type="text" autocomplete="off"
-                    :placeholder="t('supporter.placeholder')" aria-describedby="supporter-result"
-                    :disabled="redeeming" />
-                  <button type="submit" :disabled="redeeming || !orderNumber.trim()">{{ t(redeeming ?
-                    'supporter.redeeming' : 'supporter.redeem') }}</button>
-                </div>
-                <p id="supporter-result" role="status">{{ redeemMessage ? t(redeemMessage) : '' }}</p>
-                <details class="supporter-help">
-                  <summary>
-                    <ChevronRight :size="14" />{{ t('supporter.findOrder') }}
-                  </summary>
-                  <p>{{ t('supporter.orderHelp') }}</p>
-                </details>
-              </form>
-            </details>
+                <p>{{ t('supporter.thankYou') }}</p>
+              </section>
+              <details v-else class="supporter-section">
+                <summary>
+                  <div>
+                    <span class="supporter-title">
+                      <Heart :size="17" />{{ t('supporter.title') }}
+                    </span>
+                    <p>{{ t('supporter.description') }}</p>
+                  </div>
+                  <ChevronDown :size="17" class="supporter-chevron" />
+                </summary>
+                <form class="supporter-form" @submit.prevent="redeem">
+                  <label for="supporter-order">{{ t('supporter.orderNumber') }}</label>
+                  <div class="supporter-input-row">
+                    <input id="supporter-order" v-model="orderNumber" type="text" autocomplete="off"
+                      :placeholder="t('supporter.placeholder')" aria-describedby="supporter-result"
+                      :disabled="redeeming" />
+                    <button type="submit" :disabled="redeeming || !orderNumber.trim()">{{ t(redeeming ?
+                      'supporter.redeeming' : 'supporter.redeem') }}</button>
+                  </div>
+                  <p id="supporter-result" role="status">{{ redeemMessage ? t(redeemMessage) : '' }}</p>
+                  <details class="supporter-help">
+                    <summary>
+                      <ChevronRight :size="14" />{{ t('supporter.findOrder') }}
+                    </summary>
+                    <p>{{ t('supporter.orderHelp') }}</p>
+                  </details>
+                </form>
+              </details>
+            </div>
             <footer class="settings-footer">
               <span class="app-version">
                 v{{ appVersion }}
@@ -252,10 +280,14 @@ watch(() => props.show, async (show) => {
   align-items: center;
   justify-content: center;
   padding: 20px;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 .settings-panel {
+  display: flex;
+  flex-direction: column;
+  max-height: min(90vh, calc(100vh - 40px));
+  overflow: hidden;
   width: 650px;
   max-width: 100%;
   background: var(--surface-app);
@@ -264,6 +296,7 @@ watch(() => props.show, async (show) => {
 }
 
 header {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -274,6 +307,11 @@ header h2 {
   font-size: 16px;
   font-weight: 500;
   margin: 0;
+}
+
+.settings-content {
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .settings-columns {
@@ -459,6 +497,7 @@ select {
 }
 
 .settings-footer {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -557,5 +596,103 @@ select {
 .app-version {
   font-size: 12px;
   color: var(--text-secondary)
+}
+
+.dating-point-settings {
+  padding: 0 24px 24px;
+}
+
+.point-setting {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(100px, 150px);
+  align-items: center;
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.point-setting small {
+  display: block;
+  margin-top: 4px;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.point-setting input[type="color"] {
+  width: 100%;
+  height: 32px;
+  padding: 3px;
+  border: 1px solid var(--border-default);
+  border-radius: 4px;
+  background: var(--surface-input);
+}
+
+.point-size-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.point-size-control input {
+  flex: 1;
+  width: 0;
+  min-width: 0;
+  height: 16px;
+  margin: 0;
+  appearance: none;
+  background: transparent;
+}
+
+.point-size-control input::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(to right, var(--accent) var(--point-size-progress), var(--border-strong) var(--point-size-progress));
+}
+
+.point-size-control input::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(to right, var(--accent) var(--point-size-progress), var(--border-strong) var(--point-size-progress));
+}
+
+.point-size-control input::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  margin-top: -5px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.point-size-control input::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.point-size-control output {
+  min-width: 36px;
+  text-align: right;
+  font-size: 12px;
+}
+
+.point-reset {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.point-reset:hover {
+  color: var(--text-primary);
 }
 </style>

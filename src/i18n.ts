@@ -5,6 +5,7 @@ import en_US from './locales/en-US.json'
 const messages = {
     en_US: en_US,
     zh_CN: {
+        datingPointSettings: {"click": "点击互动点", "drag": "拖动互动点", "colorHelp": "指示标记和区域框的颜色。", "size": "互动点大小", "sizeHelp": "仅更改指示标记大小，不改变互动区域。", "reset": "恢复默认"},
         supporter: {
             "title": "赞助者权限",
             "active": "已激活",
@@ -325,6 +326,7 @@ const messages = {
         }
     },
     ja_JP: {
+        datingPointSettings: {"click": "クリックポイント", "drag": "ドラッグポイント", "colorHelp": "マーカーと範囲枠の色。", "size": "ポイントのサイズ", "sizeHelp": "マーカーの大きさのみ変更します。操作範囲は変わりません。", "reset": "初期設定に戻す"},
         supporter: {
             "title": "サポーター特典",
             "active": "有効",
@@ -645,6 +647,7 @@ const messages = {
         }
     },
     ko_KR: {
+        datingPointSettings: {"click": "클릭 포인트", "drag": "드래그 포인트", "colorHelp": "표시와 영역 테두리의 색상입니다.", "size": "포인트 크기", "sizeHelp": "표시 크기만 변경하며 상호작용 영역은 바뀌지 않습니다.", "reset": "기본값으로 초기화"},
         supporter: {
             "title": "후원자 기능",
             "active": "활성",

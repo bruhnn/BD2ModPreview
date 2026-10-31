@@ -1,6 +1,6 @@
-import { useLocalStorage } from '@vueuse/core';
+import { useIntervalFn, useLocalStorage, useTimestamp } from '@vueuse/core';
 import { defineStore } from 'pinia'
-import { ref, readonly, watch } from 'vue'
+import { computed, ref, readonly, watch } from 'vue'
 
 import { getVersion } from '@tauri-apps/api/app';
 import { useI18n } from 'vue-i18n';
@@ -8,6 +8,8 @@ import { invoke } from '@tauri-apps/api/core';
 
 export const useUIStore = defineStore('ui', () => {
   const { locale } = useI18n()
+
+  const datingPointStyle = useLocalStorage('DATING_POINT_STYLE', { clickColor: '#ffffff', dragColor: '#ffffff', size: 100 }, { mergeDefaults: true })
 
   const theme = useLocalStorage('APP_THEME', 'dark-3')
   const language = useLocalStorage<string>('APP_LANGUAGE', 'en_US', { writeDefaults: false })
@@ -24,13 +26,13 @@ export const useUIStore = defineStore('ui', () => {
   }
 
   const machineId = ref<string | null>(null)
-  const isSupporter = ref(false)
   const supporterCache = useLocalStorage('SUPPORTER_ACCESS', { machineId: '', expiresAt: 0, valid: false })
+  const now = useTimestamp({ scheduler: callback => useIntervalFn(callback, 1000) })
+  const isSupporter = computed(() => supporterCache.value.machineId === machineId.value &&
+    supporterCache.value.expiresAt > now.value && supporterCache.value.valid)
 
   async function checkSupporter() {
     const id = await loadMachineId()
-    isSupporter.value = supporterCache.value.machineId === id &&
-      supporterCache.value.expiresAt > Date.now() && supporterCache.value.valid
 
     const response = await fetch('https://shy-waterfall-2797.bruhnn.workers.dev/check', {
       headers: { 'X-Machine-ID': id },
@@ -38,8 +40,12 @@ export const useUIStore = defineStore('ui', () => {
     })
     if (!response.ok) throw new Error(`Failed to check supporter access: ${response.status}`)
     const data = await response.json()
-    isSupporter.value = data.valid === true
-    supporterCache.value = { machineId: id, expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000, valid: isSupporter.value }
+    const expiresAt = Date.now() + 7 * 24 * 60 * 60 * 1000
+    supporterCache.value = {
+      machineId: id,
+      expiresAt: typeof data.expiresAt === 'number' ? Math.min(expiresAt, data.expiresAt) : expiresAt,
+      valid: data.valid === true,
+    }
   }
 
   async function loadMachineId() {
@@ -105,6 +111,7 @@ export const useUIStore = defineStore('ui', () => {
   }, { immediate: true });
 
   return {
+    datingPointStyle,
     machineId,
     loadMachineId,
     isSupporter,

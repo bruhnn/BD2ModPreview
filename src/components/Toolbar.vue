@@ -143,6 +143,7 @@ function selectBackground(event: Event) {
 
 <style scoped>
 #toolbar {
+  container-type: inline-size;
   position: relative;
   flex-shrink: 0;
   color: var(--text-primary);
@@ -287,7 +288,7 @@ input[type="color"] {
   margin-bottom: 12px;
 }
 
-@media (max-width: 600px) {
+@container (max-width: 600px) {
   .toolbar-row {
     padding-left: 8px;
     padding-right: 8px;
@@ -295,6 +296,21 @@ input[type="color"] {
 
   .animation-select {
     flex: 1;
+  }
+}
+
+@container (max-width: 480px) {
+  .toolbar-row,
+  .toolbar-actions {
+    gap: 4px;
+  }
+
+  .toolbar-row {
+    flex-wrap: wrap;
+  }
+
+  .animation-select {
+    min-width: 70px;
   }
 }
 

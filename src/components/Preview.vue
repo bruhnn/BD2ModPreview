@@ -3,7 +3,7 @@
   lang="ts"
 >
 import { useI18n } from "vue-i18n"
-import { ExternalLink, Flame, GripVertical, PanelRightClose, PanelBottomClose, Play, Pause, Repeat, Hand, Eye, EyeOff, Check, ChevronDown, ChevronRight, FolderOpen, Focus, Image, Layers, Maximize, Palette, Shirt, Pencil, Plus, RotateCcw, SkipBack, Trash2, X } from "@lucide/vue"
+import { Ellipsis, Scan, ExternalLink, Flame, GripVertical, PanelRightClose, PanelBottomClose, Play, Pause, Repeat, Hand, Eye, EyeOff, Check, ChevronDown, ChevronRight, FolderOpen, Focus, Image, Layers, Maximize, Palette, Shirt, Pencil, Plus, RotateCcw, SkipBack, Trash2, X } from "@lucide/vue"
 import { autoUpdate, flip, offset, shift, useFloating } from "@floating-ui/vue"
 import { onClickOutside, useTimeoutFn } from "@vueuse/core"
 import { computed, nextTick, ref, useTemplateRef, watch } from "vue"
@@ -110,6 +110,16 @@ const sequenceEditorOpen = ref(false)
 const editingSequence = ref<number | null>(null)
 const animationButton = ref<HTMLElement | null>(null)
 const animationPopover = ref<HTMLElement | null>(null)
+const datingToolsOpen = ref(false)
+const datingToolsButton = ref<HTMLElement | null>(null)
+const datingToolsPopover = ref<HTMLElement | null>(null)
+const syncGroup = computed({
+  get: () => previewerStore.getPreview(props.previewId)?.syncGroup ?? 0,
+  set: (value: number) => {
+    const preview = previewerStore.getPreview(props.previewId)
+    if (preview) preview.syncGroup = value || null
+  },
+})
 const layersOpen = ref(false)
 const layerSearch = ref("")
 const layersButton = ref<HTMLElement | null>(null)
@@ -143,6 +153,13 @@ const managerHint = computed(() => !modManager.connected ? t("preview.managerDis
 const recentFolders = computed(() => history.value.filter(item => item.source.type === "folder").slice(0, 5))
 
 const { floatingStyles: animationStyles } = useFloating(animationButton, animationPopover, {
+  placement: "top-end",
+  strategy: "fixed",
+  whileElementsMounted: autoUpdate,
+  middleware: [offset(6), flip(), shift({ padding: 8 })],
+})
+
+const { floatingStyles: datingToolsStyles } = useFloating(datingToolsButton, datingToolsPopover, {
   placement: "top-end",
   strategy: "fixed",
   whileElementsMounted: autoUpdate,
@@ -304,6 +321,8 @@ async function selectFolder() {
   }
 }
 
+onClickOutside(datingToolsPopover, () => datingToolsOpen.value = false, { ignore: [datingToolsButton] })
+
 onClickOutside(animationPopover, () => animationsOpen.value = false, { ignore: [animationButton] })
 
 watch(layersOpen, open => { if (!open) highlightedLayer.value = "" })
@@ -366,6 +385,11 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
           :title="t('preview.syncGroup', { group })" :aria-label="t('preview.syncGroup', { group })"
           @click="previewerStore.toggleSyncGroup(props.previewId, group)">{{ group }}</button>
       </div>
+      <select v-model.number="syncGroup" class="preview-sync-select" :aria-label="t('preview.syncGroups')"
+        :title="t('preview.syncGroups')">
+        <option :value="0">{{ t('preview.none') }}</option>
+        <option v-for="group in [1, 2, 3]" :key="group" :value="group">{{ group }}</option>
+      </select>
       <button v-if="canAddRight" :disabled="previewerStore.previewLimitReached" type="button"
         :title="t('preview.addRight')" :aria-label="t('preview.addRight')" class="preview-titlebar-action"
         @click="addPreview('right')">
@@ -425,11 +449,13 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
         class="player-container" @contextmenu.prevent="openContext" @pointerdown.capture="playerContainer?.focus()"
         @keydown="onPreviewKeydown" @keydown.shift.f10.prevent="openContext" />
       <TransitionGroup v-if="datingEnabled && !isLoading" name="dating-point-fade" tag="div" class="dating-markers" aria-hidden="true">
-        <div v-for="marker in datingMarkers" :key="marker.key" class="dating-point-layer">
+        <div v-for="marker in datingMarkers" :key="marker.key" class="dating-point-layer"
+          :style="{ color: marker.drag ? uiStore.datingPointStyle.dragColor : uiStore.datingPointStyle.clickColor }">
           <div v-if="showDatingAreas" class="dating-area" :style="marker.box" />
           <div v-if="showDatingPoints" class="dating-marker" :class="{ pressed: marker.pressed, dragging: marker.dragging, hovered: marker.hovered }"
             :style="{ left: `${marker.x}px`, top: `${marker.y}px` }">
             <div class="dating-marker-motion" :style="{ transform: `translate(${marker.dx}px, ${marker.dy}px)` }">
+              <div class="dating-marker-scale" :style="{ transform: `scale(${uiStore.datingPointStyle.size / 100})` }">
               <span class="dating-marker-ring" />
               <span class="dating-marker-dot-position"><span :key="marker.pop" class="dating-marker-dot" :class="{ pop: !!marker.pop }" /></span>
               <span v-for="time in marker.ripples" :key="time" class="dating-marker-ripple" />
@@ -438,12 +464,13 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
                   :style="{ transform: `rotate(${rotation}deg)` }">
                   <span class="dating-marker-arrow-gap">
                     <svg class="dating-marker-arrow" width="6" height="10" viewBox="0 0 6 10" fill="none"
-                      stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                      stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M1 1l4 4-4 4" />
                     </svg>
                   </span>
                 </span>
               </template>
+              </div>
             </div>
           </div>
         </div>
@@ -601,15 +628,17 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
           </option>
         </select>
         <span class="dating-playback-space"></span>
-        <button type="button" class="dating-areas" :aria-pressed="showDatingPoints"
+        <button type="button" class="dating-areas" :aria-label="t('preview.showInteractionPoints')" :title="t('preview.showInteractionPoints')"
+          :aria-pressed="showDatingPoints"
           @click="showDatingPoints = !showDatingPoints">
-          <Eye :size="16" aria-hidden="true" />{{ t('preview.showInteractionPoints') }}
+          <Eye :size="16" aria-hidden="true" /><span class="playback-label">{{ t('preview.showInteractionPoints') }}</span>
         </button>
-        <button type="button" class="dating-areas" :aria-pressed="showDatingAreas"
+        <button type="button" class="dating-areas" :aria-label="t('preview.showInteractionAreas')" :title="t('preview.showInteractionAreas')"
+          :aria-pressed="showDatingAreas"
           @click="showDatingAreas = !showDatingAreas">
-          <Eye :size="16" aria-hidden="true" />{{ t('preview.showInteractionAreas') }}
+          <Scan :size="16" aria-hidden="true" /><span class="playback-label">{{ t('preview.showInteractionAreas') }}</span>
         </button>
-        <select v-if="datingTools.length > 1" :value="datingTool" :aria-label="t('preview.datingToolLabel')"
+        <select v-if="datingTools.length > 1" class="dating-tool-select" :value="datingTool" :aria-label="t('preview.datingToolLabel')"
           @change="selectDatingTool(Number(($event.target as HTMLSelectElement).value))">
           <option v-for="item in datingTools" :key="item.id" :value="item.id">
             {{ item.id === 0 ? t('preview.noTool') : t('preview.datingTool', { id: item.id }) }}
@@ -618,13 +647,29 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
       </template>
       <span v-else-if="minigameEnabled" class="minigame-hint">{{ t('preview.minigameHint') }}</span>
       <button v-if="isDating" type="button" :aria-pressed="datingEnabled"
-        :aria-disabled="!datingAvailable" class="dating-interactions-button"
+        :aria-disabled="!datingAvailable" class="dating-interactions-button" :aria-label="t('preview.datingInteractions')" :title="t('preview.datingInteractions')"
         @mouseenter="keepDatingTooltip(); datingButton = $event.currentTarget as HTMLElement; datingTooltipOpen = !uiStore.isSupporter" @mouseleave="closeDatingTooltip()"
         @focus="keepDatingTooltip(); datingButton = $event.currentTarget as HTMLElement; datingTooltipOpen = !uiStore.isSupporter" @blur="closeDatingTooltip()"
         @keydown.esc="datingTooltipOpen = false"
         @click="datingAvailable && (stopSequence(), datingEnabled = !datingEnabled)">
-        <Hand :size="16" aria-hidden="true" />{{ t('preview.datingInteractions') }}
+        <Hand :size="16" aria-hidden="true" /><span class="playback-label">{{ t('preview.datingInteractions') }}</span>
       </button>
+      <button v-if="datingEnabled && datingTools.length > 1" ref="datingToolsButton" type="button"
+        class="dating-tool-button" :aria-label="t('preview.datingToolLabel')" :title="t('preview.datingToolLabel')"
+        :aria-expanded="datingToolsOpen" @click="datingToolsOpen = !datingToolsOpen">
+        <Ellipsis :size="16" aria-hidden="true" />
+      </button>
+      <Teleport to="body">
+        <div v-if="datingEnabled && datingToolsOpen" ref="datingToolsPopover" :style="datingToolsStyles"
+          class="preview-animation-options dating-tool-options" role="dialog" :aria-label="t('preview.datingToolLabel')"
+          @keydown.esc="datingToolsOpen = false; datingToolsButton?.focus()">
+          <button v-for="item in datingTools" :key="item.id" type="button" :aria-pressed="datingTool === item.id"
+            @click="selectDatingTool(item.id); datingToolsOpen = false; datingToolsButton?.focus()">
+            <span>{{ item.id === 0 ? t('preview.noTool') : t('preview.datingTool', { id: item.id }) }}</span>
+            <Check v-if="datingTool === item.id" :size="16" aria-hidden="true" />
+          </button>
+        </div>
+      </Teleport>
       <button v-if="!datingEnabled && !minigameEnabled" ref="animationButton" type="button" class="preview-animation-select"
         :aria-label="t('preview.previewAnimation')" aria-haspopup="dialog" :aria-expanded="animationsOpen"
         :disabled="!allAnimations.length || datingEnabled || minigameEnabled" @click="animationsOpen = !animationsOpen; layersOpen = false"
@@ -793,6 +838,7 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
 }
 
 .preview-panel {
+  container-type: inline-size;
   position: relative;
   width: 100%;
   height: 100%;
@@ -886,6 +932,7 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
 }
 
 .preview-titlebar-action {
+  flex-shrink: 0;
   width: 28px;
   height: 28px;
   padding: 6px;
@@ -1169,9 +1216,27 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
   font-size: 12px;
 }
 
-.preview-playback:has(.dating-areas) {
-  flex-wrap: wrap;
+.preview-playback .dating-tool-button,
+.preview-sync-select {
+  display: none;
 }
+
+.preview-sync-select {
+  width: 58px;
+  height: 28px;
+  flex-shrink: 0;
+  padding: 0 4px;
+  border: 1px solid var(--border-default);
+  border-radius: 3px;
+  background: var(--surface-input);
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.dating-tool-options {
+  min-width: 140px;
+}
+
 
 .preview-playback button:hover {
   background: var(--state-hover);
@@ -1567,6 +1632,87 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
     background: var(--accent);
     border-radius: 3px;
 }
+@container (max-width: 760px) {
+  .preview-playback {
+    gap: 4px;
+    padding: 5px 6px;
+  }
+
+  .preview-playback .playback-label,
+  .preview-playback .dating-tool-select,
+  .dating-playback-space {
+    display: none;
+  }
+
+  .preview-playback .dating-areas,
+  .preview-playback .dating-interactions-button {
+    width: 30px;
+    padding: 5px;
+  }
+
+  .preview-playback .dating-tool-button {
+    display: inline-flex;
+  }
+
+  .preview-playback select {
+    flex: 1;
+    width: 0;
+  }
+}
+
+@container (max-width: 480px) {
+  .preview-sync-groups {
+    display: none;
+  }
+
+  .preview-sync-select {
+    display: block;
+  }
+
+  .preview-titlebar {
+    gap: 4px;
+    padding: 0 6px;
+  }
+}
+
+@container (max-width: 360px) {
+  .preview-playback {
+    gap: 2px;
+  }
+
+  .preview-playback button {
+    width: 28px;
+  }
+
+  .preview-playback .dating-areas,
+  .preview-playback .dating-interactions-button {
+    width: 28px;
+  }
+}
+
+
+@container (max-width: 280px) {
+  .preview-titlebar {
+    height: auto;
+    min-height: 36px;
+    flex-wrap: wrap;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .preview-name {
+    min-width: 40px;
+  }
+
+  .preview-playback {
+    flex-wrap: wrap;
+  }
+
+  .preview-playback select,
+  .preview-playback .preview-animation-select {
+    min-width: 65px;
+  }
+}
 </style>
 <style scoped>
 .preview-stage {
@@ -1599,22 +1745,29 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
   opacity: 0;
 }
 
+.dating-marker-scale {
+  position: absolute;
+  width: 0;
+  height: 0;
+  transform-origin: 0 0;
+}
+
 .dating-area {
   position: absolute;
   left: 0;
   top: 0;
   transform-origin: 0 0;
   box-sizing: border-box;
-  border: 1px dashed rgb(255 255 255 / .75);
+  border: 1px dashed color-mix(in srgb, currentColor 75%, transparent);
   border-radius: 6px;
-  background: rgb(255 255 255 / .1);
+  background: color-mix(in srgb, currentColor 10%, transparent);
 }
 
 .dating-marker {
   position: absolute;
   width: 0;
   height: 0;
-  color: #fff;
+  color: inherit;
   opacity: .6;
   transition: opacity .15s ease-out;
 }
@@ -1646,8 +1799,8 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 0 4px 1px rgb(255 255 255 / .7), 0 0 10px 3px rgb(255 255 255 / .25);
+  background: currentColor;
+  box-shadow: 0 0 4px 1px color-mix(in srgb, currentColor 70%, transparent), 0 0 10px 3px color-mix(in srgb, currentColor 25%, transparent);
 }
 
 .dating-marker-dot.pop { animation: dating-dot-pop .4s ease-out; }
@@ -1659,15 +1812,15 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
   box-sizing: border-box;
   border-radius: 50%;
   transform: translate(-50%, -50%) scale(1);
-  border: 1px solid rgb(255 255 255 / .85);
-  box-shadow: 0 0 8px 1px rgb(255 255 255 / .55), inset 0 0 6px rgb(255 255 255 / .35);
+  border: 1px solid color-mix(in srgb, currentColor 85%, transparent);
+  box-shadow: 0 0 8px 1px color-mix(in srgb, currentColor 55%, transparent), inset 0 0 6px color-mix(in srgb, currentColor 35%, transparent);
   transition: transform .3s cubic-bezier(.34, 1.9, .5, 1), border-color .15s, box-shadow .15s, opacity .2s;
 }
 
 .dating-marker.pressed .dating-marker-ring {
   transform: translate(-50%, -50%) scale(.8);
-  border-color: #fff;
-  box-shadow: 0 0 12px 3px rgb(255 255 255 / .8), inset 0 0 8px rgb(255 255 255 / .6);
+  border-color: inherit;
+  box-shadow: 0 0 12px 3px color-mix(in srgb, currentColor 80%, transparent), inset 0 0 8px color-mix(in srgb, currentColor 60%, transparent);
 }
 
 .dating-marker.dragging .dating-marker-ring {
@@ -1681,8 +1834,8 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
   height: 22px;
   box-sizing: border-box;
   border-radius: 50%;
-  border: 2px solid #fff;
-  box-shadow: 0 0 10px 2px rgb(255 255 255 / .7);
+  border: 2px solid currentColor;
+  box-shadow: 0 0 10px 2px color-mix(in srgb, currentColor 70%, transparent);
   animation: dating-ripple .6s cubic-bezier(.1, .7, .2, 1) both;
 }
 
@@ -1704,7 +1857,7 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
   height: 10px;
   max-width: none;
   transform: translate(-50%, -50%);
-  filter: drop-shadow(0 0 3px rgb(255 255 255 / .8));
+  filter: drop-shadow(0 0 3px color-mix(in srgb, currentColor 80%, transparent));
 }
 
 .dating-marker.dragging .dating-marker-arrow-gap {

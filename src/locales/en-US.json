@@ -1,4 +1,5 @@
 {
+    "datingPointSettings": {"click": "Click points", "drag": "Drag points", "colorHelp": "Color of the indicator and area box.", "size": "Point size", "sizeHelp": "Changes the indicator size, not the interaction area.", "reset": "Reset to default"},
     "supporter": {
         "title": "Supporter access",
         "active": "Active",
