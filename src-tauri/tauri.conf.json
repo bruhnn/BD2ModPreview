@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "BD2ModPreview",
-  "version": "1.0.0",
-  "identifier": "com.bd2modmanager.preview",
+  "version": "1.0.1",
+  "identifier": "com.bruhnn.BD2ModPreview",
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",
