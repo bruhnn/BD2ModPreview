@@ -37,6 +37,7 @@ export function useDatingInteractions(
 	} | null = null;
 	const hidden = new Map<string, number>();
 	const lastClick = new Map<string, number>();
+	const dragPositions = new Map<string, { x: number; y: number }>();
 	const available = ref(false);
 	const isDating = ref(false);
 	let skeletonFilename = "";
@@ -44,7 +45,7 @@ export function useDatingInteractions(
 	const showPoints = ref(false);
 	const showAreas = ref(false);
 	const markers = shallowRef<{
-		key: string; x: number; y: number; drag: boolean; pressed: boolean;
+		key: string; x: number; y: number; screenX: number; screenY: number; drag: boolean; pressed: boolean;
 		dragging: boolean; hovered: boolean; dx: number; dy: number; pop: number;
 		ripples: number[]; box: { width: string; height: string; transform: string };
 	}[]>([]);
@@ -74,6 +75,12 @@ export function useDatingInteractions(
 	const clicks = new Map<string, number>();
 
 	function reset() {
+		if (dragPositions.size && player) {
+			dragPositions.clear();
+			player.skeleton.setToSetupPose();
+			player.animationState.apply(player.skeleton);
+			player.skeleton.updateWorldTransform();
+		}
 		markers.value = [];
 		pointer = null;
 		markerPress = null;
@@ -233,6 +240,13 @@ export function useDatingInteractions(
 		);
 
 		if (!next || group.value === next) return;
+
+		if (dragPositions.size) {
+			dragPositions.clear();
+			player.skeleton.setToSetupPose();
+			player.animationState.apply(player.skeleton);
+			player.skeleton.updateWorldTransform();
+		}
 
 		hidden.clear();
 		clicks.clear();
@@ -423,12 +437,16 @@ export function useDatingInteractions(
 		if (drag || hold || transition || switching) return true;
 
 		const world = position(event);
+		// Visible markers can be grabbed even when the game area is tiny.
+		const selectedMarker = showPoints.value ? markers.value.find(marker =>
+			Math.hypot(event.clientX - marker.screenX, event.clientY - marker.screenY) <= (marker.drag ? 22 : 14),
+		) : null;
 
 		for (const point of points() ?? []) {
 			const bone = player.skeleton.findBone(point.bone);
 			const local = bone.worldToLocal({ x: world.x, y: world.y });
 
-			if (!contains(point.corners, local.x, local.y)) continue;
+			if (selectedMarker ? point.key !== selectedMarker.key : !contains(point.corners, local.x, local.y)) continue;
 
 			pointer = event;
 			const marker = markers.value.find((entry) => entry.key === point.key);
@@ -620,6 +638,9 @@ export function useDatingInteractions(
 
 	function pointerUp(event: PointerEvent) {
 		releaseMarker(event);
+		if (drag?.id === event.pointerId && drag.started && drag.point.resetOnRelease === false) {
+			dragPositions.set(drag.point.bone, { x: drag.x, y: drag.y });
+		}
 		if (hold?.id === event.pointerId) {
 			finishHold(elapsed - hold.start >= hold.point.hold.time);
 			cancelDrag();
@@ -647,6 +668,10 @@ export function useDatingInteractions(
 					p.hidden.points.includes(key),
 				);
 				if (parent?.hidden.reset) {
+					dragPositions.clear();
+					player.skeleton.setToSetupPose();
+					player.animationState.apply(player.skeleton);
+					player.skeleton.updateWorldTransform();
 					cancelDrag();
 					clicks.clear();
 				}
@@ -681,6 +706,12 @@ export function useDatingInteractions(
 			)
 				finishHold(true);
 		}
+		for (const [name, position] of dragPositions) {
+			const bone = player.skeleton.findBone(name);
+			bone.x = position.x;
+			bone.y = position.y;
+		}
+		if (dragPositions.size) player.skeleton.updateWorldTransform();
 		if (!drag?.started) return;
 		const bone = player.skeleton.findBone(drag.point.bone);
 		bone.x = drag.x;
@@ -826,6 +857,7 @@ export function useDatingInteractions(
 				throw new Error(
 					`Missing dating animation: ${next.switchAnimation}`,
 				);
+			dragPositions.clear();
 			cancelDrag();
 			cancelHold();
 			clicks.clear();
@@ -920,8 +952,6 @@ export function useDatingInteractions(
 		markers.value = visiblePoints.map((point) => {
 			const bone = player!.skeleton.findBone(point.bone);
 			const local = world ? bone.worldToLocal({ x: world.x, y: world.y }) : null;
-			const hovered = !!local && contains(point.corners, local.x, local.y);
-			if (!cursor && hovered) cursor = point.drag ? "grab" : "pointer";
 			const corners = point.corners.map(([x, y]) => {
 				const world = bone.localToWorld({ x, y });
 				const screen = player!.sceneRenderer.camera.worldToScreen(new spine.Vector3(world.x, world.y, 0), canvas.width, canvas.height);
@@ -931,6 +961,11 @@ export function useDatingInteractions(
 				x: corners.reduce((sum, corner) => sum + corner.x, 0) / corners.length,
 				y: corners.reduce((sum, corner) => sum + corner.y, 0) / corners.length,
 			};
+			const screenX = center.x + origin.left;
+			const screenY = center.y + origin.top;
+			const hovered = !!local && (contains(point.corners, local.x, local.y) ||
+				showPoints.value && !!pointer && Math.hypot(pointer.clientX - screenX, pointer.clientY - screenY) <= (point.drag ? 22 : 14));
+			if (!cursor && hovered) cursor = point.drag ? "grab" : "pointer";
 			const width = Math.hypot(corners[3].x - corners[0].x, corners[3].y - corners[0].y);
 			const height = Math.hypot(corners[1].x - corners[0].x, corners[1].y - corners[0].y);
 			const press = markerPress?.key === point.key ? markerPress : null;
@@ -939,7 +974,7 @@ export function useDatingInteractions(
 			if (pulses.length) ripples.set(point.key, pulses);
 			else ripples.delete(point.key);
 			return {
-				key: point.key, x: dragging ? press.x : center.x, y: dragging ? press.y : center.y,
+				key: point.key, x: dragging ? press.x : center.x, y: dragging ? press.y : center.y, screenX, screenY,
 				drag: point.drag, dragging, hovered,
 				pressed: !point.drag && !!press && (press.down || now - press.releasedAt < 200),
 				dx: dragging && pointer ? pointer.clientX - press.startX : 0,

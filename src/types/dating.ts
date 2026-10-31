@@ -46,6 +46,7 @@ export interface DatingPoint {
   bone: string
   corners: number[][]
   drag: boolean
+  resetOnRelease?: boolean
   radius: number
   clickMax: number
   clickReset: number
