@@ -2,7 +2,6 @@
     setup
     lang="ts"
 >
-import { version } from "../../../package.json"
 import { useI18n } from "vue-i18n"
 import { openUrl } from "@tauri-apps/plugin-opener"
 import { X, Info, ExternalLink } from "@lucide/vue"
@@ -55,6 +54,38 @@ const otherUpdates = [
     "cutsceneVisibilityFix",
     "datingFixes"
 ]
+
+const versions = [
+    {
+        version: "1.0.1",
+        highlights: [],
+        changelog: [
+            "whatsNew.pointAppearance",
+            "whatsNew.dragPosition",
+            "whatsNew.compactControls",
+            "whatsNew.settingsScrolling"
+        ]
+    },
+    {
+        version: "1.0.0",
+        highlights: [
+            {
+                title: "whatsNew.multiplePreviews",
+                description: "whatsNew.grid",
+                video: "/docs/resizeReorder.mp4",
+                supporter: false
+            },
+            {
+                title: "whatsNew.datingInteractions",
+                description: "whatsNew.dating",
+                video: "/docs/datingInteractions.mp4",
+                supporter: true
+            }
+        ],
+        changelog: otherUpdates.map(item => "whatsNew." + item)
+    }
+]
+
 </script>
 
 <template>
@@ -81,67 +112,49 @@ const otherUpdates = [
                         </div>
 
                         <DialogDescription as="div" class="updates-content">
-                            <div class="updates-version">
-                                <h3 class="section-title">
-                                    {{ t("whatsNew.version", { version }) }}
-                                </h3>
-                            </div>
-
-                            <div class="updates-sections">
-                                <!-- Multiple previews -->
-                                <section class="update-feature">
-                                    <h3 class="feature-title">
-                                        {{ t("whatsNew.multiplePreviews") }}
+                            <section v-for="(release, index) in versions" :key="release.version"
+                                class="version" :class="{ latest: index === 0 }">
+                                <div class="version-label">
+                                    <span class="version-dot" aria-hidden="true" />
+                                    <h3 class="version-number">
+                                        <span class="version-caption">{{ t("whatsNew.versionLabel") }}</span>
+                                        {{ release.version }}
                                     </h3>
+                                </div>
 
-                                    <p class="feature-description">
-                                        {{ t("whatsNew.grid") }}
-                                    </p>
+                                <div class="updates-sections">
+                                    <section v-for="highlight in release.highlights" :key="highlight.title"
+                                        class="update-feature">
+                                        <h4 class="feature-title">{{ t(highlight.title) }}</h4>
+                                        <p class="feature-description">
+                                            {{ t(highlight.description) }}
+                                            <template v-if="highlight.supporter">
+                                                {{ t("whatsNew.supporterMessage") }}
+                                                <template v-for="(link, linkIndex) in supportLinks" :key="link.name">
+                                                    <span v-if="linkIndex > 0">{{ t("whatsNew.supportOr") }}</span>
+                                                    <button type="button" class="supporter-link" @click="openUrl(link.url)">
+                                                        {{ link.name }}
+                                                        <ExternalLink :size="12" aria-hidden="true" />
+                                                    </button>
+                                                </template>
+                                            </template>
+                                        </p>
+                                        <video :src="highlight.video" class="update-video" autoplay muted loop
+                                            playsinline preload="metadata" disablepictureinpicture />
+                                    </section>
 
-                                    <video src="/docs/resizeReorder.mp4" class="update-video" autoplay muted loop
-                                        playsinline preload="metadata" disablepictureinpicture />
-                                </section>
-
-                                <!-- Dating interactions -->
-                                <section class="update-feature">
-                                    <h3 class="feature-title">
-                                        {{ t("whatsNew.datingInteractions") }}
-                                    </h3>
-
-                                    <p class="feature-description">
-                                        {{ t("whatsNew.dating") }}
-                                        {{ t("whatsNew.supporterMessage") }}
-
-                                        <template v-for="(link, index) in supportLinks" :key="link.name">
-                                            <span v-if="index > 0">
-                                                {{ index === supportLinks.length - 1 ? " or " : ", " }}
-                                            </span>
-                                            <span v-else> </span>
-
-                                            <button type="button" class="supporter-link" @click="openUrl(link.url)">
-                                                {{ link.name }}
-                                                <ExternalLink :size="12" aria-hidden="true" />
-                                            </button>
-                                        </template>.
-                                    </p>
-
-                                    <video src="/docs/datingInteractions.mp4" class="update-video" autoplay muted loop
-                                        playsinline preload="metadata" disablepictureinpicture />
-                                </section>
-
-                                <!-- Other improvements -->
-                                <section class="updates-section">
-                                    <h3 class="feature-title">
-                                        {{ t("whatsNew.otherImprovements") }}
-                                    </h3>
-
-                                    <ul class="updates-list">
-                                        <li v-for="item in otherUpdates" :key="item" class="update-item">
-                                            {{ t("whatsNew." + item) }}
-                                        </li>
-                                    </ul>
-                                </section>
-                            </div>
+                                    <section class="updates-section">
+                                        <h4 v-if="release.highlights.length" class="feature-title">
+                                            {{ t("whatsNew.changelog") }}
+                                        </h4>
+                                        <ul class="updates-list" :class="{ 'changelog-only': !release.highlights.length }">
+                                            <li v-for="item in release.changelog" :key="item" class="update-item">
+                                                {{ t(item) }}
+                                            </li>
+                                        </ul>
+                                    </section>
+                                </div>
+                            </section>
                         </DialogDescription>
 
                         <div class="updates-footer">
@@ -239,36 +252,77 @@ const otherUpdates = [
     color: var(--text-secondary);
 }
 
-.updates-version {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 24px;
+.version {
+    position: relative;
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    gap: 12px;
+    padding-bottom: 22px;
 }
 
-.section-title {
-    font-size: 18px;
-    line-height: 28px;
+.version::before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border-default);
+}
+
+.version:last-child {
+    padding-bottom: 0;
+}
+
+.version:last-child::before {
+    bottom: auto;
+    height: 12px;
+}
+
+.version-label {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.version-dot {
+    position: relative;
+    z-index: 1;
+    flex: none;
+    width: 12px;
+    height: 12px;
+    margin-top: 6px;
+    border-radius: 50%;
+    background: var(--border-strong);
+}
+
+.version.latest .version-dot {
+    background: var(--accent);
+}
+
+.version-number {
+    font-size: 16px;
+    line-height: 24px;
     font-weight: 600;
     color: var(--text-primary);
 }
 
-.version-badge {
-    padding: 2px 8px;
-    font-size: 12px;
+.version-caption {
+    display: block;
+    font-size: 10px;
     line-height: 16px;
     font-weight: 500;
+    text-transform: uppercase;
     color: var(--text-secondary);
-    background: var(--surface-card);
-    border: 1px solid var(--border-strong);
-    border-radius: 4px;
-    user-select: none;
 }
 
 /* Sections */
 
 .updates-sections {
+    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 28px;
@@ -330,7 +384,7 @@ const otherUpdates = [
     align-self: center;
 }
 
-/* Other improvements */
+/* Other changelog */
 
 .updates-list {
     display: flex;
@@ -339,6 +393,10 @@ const otherUpdates = [
     margin-top: 12px;
     padding-left: 20px;
     list-style: disc;
+}
+
+.updates-list.changelog-only {
+    margin-top: 0;
 }
 
 .update-item {
@@ -470,10 +528,6 @@ const otherUpdates = [
         font-size: 18px;
     }
 
-    .section-title {
-        font-size: 16px;
-    }
-
     .updates-sections {
         gap: 24px;
     }
@@ -484,6 +538,12 @@ const otherUpdates = [
 
     .github-link {
         font-size: 12px;
+    }
+}
+
+@media (max-width: 520px) {
+    .version {
+        grid-template-columns: 76px 1fr;
     }
 }
 

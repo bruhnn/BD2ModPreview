@@ -16,6 +16,13 @@
         "orderHelp": "AFDIAN: Go to your dashboard, open My orders, and copy the order number. Ko-fi: Enter the activation code you received, not the transaction number."
     },
     "whatsNew": {
+        "versionLabel": "Version",
+        "changelog": "Changelog",
+        "supportOr": " or ",
+        "pointAppearance": "Customize click and drag point colors and size in Settings. Area boxes use the same colors.",
+        "dragPosition": "Dragging now keeps the released position for interactions that support it.",
+        "compactControls": "Preview controls adapt to smaller panels, including when the character list is open.",
+        "settingsScrolling": "Settings stays within the window, with scrolling content and a fixed header and footer.",
         "supporterActivation": "Activate supporter access in Settings with your AFDIAN order number or Ko-fi activation code.",
         "datingControls": "Choose a dating pose, reset interactions, and show or hide interaction points and areas.",
         "appIcon": "New app icon.",
@@ -48,8 +55,7 @@
         "themes": "Added themes and translated character names.",
         "datingInteractions": "Dating Interactions",
         "dating": "Added dating interactions, including clicking, dragging, and holding.",
-        "supporterMessage": "This feature is exclusive to supporters. If you'd like to support development and gain access, you can support me on",
-        "otherImprovements": "Other Improvements"
+        "supporterMessage": "This feature is exclusive to supporters. If you'd like to support development and gain access, you can support me on"
     },
     "preview": {
         "minigameInteractions": "Minigame interactions",
