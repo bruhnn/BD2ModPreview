@@ -654,6 +654,11 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
         @click="datingAvailable && (stopSequence(), datingEnabled = !datingEnabled)">
         <Hand :size="16" aria-hidden="true" /><span class="playback-label">{{ t('preview.datingInteractions') }}</span>
       </button>
+      <button v-if="minigameAvailable" type="button" :aria-pressed="minigameEnabled"
+        class="dating-interactions-button" :aria-label="t('preview.minigameInteractions')" :title="t('preview.minigameInteractions')"
+        @click="minigameEnabled = !minigameEnabled">
+        <Hand :size="16" aria-hidden="true" /><span class="playback-label">{{ t('preview.minigameInteractions') }}</span>
+      </button>
       <button v-if="datingEnabled && datingTools.length > 1" ref="datingToolsButton" type="button"
         class="dating-tool-button" :aria-label="t('preview.datingToolLabel')" :title="t('preview.datingToolLabel')"
         :aria-expanded="datingToolsOpen" @click="datingToolsOpen = !datingToolsOpen">
