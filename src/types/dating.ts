@@ -1,5 +1,6 @@
 export interface DatingScene {
   skeleton: string
+  audio?: DatingAudio
   groups: DatingGroup[]
   points: DatingPoint[]
 }
@@ -34,12 +35,15 @@ export interface DatingGauge {
 
 export interface DatingScoreMotion {
   Score: number
+  VoiceSoundEventName?: string
+  SFXSoundEventName?: string
   MixAnimationName: string
   IsCanPlayWhenIncreaseScore: boolean
   IsCanPlayWhenDecreaseScore: boolean
 }
 
 export interface DatingPoint {
+  id?: number
   key: string
   group: number
   tool: number
@@ -83,4 +87,9 @@ export interface DatingPoint {
 export interface DatingRegion {
   bone: string
   corners: number[][]
+}
+
+export interface DatingAudio {
+  points: Record<string, Record<string, string[] | number | number[]>>
+  events: Record<string, { file: string; loop: boolean }>
 }

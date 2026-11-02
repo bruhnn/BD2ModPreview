@@ -1,4 +1,54 @@
 {
+  "loadError": {
+  "titles": {
+    "network": "Network error",
+    "skeletonMissing": "Skeleton file not found",
+    "atlasMissing": "Atlas file not found",
+    "textureMissing": "Texture file not found",
+    "textureFailed": "Texture failed to load",
+    "unreadable": "File could not be read",
+    "invalid": "Invalid files",
+    "unknown": "Unknown error"
+  },
+  "online": {
+    "network": "Could not connect to the asset source.",
+    "skeletonMissing": "The skeleton file is missing from the asset source.",
+    "atlasMissing": "The atlas file is missing from the asset source.",
+    "textureMissing": "The texture {file} is missing from the asset source.",
+    "textureFailed": "The texture {file} could not be loaded.",
+    "unreadable": "The loader did not provide a clear reason.",
+    "invalid": "The loader could not read the asset data as valid Spine files.",
+    "unknown": "The loader did not provide a clear reason."
+  },
+  "folder": {
+    "network": "The loader did not provide a clear reason.",
+    "skeletonMissing": "The skeleton file is missing in the folder.",
+    "atlasMissing": "The atlas file is missing in the folder.",
+    "textureMissing": "The texture {file} is missing in the folder or could not be read.",
+    "textureFailed": "The texture {file} is missing in the folder or could not be read.",
+    "unreadable": "The app could not open the file. Check that it is not in use or blocked.",
+    "invalid": "The loader could not read the asset data as valid Spine files.",
+    "unknown": "The loader did not provide a clear reason."
+  },
+  "both": {
+    "skeletonMissing": "The skeleton file is missing on both sources. It may not be published yet.",
+    "atlasMissing": "The atlas file is missing on both sources. It may not be published yet.",
+    "textureMissing": "The texture {file} is missing on both sources. It may not be published yet."
+  },
+  "details": "Details",
+  "folderName": "Folder",
+  "file": "File",
+  "code": "Code",
+  "unspecified": "Not provided",
+  "unavailable": "Unavailable",
+  "folderLabel": "Folder",
+  "onlineLabel": "Online",
+  "pose": "Could not load pose {pose}: {cause}.",
+  "tryAgain": "Please try again."
+},
+  "datingPoseLoadFailed": "Could not load this pose. Please try again.",
+  "datingAudioStatus": { "loading": "Loading audio {loaded}/{total}", "completed": "Audio loading completed", "failed": "Audio loaded {loaded}/{total}. Some files could not be loaded." },
+  "datingAudio": "Enable sounds and voices for dating interactions",
     "datingPointSettings": {"click": "Click points", "drag": "Drag points", "colorHelp": "Color of the indicator and area box.", "size": "Point size", "sizeHelp": "Changes the indicator size, not the interaction area.", "reset": "Reset to default"},
     "supporter": {
         "title": "Supporter access",
@@ -16,6 +66,8 @@
         "orderHelp": "AFDIAN: Go to your dashboard, open My orders, and copy the order number. Ko-fi: Enter the activation code you received, not the transaction number."
     },
     "whatsNew": {
+            "datingAudio": "Added Korean voices and sound effects to dating interactions. You can turn them on or off in Settings.",
+            "previewErrors": "Clearer preview errors explain what failed, with file details and a Retry button.",
         "versionLabel": "Version",
         "changelog": "Changelog",
         "supportOr": " or ",

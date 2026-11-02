@@ -1,6 +1,7 @@
 mod commands;
 mod ipc;
 mod download;
+mod dating_audio;
 mod errors;
 mod types;
 mod utils;
@@ -56,6 +57,7 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             ipc::connect_to_bd2mm,
             ipc::enable_mod_on_bd2mm,
+            dating_audio::get_dating_audio,
             get_machine_id,
             get_user_locale,
             get_spine_assets,

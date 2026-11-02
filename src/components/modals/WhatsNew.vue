@@ -57,6 +57,14 @@ const otherUpdates = [
 
 const versions = [
     {
+        version: "1.0.2",
+        highlights: [],
+        changelog: [
+            "whatsNew.datingAudio",
+            "whatsNew.previewErrors"
+        ]
+    },
+    {
         version: "1.0.1",
         highlights: [],
         changelog: [

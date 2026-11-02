@@ -2,7 +2,7 @@
   setup
   lang="ts"
 >
-import { RotateCcw, Bug, Check, ChevronDown, ChevronRight, CircleQuestionMark, Heart, ScrollText, Sparkles, X } from "@lucide/vue"
+import { ExternalLink, RotateCcw, Bug, Check, ChevronDown, ChevronRight, CircleQuestionMark, Heart, ScrollText, Sparkles, X } from "@lucide/vue"
 import { Dialog, DialogPanel, DialogTitle, Menu, MenuButton, MenuItems, MenuItem, TransitionRoot, TransitionChild } from '@headlessui/vue'
 import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -158,6 +158,10 @@ watch(() => props.show, async (show) => {
               </div>
               <section class="dating-point-settings">
                 <h3>{{ t('preview.datingInteractions') }}</h3>
+                <label class="settings-check">
+                  <input v-model="uiStore.datingAudio" type="checkbox" />
+                  <span>{{ t('datingAudio') }}</span>
+                </label>
                 <label class="point-setting">
                   <span>{{ t('datingPointSettings.click') }}<small>{{ t('datingPointSettings.colorHelp')
                       }}</small></span>
@@ -191,6 +195,14 @@ watch(() => props.show, async (show) => {
                   </span>
                 </div>
                 <p>{{ t('supporter.thankYou') }}</p>
+                <div class="supporter-links">
+                  <button type="button" @click="openUrl('https://ko-fi.com/bruhnn')">
+                    Ko-fi<ExternalLink :size="12" aria-hidden="true" />
+                  </button>
+                  <button type="button" @click="openUrl('https://afdian.com/a/bruhnn')">
+                    AFDIAN<ExternalLink :size="12" aria-hidden="true" />
+                  </button>
+                </div>
               </section>
               <details v-else class="supporter-section">
                 <summary>
@@ -202,6 +214,14 @@ watch(() => props.show, async (show) => {
                   </div>
                   <ChevronDown :size="17" class="supporter-chevron" />
                 </summary>
+                <div class="supporter-links">
+                  <button type="button" @click="openUrl('https://ko-fi.com/bruhnn')">
+                    Ko-fi<ExternalLink :size="12" aria-hidden="true" />
+                  </button>
+                  <button type="button" @click="openUrl('https://afdian.com/a/bruhnn')">
+                    AFDIAN<ExternalLink :size="12" aria-hidden="true" />
+                  </button>
+                </div>
                 <form class="supporter-form" @submit.prevent="redeem">
                   <label for="supporter-order">{{ t('supporter.orderNumber') }}</label>
                   <div class="supporter-input-row">
@@ -437,6 +457,29 @@ select {
   color: var(--text-secondary);
   font-size: 12px;
   line-height: 1.5;
+}
+
+.supporter-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.supporter-links button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.supporter-links button:hover {
+  text-decoration: underline;
 }
 
 .supporter-form {

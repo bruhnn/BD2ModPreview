@@ -5,6 +5,56 @@ import en_US from './locales/en-US.json'
 const messages = {
     en_US: en_US,
     zh_CN: {
+        loadError: {
+  "titles": {
+    "network": "网络错误",
+    "skeletonMissing": "未找到骨骼文件",
+    "atlasMissing": "未找到图集文件",
+    "textureMissing": "未找到纹理文件",
+    "textureFailed": "纹理加载失败",
+    "unreadable": "无法读取文件",
+    "invalid": "文件无效",
+    "unknown": "未知错误"
+  },
+  "online": {
+    "network": "无法连接到资源来源。",
+    "skeletonMissing": "资源来源中缺少骨骼文件。",
+    "atlasMissing": "资源来源中缺少图集文件。",
+    "textureMissing": "资源来源中缺少纹理 {file}。",
+    "textureFailed": "无法加载纹理 {file}。",
+    "unreadable": "加载器未提供明确原因。",
+    "invalid": "加载器无法将资源数据读取为有效的 Spine 文件。",
+    "unknown": "加载器未提供明确原因。"
+  },
+  "folder": {
+    "network": "加载器未提供明确原因。",
+    "skeletonMissing": "文件夹中缺少骨骼文件。",
+    "atlasMissing": "文件夹中缺少图集文件。",
+    "textureMissing": "文件夹中缺少纹理 {file}，或无法读取该文件。",
+    "textureFailed": "文件夹中缺少纹理 {file}，或无法读取该文件。",
+    "unreadable": "应用无法打开文件。请检查文件是否被占用或阻止访问。",
+    "invalid": "加载器无法将资源数据读取为有效的 Spine 文件。",
+    "unknown": "加载器未提供明确原因。"
+  },
+  "both": {
+    "skeletonMissing": "两个来源都缺少骨骼文件。该文件可能尚未发布。",
+    "atlasMissing": "两个来源都缺少图集文件。该文件可能尚未发布。",
+    "textureMissing": "两个来源都缺少纹理 {file}。该文件可能尚未发布。"
+  },
+  "details": "详情",
+  "folderName": "文件夹",
+  "file": "文件",
+  "code": "代码",
+  "unspecified": "未提供",
+  "unavailable": "不可用",
+  "folderLabel": "文件夹",
+  "onlineLabel": "在线",
+  "pose": "无法加载姿势 {pose}：{cause}。",
+  "tryAgain": "请重试。"
+},
+        datingPoseLoadFailed: "无法加载此姿势。请重试。",
+        datingAudioStatus: { loading: "正在加载音频 {loaded}/{total}", completed: "音频加载完成", failed: "已加载音频 {loaded}/{total}。部分文件无法加载。" },
+        datingAudio: "启用约会互动的音效和语音",
         datingPointSettings: {"click": "点击互动点", "drag": "拖动互动点", "colorHelp": "指示标记和区域框的颜色。", "size": "互动点大小", "sizeHelp": "仅更改指示标记大小，不改变互动区域。", "reset": "恢复默认"},
         supporter: {
             "title": "赞助者权限",
@@ -22,6 +72,8 @@ const messages = {
             "orderHelp": "AFDIAN：进入个人中心，打开“我的订单”，然后复制订单号。Ko-fi：输入你收到的激活码，而不是交易编号。"
         },
         whatsNew: {
+            "datingAudio": "为约会互动添加了韩语语音和音效，可在设置中开启或关闭。",
+            "previewErrors": "预览错误提示更加清晰，说明失败原因，并提供文件详情和重试按钮。",
             versionLabel: "版本",
             changelog: "更新日志",
             supportOr: " 或 ",
@@ -332,6 +384,56 @@ const messages = {
         }
     },
     ja_JP: {
+        loadError: {
+  "titles": {
+    "network": "ネットワークエラー",
+    "skeletonMissing": "スケルトンファイルが見つかりません",
+    "atlasMissing": "アトラスファイルが見つかりません",
+    "textureMissing": "テクスチャファイルが見つかりません",
+    "textureFailed": "テクスチャの読み込みに失敗",
+    "unreadable": "ファイルを読み込めません",
+    "invalid": "無効なファイル",
+    "unknown": "不明なエラー"
+  },
+  "online": {
+    "network": "アセットの配信元に接続できませんでした。",
+    "skeletonMissing": "配信元にスケルトンファイルがありません。",
+    "atlasMissing": "配信元にアトラスファイルがありません。",
+    "textureMissing": "配信元にテクスチャ {file} がありません。",
+    "textureFailed": "テクスチャ {file} を読み込めませんでした。",
+    "unreadable": "ローダーから明確な原因が提供されませんでした。",
+    "invalid": "アセットを有効な Spine ファイルとして読み込めませんでした。",
+    "unknown": "ローダーから明確な原因が提供されませんでした。"
+  },
+  "folder": {
+    "network": "ローダーから明確な原因が提供されませんでした。",
+    "skeletonMissing": "フォルダーにスケルトンファイルがありません。",
+    "atlasMissing": "フォルダーにアトラスファイルがありません。",
+    "textureMissing": "テクスチャ {file} がフォルダーにないか、読み込めません。",
+    "textureFailed": "テクスチャ {file} がフォルダーにないか、読み込めません。",
+    "unreadable": "ファイルを開けませんでした。使用中またはアクセスがブロックされていないか確認してください。",
+    "invalid": "アセットを有効な Spine ファイルとして読み込めませんでした。",
+    "unknown": "ローダーから明確な原因が提供されませんでした。"
+  },
+  "both": {
+    "skeletonMissing": "両方の配信元にスケルトンファイルがありません。まだ公開されていない可能性があります。",
+    "atlasMissing": "両方の配信元にアトラスファイルがありません。まだ公開されていない可能性があります。",
+    "textureMissing": "両方の配信元にテクスチャ {file} がありません。まだ公開されていない可能性があります。"
+  },
+  "details": "詳細",
+  "folderName": "フォルダー",
+  "file": "ファイル",
+  "code": "コード",
+  "unspecified": "未提供",
+  "unavailable": "取得不可",
+  "folderLabel": "フォルダー",
+  "onlineLabel": "オンライン",
+  "pose": "ポーズ {pose} を読み込めませんでした：{cause}。",
+  "tryAgain": "もう一度お試しください。"
+},
+        datingPoseLoadFailed: "このポーズを読み込めませんでした。もう一度お試しください。",
+        datingAudioStatus: { loading: "音声を読み込み中 {loaded}/{total}", completed: "音声の読み込みが完了しました", failed: "音声を {loaded}/{total} 読み込みました。一部のファイルを読み込めませんでした。" },
+        datingAudio: "デートインタラクションの効果音とボイスを有効にする",
         datingPointSettings: {"click": "クリックポイント", "drag": "ドラッグポイント", "colorHelp": "マーカーと範囲枠の色。", "size": "ポイントのサイズ", "sizeHelp": "マーカーの大きさのみ変更します。操作範囲は変わりません。", "reset": "初期設定に戻す"},
         supporter: {
             "title": "サポーター特典",
@@ -349,6 +451,8 @@ const messages = {
             "orderHelp": "AFDIAN：ダッシュボードから「マイオーダー」を開き、注文番号をコピーしてください。Ko-fi：取引番号ではなく、受け取った有効化コードを入力してください。"
         },
         whatsNew: {
+            "datingAudio": "デートインタラクションに韓国語ボイスと効果音を追加しました。設定でオン・オフを切り替えられます。",
+            "previewErrors": "プレビューのエラー表示を改善しました。失敗の原因やファイルの詳細を確認し、再試行できます。",
             versionLabel: "バージョン",
             changelog: "変更履歴",
             supportOr: " または ",
@@ -659,6 +763,56 @@ const messages = {
         }
     },
     ko_KR: {
+        loadError: {
+  "titles": {
+    "network": "네트워크 오류",
+    "skeletonMissing": "스켈레톤 파일을 찾을 수 없음",
+    "atlasMissing": "아틀라스 파일을 찾을 수 없음",
+    "textureMissing": "텍스처 파일을 찾을 수 없음",
+    "textureFailed": "텍스처 로딩 실패",
+    "unreadable": "파일을 읽을 수 없음",
+    "invalid": "유효하지 않은 파일",
+    "unknown": "알 수 없는 오류"
+  },
+  "online": {
+    "network": "에셋 제공 서버에 연결하지 못했습니다.",
+    "skeletonMissing": "에셋 제공 서버에 스켈레톤 파일이 없습니다.",
+    "atlasMissing": "에셋 제공 서버에 아틀라스 파일이 없습니다.",
+    "textureMissing": "에셋 제공 서버에 텍스처 {file}이(가) 없습니다.",
+    "textureFailed": "텍스처 {file}을(를) 불러오지 못했습니다.",
+    "unreadable": "로더가 명확한 원인을 제공하지 않았습니다.",
+    "invalid": "에셋을 유효한 Spine 파일로 읽을 수 없습니다.",
+    "unknown": "로더가 명확한 원인을 제공하지 않았습니다."
+  },
+  "folder": {
+    "network": "로더가 명확한 원인을 제공하지 않았습니다.",
+    "skeletonMissing": "폴더에 스켈레톤 파일이 없습니다.",
+    "atlasMissing": "폴더에 아틀라스 파일이 없습니다.",
+    "textureMissing": "텍스처 {file}이(가) 폴더에 없거나 읽을 수 없습니다.",
+    "textureFailed": "텍스처 {file}이(가) 폴더에 없거나 읽을 수 없습니다.",
+    "unreadable": "파일을 열 수 없습니다. 사용 중이거나 차단되어 있는지 확인해 주세요.",
+    "invalid": "에셋을 유효한 Spine 파일로 읽을 수 없습니다.",
+    "unknown": "로더가 명확한 원인을 제공하지 않았습니다."
+  },
+  "both": {
+    "skeletonMissing": "두 서버 모두에 스켈레톤 파일이 없습니다. 아직 공개되지 않았을 수 있습니다.",
+    "atlasMissing": "두 서버 모두에 아틀라스 파일이 없습니다. 아직 공개되지 않았을 수 있습니다.",
+    "textureMissing": "두 서버 모두에 텍스처 {file}이(가) 없습니다. 아직 공개되지 않았을 수 있습니다."
+  },
+  "details": "상세 정보",
+  "folderName": "폴더",
+  "file": "파일",
+  "code": "코드",
+  "unspecified": "제공되지 않음",
+  "unavailable": "확인 불가",
+  "folderLabel": "폴더",
+  "onlineLabel": "온라인",
+  "pose": "포즈 {pose}을(를) 불러오지 못했습니다: {cause}.",
+  "tryAgain": "다시 시도해 주세요."
+},
+        datingPoseLoadFailed: "이 포즈를 불러오지 못했습니다. 다시 시도해 주세요.",
+        datingAudioStatus: { loading: "오디오 로딩 중 {loaded}/{total}", completed: "오디오 로딩 완료", failed: "오디오 {loaded}/{total} 로딩 완료. 일부 파일을 불러오지 못했습니다." },
+        datingAudio: "데이트 상호작용의 효과음과 음성 활성화",
         datingPointSettings: {"click": "클릭 포인트", "drag": "드래그 포인트", "colorHelp": "표시와 영역 테두리의 색상입니다.", "size": "포인트 크기", "sizeHelp": "표시 크기만 변경하며 상호작용 영역은 바뀌지 않습니다.", "reset": "기본값으로 초기화"},
         supporter: {
             "title": "후원자 기능",
@@ -676,6 +830,8 @@ const messages = {
             "orderHelp": "AFDIAN: 대시보드에서 내 주문을 열고 주문 번호를 복사하세요. Ko-fi: 거래 번호가 아닌, 받은 활성화 코드를 입력하세요."
         },
         whatsNew: {
+            "datingAudio": "데이트 상호작용에 한국어 음성과 효과음을 추가했습니다. 설정에서 켜거나 끌 수 있습니다.",
+            "previewErrors": "미리보기 오류 메시지를 개선했습니다. 실패 원인과 파일 정보를 확인하고 다시 시도할 수 있습니다.",
             versionLabel: "버전",
             changelog: "변경 사항",
             supportOr: " 또는 ",

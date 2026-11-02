@@ -3,7 +3,7 @@
   lang="ts"
 >
 import { useI18n } from "vue-i18n"
-import { Ellipsis, Scan, ExternalLink, Flame, GripVertical, PanelRightClose, PanelBottomClose, Play, Pause, Repeat, Hand, Eye, EyeOff, Check, ChevronDown, ChevronRight, FolderOpen, Focus, Image, Layers, Maximize, Palette, Shirt, Pencil, Plus, RotateCcw, SkipBack, Trash2, X } from "@lucide/vue"
+import { WifiOff, FileQuestion, ImageOff, FileWarning, CircleAlert, Ellipsis, Scan, ExternalLink, Flame, GripVertical, PanelRightClose, PanelBottomClose, Play, Pause, Repeat, Hand, Eye, EyeOff, Check, ChevronDown, ChevronRight, FolderOpen, Focus, Image, Layers, Maximize, Palette, Shirt, Pencil, Plus, RotateCcw, SkipBack, Trash2, X } from "@lucide/vue"
 import { autoUpdate, flip, offset, shift, useFloating } from "@floating-ui/vue"
 import { onClickOutside, useTimeoutFn } from "@vueuse/core"
 import { computed, nextTick, ref, useTemplateRef, watch } from "vue"
@@ -24,6 +24,11 @@ import { useLogger } from "../composables/useLogger"
 import RecentFolderItem from "./RecentFolderItem.vue"
 import { useHistory } from "../composables/useHistory"
 import type { HistoryItem } from "../types/history"
+
+import { fileName, type LoadCause } from "../composables/previewErrors"
+
+const errorIcons = { network: WifiOff, skeletonMissing: FileQuestion, atlasMissing: FileQuestion, textureMissing: ImageOff, textureFailed: ImageOff, unreadable: FileWarning, invalid: FileWarning, unknown: CircleAlert }
+function errorIcon(cause: LoadCause) { return errorIcons[cause] }
 
 const { t } = useI18n()
 const props = defineProps<{
@@ -57,6 +62,9 @@ const {
   minigameEnabled,
   minigameFever,
   minigameFeverAvailable,
+  datingPoseLoadFailed,
+  datingPoseError,
+  datingAudioProgress,
   datingMarkers,
   datingGroups,
   datingGroup,
@@ -72,6 +80,7 @@ const {
   showDatingPoints,
   showDatingAreas,
   error,
+  errorInfo,
   isLoading,
   retry,
   title,
@@ -349,6 +358,20 @@ watch([source, contextOpen, submenu], async ([value, open, menu], _previous, onC
 })
 
 onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [submenuPopover] })
+const errorExplanation = computed(() => {
+  const issue = errorInfo.value
+  if (!issue) return ''
+  const bothMissing = issue.origin === 'online' && ['skeletonMissing', 'atlasMissing', 'textureMissing'].includes(issue.cause)
+    && ['jsDelivr', 'GitHub'].every(source => issue.results.some(result => result.source === source && result.cause === issue.cause && result.file === issue.file))
+  return t(`loadError.${bothMissing ? 'both' : issue.origin}.${issue.cause}`, { file: issue.file || t('loadError.unspecified') })
+})
+const poseErrorMessage = computed(() => {
+  const failure = datingPoseError.value
+  if (!failure) return ''
+  const message = t('loadError.pose', { pose: failure.pose, cause: t(`loadError.titles.${failure.issue.cause}`) })
+  return failure.issue.origin === 'online' && ['network', 'textureFailed', 'textureMissing'].includes(failure.issue.cause)
+    ? `${message} ${t('loadError.tryAgain')}` : message
+})
 </script>
 <template>
   <SequenceEditor v-if="sequenceEditorOpen" :animations="allAnimations"
@@ -435,15 +458,31 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
     <p v-if="cutsceneActive && cutsceneIncomplete" class="cutscene-warning" role="status">
       {{ t('preview.cutsceneIncomplete') }}
     </p>
-    <div v-if="source && error" class="preview-error" role="alert">
-      <p class="error-title">{{ t('preview.loadFailed') }}</p>
-      <p class="error-details">{{ error }}</p>
-      <div class="error-actions">
-        <button class="error-button" @click="retry">{{ t('common.retry') }}</button>
-        <button class="error-button" @click="selectFolder">{{ t('common.openFolder') }}</button>
-      </div>
+    <div v-if="source && error && errorInfo" class="preview-error" role="alert">
+      <component :is="errorIcon(errorInfo.cause)" :size="20" class="error-icon" aria-hidden="true" />
+      <p class="error-title">{{ t(`loadError.titles.${errorInfo.cause}`) }}</p>
+      <p class="error-details">{{ errorExplanation }}</p>
+      <button class="error-button" @click="retry">{{ t('common.retry') }}</button>
+      <details :key="error" class="load-error-details">
+        <summary>{{ t('loadError.details') }}</summary>
+        <p v-if="source.type === 'folder'">{{ t('loadError.folderName') }}: {{ fileName(source.path) }}</p>
+        <p>{{ t('loadError.file') }}: {{ errorInfo.file || t('loadError.unspecified') }}</p>
+        <p v-for="(result, index) in errorInfo.results" :key="index">
+          {{ result.source === 'folder' || result.source === 'online' ? t(`loadError.${result.source}Label`) : result.source }}:
+          {{ t(`loadError.titles.${result.cause}`) }}
+          ({{ t('loadError.code') }}: {{ result.code || t('loadError.unavailable') }})
+          <template v-if="result.file && result.file !== errorInfo.file"> — {{ result.file }}</template>
+        </p>
+      </details>
     </div>
     <p v-if="source && isLoading && !error" role="status" class="preview-loading">{{ t('preview.loading') }}</p>
+    <p v-else-if="source && !error && datingAudioProgress.status !== 'idle'" class="preview-loading" role="status">
+        {{ datingAudioProgress.status === 'loading'
+          ? t('datingAudioStatus.loading', { loaded: datingAudioProgress.loaded, total: datingAudioProgress.total })
+          : datingAudioProgress.status === 'complete'
+            ? t('datingAudioStatus.completed')
+            : t('datingAudioStatus.failed', { loaded: datingAudioProgress.loaded, total: datingAudioProgress.total }) }}
+    </p>
     <div v-show="source && !error" class="preview-stage">
       <div ref="player-container" :id="`player-container-${props.previewId}`" tabindex="0"
         class="player-container" @contextmenu.prevent="openContext" @pointerdown.capture="playerContainer?.focus()"
@@ -475,6 +514,11 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
           </div>
         </div>
       </TransitionGroup>
+      <div v-if="datingPoseLoadFailed && datingPoseError" :key="datingPoseError.attempt" class="dating-pose-error" role="alert">
+        <component :is="errorIcon(datingPoseError.issue.cause)" :size="16" class="error-icon" aria-hidden="true" />
+        <span>{{ poseErrorMessage }}</span>
+        <button type="button" :aria-label="t('preview.close')" @click="datingPoseLoadFailed = false"><X :size="16" /></button>
+      </div>
     </div>
     <div v-if="datingEnabled && datingGaugeRange" class="dating-gauge" :aria-label="t('preview.datingGauge')">
       <span>{{ datingGaugeRange.y }}</span>
@@ -1086,6 +1130,50 @@ onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [subme
   line-height: 16px;
   border-radius: 4px;
   border: 1px solid var(--border-default);
+}
+
+.dating-pose-error {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-top: 1px solid var(--border-default);
+  background: var(--surface-panel);
+  color: var(--text-primary);
+  font-size: 12px;
+}
+
+.dating-pose-error span { flex: 1; min-width: 0; }
+.dating-pose-error::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--error);
+  transform-origin: left;
+  animation: pose-error-countdown 6s linear forwards;
+}
+@keyframes pose-error-countdown { to { transform: scaleX(0); } }
+.error-icon { color: var(--error); flex: none; }
+.load-error-details { font-size: 12px; color: var(--text-secondary); max-width: 100%; overflow-wrap: anywhere; }
+.load-error-details summary { cursor: pointer; }
+.load-error-details p { margin-top: 6px; }
+
+.dating-pose-error button {
+  display: flex;
+  flex: none;
+  padding: 4px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
 }
 
 .preview-loading {

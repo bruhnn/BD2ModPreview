@@ -1,8 +1,12 @@
+import { describeLoadError, loadIssue, type LoadFailure, type LoadIssue } from "./previewErrors";
 import { computed, ref, shallowRef, watch } from "vue";
+import { useTimeoutFn } from "@vueuse/core";
 import type { SpinePlayer } from "../types/spine";
 import { DatingPoint, DatingScene, DatingGroup } from "../types/dating";
 import { useDatingScenesStore } from "../stores/datingScenes";
 import { useUIStore } from "../stores/ui";
+
+import { useDatingAudio } from "./useDatingAudio";
 
 declare const spine: any;
 
@@ -13,6 +17,14 @@ export function useDatingInteractions(
 ) {
 	const datingScenesStore = useDatingScenesStore();
 	const uiStore = useUIStore();
+	const audio = useDatingAudio();
+	const poseLoadFailed = ref(false);
+	const poseError = shallowRef<{ issue: LoadIssue; pose: number; attempt: number } | null>(null);
+	let poseResults: LoadFailure[] = [];
+	let poseAttempt = 0;
+	const { start: dismissPoseError } = useTimeoutFn(() => {
+		poseLoadFailed.value = false;
+	}, 6000, { immediate: false });
 
 	let currentDating: DatingScene | null = null;
 
@@ -75,6 +87,7 @@ export function useDatingInteractions(
 	const clicks = new Map<string, number>();
 
 	function reset() {
+		audio.stop();
 		if (dragPositions.size && player) {
 			dragPositions.clear();
 			player.skeleton.setToSetupPose();
@@ -191,6 +204,8 @@ export function useDatingInteractions(
 		const scene = name ? (datingScenesStore.scenes[name] ?? null) : null;
 
 		currentDating = scene;
+
+		audio.load(uiStore.isSupporter ? scene?.audio : undefined);
 		isDating.value = !!player && !!name;
 
 		group.value = null;
@@ -308,6 +323,10 @@ export function useDatingInteractions(
 
 		if (motion?.MixAnimationName) {
 			playReaction(motion.MixAnimationName);
+			void audio.playEvents([
+				motion.VoiceSoundEventName ? `event:/Voices/${motion.VoiceSoundEventName}_KR` : undefined,
+				motion.SFXSoundEventName,
+			]);
 		}
 	}
 
@@ -336,6 +355,7 @@ export function useDatingInteractions(
 	function cancelHold(release = true) {
 		const current = hold;
 		hold = null;
+		if (current) audio.stop();
 
 		if (current && player) {
 			const parent = currentDating?.points.find((p) =>
@@ -373,7 +393,10 @@ export function useDatingInteractions(
 				destination
 			];
 
-			if (animation) playReaction(animation);
+			if (animation) {
+				playReaction(animation);
+				audio.play(point, success ? "success" : "fail", destination);
+			}
 
 			if (point.gauge.IsOn)
 				addScore(
@@ -502,7 +525,10 @@ export function useDatingInteractions(
 					count + 1 >= point.clickMax
 				) {
 					changeGroup(point);
-				} else playReaction(point.animations[index]);
+				} else {
+					playReaction(point.animations[index]);
+					audio.play(point, "click", index);
+				}
 
 				if (point.gauge.IsOn && point.gauge.Scores.length) {
 					addScore(
@@ -560,6 +586,7 @@ export function useDatingInteractions(
 				return true;
 			drag.started = true;
 			playReaction(drag.point.animations[0]);
+			audio.play(drag.point, "click", 0);
 		}
 		const bone = player.skeleton.findBone(drag.point.bone);
 		const world = position(event);
@@ -652,7 +679,10 @@ export function useDatingInteractions(
 		}
 		const current = drag;
 		cancelDrag();
-		if (current.started) playReaction(current.point.animations[1]);
+		if (current.started) {
+			playReaction(current.point.animations[1]);
+			audio.play(current.point, "click", 1);
+		}
 		return true;
 	}
 
@@ -698,6 +728,7 @@ export function useDatingInteractions(
 				const animation = hold.point.hold.loop[hold.destination];
 				if (animation && player.skeleton.data.findAnimation(animation))
 					player.animationState.setAnimation(2, animation, true);
+				audio.play(hold.point, "loop", hold.destination);
 				hold.loopStarted = true;
 			}
 			if (
@@ -796,38 +827,51 @@ export function useDatingInteractions(
 			url.pathname = url.pathname.replace(/\.skel$/, ".atlas");
 			atlasUrl = url.href;
 		}
-		const manager = new spine.AssetManager(player.sceneRenderer.context);
-		try {
-			for (const [name, data] of Object.entries(raw ?? {}))
-				manager.setRawDataURI(name, data);
-			if (skeletonUrl.endsWith(".json")) manager.loadJson(skeletonUrl);
-			else manager.loadBinary(skeletonUrl);
-			manager.loadTextureAtlas(atlasUrl);
-			await manager.loadAll();
-			if (request !== generation || player !== currentPlayer) {
+		while (true) {
+			const manager = new spine.AssetManager(player.sceneRenderer.context);
+			try {
+				for (const [name, data] of Object.entries(raw ?? {}))
+					manager.setRawDataURI(name, data);
+				if (skeletonUrl.endsWith(".json")) manager.loadJson(skeletonUrl);
+				else manager.loadBinary(skeletonUrl);
+				manager.loadTextureAtlas(atlasUrl);
+				await manager.loadAll();
+				if (request !== generation || player !== currentPlayer) {
+					manager.dispose();
+					return null;
+				}
+				const loader = new spine.AtlasAttachmentLoader(
+					manager.get(atlasUrl),
+				);
+				const reader = skeletonUrl.endsWith(".json")
+					? new spine.SkeletonJson(loader)
+					: new spine.SkeletonBinary(loader);
+				const data = reader.readSkeletonData(manager.get(skeletonUrl));
+				const skeleton = new spine.Skeleton(data);
+				const stateData = new spine.AnimationStateData(data);
+				stateData.defaultMix = player.config.defaultMix;
+				const loaded = {
+					skeleton,
+					state: new spine.AnimationState(stateData),
+				};
+				skeletons.set(next.skeleton, loaded);
+				assetManagers.push(manager);
+				poseResults = [];
+				return loaded;
+			} catch (error) {
 				manager.dispose();
-				return null;
+				if (request !== generation || player !== currentPlayer) return null;
+				const results = describeLoadError(error, raw ? "folder" : "online", skeletonUrl);
+				poseResults.push(...results);
+				onError(JSON.stringify({ results, skeletonUrl, atlasUrl, error }));
+				const cdn = "https://cdn.jsdelivr.net/gh/bruhnn/Brown-Dust-2-Asset@master/";
+				if (raw || !skeletonUrl.startsWith(cdn) || !atlasUrl.startsWith(cdn))
+					throw error;
+				// Retry the whole part, including atlas textures, from GitHub.
+				const github = "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/";
+				skeletonUrl = github + skeletonUrl.slice(cdn.length);
+				atlasUrl = github + atlasUrl.slice(cdn.length);
 			}
-			const loader = new spine.AtlasAttachmentLoader(
-				manager.get(atlasUrl),
-			);
-			const reader = skeletonUrl.endsWith(".json")
-				? new spine.SkeletonJson(loader)
-				: new spine.SkeletonBinary(loader);
-			const data = reader.readSkeletonData(manager.get(skeletonUrl));
-			const skeleton = new spine.Skeleton(data);
-			const stateData = new spine.AnimationStateData(data);
-			stateData.defaultMix = player.config.defaultMix;
-			const loaded = {
-				skeleton,
-				state: new spine.AnimationState(stateData),
-			};
-			skeletons.set(next.skeleton, loaded);
-			assetManagers.push(manager);
-			return loaded;
-		} catch (error) {
-			manager.dispose();
-			throw error;
 		}
 	}
 
@@ -835,13 +879,15 @@ export function useDatingInteractions(
 		const next = currentDating?.groups.find(
 			(g) => g.id === point.nextGroup,
 		);
-		if (next) return startGroup(next, point.motions[destination]);
+		if (next) return startGroup(next, point.motions[destination], false, () => audio.play(point, "motion", destination));
 	}
 
-	async function startGroup(next: DatingGroup, motion = "", initial = false) {
+	async function startGroup(next: DatingGroup, motion = "", initial = false, onMotion?: () => void) {
 		if (!player || switching) return;
 		const request = generation;
 		const currentPlayer = player;
+		poseLoadFailed.value = false;
+		poseResults = [];
 		switching = true;
 		try {
 			const loaded = await loadGroupSkeleton(next);
@@ -916,6 +962,7 @@ export function useDatingInteractions(
 				player.skeleton.updateWorldTransform();
 				switching = false;
 			};
+			onMotion?.();
 			if (motion && player.skeleton.data.findAnimation(motion)) {
 				transition = player.animationState.setAnimation(
 					0,
@@ -933,7 +980,12 @@ export function useDatingInteractions(
 		} catch (error) {
 			if (request !== generation) return;
 			switching = false;
-			onError(String(error));
+			const origin = player?.config.rawDataURIs ? "folder" : "online";
+			if (!poseResults.length) poseResults.push(...describeLoadError(error, origin));
+			poseError.value = { issue: loadIssue(origin, poseResults), pose: (currentDating?.groups.indexOf(next) ?? -1) + 1, attempt: ++poseAttempt };
+			poseLoadFailed.value = true;
+			dismissPoseError();
+			onError(JSON.stringify({ ...poseError.value, error: error instanceof Error ? error.message : error }));
 		}
 	}
 
@@ -991,6 +1043,9 @@ export function useDatingInteractions(
 	}
 
 	return {
+		poseLoadFailed,
+		poseError,
+		audioProgress: audio.audioProgress,
 		groups,
 		group,
 		selectGroup,

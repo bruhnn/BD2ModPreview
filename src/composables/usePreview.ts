@@ -1,3 +1,4 @@
+import { describeLoadError, loadIssue, type LoadFailure, type LoadIssue } from "./previewErrors";
 import { computed, onUnmounted, ref, Ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { invoke } from "@tauri-apps/api/core";
@@ -36,8 +37,10 @@ export function usePreview(
 		hiddenLayers.value = [];
 		highlightedLayer.value = "";
 		hiddenAttachments.clear();
-	}, (message) => logMessage(message, "error"));
+	}, (message) => logMessage(JSON.stringify({ source: source.value, error: message }), "error"));
 	const error = ref("");
+	const errorInfo = ref<LoadIssue | null>(null);
+	let loadResults: LoadFailure[] = [];
 	const retryCount = ref(0);
 	const activeSequence = ref<AnimationSequence | null>(null);
 	const playbackTime = ref(0);
@@ -505,8 +508,12 @@ export function usePreview(
 			playbackTime.value = track?.getAnimationTime() ?? 0;
 		}
 	}
-	function showError(reason: unknown, request: number) {
+	function showError(reason: unknown, request: number, recorded = false) {
 		if (request !== loadId) return;
+		const origin = source.value?.type === "folder" ? "folder" : "online";
+		if (!recorded) loadResults.push(...describeLoadError(reason, origin));
+		errorInfo.value = loadIssue(origin, loadResults);
+		logMessage(JSON.stringify({ ...errorInfo.value, source: source.value }), "error");
 		const detail = reason as { type?: string; message?: unknown };
 		error.value =
 			detail?.type && te("errors." + detail.type + ".message")
@@ -549,13 +556,15 @@ export function usePreview(
 		});
 		config.error = (_player: SpinePlayer, message: string) => {
 			if (request !== loadId) return;
+			loadResults.push(...describeLoadError(message, "online", skeletonUrl));
+			logMessage(JSON.stringify({ results: loadResults, skeletonUrl, atlasUrl, message }), "error");
 			if (fallbackSkeleton && fallbackAtlas) {
 				try {
 					loadSpineFromUrl(fallbackSkeleton, fallbackAtlas, request);
 				} catch (error) {
 					showError(error, request);
 				}
-			} else showError(message, request);
+			} else showError(message, request, true);
 		};
 		initializePlayer(config, request);
 	}
@@ -633,6 +642,7 @@ export function usePreview(
 		const onError = config.error;
 		config.success = (player: SpinePlayer) => {
 			if (request !== loadId) return;
+			logMessage(JSON.stringify({ source: source.value, result: "Loaded", skeleton: config.skelUrl ?? config.jsonUrl, atlas: config.atlasUrl }), "info");
 			onPlayerSuccess(player);
 			if (preview.value) preview.value.isLoading = false;
 			if (source.value)
@@ -852,6 +862,8 @@ export function usePreview(
 			});
 			destroyPlayer();
 			error.value = "";
+			errorInfo.value = null;
+			loadResults = [];
 			if (preview.value) {
 				preview.value.allAnimations = [];
 				preview.value.settings.currentAnimation = null;
@@ -882,6 +894,7 @@ export function usePreview(
 	onUnmounted(destroyPlayer);
 	return {
 		error,
+		errorInfo,
 		isLoading,
 		retry: () => retryCount.value++,
 		cutsceneAvailable: cutscene.available,
@@ -892,6 +905,9 @@ export function usePreview(
 		minigameEnabled: minigame.enabled,
 		minigameFever: minigame.fever,
 		minigameFeverAvailable: minigame.feverAvailable,
+		datingPoseLoadFailed: datingInteraction.poseLoadFailed,
+		datingPoseError: datingInteraction.poseError,
+		datingAudioProgress: datingInteraction.audioProgress,
 		datingMarkers: datingInteraction.markers,
 		datingGroups: datingInteraction.groups,
 		datingGroup: datingInteraction.group,
