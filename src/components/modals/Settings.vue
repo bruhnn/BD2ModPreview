@@ -200,14 +200,6 @@ watch(() => props.show, async (show) => {
                   </span>
                 </div>
                 <p>{{ t('supporter.thankYou') }}</p>
-                <div class="supporter-links">
-                  <button type="button" @click="openUrl('https://ko-fi.com/bruhnn')">
-                    Ko-fi<ExternalLink :size="12" aria-hidden="true" />
-                  </button>
-                  <button type="button" @click="openUrl('https://afdian.com/a/bruhnn')">
-                    AFDIAN<ExternalLink :size="12" aria-hidden="true" />
-                  </button>
-                </div>
               </section>
               <details v-else class="supporter-section">
                 <summary>
