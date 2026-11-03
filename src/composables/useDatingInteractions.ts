@@ -76,6 +76,7 @@ export function useDatingInteractions(
 		x: number;
 		y: number;
 		started: boolean;
+		destination: number;
 	} | null = null;
 	let transition: any = null;
 	let generation = 0;
@@ -387,7 +388,7 @@ export function useDatingInteractions(
 		cancelDrag();
 
 		if (success && point.nextGroup) {
-			changeGroup(point, destination);
+			changeGroup(point, destination, !point.drag);
 		} else {
 			const animation = (success ? point.hold.success : point.hold.fail)[
 				destination
@@ -498,6 +499,7 @@ export function useDatingInteractions(
 					x: bone.x,
 					y: bone.y,
 					started: false,
+					destination: -1,
 				};
 
 				player.canvas.setPointerCapture(event.pointerId);
@@ -778,6 +780,10 @@ export function useDatingInteractions(
 			}
 			return true;
 		});
+		if (destination !== drag.destination) {
+			drag.destination = destination;
+			if (destination >= 0) audio.play(drag.point, "motion", destination);
+		}
 		if (destination < 0) {
 			if (hold?.point === drag.point) cancelHold(false);
 			return;
@@ -793,7 +799,7 @@ export function useDatingInteractions(
 					loopStarted: false,
 					destination,
 				};
-		} else changeGroup(point, destination);
+		} else changeGroup(point, destination, false);
 	}
 
 	async function loadGroupSkeleton(next: DatingGroup) {
@@ -875,11 +881,11 @@ export function useDatingInteractions(
 		}
 	}
 
-	function changeGroup(point: DatingPoint, destination = 0) {
+	function changeGroup(point: DatingPoint, destination = 0, playSound = true) {
 		const next = currentDating?.groups.find(
 			(g) => g.id === point.nextGroup,
 		);
-		if (next) return startGroup(next, point.motions[destination], false, () => audio.play(point, "motion", destination));
+		if (next) return startGroup(next, point.motions[destination], false, playSound ? () => audio.play(point, "motion", destination) : undefined);
 	}
 
 	async function startGroup(next: DatingGroup, motion = "", initial = false, onMotion?: () => void) {
