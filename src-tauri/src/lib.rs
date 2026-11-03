@@ -6,6 +6,9 @@ mod errors;
 mod types;
 mod utils;
 
+#[cfg(windows)]
+use tauri::Manager;
+
 pub use commands::*;
 pub use types::*;
 
@@ -48,6 +51,28 @@ pub fn run() {
     }
 
     tauri::Builder::default()
+        .setup(|app| {
+            #[cfg(windows)]
+            if let Some(window) = app.get_webview_window("main") {
+                window.with_webview(|webview| {
+                    use webview2_com::Microsoft::Web::WebView2::Win32::ICoreWebView2Settings3;
+                    use windows_core::Interface;
+
+                    let result = (|| -> windows_core::Result<()> {
+                        unsafe {
+                            let settings = webview.controller().CoreWebView2()?.Settings()?;
+                            settings.cast::<ICoreWebView2Settings3>()?
+                                .SetAreBrowserAcceleratorKeysEnabled(false)?;
+                        }
+                        Ok(())
+                    })();
+                    if let Err(error) = result {
+                        eprintln!("Failed to disable browser shortcuts: {error}");
+                    }
+                })?;
+            }
+            Ok(())
+        })
         .manage(ipc::ManagerConnection::default())
         .plugin(tauri_plugin_window_state::Builder::new().build())
         .plugin(tauri_plugin_fs::init())
