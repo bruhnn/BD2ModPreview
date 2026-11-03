@@ -1,7 +1,11 @@
+import rhythmHit from "../../assets/audio/minigames/rhythm-hit.ogg"
+import rhythmFever from "../../assets/audio/minigames/rhythm-fever.ogg"
+
 export type MinigameAction = "tap" | "hold" | "release" | "slide"
 
 export interface MinigameDefinition {
   id: string
+  sounds?: Partial<Record<MinigameAction | "fever", string>>
   characters: (animations: string[]) => string[]
   idle: (character: string, fever: boolean) => string
   reactions: (action: MinigameAction, left: boolean, fever: boolean) => string[]
@@ -10,6 +14,7 @@ export interface MinigameDefinition {
 // Add other minigames here. Input and playback stay in useMinigameInteractions.
 export const minigames: MinigameDefinition[] = [{
   id: "rhythm",
+  sounds: { tap: rhythmHit, hold: rhythmHit, slide: rhythmHit, fever: rhythmFever },
   characters: animations => animations.filter(name => /^_char\d{3}$/.test(name)).sort(),
   idle: (character, fever) => character + (fever ? "fever" : ""),
   reactions: (action, left, fever) => {

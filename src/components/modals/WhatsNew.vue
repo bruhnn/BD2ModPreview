@@ -61,6 +61,7 @@ const versions = [
         highlights: [],
         changelog: [
             "whatsNew.datingAudio",
+            "whatsNew.minigameAudio",
             "whatsNew.previewErrors"
         ]
     },

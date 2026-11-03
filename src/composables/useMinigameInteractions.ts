@@ -1,8 +1,10 @@
 import { computed, ref, shallowRef, watch } from "vue"
 import { minigames, type MinigameAction, type MinigameDefinition } from "../data/minigames"
+import { useMinigameAudio } from "./useMinigameAudio"
 import type { SpinePlayer } from "../types/spine"
 
 export function useMinigameInteractions() {
+  const audio = useMinigameAudio()
   const definition = shallowRef<MinigameDefinition | null>(null)
   const enabled = ref(false)
   const character = ref("")
@@ -40,6 +42,7 @@ export function useMinigameInteractions() {
     player.skeleton.setToSetupPose()
     player.animationState.setAnimation(0, name, true)
     uses.clear()
+    void audio.load(Object.values(definition.value.sounds ?? {}))
   }
 
   function play(action: MinigameAction, left: boolean) {
@@ -53,6 +56,7 @@ export function useMinigameInteractions() {
     const name = choices[Math.floor(Math.random() * choices.length)]
     uses.set(name, (uses.get(name) ?? 0) + 1)
     player.animationState.setAnimation(left ? 1 : 2, name, false)
+    void audio.play(definition.value.sounds?.[fever.value && feverAvailable.value ? "fever" : action])
   }
 
   function pointerDown(event: PointerEvent) {
@@ -116,6 +120,7 @@ export function useMinigameInteractions() {
       previousLoop = track?.loop ?? true
       reset()
     } else {
+      void audio.load([])
       cancel()
       player.animationState.clearTracks()
       player.skeleton.setToSetupPose()

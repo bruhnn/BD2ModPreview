@@ -472,6 +472,7 @@ onMounted(async () => {
 
 .tabs-row {
 	display: flex;
+	overflow-x: auto;
 	justify-content: space-evenly;
 	background: color-mix(in srgb, var(--surface-panel) 60%, transparent);
 	padding: 16px 8px;
@@ -480,7 +481,7 @@ onMounted(async () => {
 }
 
 .tab-option {
-	width: 100%;
+	flex: 1 0 auto;
 }
 
 .tab-option+.tab-option {
@@ -491,7 +492,8 @@ onMounted(async () => {
 	cursor: pointer;
 	width: 100%;
 	border-radius: 8px;
-	padding: 10px 0;
+	padding: 10px 8px;
+	white-space: nowrap;
 	font-size: 14px;
 	font-weight: 500;
 	line-height: 20px;

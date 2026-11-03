@@ -54,6 +54,7 @@ const messages = {
 },
         datingPoseLoadFailed: "无法加载此姿势。请重试。",
         datingAudioStatus: { loading: "正在加载音频 {loaded}/{total}", completed: "音频加载完成", failed: "已加载音频 {loaded}/{total}。部分文件无法加载。" },
+        minigameAudio: "启用小游戏音效",
         datingAudio: "启用约会互动的音效和语音",
         datingPointSettings: {"click": "点击互动点", "drag": "拖动互动点", "colorHelp": "指示标记和区域框的颜色。", "size": "互动点大小", "sizeHelp": "仅更改指示标记大小，不改变互动区域。", "reset": "恢复默认"},
         supporter: {
@@ -72,6 +73,7 @@ const messages = {
             "orderHelp": "AFDIAN：进入个人中心，打开“我的订单”，然后复制订单号。Ko-fi：输入你收到的激活码，而不是交易编号。"
         },
         whatsNew: {
+            "minigameAudio": "为 Slap Slap Slop 互动添加了音效，可在设置中开启或关闭。",
             "datingAudio": "为约会互动添加了韩语语音和音效，可在设置中开启或关闭。",
             "previewErrors": "预览错误提示更加清晰，说明失败原因，并提供文件详情和重试按钮。",
             versionLabel: "版本",
@@ -433,6 +435,7 @@ const messages = {
 },
         datingPoseLoadFailed: "このポーズを読み込めませんでした。もう一度お試しください。",
         datingAudioStatus: { loading: "音声を読み込み中 {loaded}/{total}", completed: "音声の読み込みが完了しました", failed: "音声を {loaded}/{total} 読み込みました。一部のファイルを読み込めませんでした。" },
+        minigameAudio: "ミニゲームの効果音を有効にする",
         datingAudio: "デートインタラクションの効果音とボイスを有効にする",
         datingPointSettings: {"click": "クリックポイント", "drag": "ドラッグポイント", "colorHelp": "マーカーと範囲枠の色。", "size": "ポイントのサイズ", "sizeHelp": "マーカーの大きさのみ変更します。操作範囲は変わりません。", "reset": "初期設定に戻す"},
         supporter: {
@@ -451,6 +454,7 @@ const messages = {
             "orderHelp": "AFDIAN：ダッシュボードから「マイオーダー」を開き、注文番号をコピーしてください。Ko-fi：取引番号ではなく、受け取った有効化コードを入力してください。"
         },
         whatsNew: {
+            "minigameAudio": "Slap Slap Slop のインタラクションに効果音を追加しました。設定でオン・オフを切り替えられます。",
             "datingAudio": "デートインタラクションに韓国語ボイスと効果音を追加しました。設定でオン・オフを切り替えられます。",
             "previewErrors": "プレビューのエラー表示を改善しました。失敗の原因やファイルの詳細を確認し、再試行できます。",
             versionLabel: "バージョン",
@@ -812,6 +816,7 @@ const messages = {
 },
         datingPoseLoadFailed: "이 포즈를 불러오지 못했습니다. 다시 시도해 주세요.",
         datingAudioStatus: { loading: "오디오 로딩 중 {loaded}/{total}", completed: "오디오 로딩 완료", failed: "오디오 {loaded}/{total} 로딩 완료. 일부 파일을 불러오지 못했습니다." },
+        minigameAudio: "미니게임 효과음 활성화",
         datingAudio: "데이트 상호작용의 효과음과 음성 활성화",
         datingPointSettings: {"click": "클릭 포인트", "drag": "드래그 포인트", "colorHelp": "표시와 영역 테두리의 색상입니다.", "size": "포인트 크기", "sizeHelp": "표시 크기만 변경하며 상호작용 영역은 바뀌지 않습니다.", "reset": "기본값으로 초기화"},
         supporter: {
@@ -830,6 +835,7 @@ const messages = {
             "orderHelp": "AFDIAN: 대시보드에서 내 주문을 열고 주문 번호를 복사하세요. Ko-fi: 거래 번호가 아닌, 받은 활성화 코드를 입력하세요."
         },
         whatsNew: {
+            "minigameAudio": "Slap Slap Slop 상호작용에 효과음을 추가했습니다. 설정에서 켜거나 끌 수 있습니다.",
             "datingAudio": "데이트 상호작용에 한국어 음성과 효과음을 추가했습니다. 설정에서 켜거나 끌 수 있습니다.",
             "previewErrors": "미리보기 오류 메시지를 개선했습니다. 실패 원인과 파일 정보를 확인하고 다시 시도할 수 있습니다.",
             versionLabel: "버전",

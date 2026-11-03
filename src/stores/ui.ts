@@ -9,6 +9,7 @@ import { invoke } from '@tauri-apps/api/core';
 export const useUIStore = defineStore('ui', () => {
   const { locale } = useI18n()
 
+  const minigameAudio = useLocalStorage('MINIGAME_AUDIO', true)
   const datingAudio = useLocalStorage('DATING_AUDIO', true)
   const datingPointStyle = useLocalStorage('DATING_POINT_STYLE', { clickColor: '#ffffff', dragColor: '#ffffff', size: 100 }, { mergeDefaults: true })
 
@@ -114,6 +115,7 @@ export const useUIStore = defineStore('ui', () => {
   return {
     datingPointStyle,
     datingAudio,
+    minigameAudio,
     machineId,
     loadMachineId,
     isSupporter,

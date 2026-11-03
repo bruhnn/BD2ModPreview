@@ -148,6 +148,11 @@ watch(() => props.show, async (show) => {
                 </section>
                 <section>
                   <h3>{{ t('preview.rendering') }}</h3>
+                <label class="settings-check">
+                  <input v-model="uiStore.minigameAudio" type="checkbox" />
+                  <span>{{ t('minigameAudio') }}</span>
+                </label>
+
                   <label class="settings-check">
                     <input v-model="previewerStore.premultipliedAlpha"
                       @update:model-value="previewerStore.setPremultipliedAlpha" type="checkbox" />

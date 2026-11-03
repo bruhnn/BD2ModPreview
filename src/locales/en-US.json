@@ -48,6 +48,7 @@
 },
   "datingPoseLoadFailed": "Could not load this pose. Please try again.",
   "datingAudioStatus": { "loading": "Loading audio {loaded}/{total}", "completed": "Audio loading completed", "failed": "Audio loaded {loaded}/{total}. Some files could not be loaded." },
+  "minigameAudio": "Enable sounds for minigames",
   "datingAudio": "Enable sounds and voices for dating interactions",
     "datingPointSettings": {"click": "Click points", "drag": "Drag points", "colorHelp": "Color of the indicator and area box.", "size": "Point size", "sizeHelp": "Changes the indicator size, not the interaction area.", "reset": "Reset to default"},
     "supporter": {
@@ -66,6 +67,7 @@
         "orderHelp": "AFDIAN: Go to your dashboard, open My orders, and copy the order number. Ko-fi: Enter the activation code you received, not the transaction number."
     },
     "whatsNew": {
+            "minigameAudio": "Added sound effects to Slap Slap Slop interactions. You can turn them on or off in Settings.",
             "datingAudio": "Added Korean voices and sound effects to dating interactions. You can turn them on or off in Settings.",
             "previewErrors": "Clearer preview errors explain what failed, with file details and a Retry button.",
         "versionLabel": "Version",
