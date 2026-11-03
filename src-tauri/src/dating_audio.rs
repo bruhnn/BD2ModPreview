@@ -4,7 +4,7 @@ use std::{fs, io::Read, sync::Mutex, time::Duration};
 use tauri::Manager;
 
 static CACHE_LOCK: Mutex<()> = Mutex::new(());
-const AUDIO_URL: &str = "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/audio/dating/";
+const AUDIO_URL: &str = "https://cdn.jsdelivr.net/gh/bruhnn/Brown-Dust-2-Asset@master/audio/dating/";
 
 #[tauri::command]
 pub async fn get_dating_audio(app: tauri::AppHandle, hash: String) -> Result<String, String> {
