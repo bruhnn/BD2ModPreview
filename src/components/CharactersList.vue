@@ -463,6 +463,7 @@ onMounted(async () => {
 }
 
 .characters-tabs {
+	container-type: inline-size;
 	display: flex;
 	gap: 8px;
 	flex-direction: column;
@@ -471,21 +472,24 @@ onMounted(async () => {
 }
 
 .tabs-row {
-	display: flex;
-	overflow-x: auto;
-	justify-content: space-evenly;
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
 	background: color-mix(in srgb, var(--surface-panel) 60%, transparent);
 	padding: 16px 8px;
 	gap: 4px;
 	flex-shrink: 0;
 }
 
-.tab-option {
-	flex: 1 0 auto;
+@container (max-width: 387px) {
+	.tabs-row {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
 }
 
-.tab-option+.tab-option {
-	margin-left: 4px;
+@container (max-width: 199px) {
+	.tabs-row {
+		grid-template-columns: minmax(0, 1fr);
+	}
 }
 
 .tab-button {
