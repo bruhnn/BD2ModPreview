@@ -12,36 +12,36 @@ export function usePreviewDrag(
 	onDrop: (target: PreviewDropTarget) => void,
 	fillEmpty = false,
 ) {
-	const previewerStore = usePreviewerStore()
+	const previewerStore = usePreviewerStore();
 
-	const isDragging = ref(false)
-	const hasDragged = ref(false)
+	const isDragging = ref(false);
+	const hasDragged = ref(false);
 
-	const dragPosition = ref({ x: 0, y: 0 })
+	const dragPosition = ref({ x: 0, y: 0 });
 
-	let dragStart = { x: 0, y: 0 }
+	let dragStart = { x: 0, y: 0 };
 	let dropSpace: {
 		element: HTMLElement;
 		margin: "marginLeft" | "marginRight" | "marginTop" | "marginBottom";
 		value: string;
-	} | null = null
+	} | null = null;
 
 	function clearDropSpace() {
-		if (!dropSpace) return
+		if (!dropSpace) return;
 
-		dropSpace.element.style[dropSpace.margin] = dropSpace.value
-		dropSpace = null
+		dropSpace.element.style[dropSpace.margin] = dropSpace.value;
+		dropSpace = null;
 	}
 
 	function cancelDrag() {
-    clearDropSpace()
-    
-		isDragging.value = false
-		dropTarget.value = null
+		clearDropSpace();
+
+		isDragging.value = false;
+		dropTarget.value = null;
 	}
-  
-  onUnmounted(clearDropSpace)
-  
+
+	onUnmounted(clearDropSpace);
+
 	const dropTarget = ref<{
 		row: number;
 		column: number;

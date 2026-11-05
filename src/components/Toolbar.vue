@@ -1,4 +1,7 @@
-<script setup lang="ts">
+<script
+  setup
+  lang="ts"
+>
 import { History, Sparkles, Image, Pause, Repeat, RotateCcw, SkipBack, X, Settings, Users } from "@lucide/vue"
 import { computed, ref } from "vue"
 import { useI18n } from "vue-i18n"
@@ -93,8 +96,9 @@ function selectBackground(event: Event) {
           :aria-expanded="uiStore.isWhatsNewVisible" @click="backgroundOpen = false; uiStore.openWhatsNew()">
           <Sparkles :size="16" />
         </button>
-        <button class="text-button icon-button" :aria-label="t('controls.actions.viewHistory')" :title="t('controls.actions.viewHistory')"
-          :aria-expanded="uiStore.isHistoryVisible" @click="backgroundOpen = false; uiStore.openHistory()">
+        <button class="text-button icon-button" :aria-label="t('controls.actions.viewHistory')"
+          :title="t('controls.actions.viewHistory')" :aria-expanded="uiStore.isHistoryVisible"
+          @click="backgroundOpen = false; uiStore.openHistory()">
           <History :size="16" />
         </button>
         <button class="text-button icon-button" :aria-label="t('preview.settings')" :title="t('preview.settings')"
@@ -300,6 +304,7 @@ input[type="color"] {
 }
 
 @container (max-width: 480px) {
+
   .toolbar-row,
   .toolbar-actions {
     gap: 4px;

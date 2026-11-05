@@ -148,16 +148,16 @@ watch(() => props.show, async (show) => {
                 </section>
                 <section>
                   <h3>{{ t('preview.rendering') }}</h3>
-                <label class="settings-check">
-                  <input v-model="uiStore.minigameAudio" type="checkbox" />
-                  <span>{{ t('minigameAudio') }}</span>
-                </label>
+                  <label class="settings-check">
+                    <input v-model="uiStore.minigameAudio" type="checkbox" />
+                    <span>{{ t('minigameAudio') }}</span>
+                  </label>
 
                   <label class="settings-check">
                     <input v-model="previewerStore.premultipliedAlpha"
                       @update:model-value="previewerStore.setPremultipliedAlpha" type="checkbox" />
                     <span>{{ t('controls.render.premultipliedAlpha') }}<small>{{ t('preview.alphaHelp')
-                        }}</small></span>
+                    }}</small></span>
                   </label>
                 </section>
               </div>
@@ -169,12 +169,12 @@ watch(() => props.show, async (show) => {
                 </label>
                 <label class="point-setting">
                   <span>{{ t('datingPointSettings.click') }}<small>{{ t('datingPointSettings.colorHelp')
-                      }}</small></span>
+                  }}</small></span>
                   <input v-model="uiStore.datingPointStyle.clickColor" type="color" />
                 </label>
                 <label class="point-setting">
                   <span>{{ t('datingPointSettings.drag') }}<small>{{ t('datingPointSettings.colorHelp')
-                      }}</small></span>
+                  }}</small></span>
                   <input v-model="uiStore.datingPointStyle.dragColor" type="color" />
                 </label>
                 <label class="point-setting">
@@ -213,10 +213,12 @@ watch(() => props.show, async (show) => {
                 </summary>
                 <div class="supporter-links">
                   <button type="button" @click="openUrl('https://ko-fi.com/bruhnn')">
-                    Ko-fi<ExternalLink :size="12" aria-hidden="true" />
+                    Ko-fi
+                    <ExternalLink :size="12" aria-hidden="true" />
                   </button>
                   <button type="button" @click="openUrl('https://afdian.com/a/bruhnn')">
-                    AFDIAN<ExternalLink :size="12" aria-hidden="true" />
+                    AFDIAN
+                    <ExternalLink :size="12" aria-hidden="true" />
                   </button>
                 </div>
                 <form class="supporter-form" @submit.prevent="redeem">
