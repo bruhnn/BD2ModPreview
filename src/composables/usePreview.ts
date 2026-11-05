@@ -1,4 +1,9 @@
-import { describeLoadError, loadIssue, type LoadFailure, type LoadIssue } from "./previewErrors";
+import {
+	describeLoadError,
+	loadIssue,
+	type LoadFailure,
+	type LoadIssue,
+} from "./previewErrors";
 import { computed, onUnmounted, ref, Ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { invoke } from "@tauri-apps/api/core";
@@ -24,20 +29,34 @@ export function usePreview(
 	const { t, te } = useI18n();
 	const cutscene = useGameCutscene();
 	const minigame = useMinigameInteractions();
-	const datingInteraction = useDatingInteractions((animation) => {
-		if (!settings.value) return;
-		settings.value.followGlobalAnimation = false;
-		settings.value.currentAnimation = animation;
-	}, (player) => {
-		if (!preview.value) return;
-		preview.value.allAnimations = player.skeleton.data.animations.map((animation: any) => animation.name);
-		layers.value = player.skeleton.data.slots.map((slot: any) => slot.name);
-		skins.value = player.skeleton.data.skins.map((skin: any) => skin.name);
-		skin.value = player.skeleton.data.defaultSkin?.name ?? "";
-		hiddenLayers.value = [];
-		highlightedLayer.value = "";
-		hiddenAttachments.clear();
-	}, (message) => logMessage(JSON.stringify({ source: source.value, error: message }), "error"));
+	const datingInteraction = useDatingInteractions(
+		(animation) => {
+			if (!settings.value) return;
+			settings.value.followGlobalAnimation = false;
+			settings.value.currentAnimation = animation;
+		},
+		(player) => {
+			if (!preview.value) return;
+			preview.value.allAnimations = player.skeleton.data.animations.map(
+				(animation: any) => animation.name,
+			);
+			layers.value = player.skeleton.data.slots.map(
+				(slot: any) => slot.name,
+			);
+			skins.value = player.skeleton.data.skins.map(
+				(skin: any) => skin.name,
+			);
+			skin.value = player.skeleton.data.defaultSkin?.name ?? "";
+			hiddenLayers.value = [];
+			highlightedLayer.value = "";
+			hiddenAttachments.clear();
+		},
+		(message) =>
+			logMessage(
+				JSON.stringify({ source: source.value, error: message }),
+				"error",
+			),
+	);
 	const error = ref("");
 	const errorInfo = ref<LoadIssue | null>(null);
 	let loadResults: LoadFailure[] = [];
@@ -96,8 +115,12 @@ export function usePreview(
 				settings.value.loopAnimation = control.value;
 				break;
 			case "animation": {
-				if (datingInteraction.enabled.value || minigame.enabled.value) return;
-				const animation = control.value || previewerStore.globalAnimation || allAnimations.value[0];
+				if (datingInteraction.enabled.value || minigame.enabled.value)
+					return;
+				const animation =
+					control.value ||
+					previewerStore.globalAnimation ||
+					allAnimations.value[0];
 				if (!allAnimations.value.includes(animation)) return;
 				stopGameCutscene();
 				stopSequence();
@@ -106,15 +129,35 @@ export function usePreview(
 				restart();
 				break;
 			}
-			case "seek": seekTo(control.time); break;
-			case "restart": restart(); break;
-			case "fit": fitCharacter(); break;
-			case "center": centerCharacter(); break;
-			case "resetCamera": resetCamera(); break;
-			case "cutscene": playGameCutscene(); break;
-			case "stopSequence": stopSequence(); break;
+			case "seek":
+				seekTo(control.time);
+				break;
+			case "restart":
+				restart();
+				break;
+			case "fit":
+				fitCharacter();
+				break;
+			case "center":
+				centerCharacter();
+				break;
+			case "resetCamera":
+				resetCamera();
+				break;
+			case "cutscene":
+				playGameCutscene();
+				break;
+			case "stopSequence":
+				stopSequence();
+				break;
 			case "sequence":
-				if (control.sequence.steps.every(step => step.every(entry => allAnimations.value.includes(entry.animation))))
+				if (
+					control.sequence.steps.every((step) =>
+						step.every((entry) =>
+							allAnimations.value.includes(entry.animation),
+						),
+					)
+				)
 					playSequence(control.sequence);
 				break;
 		}
@@ -289,7 +332,8 @@ export function usePreview(
 				if (event.button !== 0 && event.button !== 1) return;
 				if (
 					!activeSequence.value &&
-					(minigame.pointerDown(event) || datingInteraction.pointerDown(event))
+					(minigame.pointerDown(event) ||
+						datingInteraction.pointerDown(event))
 				) {
 					settings.value!.paused = false;
 					player.play();
@@ -305,11 +349,19 @@ export function usePreview(
 			},
 			{ signal },
 		);
-		canvas.addEventListener("pointerleave", datingInteraction.pointerLeave, { signal });
+		canvas.addEventListener(
+			"pointerleave",
+			datingInteraction.pointerLeave,
+			{ signal },
+		);
 		canvas.addEventListener(
 			"pointermove",
 			(event) => {
-				if (minigame.pointerMove(event) || datingInteraction.pointerMove(event)) return;
+				if (
+					minigame.pointerMove(event) ||
+					datingInteraction.pointerMove(event)
+				)
+					return;
 				if (!camera || !drag || drag.id !== event.pointerId) return;
 				const dx = event.clientX - drag.x;
 				const dy = event.clientY - drag.y;
@@ -333,7 +385,11 @@ export function usePreview(
 		canvas.addEventListener(
 			"pointerup",
 			(event) => {
-				if (minigame.pointerUp(event) || datingInteraction.pointerUp(event)) return;
+				if (
+					minigame.pointerUp(event) ||
+					datingInteraction.pointerUp(event)
+				)
+					return;
 				if (drag?.id !== event.pointerId) return;
 				canvas.releasePointerCapture(event.pointerId);
 				drag = null;
@@ -409,7 +465,8 @@ export function usePreview(
 		canvas.addEventListener(
 			"dblclick",
 			() => {
-				if (!datingInteraction.enabled.value && !minigame.enabled.value) runControl({ type: "fit" });
+				if (!datingInteraction.enabled.value && !minigame.enabled.value)
+					runControl({ type: "fit" });
 			},
 			{ signal },
 		);
@@ -513,7 +570,10 @@ export function usePreview(
 		const origin = source.value?.type === "folder" ? "folder" : "online";
 		if (!recorded) loadResults.push(...describeLoadError(reason, origin));
 		errorInfo.value = loadIssue(origin, loadResults);
-		logMessage(JSON.stringify({ ...errorInfo.value, source: source.value }), "error");
+		logMessage(
+			JSON.stringify({ ...errorInfo.value, source: source.value }),
+			"error",
+		);
 		const detail = reason as { type?: string; message?: unknown };
 		error.value =
 			detail?.type && te("errors." + detail.type + ".message")
@@ -536,10 +596,18 @@ export function usePreview(
 		if (request !== loadId) return;
 		if (!assets.skeletonFilename || !assets.atlasFilename)
 			throw new Error(t("preview.missingAssets"));
-		const firstPart = Object.keys(assets.rawData ?? {}).sort().find((name) => /^illust_dating\d+_1\.(skel|json)$/i.test(name));
-		if (firstPart && assets.rawData?.[firstPart.replace(/\.(skel|json)$/i, ".atlas")]) {
+		const firstPart = Object.keys(assets.rawData ?? {})
+			.sort()
+			.find((name) => /^illust_dating\d+_1\.(skel|json)$/i.test(name));
+		if (
+			firstPart &&
+			assets.rawData?.[firstPart.replace(/\.(skel|json)$/i, ".atlas")]
+		) {
 			assets.skeletonFilename = firstPart;
-			assets.atlasFilename = firstPart.replace(/\.(skel|json)$/i, ".atlas");
+			assets.atlasFilename = firstPart.replace(
+				/\.(skel|json)$/i,
+				".atlas",
+			);
 		}
 		initializePlayer(createPlayerConfig(assets), request);
 	}
@@ -556,8 +624,18 @@ export function usePreview(
 		});
 		config.error = (_player: SpinePlayer, message: string) => {
 			if (request !== loadId) return;
-			loadResults.push(...describeLoadError(message, "online", skeletonUrl));
-			logMessage(JSON.stringify({ results: loadResults, skeletonUrl, atlasUrl, message }), "error");
+			loadResults.push(
+				...describeLoadError(message, "online", skeletonUrl),
+			);
+			logMessage(
+				JSON.stringify({
+					results: loadResults,
+					skeletonUrl,
+					atlasUrl,
+					message,
+				}),
+				"error",
+			);
 			if (fallbackSkeleton && fallbackAtlas) {
 				try {
 					loadSpineFromUrl(fallbackSkeleton, fallbackAtlas, request);
@@ -581,7 +659,10 @@ export function usePreview(
 					slot.attachment = attachment;
 				hiddenAttachments.clear();
 				if (cutscene.draw()) return;
-				if (playerContainer.value) datingInteraction.updateMarkers(playerContainer.value.getBoundingClientRect());
+				if (playerContainer.value)
+					datingInteraction.updateMarkers(
+						playerContainer.value.getBoundingClientRect(),
+					);
 				if (!highlightedLayer.value) return;
 				const slot = player.skeleton.findSlot(highlightedLayer.value);
 				if (!slot?.bone.active || !slot.attachment) return;
@@ -642,7 +723,15 @@ export function usePreview(
 		const onError = config.error;
 		config.success = (player: SpinePlayer) => {
 			if (request !== loadId) return;
-			logMessage(JSON.stringify({ source: source.value, result: "Loaded", skeleton: config.skelUrl ?? config.jsonUrl, atlas: config.atlasUrl }), "info");
+			logMessage(
+				JSON.stringify({
+					source: source.value,
+					result: "Loaded",
+					skeleton: config.skelUrl ?? config.jsonUrl,
+					atlas: config.atlasUrl,
+				}),
+				"info",
+			);
 			onPlayerSuccess(player);
 			if (preview.value) preview.value.isLoading = false;
 			if (source.value)
@@ -681,14 +770,19 @@ export function usePreview(
 			player.skeleton.skin?.name ??
 			player.skeleton.data.defaultSkin?.name ??
 			"";
-		const initialAnimation = source.value?.type === "url" ? source.value.initialAnimation : undefined;
-		const animation = initialAnimation && animations.includes(initialAnimation) ? initialAnimation :
-			(preview.value.settings.followGlobalAnimation &&
-			animations.includes(previewerStore.globalAnimation)
-				? previewerStore.globalAnimation
-				: preview.value.settings.currentAnimation) ??
-			animations[0] ??
-			null;
+		const initialAnimation =
+			source.value?.type === "url"
+				? source.value.initialAnimation
+				: undefined;
+		const animation =
+			initialAnimation && animations.includes(initialAnimation)
+				? initialAnimation
+				: ((preview.value.settings.followGlobalAnimation &&
+					animations.includes(previewerStore.globalAnimation)
+						? previewerStore.globalAnimation
+						: preview.value.settings.currentAnimation) ??
+					animations[0] ??
+					null);
 		if (animation) {
 			preview.value.settings.currentAnimation = animation;
 			player.setAnimation(
@@ -735,7 +829,12 @@ export function usePreview(
 	watch(
 		() => previewerStore.controlChange,
 		(change) => {
-			if (!change || change.sourceId === id || preview.value?.syncGroup !== change.groupId) return;
+			if (
+				!change ||
+				change.sourceId === id ||
+				preview.value?.syncGroup !== change.groupId
+			)
+				return;
 			applyControl(change.control as PreviewControl);
 		},
 		{ flush: "sync" },
@@ -801,7 +900,8 @@ export function usePreview(
 	watch(currentAnimation, (animation) => {
 		stopGameCutscene();
 		if (
-			datingInteraction.enabled.value || minigame.enabled.value
+			datingInteraction.enabled.value ||
+			minigame.enabled.value
 			// && spinePlayer?.animationState.getCurrent(0)?.animation.name === animation
 		) {
 			return;
@@ -830,7 +930,11 @@ export function usePreview(
 		() => settings.value?.loopAnimation,
 		(loop) => {
 			spinePlayer?.animationState.tracks.forEach((track: any) => {
-				if (track && !datingInteraction.enabled.value && !minigame.enabled.value)
+				if (
+					track &&
+					!datingInteraction.enabled.value &&
+					!minigame.enabled.value
+				)
 					track.loop = loop;
 			});
 		},
@@ -908,6 +1012,8 @@ export function usePreview(
 		datingPoseLoadFailed: datingInteraction.poseLoadFailed,
 		datingPoseError: datingInteraction.poseError,
 		datingAudioProgress: datingInteraction.audioProgress,
+		retryDatingAudio: datingInteraction.retryAudio,
+		dismissDatingAudioError: datingInteraction.dismissAudioError,
 		datingMarkers: datingInteraction.markers,
 		datingGroups: datingInteraction.groups,
 		datingGroup: datingInteraction.group,
@@ -924,7 +1030,8 @@ export function usePreview(
 		showDatingAreas: datingInteraction.showAreas,
 		sequences,
 		activeSequence,
-		playSequence: (sequence: AnimationSequence) => runControl({ type: "sequence", sequence }),
+		playSequence: (sequence: AnimationSequence) =>
+			runControl({ type: "sequence", sequence }),
 		stopSequence: () => runControl({ type: "stopSequence" }),
 		title,
 		source,
@@ -936,7 +1043,11 @@ export function usePreview(
 		animationSelection,
 		playbackTime,
 		duration,
-		seek: (event: Event) => runControl({ type: "seek", time: Number((event.target as HTMLInputElement).value) }),
+		seek: (event: Event) =>
+			runControl({
+				type: "seek",
+				time: Number((event.target as HTMLInputElement).value),
+			}),
 		restart: () => runControl({ type: "restart" }),
 		resetCamera: () => runControl({ type: "resetCamera" }),
 		fitCharacter: () => runControl({ type: "fit" }),

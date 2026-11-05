@@ -65,6 +65,8 @@ const {
   datingPoseLoadFailed,
   datingPoseError,
   datingAudioProgress,
+  retryDatingAudio,
+  dismissDatingAudioError,
   datingMarkers,
   datingGroups,
   datingGroup,
@@ -468,7 +470,8 @@ const poseErrorMessage = computed(() => {
         <p v-if="source.type === 'folder'">{{ t('loadError.folderName') }}: {{ fileName(source.path) }}</p>
         <p>{{ t('loadError.file') }}: {{ errorInfo.file || t('loadError.unspecified') }}</p>
         <p v-for="(result, index) in errorInfo.results" :key="index">
-          {{ result.source === 'folder' || result.source === 'online' ? t(`loadError.${result.source}Label`) : result.source }}:
+          {{ result.source === 'folder' || result.source === 'online' ? t(`loadError.${result.source}Label`) :
+            result.source }}:
           {{ t(`loadError.titles.${result.cause}`) }}
           ({{ t('loadError.code') }}: {{ result.code || t('loadError.unavailable') }})
           <template v-if="result.file && result.file !== errorInfo.file"> — {{ result.file }}</template>
@@ -476,48 +479,64 @@ const poseErrorMessage = computed(() => {
       </details>
     </div>
     <p v-if="source && isLoading && !error" role="status" class="preview-loading">{{ t('preview.loading') }}</p>
-    <p v-else-if="source && !error && datingAudioProgress.status !== 'idle'" class="preview-loading" role="status">
+    <div v-else-if="source && !error && datingAudioProgress.status !== 'idle'" class="preview-loading audio-loading"
+      role="status">
+      <span>
         {{ datingAudioProgress.status === 'loading'
           ? t('datingAudioStatus.loading', { loaded: datingAudioProgress.loaded, total: datingAudioProgress.total })
           : datingAudioProgress.status === 'complete'
             ? t('datingAudioStatus.completed')
             : t('datingAudioStatus.failed', { loaded: datingAudioProgress.loaded, total: datingAudioProgress.total }) }}
-    </p>
+      </span>
+      <template v-if="datingAudioProgress.status === 'failed'">
+        <button class="error-button" @click="retryDatingAudio">{{ t('common.retry') }}</button>
+        <button class="audio-close" :aria-label="t('common.close')" :title="t('common.close')"
+          @click="dismissDatingAudioError">
+          <X :size="16" />
+        </button>
+      </template>
+    </div>
     <div v-show="source && !error" class="preview-stage">
-      <div ref="player-container" :id="`player-container-${props.previewId}`" tabindex="0"
-        class="player-container" @contextmenu.prevent="openContext" @pointerdown.capture="playerContainer?.focus()"
-        @keydown="onPreviewKeydown" @keydown.shift.f10.prevent="openContext" />
-      <TransitionGroup v-if="datingEnabled && !isLoading" name="dating-point-fade" tag="div" class="dating-markers" aria-hidden="true">
+      <div ref="player-container" :id="`player-container-${props.previewId}`" tabindex="0" class="player-container"
+        @contextmenu.prevent="openContext" @pointerdown.capture="playerContainer?.focus()" @keydown="onPreviewKeydown"
+        @keydown.shift.f10.prevent="openContext" />
+      <TransitionGroup v-if="datingEnabled && !isLoading" name="dating-point-fade" tag="div" class="dating-markers"
+        aria-hidden="true">
         <div v-for="marker in datingMarkers" :key="marker.key" class="dating-point-layer"
           :style="{ color: marker.drag ? uiStore.datingPointStyle.dragColor : uiStore.datingPointStyle.clickColor }">
           <div v-if="showDatingAreas" class="dating-area" :style="marker.box" />
-          <div v-if="showDatingPoints" class="dating-marker" :class="{ pressed: marker.pressed, dragging: marker.dragging, hovered: marker.hovered }"
+          <div v-if="showDatingPoints" class="dating-marker"
+            :class="{ pressed: marker.pressed, dragging: marker.dragging, hovered: marker.hovered }"
             :style="{ left: `${marker.x}px`, top: `${marker.y}px` }">
             <div class="dating-marker-motion" :style="{ transform: `translate(${marker.dx}px, ${marker.dy}px)` }">
               <div class="dating-marker-scale" :style="{ transform: `scale(${uiStore.datingPointStyle.size / 100})` }">
-              <span class="dating-marker-ring" />
-              <span class="dating-marker-dot-position"><span :key="marker.pop" class="dating-marker-dot" :class="{ pop: !!marker.pop }" /></span>
-              <span v-for="time in marker.ripples" :key="time" class="dating-marker-ripple" />
-              <template v-if="marker.drag">
-                <span v-for="rotation in [0, 90, 180, 270]" :key="rotation" class="dating-marker-arrow-axis"
-                  :style="{ transform: `rotate(${rotation}deg)` }">
-                  <span class="dating-marker-arrow-gap">
-                    <svg class="dating-marker-arrow" width="6" height="10" viewBox="0 0 6 10" fill="none"
-                      stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M1 1l4 4-4 4" />
-                    </svg>
+                <span class="dating-marker-ring" />
+                <span class="dating-marker-dot-position"><span :key="marker.pop" class="dating-marker-dot"
+                    :class="{ pop: !!marker.pop }" /></span>
+                <span v-for="time in marker.ripples" :key="time" class="dating-marker-ripple" />
+                <template v-if="marker.drag">
+                  <span v-for="rotation in [0, 90, 180, 270]" :key="rotation" class="dating-marker-arrow-axis"
+                    :style="{ transform: `rotate(${rotation}deg)` }">
+                    <span class="dating-marker-arrow-gap">
+                      <svg class="dating-marker-arrow" width="6" height="10" viewBox="0 0 6 10" fill="none"
+                        stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 1l4 4-4 4" />
+                      </svg>
+                    </span>
                   </span>
-                </span>
-              </template>
+                </template>
               </div>
             </div>
           </div>
         </div>
       </TransitionGroup>
-      <div v-if="datingPoseLoadFailed && datingPoseError" :key="datingPoseError.attempt" class="dating-pose-error" role="alert">
+      <div v-if="datingPoseLoadFailed && datingPoseError" :key="datingPoseError.attempt" class="dating-pose-error"
+        role="alert">
         <component :is="errorIcon(datingPoseError.issue.cause)" :size="16" class="error-icon" aria-hidden="true" />
         <span>{{ poseErrorMessage }}</span>
-        <button type="button" :aria-label="t('preview.close')" @click="datingPoseLoadFailed = false"><X :size="16" /></button>
+        <button type="button" :aria-label="t('preview.close')" @click="datingPoseLoadFailed = false">
+          <X :size="16" />
+        </button>
       </div>
     </div>
     <div v-if="datingEnabled && datingGaugeRange" class="dating-gauge" :aria-label="t('preview.datingGauge')">
@@ -554,8 +573,9 @@ const poseErrorMessage = computed(() => {
             <Check v-if="minigameEnabled" :size="16" />
           </button>
           <template v-if="minigameEnabled">
-            <button type="button" role="menuitemcheckbox" :aria-checked="minigameFever" :disabled="!minigameFeverAvailable"
-              @mouseenter="submenu = null" @click="minigameFever = !minigameFever; closeContext()">
+            <button type="button" role="menuitemcheckbox" :aria-checked="minigameFever"
+              :disabled="!minigameFeverAvailable" @mouseenter="submenu = null"
+              @click="minigameFever = !minigameFever; closeContext()">
               <Flame :size="16" /><span>{{ t('preview.minigameFever') }}</span>
               <Check v-if="minigameFever" :size="16" />
             </button>
@@ -645,8 +665,9 @@ const poseErrorMessage = computed(() => {
       </div>
     </Teleport>
     <div v-if="source && settings" class="preview-playback">
-      <button type="button" :aria-label="t(datingEnabled ? 'preview.resetDating' : 'preview.restart')" :title="t(datingEnabled ? 'preview.resetDating' : 'preview.restart')"
-        :disabled="!allAnimations.length" @click="restart">
+      <button type="button" :aria-label="t(datingEnabled ? 'preview.resetDating' : 'preview.restart')"
+        :title="t(datingEnabled ? 'preview.resetDating' : 'preview.restart')" :disabled="!allAnimations.length"
+        @click="restart">
         <RotateCcw v-if="datingEnabled" :size="16" aria-hidden="true" />
         <SkipBack v-else :size="16" aria-hidden="true" />
       </button>
@@ -656,13 +677,14 @@ const poseErrorMessage = computed(() => {
         <Play v-if="paused" :size="16" aria-hidden="true" />
         <Pause v-else :size="16" aria-hidden="true" />
       </button>
-      <button v-if="!datingEnabled && !minigameEnabled" type="button" :aria-label="t('preview.loop')" :title="t('preview.loop')" :aria-pressed="loopAnimation"
-        :disabled="!allAnimations.length" @click="loopAnimation = !loopAnimation">
+      <button v-if="!datingEnabled && !minigameEnabled" type="button" :aria-label="t('preview.loop')"
+        :title="t('preview.loop')" :aria-pressed="loopAnimation" :disabled="!allAnimations.length"
+        @click="loopAnimation = !loopAnimation">
         <Repeat :size="16" aria-hidden="true" />
       </button>
-      <input v-if="!datingEnabled && !minigameEnabled" type="range" min="0" :max="duration" step="0.01" :value="playbackTime" :disabled="!duration"
-        :aria-label="t('preview.progress')" :title="`${playbackTime.toFixed(2)} / ${duration.toFixed(2)} s`"
-        @input="seek" />
+      <input v-if="!datingEnabled && !minigameEnabled" type="range" min="0" :max="duration" step="0.01"
+        :value="playbackTime" :disabled="!duration" :aria-label="t('preview.progress')"
+        :title="`${playbackTime.toFixed(2)} / ${duration.toFixed(2)} s`" @input="seek" />
 
       <template v-if="datingEnabled">
         <select :value="datingGroup?.id" :aria-label="t('preview.datingStageLabel')"
@@ -672,17 +694,20 @@ const poseErrorMessage = computed(() => {
           </option>
         </select>
         <span class="dating-playback-space"></span>
-        <button type="button" class="dating-areas" :aria-label="t('preview.showInteractionPoints')" :title="t('preview.showInteractionPoints')"
-          :aria-pressed="showDatingPoints"
+        <button type="button" class="dating-areas" :aria-label="t('preview.showInteractionPoints')"
+          :title="t('preview.showInteractionPoints')" :aria-pressed="showDatingPoints"
           @click="showDatingPoints = !showDatingPoints">
-          <Eye :size="16" aria-hidden="true" /><span class="playback-label">{{ t('preview.showInteractionPoints') }}</span>
+          <Eye :size="16" aria-hidden="true" /><span class="playback-label">{{ t('preview.showInteractionPoints')
+            }}</span>
         </button>
-        <button type="button" class="dating-areas" :aria-label="t('preview.showInteractionAreas')" :title="t('preview.showInteractionAreas')"
-          :aria-pressed="showDatingAreas"
+        <button type="button" class="dating-areas" :aria-label="t('preview.showInteractionAreas')"
+          :title="t('preview.showInteractionAreas')" :aria-pressed="showDatingAreas"
           @click="showDatingAreas = !showDatingAreas">
-          <Scan :size="16" aria-hidden="true" /><span class="playback-label">{{ t('preview.showInteractionAreas') }}</span>
+          <Scan :size="16" aria-hidden="true" /><span class="playback-label">{{ t('preview.showInteractionAreas')
+            }}</span>
         </button>
-        <select v-if="datingTools.length > 1" class="dating-tool-select" :value="datingTool" :aria-label="t('preview.datingToolLabel')"
+        <select v-if="datingTools.length > 1" class="dating-tool-select" :value="datingTool"
+          :aria-label="t('preview.datingToolLabel')"
           @change="selectDatingTool(Number(($event.target as HTMLSelectElement).value))">
           <option v-for="item in datingTools" :key="item.id" :value="item.id">
             {{ item.id === 0 ? t('preview.noTool') : t('preview.datingTool', { id: item.id }) }}
@@ -690,18 +715,21 @@ const poseErrorMessage = computed(() => {
         </select>
       </template>
       <span v-else-if="minigameEnabled" class="minigame-hint">{{ t('preview.minigameHint') }}</span>
-      <button v-if="isDating" type="button" :aria-pressed="datingEnabled"
-        :aria-disabled="!datingAvailable" class="dating-interactions-button" :aria-label="t('preview.datingInteractions')" :title="t('preview.datingInteractions')"
-        @mouseenter="keepDatingTooltip(); datingButton = $event.currentTarget as HTMLElement; datingTooltipOpen = !uiStore.isSupporter" @mouseleave="closeDatingTooltip()"
-        @focus="keepDatingTooltip(); datingButton = $event.currentTarget as HTMLElement; datingTooltipOpen = !uiStore.isSupporter" @blur="closeDatingTooltip()"
-        @keydown.esc="datingTooltipOpen = false"
+      <button v-if="isDating" type="button" :aria-pressed="datingEnabled" :aria-disabled="!datingAvailable"
+        class="dating-interactions-button" :aria-label="t('preview.datingInteractions')"
+        :title="t('preview.datingInteractions')"
+        @mouseenter="keepDatingTooltip(); datingButton = $event.currentTarget as HTMLElement; datingTooltipOpen = !uiStore.isSupporter"
+        @mouseleave="closeDatingTooltip()"
+        @focus="keepDatingTooltip(); datingButton = $event.currentTarget as HTMLElement; datingTooltipOpen = !uiStore.isSupporter"
+        @blur="closeDatingTooltip()" @keydown.esc="datingTooltipOpen = false"
         @click="datingAvailable && (stopSequence(), datingEnabled = !datingEnabled)">
         <Hand :size="16" aria-hidden="true" /><span class="playback-label">{{ t('preview.datingInteractions') }}</span>
       </button>
-      <button v-if="minigameAvailable" type="button" :aria-pressed="minigameEnabled"
-        class="dating-interactions-button" :aria-label="t('preview.minigameInteractions')" :title="t('preview.minigameInteractions')"
+      <button v-if="minigameAvailable" type="button" :aria-pressed="minigameEnabled" class="dating-interactions-button"
+        :aria-label="t('preview.minigameInteractions')" :title="t('preview.minigameInteractions')"
         @click="minigameEnabled = !minigameEnabled">
-        <Hand :size="16" aria-hidden="true" /><span class="playback-label">{{ t('preview.minigameInteractions') }}</span>
+        <Hand :size="16" aria-hidden="true" /><span class="playback-label">{{ t('preview.minigameInteractions')
+          }}</span>
       </button>
       <button v-if="datingEnabled && datingTools.length > 1" ref="datingToolsButton" type="button"
         class="dating-tool-button" :aria-label="t('preview.datingToolLabel')" :title="t('preview.datingToolLabel')"
@@ -719,10 +747,10 @@ const poseErrorMessage = computed(() => {
           </button>
         </div>
       </Teleport>
-      <button v-if="!datingEnabled && !minigameEnabled" ref="animationButton" type="button" class="preview-animation-select"
-        :aria-label="t('preview.previewAnimation')" aria-haspopup="dialog" :aria-expanded="animationsOpen"
-        :disabled="!allAnimations.length || datingEnabled || minigameEnabled" @click="animationsOpen = !animationsOpen; layersOpen = false"
-        @keydown.esc="animationsOpen = false">
+      <button v-if="!datingEnabled && !minigameEnabled" ref="animationButton" type="button"
+        class="preview-animation-select" :aria-label="t('preview.previewAnimation')" aria-haspopup="dialog"
+        :aria-expanded="animationsOpen" :disabled="!allAnimations.length || datingEnabled || minigameEnabled"
+        @click="animationsOpen = !animationsOpen; layersOpen = false" @keydown.esc="animationsOpen = false">
         <ChevronDown :size="16" aria-hidden="true" />
         <span>{{ (cutsceneActive ? t('preview.gameCutscene') : activeSequence?.name) || animationSelection ||
           t('preview.global', {
@@ -735,16 +763,19 @@ const poseErrorMessage = computed(() => {
 
       <Teleport to="body">
         <div v-if="isDating && datingTooltipOpen && !uiStore.isSupporter" ref="datingTooltip"
-          :style="datingTooltipStyles" class="dating-support-tooltip" role="dialog" :aria-label="t('preview.datingInteractions')"
-          @mouseenter="keepDatingTooltip()" @mouseleave="closeDatingTooltip()"
-          @focusin="keepDatingTooltip()" @focusout="closeDatingTooltip()" @keydown.esc="datingTooltipOpen = false">
+          :style="datingTooltipStyles" class="dating-support-tooltip" role="dialog"
+          :aria-label="t('preview.datingInteractions')" @mouseenter="keepDatingTooltip()"
+          @mouseleave="closeDatingTooltip()" @focusin="keepDatingTooltip()" @focusout="closeDatingTooltip()"
+          @keydown.esc="datingTooltipOpen = false">
           {{ t('preview.datingSupportMessage') }}
           <div class="dating-support-links">
             <button type="button" @click="openUrl('https://ko-fi.com/bruhnn')">
-              Ko-fi<ExternalLink :size="12" aria-hidden="true" />
+              Ko-fi
+              <ExternalLink :size="12" aria-hidden="true" />
             </button>
             <button type="button" @click="openUrl('https://afdian.com/a/bruhnn')">
-              AFDIAN<ExternalLink :size="12" aria-hidden="true" />
+              AFDIAN
+              <ExternalLink :size="12" aria-hidden="true" />
             </button>
           </div>
         </div>
@@ -1148,7 +1179,11 @@ const poseErrorMessage = computed(() => {
   font-size: 12px;
 }
 
-.dating-pose-error span { flex: 1; min-width: 0; }
+.dating-pose-error span {
+  flex: 1;
+  min-width: 0;
+}
+
 .dating-pose-error::before {
   content: "";
   position: absolute;
@@ -1160,11 +1195,32 @@ const poseErrorMessage = computed(() => {
   transform-origin: left;
   animation: pose-error-countdown 6s linear forwards;
 }
-@keyframes pose-error-countdown { to { transform: scaleX(0); } }
-.error-icon { color: var(--error); flex: none; }
-.load-error-details { font-size: 12px; color: var(--text-secondary); max-width: 100%; overflow-wrap: anywhere; }
-.load-error-details summary { cursor: pointer; }
-.load-error-details p { margin-top: 6px; }
+
+@keyframes pose-error-countdown {
+  to {
+    transform: scaleX(0);
+  }
+}
+
+.error-icon {
+  color: var(--error);
+  flex: none;
+}
+
+.load-error-details {
+  font-size: 12px;
+  color: var(--text-secondary);
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.load-error-details summary {
+  cursor: pointer;
+}
+
+.load-error-details p {
+  margin-top: 6px;
+}
 
 .dating-pose-error button {
   display: flex;
@@ -1181,6 +1237,29 @@ const poseErrorMessage = computed(() => {
   font-size: 12px;
   line-height: 16px;
   color: var(--text-secondary);
+}
+
+.audio-loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.audio-loading .error-button {
+  padding: 0 6px;
+  line-height: 16px;
+  border: 0;
+}
+
+.audio-loading>span {
+  flex: 1;
+  min-width: 0;
+}
+
+.audio-close {
+  display: flex;
+  padding: 0;
+  flex-shrink: 0;
 }
 
 .player-container {
@@ -1707,24 +1786,25 @@ const poseErrorMessage = computed(() => {
 }
 
 .dating-gauge progress {
-    width: 6px;
-    height: 100px;
-    writing-mode: vertical-lr;
-    direction: rtl;
-    appearance: none;
-    border: none;
-    background: transparent;
+  width: 6px;
+  height: 100px;
+  writing-mode: vertical-lr;
+  direction: rtl;
+  appearance: none;
+  border: none;
+  background: transparent;
 }
 
 .dating-gauge progress::-webkit-progress-bar {
-    background: var(--surface-input);
-    border-radius: 3px;
+  background: var(--surface-input);
+  border-radius: 3px;
 }
 
 .dating-gauge progress::-webkit-progress-value {
-    background: var(--accent);
-    border-radius: 3px;
+  background: var(--accent);
+  border-radius: 3px;
 }
+
 @container (max-width: 760px) {
   .preview-playback {
     gap: 4px;
@@ -1878,7 +1958,9 @@ const poseErrorMessage = computed(() => {
   transition: transform .2s ease-out;
 }
 
-.dating-marker.dragging .dating-marker-motion { transition: none; }
+.dating-marker.dragging .dating-marker-motion {
+  transition: none;
+}
 
 .dating-marker-dot-position {
   position: absolute;
@@ -1896,7 +1978,9 @@ const poseErrorMessage = computed(() => {
   box-shadow: 0 0 4px 1px color-mix(in srgb, currentColor 70%, transparent), 0 0 10px 3px color-mix(in srgb, currentColor 25%, transparent);
 }
 
-.dating-marker-dot.pop { animation: dating-dot-pop .4s ease-out; }
+.dating-marker-dot.pop {
+  animation: dating-dot-pop .4s ease-out;
+}
 
 .dating-marker-ring {
   position: absolute;
@@ -1959,17 +2043,40 @@ const poseErrorMessage = computed(() => {
 }
 
 @keyframes dating-dot-pop {
-  0%, 100% { transform: scale(1); }
-  30% { transform: scale(1.8); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  30% {
+    transform: scale(1.8);
+  }
 }
 
 @keyframes dating-ripple {
-  from { opacity: 1; transform: translate(-50%, -50%) scale(.9); border-width: 2px; }
-  to { opacity: 0; transform: translate(-50%, -50%) scale(2.4); border-width: .5px; }
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(.9);
+    border-width: 2px;
+  }
+
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2.4);
+    border-width: .5px;
+  }
 }
 
 @keyframes dating-nudge {
-  0%, 100% { transform: translateX(24px); }
-  50% { transform: translateX(calc(24px - 1.5px)); }
+
+  0%,
+  100% {
+    transform: translateX(24px);
+  }
+
+  50% {
+    transform: translateX(calc(24px - 1.5px));
+  }
 }
 </style>
