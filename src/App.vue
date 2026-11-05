@@ -5,6 +5,8 @@ import { saveWindowState, StateFlags } from '@tauri-apps/plugin-window-state'
 import { UnlistenFn } from '@tauri-apps/api/event'
 import { getCurrentWebview } from '@tauri-apps/api/webview'
 
+import { updateCutscenes } from "./utils/cutsceneData"
+
 import { usePreviewDrag } from './composables/usePreviewDrag'
 
 import { useI18n } from "vue-i18n"
@@ -184,6 +186,7 @@ onMounted(async () => {
     initializeDragAndDrop(),
     modManager.initialize(),
     charactersStore.loadCharacters(),
+    updateCutscenes(),
     uiStore.checkSupporter().catch(error => {
       logMessage(`Failed to check supporter access: ${error}`, "error")
     })

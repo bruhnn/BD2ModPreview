@@ -1,1 +1,736 @@
-{"duration":3.7833333333333337,"nodes":[{"path":"","parent":-1,"active":true,"position":{"x":0.0,"y":0.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"size":{"x":1600.0,"y":1600.0},"pivot":{"x":0.5,"y":0.5},"anchorMin":{"x":0.5,"y":0.5},"anchorMax":{"x":0.5,"y":0.5},"color":{"r":1,"g":1,"b":1,"a":1},"texture":null,"skeleton":false,"rotation":0.0,"quaternion":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"euler":{"x":0.0,"y":0.0,"z":0.0},"depth":0.0},{"path":"Cut","parent":0,"active":true,"position":{"x":0.0,"y":0.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"size":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"anchorMin":{"x":0.0,"y":0.0},"anchorMax":{"x":1.0,"y":1.0},"color":{"r":1,"g":1,"b":1,"a":1},"texture":null,"skeleton":false,"rotation":0.0,"quaternion":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"euler":{"x":0.0,"y":0.0,"z":0.0},"depth":0.0,"groupAlpha":1.0,"ignoreParentGroups":false},{"path":"Cut/Cut1","parent":1,"active":true,"position":{"x":0.0,"y":0.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"size":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"anchorMin":{"x":0.0,"y":0.0},"anchorMax":{"x":1.0,"y":1.0},"color":{"r":1,"g":1,"b":1,"a":1},"texture":null,"skeleton":false,"rotation":0.0,"quaternion":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"euler":{"x":0.0,"y":0.0,"z":0.0},"depth":0.0},{"path":"Cut/Cut1/Anchors","parent":2,"active":true,"position":{"x":0.0,"y":0.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"size":{"x":1600.0,"y":1600.0},"pivot":{"x":0.5,"y":0.5},"anchorMin":{"x":0.5,"y":0.5},"anchorMax":{"x":0.5,"y":0.5},"color":{"r":1,"g":1,"b":1,"a":1},"texture":null,"skeleton":false,"rotation":-0.0,"quaternion":{"x":-0.0,"y":-0.0,"z":-0.0,"w":1.0},"euler":{"x":-0.0,"y":0.0,"z":0.0},"depth":0.0,"groupAlpha":1.0,"ignoreParentGroups":false},{"path":"Cut/Cut1/Anchors/object","parent":3,"active":true,"position":{"x":0.0,"y":0.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"size":{"x":100.0,"y":100.0},"pivot":{"x":0.5,"y":0.5},"anchorMin":{"x":0.5,"y":0.5},"anchorMax":{"x":0.5,"y":0.5},"color":{"r":1,"g":1,"b":1,"a":1},"texture":null,"skeleton":false,"rotation":0.0,"quaternion":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"euler":{"x":0.0,"y":0.0,"z":0.0},"depth":0.0},{"path":"Cut/Cut1/Anchors/object/SkeletonGraphic (cutscene_Char061002)","parent":4,"active":true,"position":{"x":25.0,"y":25.0},"scale":{"x":1.2999999523162842,"y":1.2999999523162842,"z":1.2999999523162842},"size":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"anchorMin":{"x":0.5,"y":0.5},"anchorMax":{"x":0.5,"y":0.5},"color":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"texture":null,"skeleton":true,"rotation":0.0,"quaternion":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"euler":{"x":0.0,"y":0.0,"z":0.0},"depth":0.0,"defaultMix":0.20000000298023224,"mixes":[]}],"tracks":[{"node":5,"trackIndex":0,"clips":[{"name":"1_cut","start":0.0,"duration":1.25,"clipIn":0.0,"speed":1.0,"loop":false,"settings":{"loop":0,"customDuration":1,"useBlendDuration":0,"isInitialized":1,"mixDuration":0.0,"holdPrevious":0,"dontPauseWithDirector":0,"dontEndWithClip":0,"endMixOutDuration":0.0,"attachmentThreshold":0.5,"eventThreshold":0.5,"drawOrderThreshold":0.5,"alpha":1.0},"easeIn":0.0,"easeOut":0.0,"blendIn":-1.0,"blendOut":-1.0},{"name":"2_cut","start":1.25,"duration":1.3333333333333335,"clipIn":0.0,"speed":1.0,"loop":false,"settings":{"loop":0,"customDuration":1,"useBlendDuration":0,"isInitialized":1,"mixDuration":0.0,"holdPrevious":0,"dontPauseWithDirector":0,"dontEndWithClip":0,"endMixOutDuration":0.0,"attachmentThreshold":0.5,"eventThreshold":0.5,"drawOrderThreshold":0.5,"alpha":1.0},"easeIn":0.0,"easeOut":0.0,"blendIn":-1.0,"blendOut":-1.0},{"name":"3_cut","start":2.5833333333333335,"duration":1.2000000000000002,"clipIn":0.0,"speed":1.0,"loop":false,"settings":{"loop":0,"customDuration":1,"useBlendDuration":0,"isInitialized":1,"mixDuration":0.0,"holdPrevious":0,"dontPauseWithDirector":0,"dontEndWithClip":0,"endMixOutDuration":0.0,"attachmentThreshold":0.5,"eventThreshold":0.5,"drawOrderThreshold":0.5,"alpha":1.0},"easeIn":0.0,"easeOut":0.0,"blendIn":-1.0,"blendOut":-1.0}]}],"curves":[{"path":"Cut/Cut1/Anchors/object","property":"m_LocalScale.x","keys":[{"time":0.0,"value":3.0,"coefficients":[-1.5351192951202393,-0.9247265458106995,0.0,3.0]},{"time":0.36666667461395264,"value":2.799999952316284,"coefficients":[91.24324035644531,-45.621612548828125,-1.2972975969314575,2.799999952316284]},{"time":0.6166666746139526,"value":1.0499999523162842,"coefficients":[0.0,0.0,-0.08108100295066833,1.0499999523162842]},{"time":1.2333333492279053,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]},{"time":1.25,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]},{"time":2.566666603088379,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]},{"time":3.183333396911621,"value":1.0,"coefficients":[-124.99993133544922,37.49998474121094,0.0,1.0]},{"time":3.383333444595337,"value":1.5,"coefficients":[0.0,0.0,0.0,1.5]}]},{"path":"Cut/Cut1/Anchors/object","property":"m_LocalScale.y","keys":[{"time":0.0,"value":3.0,"coefficients":[-1.5351192951202393,-0.9247265458106995,0.0,3.0]},{"time":0.36666667461395264,"value":2.799999952316284,"coefficients":[91.24324035644531,-45.621612548828125,-1.2972975969314575,2.799999952316284]},{"time":0.6166666746139526,"value":1.0499999523162842,"coefficients":[0.0,0.0,-0.08108100295066833,1.0499999523162842]},{"time":1.2333333492279053,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]},{"time":1.25,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]},{"time":2.566666603088379,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]},{"time":3.183333396911621,"value":1.0,"coefficients":[-124.99993133544922,37.49998474121094,0.0,1.0]},{"time":3.383333444595337,"value":1.5,"coefficients":[0.0,0.0,0.0,1.5]}]},{"path":"Cut/Cut1/Anchors/object","property":"m_LocalScale.z","keys":[{"time":0.0,"value":3.0,"coefficients":[-1.5351192951202393,-0.9247265458106995,0.0,3.0]},{"time":0.36666667461395264,"value":2.799999952316284,"coefficients":[91.24324035644531,-45.621612548828125,-1.2972975969314575,2.799999952316284]},{"time":0.6166666746139526,"value":1.0499999523162842,"coefficients":[0.0,0.0,-0.08108100295066833,1.0499999523162842]},{"time":1.2333333492279053,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]},{"time":1.25,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]},{"time":2.566666603088379,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]},{"time":3.183333396911621,"value":1.0,"coefficients":[-124.99993133544922,37.49998474121094,0.0,1.0]},{"time":3.383333444595337,"value":1.5,"coefficients":[0.0,0.0,0.0,1.5]}]},{"path":"Cut/Cut1/Anchors/object/SkeletonGraphic (cutscene_Char061002)","property":"m_LocalScale.x","keys":[{"time":1.2333333492279053,"value":1.100000023841858,"coefficients":[43200.1328125,-1080.0023193359375,0.0,1.100000023841858]},{"time":1.25,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]}]},{"path":"Cut/Cut1/Anchors/object/SkeletonGraphic (cutscene_Char061002)","property":"m_LocalScale.y","keys":[{"time":1.2333333492279053,"value":1.100000023841858,"coefficients":[43200.1328125,-1080.0023193359375,0.0,1.100000023841858]},{"time":1.25,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]}]},{"path":"Cut/Cut1/Anchors/object/SkeletonGraphic (cutscene_Char061002)","property":"m_LocalScale.z","keys":[{"time":1.2333333492279053,"value":1.100000023841858,"coefficients":[43200.1328125,-1080.0023193359375,0.0,1.100000023841858]},{"time":1.25,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]}]},{"path":"Cut/Cut1/Anchors","property":"m_Pivot.x","keys":[{"time":0.0,"value":0.5,"coefficients":[0.0,0.0,0.0,0.5]},{"time":0.36666667461395264,"value":0.5,"coefficients":[0.0,0.0,0.0,0.5]},{"time":0.6166666746139526,"value":0.5,"coefficients":[0.0,0.0,0.0,0.5]},{"time":1.2333333492279053,"value":0.5,"coefficients":[0.0,0.0,0.0,0.5]},{"time":1.25,"value":0.5,"coefficients":[0.0,0.0,0.0,0.5]},{"time":2.4833333492279053,"value":0.5,"coefficients":[-691.201904296875,86.40016174316406,0.0,0.5]},{"time":2.566666603088379,"value":0.699999988079071,"coefficients":[86400.2421875,-2160.00390625,0.0,0.699999988079071]},{"time":2.5833332538604736,"value":0.5,"coefficients":[0.0,0.0,0.0,0.5]},{"time":3.383333444595337,"value":0.5,"coefficients":[0.0,0.0,0.0,0.5]}]},{"path":"Cut/Cut1/Anchors","property":"m_Pivot.y","keys":[{"time":0.0,"value":0.44999998807907104,"coefficients":[0.0,0.0,0.0,0.44999998807907104]},{"time":0.36666667461395264,"value":0.44999998807907104,"coefficients":[-4.479999542236328,2.239999771118164,0.0,0.44999998807907104]},{"time":0.6166666746139526,"value":0.5199999809265137,"coefficients":[3.177157026357236e-08,-1.9592468092355375e-08,-0.08108104765415192,0.5199999809265137]},{"time":1.2333333492279053,"value":0.4699999988079071,"coefficients":[0.021572699770331383,-0.02912314236164093,0.02222222462296486,0.4699999988079071]},{"time":2.5833332538604736,"value":0.5,"coefficients":[-0.17628157138824463,0.4198713004589081,0.061538465321063995,0.5]},{"time":3.183333396911621,"value":0.6499999761581421,"coefficients":[-28.12499237060547,7.500000476837158,0.3749999403953552,0.6499999761581421]},{"time":3.383333444595337,"value":0.800000011920929,"coefficients":[0.0,0.0,0.0,0.800000011920929]}]},{"path":"Cut/Cut1/Anchors/object/SkeletonGraphic (cutscene_Char061002)","property":"m_AnchoredPosition.x","keys":[{"time":1.2333333492279053,"value":10.0,"coefficients":[-8.229168891906738,5.347222805023193,0.0,10.0]},{"time":2.566666603088379,"value":0.0,"coefficients":[43093456.0,-1076446.375,-29.62963104248047,0.0]},{"time":2.5833332538604736,"value":-100.0,"coefficients":[-59259.140625,13333.3154296875,0.0,-100.0]},{"time":2.7333333492279053,"value":0.0,"coefficients":[0.0,0.0,0.0,0.0]}]},{"path":"Cut/Cut1/Anchors/object/SkeletonGraphic (cutscene_Char061002)","property":"m_AnchoredPosition.y","keys":[{"time":1.2333333492279053,"value":10.0,"coefficients":[4320012.5,-108000.203125,0.0,10.0]},{"time":1.25,"value":0.0,"coefficients":[0.0,0.0,0.0,0.0]},{"time":2.566666603088379,"value":0.0,"coefficients":[0.0,0.0,0.0,0.0]},{"time":2.5833332538604736,"value":0.0,"coefficients":[0.0,0.0,0.0,0.0]}]},{"path":"Cut/Cut1/Anchors/object/SkeletonGraphic (cutscene_Char061002)","property":"m_Color.r","keys":[{"time":0.0,"value":0.949999988079071,"coefficients":[-0.426430881023407,0.39444857835769653,0.0,0.949999988079071]},{"time":0.6166666746139526,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]},{"time":1.2333333492279053,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]},{"time":1.25,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]},{"time":2.566666603088379,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]},{"time":2.5833332538604736,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]}]},{"path":"Cut/Cut1/Anchors/object/SkeletonGraphic (cutscene_Char061002)","property":"m_Color.g","keys":[{"time":0.0,"value":0.949999988079071,"coefficients":[-0.426430881023407,0.39444857835769653,0.0,0.949999988079071]},{"time":0.6166666746139526,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]},{"time":1.2333333492279053,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]},{"time":1.25,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]},{"time":2.566666603088379,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]},{"time":2.5833332538604736,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]}]},{"path":"Cut/Cut1/Anchors/object/SkeletonGraphic (cutscene_Char061002)","property":"m_Color.b","keys":[{"time":0.0,"value":0.949999988079071,"coefficients":[-0.426430881023407,0.39444857835769653,0.0,0.949999988079071]},{"time":0.6166666746139526,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]},{"time":1.2333333492279053,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]},{"time":1.25,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]},{"time":2.566666603088379,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]},{"time":2.5833332538604736,"value":1.0,"coefficients":[0.0,0.0,0.0,1.0]}]},{"path":"Cut/Cut1/Anchors","property":"m_AnchoredPosition.x","keys":[],"constant":0.0},{"path":"Cut/Cut1/Anchors","property":"m_AnchoredPosition.y","keys":[],"constant":0.0}],"activations":[],"assets":{}}
+{"revision":1,
+	"duration": 3.7833333333333337,
+	"nodes": [
+		{
+			"path": "",
+			"parent": -1,
+			"active": true,
+			"position": { "x": 0.0, "y": 0.0 },
+			"scale": { "x": 1.0, "y": 1.0, "z": 1.0 },
+			"size": { "x": 1600.0, "y": 1600.0 },
+			"pivot": { "x": 0.5, "y": 0.5 },
+			"anchorMin": { "x": 0.5, "y": 0.5 },
+			"anchorMax": { "x": 0.5, "y": 0.5 },
+			"color": { "r": 1, "g": 1, "b": 1, "a": 1 },
+			"texture": null,
+			"skeleton": false,
+			"rotation": 0.0,
+			"quaternion": { "x": 0.0, "y": 0.0, "z": 0.0, "w": 1.0 },
+			"euler": { "x": 0.0, "y": 0.0, "z": 0.0 },
+			"depth": 0.0
+		},
+		{
+			"path": "Cut",
+			"parent": 0,
+			"active": true,
+			"position": { "x": 0.0, "y": 0.0 },
+			"scale": { "x": 1.0, "y": 1.0, "z": 1.0 },
+			"size": { "x": 0.0, "y": 0.0 },
+			"pivot": { "x": 0.5, "y": 0.5 },
+			"anchorMin": { "x": 0.0, "y": 0.0 },
+			"anchorMax": { "x": 1.0, "y": 1.0 },
+			"color": { "r": 1, "g": 1, "b": 1, "a": 1 },
+			"texture": null,
+			"skeleton": false,
+			"rotation": 0.0,
+			"quaternion": { "x": 0.0, "y": 0.0, "z": 0.0, "w": 1.0 },
+			"euler": { "x": 0.0, "y": 0.0, "z": 0.0 },
+			"depth": 0.0,
+			"groupAlpha": 1.0,
+			"ignoreParentGroups": false
+		},
+		{
+			"path": "Cut/Cut1",
+			"parent": 1,
+			"active": true,
+			"position": { "x": 0.0, "y": 0.0 },
+			"scale": { "x": 1.0, "y": 1.0, "z": 1.0 },
+			"size": { "x": 0.0, "y": 0.0 },
+			"pivot": { "x": 0.5, "y": 0.5 },
+			"anchorMin": { "x": 0.0, "y": 0.0 },
+			"anchorMax": { "x": 1.0, "y": 1.0 },
+			"color": { "r": 1, "g": 1, "b": 1, "a": 1 },
+			"texture": null,
+			"skeleton": false,
+			"rotation": 0.0,
+			"quaternion": { "x": 0.0, "y": 0.0, "z": 0.0, "w": 1.0 },
+			"euler": { "x": 0.0, "y": 0.0, "z": 0.0 },
+			"depth": 0.0
+		},
+		{
+			"path": "Cut/Cut1/Anchors",
+			"parent": 2,
+			"active": true,
+			"position": { "x": 0.0, "y": 0.0 },
+			"scale": { "x": 1.0, "y": 1.0, "z": 1.0 },
+			"size": { "x": 1600.0, "y": 1600.0 },
+			"pivot": { "x": 0.5, "y": 0.5 },
+			"anchorMin": { "x": 0.5, "y": 0.5 },
+			"anchorMax": { "x": 0.5, "y": 0.5 },
+			"color": { "r": 1, "g": 1, "b": 1, "a": 1 },
+			"texture": null,
+			"skeleton": false,
+			"rotation": -0.0,
+			"quaternion": { "x": -0.0, "y": -0.0, "z": -0.0, "w": 1.0 },
+			"euler": { "x": -0.0, "y": 0.0, "z": 0.0 },
+			"depth": 0.0,
+			"groupAlpha": 1.0,
+			"ignoreParentGroups": false
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object",
+			"parent": 3,
+			"active": true,
+			"position": { "x": 0.0, "y": 0.0 },
+			"scale": { "x": 1.0, "y": 1.0, "z": 1.0 },
+			"size": { "x": 100.0, "y": 100.0 },
+			"pivot": { "x": 0.5, "y": 0.5 },
+			"anchorMin": { "x": 0.5, "y": 0.5 },
+			"anchorMax": { "x": 0.5, "y": 0.5 },
+			"color": { "r": 1, "g": 1, "b": 1, "a": 1 },
+			"texture": null,
+			"skeleton": false,
+			"rotation": 0.0,
+			"quaternion": { "x": 0.0, "y": 0.0, "z": 0.0, "w": 1.0 },
+			"euler": { "x": 0.0, "y": 0.0, "z": 0.0 },
+			"depth": 0.0
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/SkeletonGraphic (cutscene_Char061002)",
+			"parent": 4,
+			"active": true,
+			"position": { "x": 25.0, "y": 25.0 },
+			"scale": {
+				"x": 1.2999999523162842,
+				"y": 1.2999999523162842,
+				"z": 1.2999999523162842
+			},
+			"size": { "x": 0.0, "y": 0.0 },
+			"pivot": { "x": 0.5, "y": 0.5 },
+			"anchorMin": { "x": 0.5, "y": 0.5 },
+			"anchorMax": { "x": 0.5, "y": 0.5 },
+			"color": { "r": 1.0, "g": 1.0, "b": 1.0, "a": 1.0 },
+			"texture": null,
+			"skeleton": true,
+			"rotation": 0.0,
+			"quaternion": { "x": 0.0, "y": 0.0, "z": 0.0, "w": 1.0 },
+			"euler": { "x": 0.0, "y": 0.0, "z": 0.0 },
+			"depth": 0.0,
+			"defaultMix": 0.20000000298023224,
+			"mixes": []
+		}
+	],
+	"tracks": [
+		{
+			"node": 5,
+			"trackIndex": 0,
+			"clips": [
+				{
+					"name": "1_cut",
+					"start": 0.0,
+					"duration": 1.25,
+					"clipIn": 0.0,
+					"speed": 1.0,
+					"loop": false,
+					"settings": {
+						"loop": 0,
+						"customDuration": 1,
+						"useBlendDuration": 0,
+						"isInitialized": 1,
+						"mixDuration": 0.0,
+						"holdPrevious": 0,
+						"dontPauseWithDirector": 0,
+						"dontEndWithClip": 0,
+						"endMixOutDuration": 0.0,
+						"attachmentThreshold": 0.5,
+						"eventThreshold": 0.5,
+						"drawOrderThreshold": 0.5,
+						"alpha": 1.0
+					},
+					"easeIn": 0.0,
+					"easeOut": 0.0,
+					"blendIn": -1.0,
+					"blendOut": -1.0
+				},
+				{
+					"name": "2_cut",
+					"start": 1.25,
+					"duration": 1.3333333333333335,
+					"clipIn": 0.0,
+					"speed": 1.0,
+					"loop": false,
+					"settings": {
+						"loop": 0,
+						"customDuration": 1,
+						"useBlendDuration": 0,
+						"isInitialized": 1,
+						"mixDuration": 0.0,
+						"holdPrevious": 0,
+						"dontPauseWithDirector": 0,
+						"dontEndWithClip": 0,
+						"endMixOutDuration": 0.0,
+						"attachmentThreshold": 0.5,
+						"eventThreshold": 0.5,
+						"drawOrderThreshold": 0.5,
+						"alpha": 1.0
+					},
+					"easeIn": 0.0,
+					"easeOut": 0.0,
+					"blendIn": -1.0,
+					"blendOut": -1.0
+				},
+				{
+					"name": "3_cut",
+					"start": 2.5833333333333335,
+					"duration": 1.2000000000000002,
+					"clipIn": 0.0,
+					"speed": 1.0,
+					"loop": false,
+					"settings": {
+						"loop": 0,
+						"customDuration": 1,
+						"useBlendDuration": 0,
+						"isInitialized": 1,
+						"mixDuration": 0.0,
+						"holdPrevious": 0,
+						"dontPauseWithDirector": 0,
+						"dontEndWithClip": 0,
+						"endMixOutDuration": 0.0,
+						"attachmentThreshold": 0.5,
+						"eventThreshold": 0.5,
+						"drawOrderThreshold": 0.5,
+						"alpha": 1.0
+					},
+					"easeIn": 0.0,
+					"easeOut": 0.0,
+					"blendIn": -1.0,
+					"blendOut": -1.0
+				}
+			]
+		}
+	],
+	"curves": [
+		{
+			"path": "Cut/Cut1/Anchors/object",
+			"property": "m_LocalScale.x",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 3.0,
+					"coefficients": [
+						-1.5351192951202393, -0.9247265458106995, 0.0, 3.0
+					]
+				},
+				{
+					"time": 0.36666667461395264,
+					"value": 2.799999952316284,
+					"coefficients": [
+						91.24324035644531, -45.621612548828125,
+						-1.2972975969314575, 2.799999952316284
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 1.0499999523162842,
+					"coefficients": [
+						0.0, 0.0, -0.08108100295066833, 1.0499999523162842
+					]
+				},
+				{
+					"time": 1.2333333492279053,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				},
+				{
+					"time": 1.25,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				},
+				{
+					"time": 3.183333396911621,
+					"value": 1.0,
+					"coefficients": [
+						-124.99993133544922, 37.49998474121094, 0.0, 1.0
+					]
+				},
+				{
+					"time": 3.383333444595337,
+					"value": 1.5,
+					"coefficients": [0.0, 0.0, 0.0, 1.5]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object",
+			"property": "m_LocalScale.y",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 3.0,
+					"coefficients": [
+						-1.5351192951202393, -0.9247265458106995, 0.0, 3.0
+					]
+				},
+				{
+					"time": 0.36666667461395264,
+					"value": 2.799999952316284,
+					"coefficients": [
+						91.24324035644531, -45.621612548828125,
+						-1.2972975969314575, 2.799999952316284
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 1.0499999523162842,
+					"coefficients": [
+						0.0, 0.0, -0.08108100295066833, 1.0499999523162842
+					]
+				},
+				{
+					"time": 1.2333333492279053,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				},
+				{
+					"time": 1.25,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				},
+				{
+					"time": 3.183333396911621,
+					"value": 1.0,
+					"coefficients": [
+						-124.99993133544922, 37.49998474121094, 0.0, 1.0
+					]
+				},
+				{
+					"time": 3.383333444595337,
+					"value": 1.5,
+					"coefficients": [0.0, 0.0, 0.0, 1.5]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object",
+			"property": "m_LocalScale.z",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 3.0,
+					"coefficients": [
+						-1.5351192951202393, -0.9247265458106995, 0.0, 3.0
+					]
+				},
+				{
+					"time": 0.36666667461395264,
+					"value": 2.799999952316284,
+					"coefficients": [
+						91.24324035644531, -45.621612548828125,
+						-1.2972975969314575, 2.799999952316284
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 1.0499999523162842,
+					"coefficients": [
+						0.0, 0.0, -0.08108100295066833, 1.0499999523162842
+					]
+				},
+				{
+					"time": 1.2333333492279053,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				},
+				{
+					"time": 1.25,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				},
+				{
+					"time": 3.183333396911621,
+					"value": 1.0,
+					"coefficients": [
+						-124.99993133544922, 37.49998474121094, 0.0, 1.0
+					]
+				},
+				{
+					"time": 3.383333444595337,
+					"value": 1.5,
+					"coefficients": [0.0, 0.0, 0.0, 1.5]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/SkeletonGraphic (cutscene_Char061002)",
+			"property": "m_LocalScale.x",
+			"keys": [
+				{
+					"time": 1.2333333492279053,
+					"value": 1.100000023841858,
+					"coefficients": [
+						43200.1328125, -1080.0023193359375, 0.0,
+						1.100000023841858
+					]
+				},
+				{
+					"time": 1.25,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/SkeletonGraphic (cutscene_Char061002)",
+			"property": "m_LocalScale.y",
+			"keys": [
+				{
+					"time": 1.2333333492279053,
+					"value": 1.100000023841858,
+					"coefficients": [
+						43200.1328125, -1080.0023193359375, 0.0,
+						1.100000023841858
+					]
+				},
+				{
+					"time": 1.25,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/SkeletonGraphic (cutscene_Char061002)",
+			"property": "m_LocalScale.z",
+			"keys": [
+				{
+					"time": 1.2333333492279053,
+					"value": 1.100000023841858,
+					"coefficients": [
+						43200.1328125, -1080.0023193359375, 0.0,
+						1.100000023841858
+					]
+				},
+				{
+					"time": 1.25,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors",
+			"property": "m_Pivot.x",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.5,
+					"coefficients": [0.0, 0.0, 0.0, 0.5]
+				},
+				{
+					"time": 0.36666667461395264,
+					"value": 0.5,
+					"coefficients": [0.0, 0.0, 0.0, 0.5]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 0.5,
+					"coefficients": [0.0, 0.0, 0.0, 0.5]
+				},
+				{
+					"time": 1.2333333492279053,
+					"value": 0.5,
+					"coefficients": [0.0, 0.0, 0.0, 0.5]
+				},
+				{
+					"time": 1.25,
+					"value": 0.5,
+					"coefficients": [0.0, 0.0, 0.0, 0.5]
+				},
+				{
+					"time": 2.4833333492279053,
+					"value": 0.5,
+					"coefficients": [
+						-691.201904296875, 86.40016174316406, 0.0, 0.5
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 0.699999988079071,
+					"coefficients": [
+						86400.2421875, -2160.00390625, 0.0, 0.699999988079071
+					]
+				},
+				{
+					"time": 2.5833332538604736,
+					"value": 0.5,
+					"coefficients": [0.0, 0.0, 0.0, 0.5]
+				},
+				{
+					"time": 3.383333444595337,
+					"value": 0.5,
+					"coefficients": [0.0, 0.0, 0.0, 0.5]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors",
+			"property": "m_Pivot.y",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.44999998807907104,
+					"coefficients": [0.0, 0.0, 0.0, 0.44999998807907104]
+				},
+				{
+					"time": 0.36666667461395264,
+					"value": 0.44999998807907104,
+					"coefficients": [
+						-4.479999542236328, 2.239999771118164, 0.0,
+						0.44999998807907104
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 0.5199999809265137,
+					"coefficients": [
+						3.177157026357236e-8, -1.9592468092355375e-8,
+						-0.08108104765415192, 0.5199999809265137
+					]
+				},
+				{
+					"time": 1.2333333492279053,
+					"value": 0.4699999988079071,
+					"coefficients": [
+						0.021572699770331383, -0.02912314236164093,
+						0.02222222462296486, 0.4699999988079071
+					]
+				},
+				{
+					"time": 2.5833332538604736,
+					"value": 0.5,
+					"coefficients": [
+						-0.17628157138824463, 0.4198713004589081,
+						0.061538465321063995, 0.5
+					]
+				},
+				{
+					"time": 3.183333396911621,
+					"value": 0.6499999761581421,
+					"coefficients": [
+						-28.12499237060547, 7.500000476837158,
+						0.3749999403953552, 0.6499999761581421
+					]
+				},
+				{
+					"time": 3.383333444595337,
+					"value": 0.800000011920929,
+					"coefficients": [0.0, 0.0, 0.0, 0.800000011920929]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/SkeletonGraphic (cutscene_Char061002)",
+			"property": "m_AnchoredPosition.x",
+			"keys": [
+				{
+					"time": 1.2333333492279053,
+					"value": 10.0,
+					"coefficients": [
+						-8.229168891906738, 5.347222805023193, 0.0, 10.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 0.0,
+					"coefficients": [
+						43093456.0, -1076446.375, -29.62963104248047, 0.0
+					]
+				},
+				{
+					"time": 2.5833332538604736,
+					"value": -100.0,
+					"coefficients": [
+						-59259.140625, 13333.3154296875, 0.0, -100.0
+					]
+				},
+				{
+					"time": 2.7333333492279053,
+					"value": 0.0,
+					"coefficients": [0.0, 0.0, 0.0, 0.0]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/SkeletonGraphic (cutscene_Char061002)",
+			"property": "m_AnchoredPosition.y",
+			"keys": [
+				{
+					"time": 1.2333333492279053,
+					"value": 10.0,
+					"coefficients": [4320012.5, -108000.203125, 0.0, 10.0]
+				},
+				{
+					"time": 1.25,
+					"value": 0.0,
+					"coefficients": [0.0, 0.0, 0.0, 0.0]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 0.0,
+					"coefficients": [0.0, 0.0, 0.0, 0.0]
+				},
+				{
+					"time": 2.5833332538604736,
+					"value": 0.0,
+					"coefficients": [0.0, 0.0, 0.0, 0.0]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/SkeletonGraphic (cutscene_Char061002)",
+			"property": "m_Color.r",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.949999988079071,
+					"coefficients": [
+						-0.426430881023407, 0.39444857835769653, 0.0,
+						0.949999988079071
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				},
+				{
+					"time": 1.2333333492279053,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				},
+				{
+					"time": 1.25,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				},
+				{
+					"time": 2.5833332538604736,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/SkeletonGraphic (cutscene_Char061002)",
+			"property": "m_Color.g",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.949999988079071,
+					"coefficients": [
+						-0.426430881023407, 0.39444857835769653, 0.0,
+						0.949999988079071
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				},
+				{
+					"time": 1.2333333492279053,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				},
+				{
+					"time": 1.25,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				},
+				{
+					"time": 2.5833332538604736,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/SkeletonGraphic (cutscene_Char061002)",
+			"property": "m_Color.b",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.949999988079071,
+					"coefficients": [
+						-0.426430881023407, 0.39444857835769653, 0.0,
+						0.949999988079071
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				},
+				{
+					"time": 1.2333333492279053,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				},
+				{
+					"time": 1.25,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				},
+				{
+					"time": 2.5833332538604736,
+					"value": 1.0,
+					"coefficients": [0.0, 0.0, 0.0, 1.0]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors",
+			"property": "m_AnchoredPosition.x",
+			"keys": [],
+			"constant": 0.0
+		},
+		{
+			"path": "Cut/Cut1/Anchors",
+			"property": "m_AnchoredPosition.y",
+			"keys": [],
+			"constant": 0.0
+		}
+	],
+	"activations": [],
+	"assets": {}
+}
