@@ -57,6 +57,20 @@ const otherUpdates = [
 
 const versions = [
     {
+        version: "1.0.3",
+        highlights: [],
+        changelog: [
+            "whatsNew.cutsceneUpdates",
+            "whatsNew.newCutscenes",
+            "whatsNew.audioRetry",
+            "whatsNew.gameBackgrounds",
+            "whatsNew.backgroundsPanel",
+            "whatsNew.machineId",
+            "whatsNew.framingFix",
+            "whatsNew.skeletonPaths"
+        ]
+    },
+    {
         version: "1.0.2",
         highlights: [],
         changelog: [
