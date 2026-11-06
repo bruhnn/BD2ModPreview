@@ -338,11 +338,34 @@ export function usePreview(
 		}
 		skeleton.updateWorldTransform();
 	}
+	// Skeleton bounds without huge backdrop meshes (dating illusts have one), which would zoom the camera way out.
+	function characterBounds(offset: any, size: any) {
+		const rects: number[][] = [];
+		for (const slot of spinePlayer!.skeleton.drawOrder) {
+			const attachment = slot.attachment;
+			const vertices: number[] = [];
+			if (attachment instanceof spine.RegionAttachment)
+				attachment.computeWorldVertices(slot, vertices, 0, 2);
+			else if (attachment instanceof spine.MeshAttachment)
+				attachment.computeWorldVertices(slot, 0, attachment.worldVerticesLength, vertices, 0, 2);
+			else continue;
+			const xs = vertices.filter((_, i) => i % 2 === 0);
+			const ys = vertices.filter((_, i) => i % 2 === 1);
+			rects.push([Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys)]);
+		}
+		const extent = ([x0, y0, x1, y1]: number[]) => Math.max(x1 - x0, y1 - y0);
+		const median = rects.map(extent).sort((a, b) => a - b)[Math.floor(rects.length / 2)];
+		const kept = rects.filter((rect) => extent(rect) <= median * 20);
+		const left = Math.min(...kept.map((r) => r[0]));
+		const bottom = Math.min(...kept.map((r) => r[1]));
+		offset.set(left, bottom);
+		size.set(Math.max(...kept.map((r) => r[2])) - left, Math.max(...kept.map((r) => r[3])) - bottom);
+	}
 	function fitCharacter() {
 		if (!spinePlayer) return;
 		const offset = new spine.Vector2();
 		const size = new spine.Vector2();
-		spinePlayer.skeleton.getBounds(offset, size, []);
+		characterBounds(offset, size);
 		const canvas = spinePlayer.canvas;
 		if (!canvas.clientWidth || !canvas.clientHeight || !size.x || !size.y)
 			return;
@@ -362,7 +385,7 @@ export function usePreview(
 		if (!spinePlayer || !camera) return;
 		const offset = new spine.Vector2();
 		const size = new spine.Vector2();
-		spinePlayer.skeleton.getBounds(offset, size, []);
+		characterBounds(offset, size);
 		camera.x = offset.x + size.x / 2;
 		camera.y = offset.y + size.y / 2;
 	}
@@ -811,6 +834,28 @@ export function usePreview(
 		playerContainer.value.innerHTML = "";
 		spinePlayer = new spine.SpinePlayer(playerContainer.value, config);
 	}
+	// Some dating skeletons (e.g. illust_dating10) draw nothing with the default skin; their images are in the named skins.
+	function pickVisibleSkin(player: SpinePlayer) {
+		const skeleton = player.skeleton;
+		const drawsImages = () => {
+			skeleton.setToSetupPose();
+			player.animationState.apply(skeleton);
+			skeleton.updateWorldTransform();
+			return skeleton.drawOrder.some(
+				(slot: any) =>
+					slot.color.a > 0 &&
+					(slot.attachment instanceof spine.RegionAttachment || slot.attachment instanceof spine.MeshAttachment),
+			);
+		};
+		const original = skeleton.skin;
+		if (drawsImages()) return;
+		const visible = skeleton.data.skins.find((candidate: any) => {
+			skeleton.setSkin(candidate);
+			return drawsImages();
+		});
+		if (visible) skin.value = visible.name;
+		else skeleton.setSkin(original);
+	}
 	function onPlayerSuccess(player: SpinePlayer) {
 		spinePlayer = player;
 		const animations = player.skeleton.data.animations.map(
@@ -845,6 +890,7 @@ export function usePreview(
 			);
 		}
 		applyPose();
+		pickVisibleSkin(player);
 		setupCamera(player);
 		minigame.load(player);
 		datingInteraction.load(
