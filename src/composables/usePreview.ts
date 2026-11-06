@@ -11,6 +11,7 @@ import { usePreviewerStore, type PreviewControl } from "../stores/previewer";
 import { useHistory } from "./useHistory";
 import { useLogger } from "./useLogger";
 import { useGameCutscene } from "./useGameCutscene";
+import { useGameBackgroundStore } from "../stores/gameBackgrounds";
 import { useMinigameInteractions } from "./useMinigameInteractions";
 import { useDatingInteractions } from "./useDatingInteractions";
 import type {
@@ -27,7 +28,10 @@ export function usePreview(
 	const { logMessage } = useLogger();
 	const { addToHistory } = useHistory();
 	const { t, te } = useI18n();
-	const cutscene = useGameCutscene();
+	const cutscene = useGameCutscene(
+		() => settings.value?.background.type === "game",
+	);
+	const gameBackgrounds = useGameBackgroundStore();
 	const minigame = useMinigameInteractions();
 	const datingInteraction = useDatingInteractions(
 		(animation) => {
@@ -82,6 +86,12 @@ export function usePreview(
 	const title = computed(() => preview.value?.title ?? "");
 	const source = computed(() => preview.value?.source ?? null);
 	const settings = computed(() => preview.value?.settings ?? null);
+	watch(
+		() => cutscene.backgroundInfo.value,
+		(info) => {
+			if (preview.value) preview.value.gameBackground = info;
+		},
+	);
 	const currentAnimation = computed(
 		() => preview.value?.settings.currentAnimation ?? null,
 	);
@@ -177,6 +187,16 @@ export function usePreview(
 	const sequences = computed(
 		() => previewerStore.savedSequences[sequenceKey.value] ?? [],
 	);
+	// World units per pixel. Without the game background the whole 1600-unit square is shown. With it, the
+	// game's own framing is used: its canvas scaler is "Expand" with a 1600x720 landscape reference, so the
+	// canvas is at least 1600 wide and 720 tall, which is why 16:9 backgrounds fill the frame in the game.
+	function gameCutsceneZoom(player: SpinePlayer) {
+		const width = player.canvas.clientWidth;
+		const height = player.canvas.clientHeight;
+		if (settings.value?.background.type === "game")
+			return Math.max(1600 / width, 720 / height);
+		return 1600 / Math.min(width, height);
+	}
 	function playGameCutscene() {
 		if (!spinePlayer || !settings.value || !cutscene.available.value)
 			return;
@@ -185,22 +205,56 @@ export function usePreview(
 		minigame.enabled.value = false;
 		if (!cutscene.active.value)
 			previousCamera = camera ? { ...camera } : null;
-		camera = {
-			x: 0,
-			y: 0,
-			zoom:
-				1600 /
-				Math.min(
-					spinePlayer.canvas.clientWidth,
-					spinePlayer.canvas.clientHeight,
-				),
-		};
+		camera = { x: 0, y: 0, zoom: gameCutsceneZoom(spinePlayer) };
 		settings.value.followGlobalAnimation = false;
 		cutscene.start();
 		playbackTime.value = 0;
 		duration.value = cutscene.duration;
 		settings.value!.paused = false;
+		offerGameBackground();
 	}
+	// Uses one image of the game background as the plain preview background. Downloads only that image.
+	const gameImage = ref({ hash: "", uri: "" });
+	const loadingGameImage = ref("");
+	async function selectGameBackgroundImage(hash: string) {
+		if (!settings.value || loadingGameImage.value) return;
+		loadingGameImage.value = hash;
+		try {
+			const uri = await gameBackgrounds.load(hash);
+			if (!settings.value) return;
+			gameImage.value = { hash, uri };
+			settings.value.background = { type: "image", path: uri };
+		} catch (error) {
+			logMessage(`Game background image ${hash.slice(0, 8)} failed: ${error}`, "warning");
+		} finally {
+			loadingGameImage.value = "";
+		}
+	}
+	function isGameBackgroundImageSelected(hash: string) {
+		const background = settings.value?.background;
+		return (
+			background?.type === "image" &&
+			gameImage.value.hash === hash &&
+			background.path === gameImage.value.uri
+		);
+	}
+	// Only offered while the preview still uses the default background, so a manual choice stays.
+	function offerGameBackground() {
+		const info = cutscene.backgroundInfo.value;
+		if (!info || settings.value?.background.type !== "theme") return;
+		gameBackgrounds.offer(`${id}:${cutscene.cutsceneId.value}`, info.count, info.bytes, () => {
+			if (settings.value?.background.type === "theme")
+				settings.value.background = { type: "game" };
+		});
+	}
+	// Selecting or clearing the game background while the cutscene plays switches to the matching framing.
+	watch(
+		() => settings.value?.background.type === "game",
+		() => {
+			if (cutscene.active.value && camera && spinePlayer)
+				camera = { x: 0, y: 0, zoom: gameCutsceneZoom(spinePlayer) };
+		},
+	);
 	function stopGameCutscene() {
 		if (!cutscene.active.value) return;
 		cutscene.active.value = false;
@@ -1004,6 +1058,10 @@ export function usePreview(
 		cutsceneAvailable: cutscene.available,
 		cutsceneActive: cutscene.active,
 		cutsceneIncomplete: cutscene.incomplete,
+		gameBackgroundImages: cutscene.backgroundImages,
+		loadingGameImage,
+		selectGameBackgroundImage,
+		isGameBackgroundImageSelected,
 		playGameCutscene: () => runControl({ type: "cutscene" }),
 		minigameAvailable: minigame.available,
 		minigameEnabled: minigame.enabled,

@@ -21,6 +21,7 @@ import { useLogger } from "./composables/useLogger"
 import Toolbar from "./components/Toolbar.vue"
 import Settings from "./components/modals/Settings.vue"
 import WhatsNew from "./components/modals/WhatsNew.vue"
+import GameBackgroundPrompt from "./components/modals/GameBackgroundPrompt.vue"
 import Preview from "./components/Preview.vue"
 import Logging from "./components/modals/Logging.vue"
 import History from "./components/modals/History.vue"
@@ -228,6 +229,7 @@ onUnmounted(() => {
     <Logging :show="uiStore.isLogsVisible" @close="uiStore.closeLogs" />
     <History :show="uiStore.isHistoryVisible" @close="uiStore.closeHistory" />
     <WhatsNew :show="uiStore.isWhatsNewVisible" @close="uiStore.closeWhatsNew" />
+    <GameBackgroundPrompt />
     <!-- modals# -->
 
     <main id="main">

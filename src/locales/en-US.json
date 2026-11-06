@@ -50,6 +50,24 @@
   "datingAudioStatus": { "loading": "Loading audio {loaded}/{total}", "completed": "Audio loading completed", "failed": "Audio loaded {loaded}/{total}. Some files could not be loaded." },
   "minigameAudio": "Enable sounds for minigames",
   "datingAudio": "Enable sounds and voices for dating interactions",
+  "gameBackgroundPrompt": {
+    "title": "Show the cutscene background?",
+    "message": "This cutscene has its animated background from the game ({count} images, {size}, downloaded once). You can also play the cutscene without it.",
+    "hint": "You can turn the background on or off at any time with the Background button in the preview controls.",
+    "remember": "Remember my choice",
+    "yes": "Download and show",
+    "no": "Play without background"
+  },
+  "gameBackgroundSettings": {
+    "title": "Cutscene backgrounds",
+    "show": "Show the cutscene background in game cutscenes",
+    "showHelp": "Off: cutscenes play without the background. You can still turn it on from the Background button.",
+    "mode": "Downloading the background images",
+    "ask": "Ask me first",
+    "always": "Download automatically",
+    "cache": "Downloaded: {size}",
+    "clear": "Clear downloads"
+  },
     "datingPointSettings": {"click": "Click points", "drag": "Drag points", "colorHelp": "Color of the indicator and area box.", "size": "Point size", "sizeHelp": "Changes the indicator size, not the interaction area.", "reset": "Reset to default"},
     "supporter": {
         "title": "Supporter access",
@@ -160,6 +178,12 @@
         "noBackgrounds": "No images in textures/",
         "backgroundsFailed": "Could not load mod backgrounds.",
         "resetBackground": "Reset background",
+        "gameBackground": "Show backgrounds in in-game cutscenes",
+        "gameBackgroundToggle": "Background",
+        "gameBackgroundToggleHint": "Turn the in-game cutscene background on or off",
+        "gameBackgroundImages": "Cutscene backgrounds",
+        "gameBackgroundImageHint": "Use this image from the game cutscene as the background. It downloads once.",
+        "gameBackgroundHint": "The game's own animated background for this cutscene. It appears when you pick In-game cutscene in the animation menu; the images download once.",
         "removeImage": "Remove image",
         "color": "Color",
         "createSequence": "Create sequence",
