@@ -99,8 +99,22 @@ onMounted(async () => {
   })
 })
 
+const machineIdCopied = ref(false)
+
+async function copyMachineId() {
+  try {
+    const id = await uiStore.loadMachineId()
+    await navigator.clipboard.writeText(id)
+    machineIdCopied.value = true
+    setTimeout(() => { machineIdCopied.value = false }, 1500)
+  } catch (error) {
+    logMessage(`Failed to copy machine ID: ${error}`, 'error')
+  }
+}
+
 watch(() => props.show, async (show) => {
   if (show) {
+    uiStore.loadMachineId().catch((error) => logMessage(`Failed to load machine ID: ${error}`, 'error'))
     gameBackgrounds.refreshCacheSize()
     alwaysOnTop.value = await getCurrentWindow().isAlwaysOnTop()
   }
@@ -271,6 +285,10 @@ watch(() => props.show, async (show) => {
             <footer class="settings-footer">
               <span class="app-version">
                 v{{ appVersion }}
+                <span v-if="uiStore.machineId" class="machine-id" role="button" tabindex="0"
+                  :title="t('app.copyMachineId')" @click="copyMachineId" @keydown.enter="copyMachineId">
+                  {{ machineIdCopied ? t('app.copied') : `(${uiStore.machineId.slice(0, 16)}...)` }}
+                </span>
               </span>
               <div class="footer-actions">
                 <button type="button" @click="openLogs">
@@ -790,5 +808,14 @@ select {
 
 .point-reset:hover {
   color: var(--text-primary);
+}
+
+.machine-id {
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.machine-id:hover {
+  text-decoration: underline;
 }
 </style>
