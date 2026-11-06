@@ -1,40 +1,107 @@
-{"revision":1,
+{
+	"revision": 4,
 	"duration": 3.7833333333333337,
 	"nodes": [
 		{
 			"path": "",
 			"parent": -1,
 			"active": true,
-			"position": { "x": 0.0, "y": 0.0 },
-			"scale": { "x": 1.0, "y": 1.0, "z": 1.0 },
-			"size": { "x": 1600.0, "y": 1600.0 },
-			"pivot": { "x": 0.5, "y": 0.5 },
-			"anchorMin": { "x": 0.5, "y": 0.5 },
-			"anchorMax": { "x": 0.5, "y": 0.5 },
-			"color": { "r": 1, "g": 1, "b": 1, "a": 1 },
+			"position": {
+				"x": 0.0,
+				"y": 0.0
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1,
+				"g": 1,
+				"b": 1,
+				"a": 1
+			},
 			"texture": null,
 			"skeleton": false,
 			"rotation": 0.0,
-			"quaternion": { "x": 0.0, "y": 0.0, "z": 0.0, "w": 1.0 },
-			"euler": { "x": 0.0, "y": 0.0, "z": 0.0 },
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0,
+				"w": 1.0
+			},
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
 			"depth": 0.0
 		},
 		{
 			"path": "Cut",
 			"parent": 0,
 			"active": true,
-			"position": { "x": 0.0, "y": 0.0 },
-			"scale": { "x": 1.0, "y": 1.0, "z": 1.0 },
-			"size": { "x": 0.0, "y": 0.0 },
-			"pivot": { "x": 0.5, "y": 0.5 },
-			"anchorMin": { "x": 0.0, "y": 0.0 },
-			"anchorMax": { "x": 1.0, "y": 1.0 },
-			"color": { "r": 1, "g": 1, "b": 1, "a": 1 },
+			"position": {
+				"x": 0.0,
+				"y": 0.0
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"size": {
+				"x": 0.0,
+				"y": 0.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.0,
+				"y": 0.0
+			},
+			"anchorMax": {
+				"x": 1.0,
+				"y": 1.0
+			},
+			"color": {
+				"r": 1,
+				"g": 1,
+				"b": 1,
+				"a": 1
+			},
 			"texture": null,
 			"skeleton": false,
 			"rotation": 0.0,
-			"quaternion": { "x": 0.0, "y": 0.0, "z": 0.0, "w": 1.0 },
-			"euler": { "x": 0.0, "y": 0.0, "z": 0.0 },
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0,
+				"w": 1.0
+			},
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
 			"depth": 0.0,
 			"groupAlpha": 1.0,
 			"ignoreParentGroups": false
@@ -43,86 +110,2951 @@
 			"path": "Cut/Cut1",
 			"parent": 1,
 			"active": true,
-			"position": { "x": 0.0, "y": 0.0 },
-			"scale": { "x": 1.0, "y": 1.0, "z": 1.0 },
-			"size": { "x": 0.0, "y": 0.0 },
-			"pivot": { "x": 0.5, "y": 0.5 },
-			"anchorMin": { "x": 0.0, "y": 0.0 },
-			"anchorMax": { "x": 1.0, "y": 1.0 },
-			"color": { "r": 1, "g": 1, "b": 1, "a": 1 },
+			"position": {
+				"x": 0.0,
+				"y": 0.0
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"size": {
+				"x": 0.0,
+				"y": 0.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.0,
+				"y": 0.0
+			},
+			"anchorMax": {
+				"x": 1.0,
+				"y": 1.0
+			},
+			"color": {
+				"r": 1,
+				"g": 1,
+				"b": 1,
+				"a": 1
+			},
 			"texture": null,
 			"skeleton": false,
 			"rotation": 0.0,
-			"quaternion": { "x": 0.0, "y": 0.0, "z": 0.0, "w": 1.0 },
-			"euler": { "x": 0.0, "y": 0.0, "z": 0.0 },
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0,
+				"w": 1.0
+			},
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
 			"depth": 0.0
+		},
+		{
+			"path": "Cut/Cut1/bg black",
+			"parent": 2,
+			"active": true,
+			"position": {
+				"x": 0.0,
+				"y": 0.0
+			},
+			"scale": {
+				"x": 100.00000762939453,
+				"y": 100.00000762939453,
+				"z": 100.00000762939453
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": null,
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0
 		},
 		{
 			"path": "Cut/Cut1/Anchors",
 			"parent": 2,
 			"active": true,
-			"position": { "x": 0.0, "y": 0.0 },
-			"scale": { "x": 1.0, "y": 1.0, "z": 1.0 },
-			"size": { "x": 1600.0, "y": 1600.0 },
-			"pivot": { "x": 0.5, "y": 0.5 },
-			"anchorMin": { "x": 0.5, "y": 0.5 },
-			"anchorMax": { "x": 0.5, "y": 0.5 },
-			"color": { "r": 1, "g": 1, "b": 1, "a": 1 },
+			"position": {
+				"x": 0.0,
+				"y": 0.0
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1,
+				"g": 1,
+				"b": 1,
+				"a": 1
+			},
 			"texture": null,
 			"skeleton": false,
 			"rotation": -0.0,
-			"quaternion": { "x": -0.0, "y": -0.0, "z": -0.0, "w": 1.0 },
-			"euler": { "x": -0.0, "y": 0.0, "z": 0.0 },
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
 			"depth": 0.0,
 			"groupAlpha": 1.0,
 			"ignoreParentGroups": false
 		},
 		{
-			"path": "Cut/Cut1/Anchors/object",
-			"parent": 3,
+			"path": "Cut/Cut1/Anchors/bg black",
+			"parent": 4,
 			"active": true,
-			"position": { "x": 0.0, "y": 0.0 },
-			"scale": { "x": 1.0, "y": 1.0, "z": 1.0 },
-			"size": { "x": 100.0, "y": 100.0 },
-			"pivot": { "x": 0.5, "y": 0.5 },
-			"anchorMin": { "x": 0.5, "y": 0.5 },
-			"anchorMax": { "x": 0.5, "y": 0.5 },
-			"color": { "r": 1, "g": 1, "b": 1, "a": 1 },
+			"position": {
+				"x": 0.0,
+				"y": 0.0
+			},
+			"scale": {
+				"x": 6.02414083480835,
+				"y": 6.02414083480835,
+				"z": 6.024140357971191
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 0.864679753780365,
+				"g": 0.761006236076355,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": null,
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": 0.1736481636762619,
+				"w": 0.9848077893257141
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": 0.0,
+				"y": -0.0,
+				"z": 19.99999900493825
+			},
+			"rotation": 19.99999900493825
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background",
+			"parent": 4,
+			"active": false,
+			"position": {
+				"x": 0.0,
+				"y": -50.0
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"size": {
+				"x": 100.0,
+				"y": 100.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1,
+				"g": 1,
+				"b": 1,
+				"a": 1
+			},
+			"texture": null,
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/bg 2",
+			"parent": 6,
+			"active": true,
+			"position": {
+				"x": 0.0,
+				"y": 0.0
+			},
+			"scale": {
+				"x": 1.600000023841858,
+				"y": 1.600000023841858,
+				"z": 1.600000023841858
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "a110227b434be178c52abe2af6f1513098c06741e3944b660f7c19a9ff625ed9",
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/bg 2 -1 ",
+			"parent": 6,
+			"active": true,
+			"position": {
+				"x": 0.0,
+				"y": 30.0
+			},
+			"scale": {
+				"x": 1.5,
+				"y": 1.5,
+				"z": 1.5
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "e4fb610f3444f38aa8d2e8527b462425297fc19711ea8f739924b1e0f1e3e76b",
+			"skeleton": false,
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/bg 2 -1 /light 1-1",
+			"parent": 8,
+			"active": true,
+			"position": {
+				"x": 320.6666564941406,
+				"y": 508.6666564941406
+			},
+			"scale": {
+				"x": 0.3499999940395355,
+				"y": 0.3499999940395355,
+				"z": 0.3499999940395355
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "9faeca7d07b8e809c9d812df018d64367fa54cdf52e17b7a4c1c55bad01d6a7f",
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/bg 2 -1 /light 1-2",
+			"parent": 8,
+			"active": true,
+			"position": {
+				"x": 113.0,
+				"y": 484.0
+			},
+			"scale": {
+				"x": 0.3499999940395355,
+				"y": 0.3499999940395355,
+				"z": 0.3499999940395355
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "9faeca7d07b8e809c9d812df018d64367fa54cdf52e17b7a4c1c55bad01d6a7f",
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/bg 2 -1 /light 1-3",
+			"parent": 8,
+			"active": true,
+			"position": {
+				"x": -88.0,
+				"y": 484.0
+			},
+			"scale": {
+				"x": 0.3499999940395355,
+				"y": 0.3499999940395355,
+				"z": 0.3499999940395355
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "9faeca7d07b8e809c9d812df018d64367fa54cdf52e17b7a4c1c55bad01d6a7f",
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/bg 2 -1 /light 1-4",
+			"parent": 8,
+			"active": true,
+			"position": {
+				"x": -295.0,
+				"y": 507.0
+			},
+			"scale": {
+				"x": 0.3499999940395355,
+				"y": 0.3499999940395355,
+				"z": 0.3499999940395355
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "9faeca7d07b8e809c9d812df018d64367fa54cdf52e17b7a4c1c55bad01d6a7f",
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light",
+			"parent": 6,
+			"active": true,
+			"position": {
+				"x": 0.0,
+				"y": 0.0
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"size": {
+				"x": 100.0,
+				"y": 100.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1,
+				"g": 1,
+				"b": 1,
+				"a": 1
+			},
+			"texture": null,
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 1-1",
+			"parent": 13,
+			"active": true,
+			"position": {
+				"x": -381.0,
+				"y": 565.0
+			},
+			"scale": {
+				"x": 2.0,
+				"y": 2.0,
+				"z": 2.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 0.40392157435417175
+			},
+			"texture": "42ca4ab78235a03a30947115a6e2832aa14aa7a9dd46bea3513e1051cef6a0b8",
+			"skeleton": false,
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 1-2",
+			"parent": 13,
+			"active": true,
+			"position": {
+				"x": -756.0,
+				"y": 717.0
+			},
+			"scale": {
+				"x": 2.0,
+				"y": 2.0,
+				"z": 2.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 0.40392157435417175
+			},
+			"texture": "42ca4ab78235a03a30947115a6e2832aa14aa7a9dd46bea3513e1051cef6a0b8",
+			"skeleton": false,
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 1-3",
+			"parent": 13,
+			"active": true,
+			"position": {
+				"x": 378.0,
+				"y": 542.0
+			},
+			"scale": {
+				"x": 2.0,
+				"y": 2.0,
+				"z": 2.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 0.40392157435417175
+			},
+			"texture": "42ca4ab78235a03a30947115a6e2832aa14aa7a9dd46bea3513e1051cef6a0b8",
+			"skeleton": false,
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.5,
+				"w": 0.8660253882408142
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 59.99999955470795
+			},
+			"rotation": 59.99999955470795,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 1-4",
+			"parent": 13,
+			"active": true,
+			"position": {
+				"x": 723.0,
+				"y": 687.9999389648438
+			},
+			"scale": {
+				"x": 2.0,
+				"y": 2.0,
+				"z": 2.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 0.40392157435417175
+			},
+			"texture": "42ca4ab78235a03a30947115a6e2832aa14aa7a9dd46bea3513e1051cef6a0b8",
+			"skeleton": false,
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.5,
+				"w": 0.8660253882408142
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 59.99999955470795
+			},
+			"rotation": 59.99999955470795,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 2-1",
+			"parent": 13,
+			"active": true,
+			"position": {
+				"x": -538.0,
+				"y": -739.0
+			},
+			"scale": {
+				"x": 1.7000000476837158,
+				"y": 1.7000000476837158,
+				"z": 1.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 0.40392157435417175
+			},
+			"texture": "fb89958d1e5ce7131d7cc2d92fcfd48994b0d18b037cb6f25ef128772c0dbc38",
+			"skeleton": false,
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 2-2",
+			"parent": 13,
+			"active": true,
+			"position": {
+				"x": -1016.0000610351562,
+				"y": -713.0
+			},
+			"scale": {
+				"x": 2.0,
+				"y": 2.0,
+				"z": 2.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 0.40392157435417175
+			},
+			"texture": "fb89958d1e5ce7131d7cc2d92fcfd48994b0d18b037cb6f25ef128772c0dbc38",
+			"skeleton": false,
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 2-3",
+			"parent": 13,
+			"active": true,
+			"position": {
+				"x": 1034.0,
+				"y": -720.0
+			},
+			"scale": {
+				"x": 2.0,
+				"y": 2.0,
+				"z": 2.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 0.40392157435417175
+			},
+			"texture": "fb89958d1e5ce7131d7cc2d92fcfd48994b0d18b037cb6f25ef128772c0dbc38",
+			"skeleton": false,
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.34202009439468384,
+				"w": 0.9396926760673523
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 39.99999515810578
+			},
+			"rotation": 39.99999515810578,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 2-4",
+			"parent": 13,
+			"active": true,
+			"position": {
+				"x": 542.9999389648438,
+				"y": -740.0000610351562
+			},
+			"scale": {
+				"x": 1.7000000476837158,
+				"y": 1.7000000476837158,
+				"z": 1.7000000476837158
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 0.40392157435417175
+			},
+			"texture": "fb89958d1e5ce7131d7cc2d92fcfd48994b0d18b037cb6f25ef128772c0dbc38",
+			"skeleton": false,
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.2588191032409668,
+				"w": 0.9659258127212524
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 30.00000694882679
+			},
+			"rotation": 30.00000694882679,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/bg 2-2",
+			"parent": 6,
+			"active": true,
+			"position": {
+				"x": 0.0,
+				"y": 0.0
+			},
+			"scale": {
+				"x": 3.0,
+				"y": 2.5,
+				"z": 2.5
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "a4da3e64923cf0dd2adf3829fbb80fa37978b79bc63baad4d1fb1eac8c2a6723",
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut3_Background",
+			"parent": 4,
+			"active": false,
+			"position": {
+				"x": 0.0,
+				"y": 0.0
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"size": {
+				"x": 100.0,
+				"y": 100.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1,
+				"g": 1,
+				"b": 1,
+				"a": 1
+			},
+			"texture": null,
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut3_Background/bg 2",
+			"parent": 23,
+			"active": true,
+			"position": {
+				"x": 0.0,
+				"y": 200.0
+			},
+			"scale": {
+				"x": 1.5999999046325684,
+				"y": 1.5999999046325684,
+				"z": 1.5999999046325684
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "6d4b67fbe038b644e1d88d2646d846c8ea01e9c5d488a8a13028eccdd59d1cf1",
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object",
+			"parent": 4,
+			"active": true,
+			"position": {
+				"x": 0.0,
+				"y": 0.0
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"size": {
+				"x": 100.0,
+				"y": 100.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1,
+				"g": 1,
+				"b": 1,
+				"a": 1
+			},
 			"texture": null,
 			"skeleton": false,
 			"rotation": 0.0,
-			"quaternion": { "x": 0.0, "y": 0.0, "z": 0.0, "w": 1.0 },
-			"euler": { "x": 0.0, "y": 0.0, "z": 0.0 },
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0,
+				"w": 1.0
+			},
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
 			"depth": 0.0
 		},
 		{
-			"path": "Cut/Cut1/Anchors/object/SkeletonGraphic (cutscene_Char061002)",
-			"parent": 4,
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background",
+			"parent": 25,
 			"active": true,
-			"position": { "x": 25.0, "y": 25.0 },
+			"position": {
+				"x": 5.0,
+				"y": 0.0
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"size": {
+				"x": 100.0,
+				"y": 100.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1,
+				"g": 1,
+				"b": 1,
+				"a": 1
+			},
+			"texture": null,
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg black",
+			"parent": 26,
+			"active": true,
+			"position": {
+				"x": 0.0,
+				"y": -1072.0
+			},
+			"scale": {
+				"x": 2.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 0.0,
+				"g": 0.0,
+				"b": 0.0,
+				"a": 1.0
+			},
+			"texture": "860f9e3784c0720153b492062b317444a48e46be15c60a846e53a2f4325c0503",
+			"skeleton": false,
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0,
+				"w": 1.0
+			},
+			"depth": 619.0,
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1",
+			"parent": 26,
+			"active": true,
+			"position": {
+				"x": 0.0,
+				"y": 0.0
+			},
+			"scale": {
+				"x": 1.100000023841858,
+				"y": 1.100000023841858,
+				"z": 1.100000023841858
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "6c1ac6238ffc492d768a189d04215cd0edd765e913ee11a64b74d4df8a5b4bfa",
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/bg 1 - light",
+			"parent": 28,
+			"active": true,
+			"position": {
+				"x": 0.0,
+				"y": 426.67999267578125
+			},
+			"scale": {
+				"x": 0.5,
+				"y": 0.5,
+				"z": 0.5
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 0.5960784554481506
+			},
+			"texture": "2426c9fe276363c7dc913904f0c3f1a2fb62921ece5d544aa547520a1a936815",
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/bg 1 - light2",
+			"parent": 28,
+			"active": true,
+			"position": {
+				"x": 0.0,
+				"y": 0.0
+			},
+			"scale": {
+				"x": 0.5,
+				"y": 0.5,
+				"z": 0.5
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "cd7d3e5fb56c18b21eddb8df47e655abbdf6492cadc79621b5d4894110b0fdc9",
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/bg 1 - 1",
+			"parent": 28,
+			"active": true,
+			"position": {
+				"x": 0.0,
+				"y": 0.0
+			},
+			"scale": {
+				"x": 0.5,
+				"y": 0.5,
+				"z": 0.5
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "a2fa95ee0ac440218097bcab1128a27a590c4cc1b98059c39f0b4d7f225dd7d3",
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Under light",
+			"parent": 28,
+			"active": true,
+			"position": {
+				"x": 0.0,
+				"y": 0.0
+			},
+			"scale": {
+				"x": 0.9166666269302368,
+				"y": 0.9166666269302368,
+				"z": 0.9166666269302368
+			},
+			"size": {
+				"x": 100.0,
+				"y": 100.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1,
+				"g": 1,
+				"b": 1,
+				"a": 1
+			},
+			"texture": null,
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Under light/light L-1 ",
+			"parent": 32,
+			"active": true,
+			"position": {
+				"x": -395.0,
+				"y": -275.0
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "b91e22bc20fa27e2112250005e67da19e818d768d3f817c4af13850d003ecb8f",
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Under light/light L-2",
+			"parent": 32,
+			"active": true,
+			"position": {
+				"x": -255.0,
+				"y": -275.0
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "0febaa596733863325c12e7774066351885c7666cc273cd40e6ebf513f8bc631",
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Under light/light R-1",
+			"parent": 32,
+			"active": true,
+			"position": {
+				"x": 395.0,
+				"y": -275.0
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "b91e22bc20fa27e2112250005e67da19e818d768d3f817c4af13850d003ecb8f",
+			"skeleton": false,
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": -0.7071068286895752,
+				"w": 0.7071068286895752
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": -90.00000769819438
+			},
+			"rotation": -90.00000769819438,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Under light/light R-2",
+			"parent": 32,
+			"active": true,
+			"position": {
+				"x": 260.0,
+				"y": -278.0
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "0febaa596733863325c12e7774066351885c7666cc273cd40e6ebf513f8bc631",
+			"skeleton": false,
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": -0.537299633026123,
+				"w": 0.8433914184570312
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": -65.00000305046707
+			},
+			"rotation": -65.00000305046707,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light",
+			"parent": 28,
+			"active": true,
+			"position": {
+				"x": 0.0,
+				"y": 0.0
+			},
+			"scale": {
+				"x": 0.9166666269302368,
+				"y": 0.9166666269302368,
+				"z": 0.9166666269302368
+			},
+			"size": {
+				"x": 100.0,
+				"y": 100.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1,
+				"g": 1,
+				"b": 1,
+				"a": 1
+			},
+			"texture": null,
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light R-1",
+			"parent": 37,
+			"active": true,
+			"position": {
+				"x": 65.0,
+				"y": 485.0
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "a02148ac7265644806a236c2bc0cc6a630557c898d62d5a92b71236ad9b315cb",
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light R-2",
+			"parent": 37,
+			"active": true,
+			"position": {
+				"x": 136.0,
+				"y": 464.0
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "a02148ac7265644806a236c2bc0cc6a630557c898d62d5a92b71236ad9b315cb",
+			"skeleton": false,
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.1736481636762619,
+				"w": 0.9848077893257141
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 19.99999900493825
+			},
+			"rotation": 19.99999900493825,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light R-3",
+			"parent": 37,
+			"active": true,
+			"position": {
+				"x": 212.0,
+				"y": 450.0
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "a02148ac7265644806a236c2bc0cc6a630557c898d62d5a92b71236ad9b315cb",
+			"skeleton": false,
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light R-4",
+			"parent": 37,
+			"active": true,
+			"position": {
+				"x": 286.0,
+				"y": 436.0
+			},
+			"scale": {
+				"x": 1.5,
+				"y": 1.5,
+				"z": 1.5
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "a02148ac7265644806a236c2bc0cc6a630557c898d62d5a92b71236ad9b315cb",
+			"skeleton": false,
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.2164396047592163,
+				"w": 0.976296067237854
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 25.000000228251498
+			},
+			"rotation": 25.000000228251498,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light L-1",
+			"parent": 37,
+			"active": true,
+			"position": {
+				"x": -61.0,
+				"y": 485.0
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "a02148ac7265644806a236c2bc0cc6a630557c898d62d5a92b71236ad9b315cb",
+			"skeleton": false,
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": -0.21643951535224915,
+				"w": 0.976296067237854
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": -24.999989288672097
+			},
+			"rotation": -24.999989288672097,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light L-2",
+			"parent": 37,
+			"active": true,
+			"position": {
+				"x": -139.0,
+				"y": 466.6000061035156
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "a02148ac7265644806a236c2bc0cc6a630557c898d62d5a92b71236ad9b315cb",
+			"skeleton": false,
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": -0.3826834261417389,
+				"w": 0.9238795638084412
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": -45.00000011863615
+			},
+			"rotation": -45.00000011863615,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light L-3",
+			"parent": 37,
+			"active": true,
+			"position": {
+				"x": -211.10000610351562,
+				"y": 446.8999938964844
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "a02148ac7265644806a236c2bc0cc6a630557c898d62d5a92b71236ad9b315cb",
+			"skeleton": false,
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": -0.21643951535224915,
+				"w": 0.976296067237854
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": -24.999989288672097
+			},
+			"rotation": -24.999989288672097,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light L-4",
+			"parent": 37,
+			"active": true,
+			"position": {
+				"x": -290.0,
+				"y": 428.0
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 1.5,
+				"z": 1.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "a02148ac7265644806a236c2bc0cc6a630557c898d62d5a92b71236ad9b315cb",
+			"skeleton": false,
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": -0.4226182699203491,
+				"w": 0.9063078761100769
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": -50.000003925738085
+			},
+			"rotation": -50.000003925738085,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/bg 3",
+			"parent": 25,
+			"active": false,
+			"position": {
+				"x": 0.0,
+				"y": 80.0
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": null,
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/SkeletonGraphic (cutscene_Char061002)",
+			"parent": 25,
+			"active": true,
+			"position": {
+				"x": 25.0,
+				"y": 25.0
+			},
 			"scale": {
 				"x": 1.2999999523162842,
 				"y": 1.2999999523162842,
 				"z": 1.2999999523162842
 			},
-			"size": { "x": 0.0, "y": 0.0 },
-			"pivot": { "x": 0.5, "y": 0.5 },
-			"anchorMin": { "x": 0.5, "y": 0.5 },
-			"anchorMax": { "x": 0.5, "y": 0.5 },
-			"color": { "r": 1.0, "g": 1.0, "b": 1.0, "a": 1.0 },
+			"size": {
+				"x": 0.0,
+				"y": 0.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
 			"texture": null,
 			"skeleton": true,
 			"rotation": 0.0,
-			"quaternion": { "x": 0.0, "y": 0.0, "z": 0.0, "w": 1.0 },
-			"euler": { "x": 0.0, "y": 0.0, "z": 0.0 },
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0,
+				"w": 1.0
+			},
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
 			"depth": 0.0,
 			"defaultMix": 0.20000000298023224,
 			"mixes": []
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Bg3 light",
+			"parent": 25,
+			"active": false,
+			"position": {
+				"x": 29.999996185302734,
+				"y": 0.0
+			},
+			"scale": {
+				"x": 0.949999988079071,
+				"y": 0.949999988079071,
+				"z": 1.0
+			},
+			"size": {
+				"x": 100.0,
+				"y": 100.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1,
+				"g": 1,
+				"b": 1,
+				"a": 1
+			},
+			"texture": null,
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Bg3 light/light 1-1",
+			"parent": 48,
+			"active": true,
+			"position": {
+				"x": -142.0,
+				"y": 924.0
+			},
+			"scale": {
+				"x": 2.0,
+				"y": 2.0,
+				"z": 2.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 0.545098066329956
+			},
+			"texture": "ef12a5983c2a9b1708855f321a979ac69145c7971af9900c83436d9b4a271004",
+			"skeleton": false,
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": -0.25881901383399963,
+				"w": 0.9659258723258972
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": -29.999997257750184
+			},
+			"rotation": -29.999997257750184,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Bg3 light/light 1-3",
+			"parent": 48,
+			"active": true,
+			"position": {
+				"x": 107.69999694824219,
+				"y": 913.0
+			},
+			"scale": {
+				"x": 2.0,
+				"y": 2.0,
+				"z": 2.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 0.545098066329956
+			},
+			"texture": "ef12a5983c2a9b1708855f321a979ac69145c7971af9900c83436d9b4a271004",
+			"skeleton": false,
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.2588191032409668,
+				"w": 0.9659258127212524
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 30.00000694882679
+			},
+			"rotation": 30.00000694882679,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Bg3 light/light 2-1",
+			"parent": 48,
+			"active": true,
+			"position": {
+				"x": 1071.0,
+				"y": -684.0
+			},
+			"scale": {
+				"x": 2.0,
+				"y": 2.0,
+				"z": 2.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "6d82bf4f6d7bb4d10a08727160406a6ae4e303c9bdf9e5f314a76994c057ee28",
+			"skeleton": false,
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.34202009439468384,
+				"w": 0.9396926760673523
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 39.99999515810578
+			},
+			"rotation": 39.99999515810578,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Bg3 light/light 2-2",
+			"parent": 48,
+			"active": true,
+			"position": {
+				"x": -954.0,
+				"y": -858.0
+			},
+			"scale": {
+				"x": 2.0,
+				"y": 2.0,
+				"z": 2.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "6d82bf4f6d7bb4d10a08727160406a6ae4e303c9bdf9e5f314a76994c057ee28",
+			"skeleton": false,
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": -0.5735763907432556,
+				"w": 0.8191521167755127
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": -69.99999453150396
+			},
+			"rotation": -69.99999453150396,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/cut1 - light",
+			"parent": 25,
+			"active": true,
+			"position": {
+				"x": -11.199999809265137,
+				"y": 391.5
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 0.9913008213043213,
+				"g": 0.5345911383628845,
+				"b": 1.0,
+				"a": 1.0
+			},
+			"texture": "b4d3e3bd0f66c5b3c507996e667476b3fbb0775538005dfdaacb4518b88c301f",
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/cut1 - light1",
+			"parent": 25,
+			"active": false,
+			"position": {
+				"x": -11.199999809265137,
+				"y": -240.17999267578125
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 0.5,
+				"z": 0.5
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 0.9937694668769836,
+				"g": 0.6666666269302368,
+				"b": 1.0,
+				"a": 0.10588235408067703
+			},
+			"texture": "b4d3e3bd0f66c5b3c507996e667476b3fbb0775538005dfdaacb4518b88c301f",
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/cut2 - light1",
+			"parent": 25,
+			"active": true,
+			"position": {
+				"x": -543.0,
+				"y": 450.0
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 2.0,
+				"z": 1.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 0.8588235378265381,
+				"g": 0.14117644727230072,
+				"b": 0.772549033164978,
+				"a": 0.2980392277240753
+			},
+			"texture": "b4d3e3bd0f66c5b3c507996e667476b3fbb0775538005dfdaacb4518b88c301f",
+			"skeleton": false,
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.34202009439468384,
+				"w": 0.9396926760673523
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 39.99999515810578
+			},
+			"rotation": 39.99999515810578,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/cut2 - light2",
+			"parent": 25,
+			"active": true,
+			"position": {
+				"x": 409.0,
+				"y": 326.0
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 2.0,
+				"z": 1.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 0.8588235378265381,
+				"g": 0.14117644727230072,
+				"b": 0.7690242528915405,
+				"a": 0.2980392277240753
+			},
+			"texture": "b4d3e3bd0f66c5b3c507996e667476b3fbb0775538005dfdaacb4518b88c301f",
+			"skeleton": false,
+			"quaternion": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": -0.34202009439468384,
+				"w": 0.9396926760673523
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": -39.99999515810578
+			},
+			"rotation": -39.99999515810578,
+			"blend": "additive"
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/cut3 - eff",
+			"parent": 25,
+			"active": true,
+			"position": {
+				"x": 0.0,
+				"y": 400.0
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 0.8773584961891174,
+				"g": 0.5849056243896484,
+				"b": 0.7986211776733398,
+				"a": 1.0
+			},
+			"texture": "3ef8759bea67375bcc278236dd8af479692112cccc96b7d346d2e43b587d5957",
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0
+		},
+		{
+			"path": "Add",
+			"parent": 0,
+			"active": true,
+			"position": {
+				"x": 237.0,
+				"y": 228.0
+			},
+			"scale": {
+				"x": 5.0,
+				"y": 5.0,
+				"z": 5.0
+			},
+			"size": {
+				"x": 1600.0,
+				"y": 1600.0
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMin": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"anchorMax": {
+				"x": 0.5,
+				"y": 0.5
+			},
+			"color": {
+				"r": 1.0,
+				"g": 1.0,
+				"b": 1.0,
+				"a": 0.0
+			},
+			"texture": "f6545f6f6b6aa1c9a26069187dd6dca227328035fef04275b9122406b1ac2078",
+			"skeleton": false,
+			"quaternion": {
+				"x": -0.0,
+				"y": -0.0,
+				"z": -0.0,
+				"w": 1.0
+			},
+			"depth": 0.0,
+			"euler": {
+				"x": -0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": 0.0
 		}
 	],
 	"tracks": [
 		{
-			"node": 5,
+			"node": 47,
 			"trackIndex": 0,
 			"clips": [
 				{
@@ -218,50 +3150,81 @@
 					"time": 0.0,
 					"value": 3.0,
 					"coefficients": [
-						-1.5351192951202393, -0.9247265458106995, 0.0, 3.0
+						-1.5351192951202393,
+						-0.9247265458106995,
+						0.0,
+						3.0
 					]
 				},
 				{
 					"time": 0.36666667461395264,
 					"value": 2.799999952316284,
 					"coefficients": [
-						91.24324035644531, -45.621612548828125,
-						-1.2972975969314575, 2.799999952316284
+						91.24324035644531,
+						-45.621612548828125,
+						-1.2972975969314575,
+						2.799999952316284
 					]
 				},
 				{
 					"time": 0.6166666746139526,
 					"value": 1.0499999523162842,
 					"coefficients": [
-						0.0, 0.0, -0.08108100295066833, 1.0499999523162842
+						0.0,
+						0.0,
+						-0.08108100295066833,
+						1.0499999523162842
 					]
 				},
 				{
 					"time": 1.2333333492279053,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				},
 				{
 					"time": 1.25,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				},
 				{
 					"time": 2.566666603088379,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				},
 				{
 					"time": 3.183333396911621,
 					"value": 1.0,
 					"coefficients": [
-						-124.99993133544922, 37.49998474121094, 0.0, 1.0
+						-124.99993133544922,
+						37.49998474121094,
+						0.0,
+						1.0
 					]
 				},
 				{
 					"time": 3.383333444595337,
 					"value": 1.5,
-					"coefficients": [0.0, 0.0, 0.0, 1.5]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.5
+					]
 				}
 			]
 		},
@@ -273,50 +3236,81 @@
 					"time": 0.0,
 					"value": 3.0,
 					"coefficients": [
-						-1.5351192951202393, -0.9247265458106995, 0.0, 3.0
+						-1.5351192951202393,
+						-0.9247265458106995,
+						0.0,
+						3.0
 					]
 				},
 				{
 					"time": 0.36666667461395264,
 					"value": 2.799999952316284,
 					"coefficients": [
-						91.24324035644531, -45.621612548828125,
-						-1.2972975969314575, 2.799999952316284
+						91.24324035644531,
+						-45.621612548828125,
+						-1.2972975969314575,
+						2.799999952316284
 					]
 				},
 				{
 					"time": 0.6166666746139526,
 					"value": 1.0499999523162842,
 					"coefficients": [
-						0.0, 0.0, -0.08108100295066833, 1.0499999523162842
+						0.0,
+						0.0,
+						-0.08108100295066833,
+						1.0499999523162842
 					]
 				},
 				{
 					"time": 1.2333333492279053,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				},
 				{
 					"time": 1.25,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				},
 				{
 					"time": 2.566666603088379,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				},
 				{
 					"time": 3.183333396911621,
 					"value": 1.0,
 					"coefficients": [
-						-124.99993133544922, 37.49998474121094, 0.0, 1.0
+						-124.99993133544922,
+						37.49998474121094,
+						0.0,
+						1.0
 					]
 				},
 				{
 					"time": 3.383333444595337,
 					"value": 1.5,
-					"coefficients": [0.0, 0.0, 0.0, 1.5]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.5
+					]
 				}
 			]
 		},
@@ -328,50 +3322,81 @@
 					"time": 0.0,
 					"value": 3.0,
 					"coefficients": [
-						-1.5351192951202393, -0.9247265458106995, 0.0, 3.0
+						-1.5351192951202393,
+						-0.9247265458106995,
+						0.0,
+						3.0
 					]
 				},
 				{
 					"time": 0.36666667461395264,
 					"value": 2.799999952316284,
 					"coefficients": [
-						91.24324035644531, -45.621612548828125,
-						-1.2972975969314575, 2.799999952316284
+						91.24324035644531,
+						-45.621612548828125,
+						-1.2972975969314575,
+						2.799999952316284
 					]
 				},
 				{
 					"time": 0.6166666746139526,
 					"value": 1.0499999523162842,
 					"coefficients": [
-						0.0, 0.0, -0.08108100295066833, 1.0499999523162842
+						0.0,
+						0.0,
+						-0.08108100295066833,
+						1.0499999523162842
 					]
 				},
 				{
 					"time": 1.2333333492279053,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				},
 				{
 					"time": 1.25,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				},
 				{
 					"time": 2.566666603088379,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				},
 				{
 					"time": 3.183333396911621,
 					"value": 1.0,
 					"coefficients": [
-						-124.99993133544922, 37.49998474121094, 0.0, 1.0
+						-124.99993133544922,
+						37.49998474121094,
+						0.0,
+						1.0
 					]
 				},
 				{
 					"time": 3.383333444595337,
 					"value": 1.5,
-					"coefficients": [0.0, 0.0, 0.0, 1.5]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.5
+					]
 				}
 			]
 		},
@@ -383,14 +3408,21 @@
 					"time": 1.2333333492279053,
 					"value": 1.100000023841858,
 					"coefficients": [
-						43200.1328125, -1080.0023193359375, 0.0,
+						43200.1328125,
+						-1080.0023193359375,
+						0.0,
 						1.100000023841858
 					]
 				},
 				{
 					"time": 1.25,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				}
 			]
 		},
@@ -402,14 +3434,21 @@
 					"time": 1.2333333492279053,
 					"value": 1.100000023841858,
 					"coefficients": [
-						43200.1328125, -1080.0023193359375, 0.0,
+						43200.1328125,
+						-1080.0023193359375,
+						0.0,
 						1.100000023841858
 					]
 				},
 				{
 					"time": 1.25,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				}
 			]
 		},
@@ -421,14 +3460,21 @@
 					"time": 1.2333333492279053,
 					"value": 1.100000023841858,
 					"coefficients": [
-						43200.1328125, -1080.0023193359375, 0.0,
+						43200.1328125,
+						-1080.0023193359375,
+						0.0,
 						1.100000023841858
 					]
 				},
 				{
 					"time": 1.25,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				}
 			]
 		},
@@ -439,51 +3485,92 @@
 				{
 					"time": 0.0,
 					"value": 0.5,
-					"coefficients": [0.0, 0.0, 0.0, 0.5]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.5
+					]
 				},
 				{
 					"time": 0.36666667461395264,
 					"value": 0.5,
-					"coefficients": [0.0, 0.0, 0.0, 0.5]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.5
+					]
 				},
 				{
 					"time": 0.6166666746139526,
 					"value": 0.5,
-					"coefficients": [0.0, 0.0, 0.0, 0.5]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.5
+					]
 				},
 				{
 					"time": 1.2333333492279053,
 					"value": 0.5,
-					"coefficients": [0.0, 0.0, 0.0, 0.5]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.5
+					]
 				},
 				{
 					"time": 1.25,
 					"value": 0.5,
-					"coefficients": [0.0, 0.0, 0.0, 0.5]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.5
+					]
 				},
 				{
 					"time": 2.4833333492279053,
 					"value": 0.5,
 					"coefficients": [
-						-691.201904296875, 86.40016174316406, 0.0, 0.5
+						-691.201904296875,
+						86.40016174316406,
+						0.0,
+						0.5
 					]
 				},
 				{
 					"time": 2.566666603088379,
 					"value": 0.699999988079071,
 					"coefficients": [
-						86400.2421875, -2160.00390625, 0.0, 0.699999988079071
+						86400.2421875,
+						-2160.00390625,
+						0.0,
+						0.699999988079071
 					]
 				},
 				{
 					"time": 2.5833332538604736,
 					"value": 0.5,
-					"coefficients": [0.0, 0.0, 0.0, 0.5]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.5
+					]
 				},
 				{
 					"time": 3.383333444595337,
 					"value": 0.5,
-					"coefficients": [0.0, 0.0, 0.0, 0.5]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.5
+					]
 				}
 			]
 		},
@@ -494,13 +3581,20 @@
 				{
 					"time": 0.0,
 					"value": 0.44999998807907104,
-					"coefficients": [0.0, 0.0, 0.0, 0.44999998807907104]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.44999998807907104
+					]
 				},
 				{
 					"time": 0.36666667461395264,
 					"value": 0.44999998807907104,
 					"coefficients": [
-						-4.479999542236328, 2.239999771118164, 0.0,
+						-4.479999542236328,
+						2.239999771118164,
+						0.0,
 						0.44999998807907104
 					]
 				},
@@ -508,38 +3602,51 @@
 					"time": 0.6166666746139526,
 					"value": 0.5199999809265137,
 					"coefficients": [
-						3.177157026357236e-8, -1.9592468092355375e-8,
-						-0.08108104765415192, 0.5199999809265137
+						3.177157026357236e-08,
+						-1.9592468092355375e-08,
+						-0.08108104765415192,
+						0.5199999809265137
 					]
 				},
 				{
 					"time": 1.2333333492279053,
 					"value": 0.4699999988079071,
 					"coefficients": [
-						0.021572699770331383, -0.02912314236164093,
-						0.02222222462296486, 0.4699999988079071
+						0.021572699770331383,
+						-0.02912314236164093,
+						0.02222222462296486,
+						0.4699999988079071
 					]
 				},
 				{
 					"time": 2.5833332538604736,
 					"value": 0.5,
 					"coefficients": [
-						-0.17628157138824463, 0.4198713004589081,
-						0.061538465321063995, 0.5
+						-0.17628157138824463,
+						0.4198713004589081,
+						0.061538465321063995,
+						0.5
 					]
 				},
 				{
 					"time": 3.183333396911621,
 					"value": 0.6499999761581421,
 					"coefficients": [
-						-28.12499237060547, 7.500000476837158,
-						0.3749999403953552, 0.6499999761581421
+						-28.12499237060547,
+						7.500000476837158,
+						0.3749999403953552,
+						0.6499999761581421
 					]
 				},
 				{
 					"time": 3.383333444595337,
 					"value": 0.800000011920929,
-					"coefficients": [0.0, 0.0, 0.0, 0.800000011920929]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.800000011920929
+					]
 				}
 			]
 		},
@@ -551,27 +3658,41 @@
 					"time": 1.2333333492279053,
 					"value": 10.0,
 					"coefficients": [
-						-8.229168891906738, 5.347222805023193, 0.0, 10.0
+						-8.229168891906738,
+						5.347222805023193,
+						0.0,
+						10.0
 					]
 				},
 				{
 					"time": 2.566666603088379,
 					"value": 0.0,
 					"coefficients": [
-						43093456.0, -1076446.375, -29.62963104248047, 0.0
+						43093456.0,
+						-1076446.375,
+						-29.62963104248047,
+						0.0
 					]
 				},
 				{
 					"time": 2.5833332538604736,
 					"value": -100.0,
 					"coefficients": [
-						-59259.140625, 13333.3154296875, 0.0, -100.0
+						-59259.140625,
+						13333.3154296875,
+						0.0,
+						-100.0
 					]
 				},
 				{
 					"time": 2.7333333492279053,
 					"value": 0.0,
-					"coefficients": [0.0, 0.0, 0.0, 0.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
 				}
 			]
 		},
@@ -582,22 +3703,42 @@
 				{
 					"time": 1.2333333492279053,
 					"value": 10.0,
-					"coefficients": [4320012.5, -108000.203125, 0.0, 10.0]
+					"coefficients": [
+						4320012.5,
+						-108000.203125,
+						0.0,
+						10.0
+					]
 				},
 				{
 					"time": 1.25,
 					"value": 0.0,
-					"coefficients": [0.0, 0.0, 0.0, 0.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
 				},
 				{
 					"time": 2.566666603088379,
 					"value": 0.0,
-					"coefficients": [0.0, 0.0, 0.0, 0.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
 				},
 				{
 					"time": 2.5833332538604736,
 					"value": 0.0,
-					"coefficients": [0.0, 0.0, 0.0, 0.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
 				}
 			]
 		},
@@ -609,34 +3750,61 @@
 					"time": 0.0,
 					"value": 0.949999988079071,
 					"coefficients": [
-						-0.426430881023407, 0.39444857835769653, 0.0,
+						-0.426430881023407,
+						0.39444857835769653,
+						0.0,
 						0.949999988079071
 					]
 				},
 				{
 					"time": 0.6166666746139526,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				},
 				{
 					"time": 1.2333333492279053,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				},
 				{
 					"time": 1.25,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				},
 				{
 					"time": 2.566666603088379,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				},
 				{
 					"time": 2.5833332538604736,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				}
 			]
 		},
@@ -648,34 +3816,61 @@
 					"time": 0.0,
 					"value": 0.949999988079071,
 					"coefficients": [
-						-0.426430881023407, 0.39444857835769653, 0.0,
+						-0.426430881023407,
+						0.39444857835769653,
+						0.0,
 						0.949999988079071
 					]
 				},
 				{
 					"time": 0.6166666746139526,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				},
 				{
 					"time": 1.2333333492279053,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				},
 				{
 					"time": 1.25,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				},
 				{
 					"time": 2.566666603088379,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				},
 				{
 					"time": 2.5833332538604736,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				}
 			]
 		},
@@ -687,34 +3882,61 @@
 					"time": 0.0,
 					"value": 0.949999988079071,
 					"coefficients": [
-						-0.426430881023407, 0.39444857835769653, 0.0,
+						-0.426430881023407,
+						0.39444857835769653,
+						0.0,
 						0.949999988079071
 					]
 				},
 				{
 					"time": 0.6166666746139526,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				},
 				{
 					"time": 1.2333333492279053,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				},
 				{
 					"time": 1.25,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				},
 				{
 					"time": 2.566666603088379,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				},
 				{
 					"time": 2.5833332538604736,
 					"value": 1.0,
-					"coefficients": [0.0, 0.0, 0.0, 1.0]
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
 				}
 			]
 		},
@@ -729,8 +3951,5219 @@
 			"property": "m_AnchoredPosition.y",
 			"keys": [],
 			"constant": 0.0
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Under light/light L-1 ",
+			"property": "localEulerAnglesRaw.x",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.7333333492279053,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.4166666269302368,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Under light/light L-1 ",
+			"property": "localEulerAnglesRaw.y",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.7333333492279053,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.4166666269302368,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Under light/light L-1 ",
+			"property": "localEulerAnglesRaw.z",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						50.713748931884766,
+						-55.78512191772461,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.7333333492279053,
+					"value": -10.0,
+					"coefficients": [
+						-62.680477142333984,
+						64.24748229980469,
+						0.0,
+						-10.0
+					]
+				},
+				{
+					"time": 1.4166666269302368,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light R-1",
+			"property": "localEulerAnglesRaw.x",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.3499999940395355,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.8666666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light R-1",
+			"property": "localEulerAnglesRaw.y",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.3499999940395355,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.8666666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light R-1",
+			"property": "localEulerAnglesRaw.z",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": -15.0,
+					"coefficients": [
+						5.584344387054443,
+						5.277203559875488,
+						0.0,
+						-15.0
+					]
+				},
+				{
+					"time": 0.3499999940395355,
+					"value": -14.114113807678223,
+					"coefficients": [
+						-887.5474853515625,
+						413.6104736328125,
+						5.746288776397705,
+						-14.114113807678223
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 0.0,
+					"coefficients": [
+						-48.07904052734375,
+						-55.960479736328125,
+						36.995059967041016,
+						0.0
+					]
+				},
+				{
+					"time": 0.8666666746139526,
+					"value": 5.0,
+					"coefficients": [
+						22.19117546081543,
+						-25.519851684570312,
+						0.0,
+						5.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light R-2",
+			"property": "localEulerAnglesRaw.x",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.3499999940395355,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.8666666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light R-2",
+			"property": "localEulerAnglesRaw.y",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.3499999940395355,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.8666666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light R-2",
+			"property": "localEulerAnglesRaw.z",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": -15.0,
+					"coefficients": [
+						14.923129081726074,
+						14.102348327636719,
+						0.0,
+						-15.0
+					]
+				},
+				{
+					"time": 0.3499999940395355,
+					"value": -12.632633209228516,
+					"coefficients": [
+						-2681.42529296875,
+						1116.358642578125,
+						15.3558931350708,
+						-12.632633209228516
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 20.0,
+					"coefficients": [
+						215.4205322265625,
+						-128.69387817382812,
+						38.709686279296875,
+						20.0
+					]
+				},
+				{
+					"time": 0.8666666746139526,
+					"value": 25.0,
+					"coefficients": [
+						-19.280855178833008,
+						12.550745010375977,
+						14.754098892211914,
+						25.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 35.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						35.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light R-3",
+			"property": "localEulerAnglesRaw.x",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.3499999940395355,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.8666666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light R-3",
+			"property": "localEulerAnglesRaw.y",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.3499999940395355,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.8666666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light R-3",
+			"property": "localEulerAnglesRaw.z",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": -15.0,
+					"coefficients": [
+						5.584344387054443,
+						5.277203559875488,
+						0.0,
+						-15.0
+					]
+				},
+				{
+					"time": 0.3499999940395355,
+					"value": -14.114113807678223,
+					"coefficients": [
+						-887.5474853515625,
+						413.6104736328125,
+						5.746288776397705,
+						-14.114113807678223
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 0.0,
+					"coefficients": [
+						-48.07904052734375,
+						-55.960479736328125,
+						36.995059967041016,
+						0.0
+					]
+				},
+				{
+					"time": 0.8666666746139526,
+					"value": 5.0,
+					"coefficients": [
+						44.38235092163086,
+						-51.039703369140625,
+						0.0,
+						5.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": -5.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						-5.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light R-4",
+			"property": "localEulerAnglesRaw.x",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.3499999940395355,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.8666666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light R-4",
+			"property": "localEulerAnglesRaw.y",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.3499999940395355,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.8666666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light R-4",
+			"property": "localEulerAnglesRaw.z",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": -20.0,
+					"coefficients": [
+						19.592517852783203,
+						18.51493263244629,
+						0.0,
+						-20.0
+					]
+				},
+				{
+					"time": 0.3499999940395355,
+					"value": -16.891891479492188,
+					"coefficients": [
+						-3590.419921875,
+						1470.9473876953125,
+						20.160703659057617,
+						-16.891891479492188
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 25.0,
+					"coefficients": [
+						215.42041015625,
+						-128.69378662109375,
+						38.70967483520508,
+						25.0
+					]
+				},
+				{
+					"time": 0.8666666746139526,
+					"value": 30.0,
+					"coefficients": [
+						-19.280855178833008,
+						12.550745010375977,
+						14.754098892211914,
+						30.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 40.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						40.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light L-1",
+			"property": "localEulerAnglesRaw.x",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.3499999940395355,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.8666666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light L-1",
+			"property": "localEulerAnglesRaw.y",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.3499999940395355,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.8666666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light L-1",
+			"property": "localEulerAnglesRaw.z",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": -5.0,
+					"coefficients": [
+						-7.919028282165527,
+						-7.483491897583008,
+						0.0,
+						-5.0
+					]
+				},
+				{
+					"time": 0.3499999940395355,
+					"value": -6.256256103515625,
+					"coefficients": [
+						1317.9332275390625,
+						-584.47509765625,
+						-8.148687362670898,
+						-6.256256103515625
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": -25.0,
+					"coefficients": [
+						20.6451416015625,
+						69.67742919921875,
+						-38.709678649902344,
+						-25.0
+					]
+				},
+				{
+					"time": 0.8666666746139526,
+					"value": -30.0,
+					"coefficients": [
+						-22.19117546081543,
+						25.519851684570312,
+						0.0,
+						-30.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": -25.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						-25.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light L-2",
+			"property": "localEulerAnglesRaw.x",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.3499999940395355,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.8666666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light L-2",
+			"property": "localEulerAnglesRaw.y",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.3499999940395355,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.8666666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light L-2",
+			"property": "localEulerAnglesRaw.z",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": -5.0,
+					"coefficients": [
+						-17.257814407348633,
+						-16.308643341064453,
+						0.0,
+						-5.0
+					]
+				},
+				{
+					"time": 0.3499999940395355,
+					"value": -7.737737655639648,
+					"coefficients": [
+						3135.92236328125,
+						-1293.6529541015625,
+						-17.758296966552734,
+						-7.737737655639648
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": -45.0,
+					"coefficients": [
+						-215.42041015625,
+						128.69381713867188,
+						-38.709678649902344,
+						-45.0
+					]
+				},
+				{
+					"time": 0.8666666746139526,
+					"value": -50.0,
+					"coefficients": [
+						19.280855178833008,
+						-12.550745010375977,
+						-14.754098892211914,
+						-50.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": -60.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						-60.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light L-3",
+			"property": "localEulerAnglesRaw.x",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.3499999940395355,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.8666666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light L-3",
+			"property": "localEulerAnglesRaw.y",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.3499999940395355,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.8666666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light L-3",
+			"property": "localEulerAnglesRaw.z",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": -5.0,
+					"coefficients": [
+						-7.919028282165527,
+						-7.483491897583008,
+						0.0,
+						-5.0
+					]
+				},
+				{
+					"time": 0.3499999940395355,
+					"value": -6.256256103515625,
+					"coefficients": [
+						1317.9332275390625,
+						-584.47509765625,
+						-8.148687362670898,
+						-6.256256103515625
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": -25.0,
+					"coefficients": [
+						20.6451416015625,
+						69.67742919921875,
+						-38.709678649902344,
+						-25.0
+					]
+				},
+				{
+					"time": 0.8666666746139526,
+					"value": -30.0,
+					"coefficients": [
+						-44.38235092163086,
+						51.039703369140625,
+						0.0,
+						-30.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": -20.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						-20.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light L-4",
+			"property": "localEulerAnglesRaw.x",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.3499999940395355,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.8666666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light L-4",
+			"property": "localEulerAnglesRaw.y",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.3499999940395355,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.8666666746139526,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light L-4",
+			"property": "localEulerAnglesRaw.z",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						-21.927207946777344,
+						-20.721221923828125,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.3499999940395355,
+					"value": -3.4784786701202393,
+					"coefficients": [
+						4044.917236328125,
+						-1648.241943359375,
+						-22.5631046295166,
+						-3.4784786701202393
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": -50.0,
+					"coefficients": [
+						-136.7320556640625,
+						109.02178192138672,
+						-38.70969009399414,
+						-50.0
+					]
+				},
+				{
+					"time": 0.8666666746139526,
+					"value": -55.0,
+					"coefficients": [
+						5.456847190856934,
+						0.13945135474205017,
+						-9.836065292358398,
+						-55.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": -60.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						-60.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Under light/light L-2",
+			"property": "localEulerAnglesRaw.x",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.8333333134651184,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.5,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Under light/light L-2",
+			"property": "localEulerAnglesRaw.y",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.8333333134651184,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.5,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Under light/light L-2",
+			"property": "localEulerAnglesRaw.z",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						-34.560001373291016,
+						43.20000076293945,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.8333333134651184,
+					"value": 10.0,
+					"coefficients": [
+						67.5,
+						-67.5,
+						0.0,
+						10.0
+					]
+				},
+				{
+					"time": 1.5,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Under light/light R-1",
+			"property": "localEulerAnglesRaw.x",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.7333333492279053,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.4166666269302368,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Under light/light R-1",
+			"property": "localEulerAnglesRaw.y",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.7333333492279053,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.4166666269302368,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Under light/light R-1",
+			"property": "localEulerAnglesRaw.z",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": -90.0,
+					"coefficients": [
+						-50.713748931884766,
+						55.78512191772461,
+						0.0,
+						-90.0
+					]
+				},
+				{
+					"time": 0.7333333492279053,
+					"value": -80.0,
+					"coefficients": [
+						62.680477142333984,
+						-64.24748229980469,
+						0.0,
+						-80.0
+					]
+				},
+				{
+					"time": 1.4166666269302368,
+					"value": -90.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						-90.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Under light/light R-2",
+			"property": "localEulerAnglesRaw.x",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.8333333134651184,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.5,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Under light/light R-2",
+			"property": "localEulerAnglesRaw.y",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.8333333134651184,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.5,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Under light/light R-2",
+			"property": "localEulerAnglesRaw.z",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": -65.0,
+					"coefficients": [
+						34.560001373291016,
+						-43.20000076293945,
+						0.0,
+						-65.0
+					]
+				},
+				{
+					"time": 0.8333333134651184,
+					"value": -75.0,
+					"coefficients": [
+						-67.5,
+						67.5,
+						0.0,
+						-75.0
+					]
+				},
+				{
+					"time": 1.5,
+					"value": -65.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						-65.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 1-1",
+			"property": "localEulerAnglesRaw.x",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.049999952316284,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 1-1",
+			"property": "localEulerAnglesRaw.y",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.049999952316284,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 1-1",
+			"property": "localEulerAnglesRaw.z",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 0.0,
+					"coefficients": [
+						19.5312557220459,
+						-23.4375057220459,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.049999952316284,
+					"value": -5.0,
+					"coefficients": [
+						-72.505126953125,
+						56.191471099853516,
+						0.0,
+						-5.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 1-2",
+			"property": "localEulerAnglesRaw.x",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.7666666507720947,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 1-2",
+			"property": "localEulerAnglesRaw.y",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.7666666507720947,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 1-2",
+			"property": "localEulerAnglesRaw.z",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 0.0,
+					"coefficients": [
+						72.505126953125,
+						-56.191471099853516,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.7666666507720947,
+					"value": -5.0,
+					"coefficients": [
+						-19.5312557220459,
+						23.4375057220459,
+						0.0,
+						-5.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 1-3",
+			"property": "localEulerAnglesRaw.x",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.049999952316284,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 1-3",
+			"property": "localEulerAnglesRaw.y",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.049999952316284,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 1-3",
+			"property": "localEulerAnglesRaw.z",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 60.0,
+					"coefficients": [
+						-19.5312557220459,
+						23.4375057220459,
+						0.0,
+						60.0
+					]
+				},
+				{
+					"time": 2.049999952316284,
+					"value": 65.0,
+					"coefficients": [
+						72.505126953125,
+						-56.191471099853516,
+						0.0,
+						65.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 60.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						60.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 1-4",
+			"property": "localEulerAnglesRaw.x",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.7666666507720947,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 1-4",
+			"property": "localEulerAnglesRaw.y",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.7666666507720947,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 1-4",
+			"property": "localEulerAnglesRaw.z",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 60.0,
+					"coefficients": [
+						-72.505126953125,
+						56.191471099853516,
+						0.0,
+						60.0
+					]
+				},
+				{
+					"time": 1.7666666507720947,
+					"value": 65.0,
+					"coefficients": [
+						19.5312557220459,
+						-23.4375057220459,
+						0.0,
+						65.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 60.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						60.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 2-1",
+			"property": "localEulerAnglesRaw.x",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 2-1",
+			"property": "localEulerAnglesRaw.y",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 2-1",
+			"property": "localEulerAnglesRaw.z",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 0.0,
+					"coefficients": [
+						177.52940368652344,
+						-102.07940673828125,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": -5.0,
+					"coefficients": [
+						-12.299565315246582,
+						17.219390869140625,
+						0.0,
+						-5.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 2-2",
+			"property": "localEulerAnglesRaw.x",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.1666667461395264,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 2-2",
+			"property": "localEulerAnglesRaw.y",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.1666667461395264,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 2-2",
+			"property": "localEulerAnglesRaw.z",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 0.0,
+					"coefficients": [
+						12.98271656036377,
+						-17.85123634338379,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.1666667461395264,
+					"value": -5.0,
+					"coefficients": [
+						-156.2501678466797,
+						93.75006866455078,
+						0.0,
+						-5.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 2-3",
+			"property": "localEulerAnglesRaw.x",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 2-3",
+			"property": "localEulerAnglesRaw.y",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 2-3",
+			"property": "localEulerAnglesRaw.z",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 40.0,
+					"coefficients": [
+						-176.59239196777344,
+						101.5406265258789,
+						0.0,
+						40.0
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 44.973609924316406,
+					"coefficients": [
+						12.234648704528809,
+						-17.12850570678711,
+						0.0,
+						44.973609924316406
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 40.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						40.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 2-4",
+			"property": "localEulerAnglesRaw.x",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.1666667461395264,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 2-4",
+			"property": "localEulerAnglesRaw.y",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.1666667461395264,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 2-4",
+			"property": "localEulerAnglesRaw.z",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 30.0,
+					"coefficients": [
+						-12.98271656036377,
+						17.85123634338379,
+						0.0,
+						30.0
+					]
+				},
+				{
+					"time": 2.1666667461395264,
+					"value": 35.0,
+					"coefficients": [
+						156.2501678466797,
+						-93.75006866455078,
+						0.0,
+						35.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 30.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						30.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background",
+			"property": "m_LocalScale.x",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 1.100000023841858,
+					"coefficients": [
+						0.08761987090110779,
+						-0.17304924130439758,
+						0.0,
+						1.100000023841858
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 1.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background",
+			"property": "m_LocalScale.y",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 1.100000023841858,
+					"coefficients": [
+						0.08761987090110779,
+						-0.17304924130439758,
+						0.0,
+						1.100000023841858
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 1.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background",
+			"property": "m_LocalScale.z",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 1.100000023841858,
+					"coefficients": [
+						0.08761987090110779,
+						-0.17304924130439758,
+						0.0,
+						1.100000023841858
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 1.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut3_Background/bg 2",
+			"property": "m_LocalScale.x",
+			"keys": [
+				{
+					"time": 2.5833332538604736,
+					"value": 1.6000001430511475,
+					"coefficients": [
+						0.46296441555023193,
+						-0.4166680574417114,
+						0.0,
+						1.6000001430511475
+					]
+				},
+				{
+					"time": 3.183333396911621,
+					"value": 1.5499999523162842,
+					"coefficients": [
+						-162.4999237060547,
+						48.7499885559082,
+						0.0,
+						1.5499999523162842
+					]
+				},
+				{
+					"time": 3.383333444595337,
+					"value": 2.200000047683716,
+					"coefficients": [
+						1.562500238418579,
+						-0.9374998211860657,
+						0.0,
+						2.200000047683716
+					]
+				},
+				{
+					"time": 3.7833333015441895,
+					"value": 2.1500000953674316,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						2.1500000953674316
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut3_Background/bg 2",
+			"property": "m_LocalScale.y",
+			"keys": [
+				{
+					"time": 2.5833332538604736,
+					"value": 1.6000001430511475,
+					"coefficients": [
+						0.46296441555023193,
+						-0.4166680574417114,
+						0.0,
+						1.6000001430511475
+					]
+				},
+				{
+					"time": 3.183333396911621,
+					"value": 1.5499999523162842,
+					"coefficients": [
+						-162.4999237060547,
+						48.7499885559082,
+						0.0,
+						1.5499999523162842
+					]
+				},
+				{
+					"time": 3.383333444595337,
+					"value": 2.200000047683716,
+					"coefficients": [
+						1.562500238418579,
+						-0.9374998211860657,
+						0.0,
+						2.200000047683716
+					]
+				},
+				{
+					"time": 3.7833333015441895,
+					"value": 2.1500000953674316,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						2.1500000953674316
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut3_Background/bg 2",
+			"property": "m_LocalScale.z",
+			"keys": [
+				{
+					"time": 2.5833332538604736,
+					"value": 1.6000001430511475,
+					"coefficients": [
+						0.46296441555023193,
+						-0.4166680574417114,
+						0.0,
+						1.6000001430511475
+					]
+				},
+				{
+					"time": 3.183333396911621,
+					"value": 1.5499999523162842,
+					"coefficients": [
+						-162.4999237060547,
+						48.7499885559082,
+						0.0,
+						1.5499999523162842
+					]
+				},
+				{
+					"time": 3.383333444595337,
+					"value": 2.200000047683716,
+					"coefficients": [
+						1.562500238418579,
+						-0.9374998211860657,
+						0.0,
+						2.200000047683716
+					]
+				},
+				{
+					"time": 3.7833333015441895,
+					"value": 2.1500000953674316,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						2.1500000953674316
+					]
+				}
+			]
+		},
+		{
+			"path": "Add",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 3.683333396911621,
+					"value": 0.0,
+					"coefficients": [
+						-2000.0057373046875,
+						300.0005798339844,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 3.7833333015441895,
+					"value": 1.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background",
+			"property": "m_IsActive",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 1.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.25,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background",
+			"property": "m_IsActive",
+			"keys": [
+				{
+					"time": 1.2333333492279053,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.25,
+					"value": 1.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 2.5833332538604736,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/bg 2-2",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 2.4833333492279053,
+					"value": 0.0,
+					"coefficients": [
+						-3456.010009765625,
+						432.0008239746094,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 1.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/bg 2-2",
+			"property": "m_AnchoredPosition.x",
+			"keys": [
+				{
+					"time": 2.4833333492279053,
+					"value": 1752.0,
+					"coefficients": [
+						9027098.0,
+						-1128386.125,
+						0.0,
+						1752.0
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": -860.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						-860.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/cut1 - light",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 0.3166666626930237,
+					"value": 0.0,
+					"coefficients": [
+						-74.07406616210938,
+						33.33333206176758,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 1.0,
+					"coefficients": [
+						29.65687370300293,
+						-17.79412078857422,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.0166666507720947,
+					"value": 0.05098039284348488,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.05098039284348488
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light L-4",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 1.0,
+					"coefficients": [
+						1.3630298376083374,
+						-1.942317247390747,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 0.949999988079071,
+					"value": 0.4156862795352936,
+					"coefficients": [
+						-3.662505865097046,
+						3.754068374633789,
+						0.0,
+						0.4156862795352936
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 1.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light L-3",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 1.0,
+					"coefficients": [
+						1.3630298376083374,
+						-1.942317247390747,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 0.949999988079071,
+					"value": 0.4156862795352936,
+					"coefficients": [
+						-3.662505865097046,
+						3.754068374633789,
+						0.0,
+						0.4156862795352936
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 1.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light L-2",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 1.0,
+					"coefficients": [
+						1.3630298376083374,
+						-1.942317247390747,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 0.949999988079071,
+					"value": 0.4156862795352936,
+					"coefficients": [
+						-3.662505865097046,
+						3.754068374633789,
+						0.0,
+						0.4156862795352936
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 1.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light L-1",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 1.0,
+					"coefficients": [
+						1.3630298376083374,
+						-1.942317247390747,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 0.949999988079071,
+					"value": 0.4156862795352936,
+					"coefficients": [
+						-3.662505865097046,
+						3.754068374633789,
+						0.0,
+						0.4156862795352936
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 1.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light R-4",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 1.0,
+					"coefficients": [
+						1.3630298376083374,
+						-1.942317247390747,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 0.949999988079071,
+					"value": 0.4156862795352936,
+					"coefficients": [
+						-3.662505865097046,
+						3.754068374633789,
+						0.0,
+						0.4156862795352936
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 1.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light R-3",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 1.0,
+					"coefficients": [
+						1.3630298376083374,
+						-1.942317247390747,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 0.949999988079071,
+					"value": 0.4156862795352936,
+					"coefficients": [
+						-3.662505865097046,
+						3.754068374633789,
+						0.0,
+						0.4156862795352936
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 1.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light R-2",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 1.0,
+					"coefficients": [
+						1.3630298376083374,
+						-1.942317247390747,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 0.949999988079071,
+					"value": 0.4156862795352936,
+					"coefficients": [
+						-3.662505865097046,
+						3.754068374633789,
+						0.0,
+						0.4156862795352936
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 1.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/Up light/light R-1",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 1.0,
+					"coefficients": [
+						1.3630298376083374,
+						-1.942317247390747,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 0.949999988079071,
+					"value": 0.4156862795352936,
+					"coefficients": [
+						-3.662505865097046,
+						3.754068374633789,
+						0.0,
+						0.4156862795352936
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 1.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/Cut1_Background/bg 1/bg 1 - light2",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						-432.0,
+						108.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.1666666716337204,
+					"value": 1.0,
+					"coefficients": [
+						590.6248779296875,
+						-118.1249771118164,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 0.30000001192092896,
+					"value": 0.30000001192092896,
+					"coefficients": [
+						-414.8150329589844,
+						93.33336639404297,
+						0.0,
+						0.30000001192092896
+					]
+				},
+				{
+					"time": 0.44999998807907104,
+					"value": 1.0,
+					"coefficients": [
+						199.5428009033203,
+						-58.457130432128906,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 0.6166666746139526,
+					"value": 0.30000001192092896,
+					"coefficients": [
+						12.364503860473633,
+						4.391968727111816,
+						-2.857142686843872,
+						0.30000001192092896
+					]
+				},
+				{
+					"time": 0.800000011920929,
+					"value": 0.0,
+					"coefficients": [
+						-843.7501831054688,
+						168.75003051757812,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.9333333373069763,
+					"value": 1.0,
+					"coefficients": [
+						302.3999328613281,
+						-75.59999084472656,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.100000023841858,
+					"value": 0.30000001192092896,
+					"coefficients": [
+						-414.8150329589844,
+						93.33336639404297,
+						0.0,
+						0.30000001192092896
+					]
+				},
+				{
+					"time": 1.25,
+					"value": 1.0,
+					"coefficients": [
+						302.40020751953125,
+						-75.60003662109375,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.4166666269302368,
+					"value": 0.30000001192092896,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.30000001192092896
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/cut1 - light1",
+			"property": "m_IsActive",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 1.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.25,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/cut1 - light",
+			"property": "m_IsActive",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 1.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.25,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/cut2 - light1",
+			"property": "m_IsActive",
+			"keys": [
+				{
+					"time": 1.2333333492279053,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.25,
+					"value": 1.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 2.5833332538604736,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/cut2 - light2",
+			"property": "m_IsActive",
+			"keys": [
+				{
+					"time": 1.2333333492279053,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 1.25,
+					"value": 1.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 2.5833332538604736,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/cut2 - light1",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 0.2980392277240753,
+					"coefficients": [
+						7.477792739868164,
+						-4.112785816192627,
+						0.0,
+						0.2980392277240753
+					]
+				},
+				{
+					"time": 1.6166666746139526,
+					"value": 0.11372549086809158,
+					"coefficients": [
+						-2.0258371829986572,
+						1.7219617366790771,
+						0.0,
+						0.11372549086809158
+					]
+				},
+				{
+					"time": 2.183333396911621,
+					"value": 0.2980392277240753,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.2980392277240753
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 0.2980392277240753,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.2980392277240753
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/cut2 - light2",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 0.2980392277240753,
+					"coefficients": [
+						7.477792739868164,
+						-4.112785816192627,
+						0.0,
+						0.2980392277240753
+					]
+				},
+				{
+					"time": 1.6166666746139526,
+					"value": 0.11372549086809158,
+					"coefficients": [
+						-2.0258371829986572,
+						1.7219617366790771,
+						0.0,
+						0.11372549086809158
+					]
+				},
+				{
+					"time": 2.183333396911621,
+					"value": 0.2980392277240753,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.2980392277240753
+					]
+				},
+				{
+					"time": 2.566666603088379,
+					"value": 0.2980392277240753,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.2980392277240753
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 2-4",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 1.1666666269302368,
+					"value": 1.0,
+					"coefficients": [
+						627.2680053710938,
+						-109.77188873291016,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.2833333015441895,
+					"value": 0.501960813999176,
+					"coefficients": [
+						-627.2680053710938,
+						109.77188873291016,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.399999976158142,
+					"value": 1.0,
+					"coefficients": [
+						996.0777587890625,
+						-149.4116973876953,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.5,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.6166666746139526,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.7333333492279053,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.8666666746139526,
+					"value": 0.501960813999176,
+					"coefficients": [
+						-420.22064208984375,
+						84.04412078857422,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.0,
+					"value": 1.0,
+					"coefficients": [
+						996.0811767578125,
+						-149.4120330810547,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 2.0999999046325684,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.2166666984558105,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.3333332538604736,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.4666666984558105,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 2-3",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 1.3833333253860474,
+					"value": 1.0,
+					"coefficients": [
+						627.2680053710938,
+						-109.77188873291016,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.5,
+					"value": 0.501960813999176,
+					"coefficients": [
+						-627.2680053710938,
+						109.77188873291016,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.6166666746139526,
+					"value": 1.0,
+					"coefficients": [
+						996.0777587890625,
+						-149.4116973876953,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.7166666984558105,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.8333333730697632,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.9500000476837158,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.0833332538604736,
+					"value": 0.501960813999176,
+					"coefficients": [
+						-420.2195129394531,
+						84.04397583007812,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.2166666984558105,
+					"value": 1.0,
+					"coefficients": [
+						996.0811767578125,
+						-149.4120330810547,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 2.316666603088379,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.433333396911621,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.549999952316284,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.683333396911621,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 2-2",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 1.2166666984558105,
+					"value": 1.0,
+					"coefficients": [
+						627.2680053710938,
+						-109.77188873291016,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.3333333730697632,
+					"value": 0.501960813999176,
+					"coefficients": [
+						-627.2680053710938,
+						109.77188873291016,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.4500000476837158,
+					"value": 1.0,
+					"coefficients": [
+						996.0811767578125,
+						-149.4120330810547,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.5499999523162842,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.6666666269302368,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.7833333015441895,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.9166666269302368,
+					"value": 0.501960813999176,
+					"coefficients": [
+						-420.22064208984375,
+						84.04412078857422,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.049999952316284,
+					"value": 1.0,
+					"coefficients": [
+						996.0741577148438,
+						-149.4113311767578,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 2.1500000953674316,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.2666666507720947,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.383333444595337,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.5166666507720947,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 2-1",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 1.350000023841858,
+					"value": 1.0,
+					"coefficients": [
+						627.2680053710938,
+						-109.77188873291016,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.4666666984558105,
+					"value": 0.501960813999176,
+					"coefficients": [
+						-627.2680053710938,
+						109.77188873291016,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.5833333730697632,
+					"value": 1.0,
+					"coefficients": [
+						996.0811767578125,
+						-149.4120330810547,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.6833332777023315,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.7999999523162842,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.9166666269302368,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.049999952316284,
+					"value": 0.501960813999176,
+					"coefficients": [
+						-420.2195129394531,
+						84.04397583007812,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.183333396911621,
+					"value": 1.0,
+					"coefficients": [
+						996.0811767578125,
+						-149.4120330810547,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 2.2833333015441895,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.4000000953674316,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.5166666507720947,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.6500000953674316,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 1-4",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 1.2166666984558105,
+					"value": 1.0,
+					"coefficients": [
+						627.2680053710938,
+						-109.77188873291016,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.3333333730697632,
+					"value": 0.501960813999176,
+					"coefficients": [
+						-627.2680053710938,
+						109.77188873291016,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.4500000476837158,
+					"value": 1.0,
+					"coefficients": [
+						996.0811767578125,
+						-149.4120330810547,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.5499999523162842,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.6666666269302368,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.7833333015441895,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.9166666269302368,
+					"value": 0.501960813999176,
+					"coefficients": [
+						-420.22064208984375,
+						84.04412078857422,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.049999952316284,
+					"value": 1.0,
+					"coefficients": [
+						996.0741577148438,
+						-149.4113311767578,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 2.1500000953674316,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.2666666507720947,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.383333444595337,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.5166666507720947,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 1-3",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 1.3833333253860474,
+					"value": 1.0,
+					"coefficients": [
+						627.2680053710938,
+						-109.77188873291016,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.5,
+					"value": 0.501960813999176,
+					"coefficients": [
+						-627.2680053710938,
+						109.77188873291016,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.6166666746139526,
+					"value": 1.0,
+					"coefficients": [
+						996.0777587890625,
+						-149.4116973876953,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.7166666984558105,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.8333333730697632,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.9500000476837158,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.0833332538604736,
+					"value": 0.501960813999176,
+					"coefficients": [
+						-420.2195129394531,
+						84.04397583007812,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.2166666984558105,
+					"value": 1.0,
+					"coefficients": [
+						996.0811767578125,
+						-149.4120330810547,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 2.316666603088379,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.433333396911621,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.549999952316284,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.683333396911621,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 1-2",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 1.1833332777023315,
+					"value": 1.0,
+					"coefficients": [
+						627.2680053710938,
+						-109.77188873291016,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.2999999523162842,
+					"value": 0.501960813999176,
+					"coefficients": [
+						-627.2680053710938,
+						109.77188873291016,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.4166666269302368,
+					"value": 1.0,
+					"coefficients": [
+						996.0777587890625,
+						-149.4116973876953,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.5166666507720947,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.6333333253860474,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.75,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.8833333253860474,
+					"value": 0.501960813999176,
+					"coefficients": [
+						-420.22064208984375,
+						84.04412078857422,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.0166666507720947,
+					"value": 1.0,
+					"coefficients": [
+						996.0811767578125,
+						-149.4120330810547,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 2.116666555404663,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.2333333492279053,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.3499999046325684,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.4833333492279053,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/Bg2 light/light 1-1",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 1.2833333015441895,
+					"value": 1.0,
+					"coefficients": [
+						627.2680053710938,
+						-109.77188873291016,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.399999976158142,
+					"value": 0.501960813999176,
+					"coefficients": [
+						-627.2680053710938,
+						109.77188873291016,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.5166666507720947,
+					"value": 1.0,
+					"coefficients": [
+						996.0777587890625,
+						-149.4116973876953,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.6166666746139526,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.7333333492279053,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.850000023841858,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 1.9833333492279053,
+					"value": 0.501960813999176,
+					"coefficients": [
+						-420.2217712402344,
+						84.04426574707031,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.116666555404663,
+					"value": 1.0,
+					"coefficients": [
+						996.0741577148438,
+						-149.4113311767578,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 2.2166666984558105,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.3333332538604736,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.450000047683716,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				},
+				{
+					"time": 2.5833332538604736,
+					"value": 0.501960813999176,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.501960813999176
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/bg 2 -1 /light 1-4",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 1.0,
+					"coefficients": [
+						189.74131774902344,
+						-47.43531799316406,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.4166666269302368,
+					"value": 0.5607843399047852,
+					"coefficients": [
+						-142.55520629882812,
+						39.202693939208984,
+						0.0,
+						0.5607843399047852
+					]
+				},
+				{
+					"time": 1.600000023841858,
+					"value": 1.0,
+					"coefficients": [
+						189.74131774902344,
+						-47.43531799316406,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.7666666507720947,
+					"value": 0.5607843399047852,
+					"coefficients": [
+						-189.74131774902344,
+						47.43531799316406,
+						0.0,
+						0.5607843399047852
+					]
+				},
+				{
+					"time": 1.9333332777023315,
+					"value": 1.0,
+					"coefficients": [
+						189.74131774902344,
+						-47.43531799316406,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 2.0999999046325684,
+					"value": 0.5607843399047852,
+					"coefficients": [
+						-142.55520629882812,
+						39.202693939208984,
+						0.0,
+						0.5607843399047852
+					]
+				},
+				{
+					"time": 2.2833333015441895,
+					"value": 1.0,
+					"coefficients": [
+						189.7408905029297,
+						-47.435245513916016,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 2.450000047683716,
+					"value": 0.5607843399047852,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.5607843399047852
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/bg 2 -1 /light 1-3",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 1.0,
+					"coefficients": [
+						189.74131774902344,
+						-47.43531799316406,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.4166666269302368,
+					"value": 0.5607843399047852,
+					"coefficients": [
+						-142.55520629882812,
+						39.202693939208984,
+						0.0,
+						0.5607843399047852
+					]
+				},
+				{
+					"time": 1.600000023841858,
+					"value": 1.0,
+					"coefficients": [
+						189.74131774902344,
+						-47.43531799316406,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.7666666507720947,
+					"value": 0.5607843399047852,
+					"coefficients": [
+						-189.74131774902344,
+						47.43531799316406,
+						0.0,
+						0.5607843399047852
+					]
+				},
+				{
+					"time": 1.9333332777023315,
+					"value": 1.0,
+					"coefficients": [
+						189.74131774902344,
+						-47.43531799316406,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 2.0999999046325684,
+					"value": 0.5607843399047852,
+					"coefficients": [
+						-142.55520629882812,
+						39.202693939208984,
+						0.0,
+						0.5607843399047852
+					]
+				},
+				{
+					"time": 2.2833333015441895,
+					"value": 1.0,
+					"coefficients": [
+						189.7408905029297,
+						-47.435245513916016,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 2.450000047683716,
+					"value": 0.5607843399047852,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.5607843399047852
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/bg 2 -1 /light 1-2",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 1.0,
+					"coefficients": [
+						189.74131774902344,
+						-47.43531799316406,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.4166666269302368,
+					"value": 0.5607843399047852,
+					"coefficients": [
+						-142.55520629882812,
+						39.202693939208984,
+						0.0,
+						0.5607843399047852
+					]
+				},
+				{
+					"time": 1.600000023841858,
+					"value": 1.0,
+					"coefficients": [
+						189.74131774902344,
+						-47.43531799316406,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.7666666507720947,
+					"value": 0.5607843399047852,
+					"coefficients": [
+						-189.74131774902344,
+						47.43531799316406,
+						0.0,
+						0.5607843399047852
+					]
+				},
+				{
+					"time": 1.9333332777023315,
+					"value": 1.0,
+					"coefficients": [
+						189.74131774902344,
+						-47.43531799316406,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 2.0999999046325684,
+					"value": 0.5607843399047852,
+					"coefficients": [
+						-142.55520629882812,
+						39.202693939208984,
+						0.0,
+						0.5607843399047852
+					]
+				},
+				{
+					"time": 2.2833333015441895,
+					"value": 1.0,
+					"coefficients": [
+						189.7408905029297,
+						-47.435245513916016,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 2.450000047683716,
+					"value": 0.5607843399047852,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.5607843399047852
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut2_Background/bg 2 -1 /light 1-1",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 1.25,
+					"value": 1.0,
+					"coefficients": [
+						189.74131774902344,
+						-47.43531799316406,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.4166666269302368,
+					"value": 0.5607843399047852,
+					"coefficients": [
+						-142.55520629882812,
+						39.202693939208984,
+						0.0,
+						0.5607843399047852
+					]
+				},
+				{
+					"time": 1.600000023841858,
+					"value": 1.0,
+					"coefficients": [
+						189.74131774902344,
+						-47.43531799316406,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 1.7666666507720947,
+					"value": 0.5607843399047852,
+					"coefficients": [
+						-189.74131774902344,
+						47.43531799316406,
+						0.0,
+						0.5607843399047852
+					]
+				},
+				{
+					"time": 1.9333332777023315,
+					"value": 1.0,
+					"coefficients": [
+						189.74131774902344,
+						-47.43531799316406,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 2.0999999046325684,
+					"value": 0.5607843399047852,
+					"coefficients": [
+						-142.55520629882812,
+						39.202693939208984,
+						0.0,
+						0.5607843399047852
+					]
+				},
+				{
+					"time": 2.2833333015441895,
+					"value": 1.0,
+					"coefficients": [
+						189.7408905029297,
+						-47.435245513916016,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 2.450000047683716,
+					"value": 0.5607843399047852,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.5607843399047852
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/Cut3_Background",
+			"property": "m_IsActive",
+			"keys": [
+				{
+					"time": 2.566666603088379,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 2.5833332538604736,
+					"value": 1.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/cut3 - eff",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 3.2333333492279053,
+					"value": 0.0,
+					"coefficients": [
+						-432001.21875,
+						10800.0205078125,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 3.25,
+					"value": 1.0,
+					"coefficients": [
+						24.578964233398438,
+						-15.976327896118164,
+						0.0,
+						1.0
+					]
+				},
+				{
+					"time": 3.683333396911621,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				}
+			]
+		},
+		{
+			"path": "Cut/Cut1/Anchors/object/cut1 - light1",
+			"property": "m_Color.a",
+			"keys": [
+				{
+					"time": 0.0,
+					"value": 0.0,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.38333332538604736,
+					"value": 0.0,
+					"coefficients": [
+						-1.7365591526031494,
+						1.2590054273605347,
+						0.0,
+						0.0
+					]
+				},
+				{
+					"time": 0.8666666746139526,
+					"value": 0.09803921729326248,
+					"coefficients": [
+						0.0,
+						0.0,
+						0.0,
+						0.09803921729326248
+					]
+				}
+			]
 		}
 	],
 	"activations": [],
-	"assets": {}
+	"assets": {},
+	"textures": {
+		"a110227b434be178c52abe2af6f1513098c06741e3944b660f7c19a9ff625ed9": {
+			"width": 1024,
+			"height": 1024,
+			"bytes": 40582,
+			"repeat": true
+		},
+		"e4fb610f3444f38aa8d2e8527b462425297fc19711ea8f739924b1e0f1e3e76b": {
+			"width": 512,
+			"height": 512,
+			"bytes": 17894,
+			"repeat": true
+		},
+		"9faeca7d07b8e809c9d812df018d64367fa54cdf52e17b7a4c1c55bad01d6a7f": {
+			"width": 512,
+			"height": 512,
+			"bytes": 18538,
+			"repeat": true
+		},
+		"42ca4ab78235a03a30947115a6e2832aa14aa7a9dd46bea3513e1051cef6a0b8": {
+			"width": 1024,
+			"height": 1024,
+			"bytes": 34038,
+			"repeat": true
+		},
+		"fb89958d1e5ce7131d7cc2d92fcfd48994b0d18b037cb6f25ef128772c0dbc38": {
+			"width": 1024,
+			"height": 1024,
+			"bytes": 43870,
+			"repeat": true
+		},
+		"a4da3e64923cf0dd2adf3829fbb80fa37978b79bc63baad4d1fb1eac8c2a6723": {
+			"width": 512,
+			"height": 512,
+			"bytes": 8414,
+			"repeat": true
+		},
+		"6d4b67fbe038b644e1d88d2646d846c8ea01e9c5d488a8a13028eccdd59d1cf1": {
+			"width": 1024,
+			"height": 1024,
+			"bytes": 116186,
+			"repeat": true
+		},
+		"860f9e3784c0720153b492062b317444a48e46be15c60a846e53a2f4325c0503": {
+			"width": 50,
+			"height": 50,
+			"bytes": 64
+		},
+		"6c1ac6238ffc492d768a189d04215cd0edd765e913ee11a64b74d4df8a5b4bfa": {
+			"width": 1024,
+			"height": 1024,
+			"bytes": 121422,
+			"repeat": true
+		},
+		"2426c9fe276363c7dc913904f0c3f1a2fb62921ece5d544aa547520a1a936815": {
+			"width": 512,
+			"height": 512,
+			"bytes": 5826,
+			"repeat": true
+		},
+		"cd7d3e5fb56c18b21eddb8df47e655abbdf6492cadc79621b5d4894110b0fdc9": {
+			"width": 512,
+			"height": 512,
+			"bytes": 13284,
+			"repeat": true
+		},
+		"a2fa95ee0ac440218097bcab1128a27a590c4cc1b98059c39f0b4d7f225dd7d3": {
+			"width": 512,
+			"height": 512,
+			"bytes": 11578,
+			"repeat": true
+		},
+		"b91e22bc20fa27e2112250005e67da19e818d768d3f817c4af13850d003ecb8f": {
+			"width": 1024,
+			"height": 1024,
+			"bytes": 14034,
+			"repeat": true
+		},
+		"0febaa596733863325c12e7774066351885c7666cc273cd40e6ebf513f8bc631": {
+			"width": 1024,
+			"height": 1024,
+			"bytes": 17410,
+			"repeat": true
+		},
+		"a02148ac7265644806a236c2bc0cc6a630557c898d62d5a92b71236ad9b315cb": {
+			"width": 1024,
+			"height": 1024,
+			"bytes": 21756,
+			"repeat": true
+		},
+		"ef12a5983c2a9b1708855f321a979ac69145c7971af9900c83436d9b4a271004": {
+			"width": 1024,
+			"height": 1024,
+			"bytes": 20912,
+			"repeat": true
+		},
+		"6d82bf4f6d7bb4d10a08727160406a6ae4e303c9bdf9e5f314a76994c057ee28": {
+			"width": 1024,
+			"height": 1024,
+			"bytes": 14798,
+			"repeat": true
+		},
+		"b4d3e3bd0f66c5b3c507996e667476b3fbb0775538005dfdaacb4518b88c301f": {
+			"width": 95,
+			"height": 96,
+			"bytes": 1608
+		},
+		"3ef8759bea67375bcc278236dd8af479692112cccc96b7d346d2e43b587d5957": {
+			"width": 1024,
+			"height": 1024,
+			"bytes": 398500,
+			"repeat": true
+		},
+		"f6545f6f6b6aa1c9a26069187dd6dca227328035fef04275b9122406b1ac2078": {
+			"width": 24,
+			"height": 24,
+			"bytes": 154
+		}
+	}
 }
