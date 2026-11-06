@@ -61,6 +61,9 @@ export const useUIStore = defineStore('ui', () => {
   const isLogsVisible = ref(false)
   const isHistoryVisible = ref(false)
   const isWhatsNewVisible = ref(false)
+  const isBackgroundsVisible = ref(false)
+  // The preview the backgrounds dialog applies to; null means every open preview.
+  const backgroundsTarget = ref<string | null>(null)
 
   async function shouldShowWhatsNew() {
     const dontShowWhatsNewForVersion = localStorage.getItem('DONT_SHOW_WHATS_NEW_FOR_VERSION')
@@ -91,6 +94,15 @@ export const useUIStore = defineStore('ui', () => {
 
   function closeHistory() {
     isHistoryVisible.value = false
+  }
+
+  function openBackgrounds(previewId: string | null = null) {
+    backgroundsTarget.value = previewId
+    isBackgroundsVisible.value = true
+  }
+
+  function closeBackgrounds() {
+    isBackgroundsVisible.value = false
   }
 
   function openWhatsNew() {
@@ -129,6 +141,8 @@ export const useUIStore = defineStore('ui', () => {
     isLogsVisible: readonly(isLogsVisible),
     isHistoryVisible: readonly(isHistoryVisible),
     isWhatsNewVisible: readonly(isWhatsNewVisible),
+    isBackgroundsVisible: readonly(isBackgroundsVisible),
+    backgroundsTarget: readonly(backgroundsTarget),
 
     shouldShowWhatsNew,
     openWhatsNew,
@@ -136,6 +150,8 @@ export const useUIStore = defineStore('ui', () => {
     closeSettings,
     openLogs,
     openHistory,
+    openBackgrounds,
+    closeBackgrounds,
     closeLogs,
     closeWhatsNew,
     closeHistory,

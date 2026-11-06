@@ -3,7 +3,7 @@
   lang="ts"
 >
 import { useI18n } from "vue-i18n"
-import { WifiOff, FileQuestion, ImageOff, FileWarning, CircleAlert, Ellipsis, Scan, ExternalLink, Flame, GripVertical, PanelRightClose, PanelBottomClose, Play, Pause, Repeat, Hand, Eye, EyeOff, Check, Clapperboard, ChevronDown, ChevronRight, FolderOpen, Focus, Image, Layers, Maximize, Palette, Shirt, Pencil, Plus, RotateCcw, SkipBack, Trash2, X } from "@lucide/vue"
+import { WifiOff, FileQuestion, ImageOff, FileWarning, CircleAlert, Ellipsis, Scan, ExternalLink, Flame, GripVertical, PanelRightClose, PanelBottomClose, Play, Pause, Repeat, Hand, Eye, EyeOff, Check, Clapperboard, Images, ChevronDown, ChevronRight, FolderOpen, Focus, Image, Layers, Maximize, Palette, Shirt, Pencil, Plus, RotateCcw, SkipBack, Trash2, X } from "@lucide/vue"
 import { autoUpdate, flip, offset, shift, useFloating } from "@floating-ui/vue"
 import { onClickOutside, useTimeoutFn } from "@vueuse/core"
 import { computed, nextTick, ref, useTemplateRef, watch } from "vue"
@@ -640,6 +640,9 @@ const poseErrorMessage = computed(() => {
           </button>
           <button type="button" role="menuitem" @click="backgroundInput?.click(); closeContext()">
             <Image :size="16" /><span>{{ t('preview.selectImage') }}</span>
+          </button>
+          <button type="button" role="menuitem" @click="uiStore.openBackgrounds(props.previewId); closeContext()">
+            <Images :size="16" /><span>{{ t('backgroundsPanel.open') }}</span>
           </button>
           <button type="button" role="menuitem" @click="settings.background = { type: 'theme' }; closeContext()">
             <RotateCcw :size="16" /><span>{{ t('preview.resetBackground') }}</span>

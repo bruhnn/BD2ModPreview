@@ -181,6 +181,8 @@
         "gameBackground": "Show backgrounds in in-game cutscenes",
         "gameBackgroundToggle": "Background",
         "gameBackgroundToggleHint": "Turn the in-game cutscene background on or off",
+        "storyBackground": "Background {number}",
+        "storyBackgroundHint": "A scenery background from the game. The full image downloads once when selected.",
         "gameBackgroundImages": "Cutscene backgrounds",
         "gameBackgroundImageHint": "Use this image from the game cutscene as the background. It downloads once.",
         "gameBackgroundHint": "The game's own animated background for this cutscene. It appears when you pick In-game cutscene in the animation menu; the images download once.",
@@ -274,6 +276,20 @@
         "recentFoldersLabel": "Recent Folders",
         "recentFoldersEmpty": "No recent folders found.",
         "openFolderButton": "Browse Folder"
+    },
+    "backgroundsPanel": {
+        "title": "Game backgrounds",
+        "open": "Game backgrounds...",
+        "search": "Search by number",
+        "reset": "Reset background",
+        "resetShort": "Reset",
+        "seeAllShort": "See all",
+        "hintAll": "Pick a background to use it on all open previews.",
+        "hintOne": "Pick a background to use it on this preview.",
+        "item": "Background {number}",
+        "none": "No backgrounds found.",
+        "failed": "Couldn't load background {number}.",
+        "offline": "Couldn't load the game backgrounds."
     },
     "characterList": {
         "searchPlaceholder": "Search characters...",

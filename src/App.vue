@@ -26,6 +26,7 @@ import Preview from "./components/Preview.vue"
 import Logging from "./components/modals/Logging.vue"
 import History from "./components/modals/History.vue"
 import CharactersList from "./components/CharactersList.vue"
+import Backgrounds from "./components/modals/Backgrounds.vue"
 
 // [TODO] move to rust
 saveWindowState(StateFlags.ALL)
@@ -230,6 +231,7 @@ onUnmounted(() => {
     <History :show="uiStore.isHistoryVisible" @close="uiStore.closeHistory" />
     <WhatsNew :show="uiStore.isWhatsNewVisible" @close="uiStore.closeWhatsNew" />
     <GameBackgroundPrompt />
+    <Backgrounds :show="uiStore.isBackgroundsVisible" @close="uiStore.closeBackgrounds" />
     <!-- modals# -->
 
     <main id="main">
