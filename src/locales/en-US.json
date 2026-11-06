@@ -299,7 +299,7 @@
         "message": "An unexpected error occurred. Please try again.",
         "noInternet": {
             "title": "No Internet Connection",
-            "message": "Character assets cannot be loaded without an internet connection.",
+            "message": "You're offline. Connect to the internet and retry.",
             "checking": "Checking..."
         }
     },

@@ -2,7 +2,7 @@
   setup
   lang="ts"
 >
-import { CloudOff, LoaderCircle, RefreshCw } from '@lucide/vue'
+import { LoaderCircle, RefreshCw } from '@lucide/vue'
 import { useI18n } from 'vue-i18n'
 
 const emits = defineEmits(['check-connection'])
@@ -16,14 +16,6 @@ const { t } = useI18n({
 </script>
 <template>
   <div class="offline-state">
-    <div class="offline-icon">
-      <CloudOff class="connection-icon" />
-    </div>
-
-    <h3 class="offline-title">
-      {{ t('error.noInternet.title') }}
-    </h3>
-
     <p class="offline-description">
       {{ t('error.noInternet.message') }}
     </p>
@@ -49,36 +41,21 @@ const { t } = useI18n({
   color: var(--text-secondary);
 }
 
-.offline-icon {
-  margin-bottom: 24px;
-}
-
-.connection-icon {
-  width: 48px;
-  height: 48px;
-}
-
-.offline-title {
-  font-size: 20px;
-  line-height: 28px;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 12px;
-}
-
 .offline-description {
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   max-width: 448px;
-  line-height: 1.625;
+  color: var(--text-primary);
+  font-size: 17px;
+  line-height: 1.5;
 }
 
 .retry-button {
   display: inline-flex;
   align-items: center;
-  padding: 8px 24px;
+  padding: 5px 12px;
   background: var(--surface-card);
   color: var(--text-primary);
-  font-size: 14px;
+  font-size: 13px;
   line-height: 20px;
   font-weight: 500;
   border-radius: 8px;
@@ -102,9 +79,9 @@ const { t } = useI18n({
 
 .retry-icon,
 .retry-spinner {
-  width: 16px;
-  height: 16px;
-  margin-right: 8px;
+  width: 14px;
+  height: 14px;
+  margin-right: 6px;
 }
 
 .retry-spinner {
