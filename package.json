@@ -27,6 +27,7 @@
   "devDependencies": {
     "@tauri-apps/cli": "^2.12.4",
     "@vitejs/plugin-vue": "^6.0.10",
+    "prettier": "^3.9.10",
     "typescript": "~6.0.3",
     "vite": "^8.3.5",
     "vue-tsc": "^3.3.14"

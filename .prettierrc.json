@@ -1,0 +1,6 @@
+{
+  "endOfLine": "auto",
+  "overrides": [
+    { "files": "src/**/*.ts", "options": { "useTabs": true } }
+  ]
+}

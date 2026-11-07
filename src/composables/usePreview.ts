@@ -225,7 +225,10 @@ export function usePreview(
 			gameImage.value = { hash, uri };
 			settings.value.background = { type: "image", path: uri };
 		} catch (error) {
-			logMessage(`Game background image ${hash.slice(0, 8)} failed: ${error}`, "warning");
+			logMessage(
+				`Game background image ${hash.slice(0, 8)} failed: ${error}`,
+				"warning",
+			);
 		} finally {
 			loadingGameImage.value = "";
 		}
@@ -347,19 +350,37 @@ export function usePreview(
 			if (attachment instanceof spine.RegionAttachment)
 				attachment.computeWorldVertices(slot, vertices, 0, 2);
 			else if (attachment instanceof spine.MeshAttachment)
-				attachment.computeWorldVertices(slot, 0, attachment.worldVerticesLength, vertices, 0, 2);
+				attachment.computeWorldVertices(
+					slot,
+					0,
+					attachment.worldVerticesLength,
+					vertices,
+					0,
+					2,
+				);
 			else continue;
 			const xs = vertices.filter((_, i) => i % 2 === 0);
 			const ys = vertices.filter((_, i) => i % 2 === 1);
-			rects.push([Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys)]);
+			rects.push([
+				Math.min(...xs),
+				Math.min(...ys),
+				Math.max(...xs),
+				Math.max(...ys),
+			]);
 		}
-		const extent = ([x0, y0, x1, y1]: number[]) => Math.max(x1 - x0, y1 - y0);
-		const median = rects.map(extent).sort((a, b) => a - b)[Math.floor(rects.length / 2)];
+		const extent = ([x0, y0, x1, y1]: number[]) =>
+			Math.max(x1 - x0, y1 - y0);
+		const median = rects.map(extent).sort((a, b) => a - b)[
+			Math.floor(rects.length / 2)
+		];
 		const kept = rects.filter((rect) => extent(rect) <= median * 20);
 		const left = Math.min(...kept.map((r) => r[0]));
 		const bottom = Math.min(...kept.map((r) => r[1]));
 		offset.set(left, bottom);
-		size.set(Math.max(...kept.map((r) => r[2])) - left, Math.max(...kept.map((r) => r[3])) - bottom);
+		size.set(
+			Math.max(...kept.map((r) => r[2])) - left,
+			Math.max(...kept.map((r) => r[3])) - bottom,
+		);
 	}
 	function fitCharacter() {
 		if (!spinePlayer) return;
@@ -844,7 +865,8 @@ export function usePreview(
 			return skeleton.drawOrder.some(
 				(slot: any) =>
 					slot.color.a > 0 &&
-					(slot.attachment instanceof spine.RegionAttachment || slot.attachment instanceof spine.MeshAttachment),
+					(slot.attachment instanceof spine.RegionAttachment ||
+						slot.attachment instanceof spine.MeshAttachment),
 			);
 		};
 		const original = skeleton.skin;
