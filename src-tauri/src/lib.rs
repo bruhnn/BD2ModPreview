@@ -86,6 +86,7 @@ pub fn run() {
             dating_audio::get_dating_audio,
             game_backgrounds::get_game_background,
             game_backgrounds::get_game_background_cache_size,
+            game_backgrounds::has_game_backgrounds,
             game_backgrounds::clear_game_background_cache,
             get_machine_id,
             get_user_locale,

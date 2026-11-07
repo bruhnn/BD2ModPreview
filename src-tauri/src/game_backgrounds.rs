@@ -54,6 +54,17 @@ pub async fn get_game_background(app: tauri::AppHandle, hash: String) -> Result<
 }
 
 #[tauri::command]
+pub fn has_game_backgrounds(
+    app: tauri::AppHandle,
+    hashes: Vec<String>,
+) -> Result<bool, String> {
+    let dir = cache_dir(&app)?;
+    Ok(hashes
+        .iter()
+        .all(|hash| dir.join(format!("{hash}.webp")).exists()))
+}
+
+#[tauri::command]
 pub fn get_game_background_cache_size(app: tauri::AppHandle) -> Result<u64, String> {
     let Ok(entries) = fs::read_dir(cache_dir(&app)?) else { return Ok(0) };
     Ok(entries.flatten().filter_map(|entry| entry.metadata().ok()).map(|m| m.len()).sum())

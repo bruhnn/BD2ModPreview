@@ -245,10 +245,15 @@ export function usePreview(
 	function offerGameBackground() {
 		const info = cutscene.backgroundInfo.value;
 		if (!info || settings.value?.background.type !== "theme") return;
-		gameBackgrounds.offer(`${id}:${cutscene.cutsceneId.value}`, info.count, info.bytes, () => {
-			if (settings.value?.background.type === "theme")
-				settings.value.background = { type: "game" };
-		});
+		gameBackgrounds.offer(
+			`${id}:${cutscene.cutsceneId.value}`,
+			cutscene.backgroundImages.value.map((image) => image.hash),
+			info.bytes,
+			() => {
+				if (settings.value?.background.type === "theme")
+					settings.value.background = { type: "game" };
+			},
+		);
 	}
 	// Selecting or clearing the game background while the cutscene plays switches to the matching framing.
 	watch(

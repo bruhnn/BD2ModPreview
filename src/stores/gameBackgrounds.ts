@@ -40,14 +40,22 @@ export const useGameBackgroundStore = defineStore("gameBackgrounds", () => {
 		await refreshCacheSize();
 	}
 
-	// Called when a game cutscene starts; `apply` selects the game background for that preview.
-	function offer(key: string, count: number, bytes: number, apply: () => void) {
+	// Called when a game cutscene starts; no prompt when the images are already downloaded.
+	async function offer(
+		key: string,
+		hashes: string[],
+		bytes: number,
+		apply: () => void,
+	) {
 		if (!showByDefault.value || decided.has(key)) return;
-		if (mode.value === "always") {
+		if (
+			mode.value === "always" ||
+			(await invoke<boolean>("has_game_backgrounds", { hashes }))
+		) {
 			decided.add(key);
 			apply();
 		} else if (!prompt.value) {
-			prompt.value = { key, count, bytes };
+			prompt.value = { key, count: hashes.length, bytes };
 			pendingApply = apply;
 		}
 	}
