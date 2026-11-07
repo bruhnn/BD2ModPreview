@@ -50,6 +50,24 @@
   "datingAudioStatus": { "loading": "Loading audio {loaded}/{total}", "completed": "Audio loading completed", "failed": "Audio loaded {loaded}/{total}. Some files could not be loaded." },
   "minigameAudio": "Enable sounds for minigames",
   "datingAudio": "Enable sounds and voices for dating interactions",
+  "gameBackgroundPrompt": {
+    "title": "Show the cutscene background?",
+    "message": "This cutscene has its animated background from the game ({count} images, {size}, downloaded once). You can also play the cutscene without it.",
+    "hint": "You can turn the background on or off at any time with the Background button in the preview controls.",
+    "remember": "Remember my choice",
+    "yes": "Download and show",
+    "no": "Play without background"
+  },
+  "gameBackgroundSettings": {
+    "title": "Cutscene backgrounds",
+    "show": "Show the cutscene background in game cutscenes",
+    "showHelp": "Off: cutscenes play without the background. You can still turn it on from the Background button.",
+    "mode": "Downloading the background images",
+    "ask": "Ask me first",
+    "always": "Download automatically",
+    "cache": "Downloaded: {size}",
+    "clear": "Clear downloads"
+  },
     "datingPointSettings": {"click": "Click points", "drag": "Drag points", "colorHelp": "Color of the indicator and area box.", "size": "Point size", "sizeHelp": "Changes the indicator size, not the interaction area.", "reset": "Reset to default"},
     "supporter": {
         "title": "Supporter access",
@@ -67,6 +85,14 @@
         "orderHelp": "AFDIAN: Go to your dashboard, open My orders, and copy the order number. Ko-fi: Enter the activation code you received, not the transaction number."
     },
     "whatsNew": {
+        "cutsceneUpdates": "Game cutscene data now updates without an app update and stays available offline once downloaded.",
+        "newCutscenes": "Added game cutscenes for Valze - Night of Betrayal and Liatris - Sweet Temptation.",
+        "audioRetry": "Improved dating audio loading and added a Retry button when some sounds fail to download.",
+        "gameBackgrounds": "In-game cutscenes can show the game's own animated background. The images download once; choose in the prompt or in Settings.",
+        "backgroundsPanel": "New Game backgrounds panel with scenery from the game, plus quicker background options in the toolbar.",
+        "machineId": "Click the machine ID in Settings to copy it.",
+        "framingFix": "Characters with large backdrops are framed correctly, and dating scenes that showed nothing now pick a visible skin.",
+        "skeletonPaths": "Fixed some characters failing to load because of file name casing.",
             "minigameAudio": "Added sound effects to Slap Slap Slop interactions. You can turn them on or off in Settings.",
             "datingAudio": "Added Korean voices and sound effects to dating interactions. You can turn them on or off in Settings.",
             "previewErrors": "Clearer preview errors explain what failed, with file details and a Retry button.",
@@ -160,6 +186,14 @@
         "noBackgrounds": "No images in textures/",
         "backgroundsFailed": "Could not load mod backgrounds.",
         "resetBackground": "Reset background",
+        "gameBackground": "Show backgrounds in in-game cutscenes",
+        "gameBackgroundToggle": "Background",
+        "gameBackgroundToggleHint": "Turn the in-game cutscene background on or off",
+        "storyBackground": "Background {number}",
+        "storyBackgroundHint": "A scenery background from the game. The full image downloads once when selected.",
+        "gameBackgroundImages": "Cutscene backgrounds",
+        "gameBackgroundImageHint": "Use this image from the game cutscene as the background. It downloads once.",
+        "gameBackgroundHint": "The game's own animated background for this cutscene. It appears when you pick In-game cutscene in the animation menu; the images download once.",
         "removeImage": "Remove image",
         "color": "Color",
         "createSequence": "Create sequence",
@@ -251,6 +285,20 @@
         "recentFoldersEmpty": "No recent folders found.",
         "openFolderButton": "Browse Folder"
     },
+    "backgroundsPanel": {
+        "title": "Game backgrounds",
+        "open": "Game backgrounds...",
+        "search": "Search by number",
+        "reset": "Reset background",
+        "resetShort": "Reset",
+        "seeAllShort": "See all",
+        "hintAll": "Pick a background to use it on all open previews.",
+        "hintOne": "Pick a background to use it on this preview.",
+        "item": "Background {number}",
+        "none": "No backgrounds found.",
+        "failed": "Couldn't load background {number}.",
+        "offline": "Couldn't load the game backgrounds."
+    },
     "characterList": {
         "searchPlaceholder": "Search characters...",
         "noCharactersFound": "No characters found.",
@@ -275,7 +323,7 @@
         "message": "An unexpected error occurred. Please try again.",
         "noInternet": {
             "title": "No Internet Connection",
-            "message": "Character assets cannot be loaded without an internet connection.",
+            "message": "You're offline. Connect to the internet and retry.",
             "checking": "Checking..."
         }
     },

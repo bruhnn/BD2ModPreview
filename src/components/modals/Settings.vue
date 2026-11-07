@@ -11,6 +11,7 @@ import { getCurrentWindow } from '@tauri-apps/api/window'
 import { getVersion } from "@tauri-apps/api/app"
 
 import { useUIStore } from '../../stores/ui'
+import { useGameBackgroundStore } from '../../stores/gameBackgrounds'
 import { usePreviewerStore } from '../../stores/previewer'
 import { useLogger } from '../../composables/useLogger'
 
@@ -18,6 +19,7 @@ const props = defineProps<{ show: boolean }>()
 const emit = defineEmits<{ close: [] }>()
 const uiStore = useUIStore()
 const previewerStore = usePreviewerStore()
+const gameBackgrounds = useGameBackgroundStore()
 const { availableLocales, t, te } = useI18n()
 const { logMessage } = useLogger()
 
@@ -79,6 +81,10 @@ function openLogs() {
   uiStore.openLogs()
 }
 
+function formatSize(bytes: number) {
+  return bytes >= 1048576 ? `${(bytes / 1048576).toFixed(1)} MB` : `${Math.round(bytes / 1024)} KB`
+}
+
 async function openIssues() {
   try {
     await openUrl('https://github.com/bruhnn/BD2ModManager/issues')
@@ -93,8 +99,25 @@ onMounted(async () => {
   })
 })
 
+const machineIdCopied = ref(false)
+
+async function copyMachineId() {
+  try {
+    const id = await uiStore.loadMachineId()
+    await navigator.clipboard.writeText(id)
+    machineIdCopied.value = true
+    setTimeout(() => { machineIdCopied.value = false }, 1500)
+  } catch (error) {
+    logMessage(`Failed to copy machine ID: ${error}`, 'error')
+  }
+}
+
 watch(() => props.show, async (show) => {
-  if (show) alwaysOnTop.value = await getCurrentWindow().isAlwaysOnTop()
+  if (show) {
+    uiStore.loadMachineId().catch((error) => logMessage(`Failed to load machine ID: ${error}`, 'error'))
+    gameBackgrounds.refreshCacheSize()
+    alwaysOnTop.value = await getCurrentWindow().isAlwaysOnTop()
+  }
 })
 </script>
 
@@ -190,6 +213,25 @@ watch(() => props.show, async (show) => {
                   <RotateCcw :size="16" />{{ t('datingPointSettings.reset') }}
                 </button>
               </section>
+              <section class="game-background-settings">
+                <h3>{{ t('gameBackgroundSettings.title') }}</h3>
+                <label class="settings-check">
+                  <input v-model="gameBackgrounds.showByDefault" type="checkbox" />
+                  <span>{{ t('gameBackgroundSettings.show') }}<small>{{ t('gameBackgroundSettings.showHelp') }}</small></span>
+                </label>
+                <label class="settings-field">
+                  <span>{{ t('gameBackgroundSettings.mode') }}</span>
+                  <select v-model="gameBackgrounds.mode">
+                    <option value="ask">{{ t('gameBackgroundSettings.ask') }}</option>
+                    <option value="always">{{ t('gameBackgroundSettings.always') }}</option>
+                  </select>
+                </label>
+                <div class="background-cache">
+                  <span>{{ t('gameBackgroundSettings.cache', { size: formatSize(gameBackgrounds.cacheSize) }) }}</span>
+                  <button type="button" :disabled="!gameBackgrounds.cacheSize" @click="gameBackgrounds.clearCache()">{{
+                    t('gameBackgroundSettings.clear') }}</button>
+                </div>
+              </section>
               <section v-if="uiStore.isSupporter" class="supporter-section">
                 <div class="supporter-heading">
                   <span class="supporter-title">
@@ -243,6 +285,10 @@ watch(() => props.show, async (show) => {
             <footer class="settings-footer">
               <span class="app-version">
                 v{{ appVersion }}
+                <span v-if="uiStore.machineId" class="machine-id" role="button" tabindex="0"
+                  :title="t('app.copyMachineId')" @click="copyMachineId" @keydown.enter="copyMachineId">
+                  {{ machineIdCopied ? t('app.copied') : `(${uiStore.machineId.slice(0, 16)}...)` }}
+                </span>
               </span>
               <div class="footer-actions">
                 <button type="button" @click="openLogs">
@@ -640,8 +686,34 @@ select {
   color: var(--text-secondary)
 }
 
-.dating-point-settings {
+.dating-point-settings,
+.game-background-settings {
   padding: 0 24px 24px;
+}
+
+.background-cache {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.background-cache button {
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid var(--border-default);
+  border-radius: 4px;
+  background: var(--surface-input);
+  color: var(--text-primary);
+  font: inherit;
+  cursor: pointer;
+}
+
+.background-cache button:disabled {
+  opacity: .5;
+  cursor: default;
 }
 
 .point-setting {
@@ -736,5 +808,14 @@ select {
 
 .point-reset:hover {
   color: var(--text-primary);
+}
+
+.machine-id {
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.machine-id:hover {
+  text-decoration: underline;
 }
 </style>

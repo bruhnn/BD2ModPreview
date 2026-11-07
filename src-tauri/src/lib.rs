@@ -2,6 +2,7 @@ mod commands;
 mod ipc;
 mod download;
 mod dating_audio;
+mod game_backgrounds;
 mod errors;
 mod types;
 mod utils;
@@ -83,6 +84,9 @@ pub fn run() {
             ipc::connect_to_bd2mm,
             ipc::enable_mod_on_bd2mm,
             dating_audio::get_dating_audio,
+            game_backgrounds::get_game_background,
+            game_backgrounds::get_game_background_cache_size,
+            game_backgrounds::clear_game_background_cache,
             get_machine_id,
             get_user_locale,
             get_spine_assets,

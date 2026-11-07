@@ -4,12 +4,14 @@ import { useLocalStorage } from "@vueuse/core";
 import type { AnimationSequence, SpineSource } from "../types/spine";
 import type { PreviewDropTarget } from "../composables/usePreviewDrag";
 import { i18n } from "../i18n";
+import type { GameBackgroundInfo } from "../types/background";
 
 export type Position = { row: number; column: number };
 export type PreviewBackground =
 	| { type: "theme" }
 	| { type: "color"; color: string }
-	| { type: "image"; path: string };
+	| { type: "image"; path: string }
+	| { type: "game" };
 
 export interface Previewer {
 	pos: Position;
@@ -27,6 +29,7 @@ export interface Previewer {
 		background: PreviewBackground;
 	};
 	allAnimations: string[];
+	gameBackground: GameBackgroundInfo | null;
 }
 
 export interface CameraChange {
@@ -147,6 +150,7 @@ export const usePreviewerStore = defineStore("previewer", () => {
 				background: { type: "theme" },
 			},
 			allAnimations: [],
+			gameBackground: null,
 		});
 		return id;
 	}

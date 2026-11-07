@@ -2,14 +2,16 @@
   setup
   lang="ts"
 >
-import { History, Sparkles, Image, Pause, Repeat, RotateCcw, SkipBack, X, Settings, Users } from "@lucide/vue"
-import { computed, ref } from "vue"
+import { History, Sparkles, Image, Clapperboard, ChevronRight, RefreshCw, Pause, Repeat, SkipBack, X, Settings, Users } from "@lucide/vue"
+import { computed, ref, watch } from "vue"
 import { useI18n } from "vue-i18n"
 import { onClickOutside } from "@vueuse/core"
 import { autoUpdate, flip, offset, shift, useFloating } from "@floating-ui/vue"
 
 import { usePreviewerStore } from "../stores/previewer"
 import { useUIStore } from "../stores/ui"
+import { useNetworkStatus } from "../composables/useNetworkStatus"
+import { NOVEL_BACKGROUNDS, novelThumbnail, loadNovelBackground } from "../data/novelBackgrounds"
 
 defineProps<{ charactersOpen: boolean }>()
 
@@ -50,6 +52,31 @@ const backgroundColor = computed({
 
 const fileInput = ref<HTMLInputElement | null>(null)
 
+const gameBackground = computed(() => previewerStore.previewers.find(p => p.gameBackground)?.gameBackground ?? null)
+const gameBackgroundSelected = computed(() => previewerStore.previewers.some(p => p.settings.background.type === 'game'))
+function toggleGameBackground() {
+  previewerStore.previewers.forEach(p => {
+    if (gameBackgroundSelected.value) {
+      if (p.settings.background.type === 'game') p.settings.background = { type: 'theme' }
+    } else if (p.gameBackground) p.settings.background = { type: 'game' }
+  })
+}
+
+const presetColors = ["#1e1f24", "#2b2f3a", "#3a2f2f", "#2f3a33", "#e9e6df"]
+const currentColor = computed(() => {
+  const value = previewerStore.previewers[0]?.settings.background
+  return value?.type === "color" ? value.color.toLowerCase() : ""
+})
+
+// A few game backgrounds; the dialog has all of them.
+const shortlist = NOVEL_BACKGROUNDS.slice(0, 3)
+const { isConnected, isChecking, checkConnection } = useNetworkStatus()
+async function applyShortlist(id: number) {
+  const url = await loadNovelBackground(id)
+  if (url) previewerStore.previewers.forEach(p => { p.settings.background = { type: "image", path: url } })
+  else checkConnection()
+}
+watch(backgroundOpen, (open) => { if (open) checkConnection() })
 const backgroundImage = computed(() => previewerStore.previewers[0]?.settings.background.type === "image")
 
 function selectBackground(event: Event) {
@@ -115,31 +142,58 @@ function selectBackground(event: Event) {
     <div v-if="backgroundOpen" ref="popover" :style="floatingStyles" class="background-popover" role="dialog">
       <div class="background-popover-header">
         {{ t('preview.background') }}
-        <button type="button" class="close-button" :aria-label="t('preview.close')" @click="backgroundOpen = false">
-          <X :size="16" />
+        <span class="background-popover-actions">
+          <button type="button" class="background-link" @click="previewerStore.resetBackgroundForAll()">
+            {{ t('backgroundsPanel.resetShort') }}
+          </button>
+          <button type="button" class="close-button" :aria-label="t('preview.close')" @click="backgroundOpen = false">
+            <X :size="16" />
+          </button>
+        </span>
+      </div>
+
+      <div class="background-swatches" role="group" :aria-label="t('preview.color')">
+        <button v-for="color in presetColors" :key="color" type="button" class="background-swatch"
+          :style="{ background: color }" :aria-label="color" :aria-pressed="currentColor === color"
+          @click="backgroundColor = color" />
+        <label class="background-swatch background-swatch-custom" :title="t('preview.color')">
+          <input v-model="backgroundColor" type="color" :aria-label="t('preview.color')" />
+        </label>
+      </div>
+
+      <div class="background-popover-section">
+        <span>{{ t('backgroundsPanel.title') }}</span>
+        <button type="button" class="background-link" @click="backgroundOpen = false; uiStore.openBackgrounds()">
+          {{ t('backgroundsPanel.seeAllShort') }}<ChevronRight :size="14" aria-hidden="true" />
+        </button>
+      </div>
+      <div v-if="!isConnected" class="background-popover-notice" role="status">
+        <span>{{ t('backgroundsPanel.offline') }}</span>
+        <button type="button" class="background-link" :disabled="isChecking" @click="checkConnection()">
+          <RefreshCw :size="14" aria-hidden="true" />{{ t('common.retry') }}
+        </button>
+      </div>
+      <div v-else class="background-thumbs">
+        <button v-for="id in shortlist" :key="id" type="button" :title="t('backgroundsPanel.item', { number: id })"
+          :aria-label="t('backgroundsPanel.item', { number: id })" @click="applyShortlist(id)">
+          <img loading="lazy" draggable="false" :src="novelThumbnail(id)" alt="" />
         </button>
       </div>
 
-      <label class="background-popover-color-label" for="bgPopover-background-color">
-        {{ t('preview.color') }}
-      </label>
-
-      <div class="background-popover-color-controls">
-        <input id="bgPopover-background-color" v-model="backgroundColor" type="color" />
-        <button type="button" class="icon-button" :aria-label="t('preview.resetBackground')"
-          :title="t('preview.resetBackground')" @click="previewerStore.resetBackgroundForAll()">
-          <RotateCcw :size="16" />
-        </button>
-      </div>
-
+      <div class="background-popover-divider" />
       <input ref="fileInput" type="file" accept="image/*" hidden @change="selectBackground" />
-
-      <button class="background-popover-image-button" @click="fileInput?.click()">
-        {{ t('preview.chooseImage') }}
+      <button type="button" class="background-popover-row" @click="fileInput?.click()">
+        <Image :size="16" aria-hidden="true" /><span>{{ t('preview.chooseImage') }}</span>
+      </button>
+      <button v-if="backgroundImage" type="button" class="background-popover-row"
+        @click="previewerStore.resetBackgroundForAll()">
+        <X :size="16" aria-hidden="true" /><span>{{ t('preview.removeImage') }}</span>
       </button>
 
-      <button v-if="backgroundImage" class="text-button" @click="previewerStore.resetBackgroundForAll()">
-        {{ t('preview.removeImage') }}
+      <button v-if="gameBackground" type="button" class="background-popover-row" role="switch"
+        :aria-checked="gameBackgroundSelected" :title="t('preview.gameBackgroundHint')" @click="toggleGameBackground">
+        <Clapperboard :size="16" aria-hidden="true" /><span>{{ t('preview.gameBackground') }}</span>
+        <span class="background-switch" :class="{ on: gameBackgroundSelected }" aria-hidden="true" />
       </button>
     </div>
   </div>
@@ -257,26 +311,9 @@ input[type="color"] {
   cursor: pointer;
 }
 
-.background-popover-color-label {
-  display: block;
-  margin-bottom: 8px;
-  color: var(--text-secondary);
-}
-
-.background-popover-color-controls {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  margin-bottom: 12px;
-}
-
-.background-popover-image-button {
-  margin-right: 8px;
-}
-
 .background-popover {
   position: absolute;
-  width: 300px;
+  width: 280px;
   max-width: calc(100vw - 16px);
   padding: 12px;
   border: 1px solid var(--border-default);
@@ -289,7 +326,191 @@ input[type="color"] {
   justify-content: space-between;
   align-items: center;
   font-weight: 500;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+}
+
+.background-popover-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.background-popover button {
+  height: auto;
+  border: 0;
+  background: transparent;
+  font-weight: 400;
+  white-space: normal;
+}
+
+.background-popover button:hover {
+  border-color: transparent;
+}
+
+.background-popover .background-link {
+  gap: 2px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.background-popover .background-link:hover {
+  background: var(--state-hover);
+  color: var(--text-primary);
+}
+
+.background-popover .background-link svg {
+  width: 14px;
+  height: 14px;
+}
+
+.background-swatches {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.background-popover .background-swatch {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+}
+
+.background-popover .background-swatch:hover {
+  border-color: var(--border-strong);
+}
+
+.background-popover .background-swatch[aria-pressed="true"] {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.background-swatch-custom {
+  overflow: hidden;
+  cursor: pointer;
+  background: conic-gradient(#d85a30, #ba7517, #639922, #378add, #7f77dd, #d85a30);
+}
+
+.background-swatch-custom input[type="color"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.background-popover-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 14px 0 6px;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.background-popover-notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+  padding: 6px 8px;
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.background-thumbs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.background-popover .background-thumbs button {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  background: var(--surface-input);
+}
+
+.background-popover .background-thumbs button:hover {
+  border-color: var(--accent);
+}
+
+.background-thumbs img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.background-popover-divider {
+  height: 1px;
+  margin: 12px -12px 6px;
+  background: var(--border-default);
+}
+
+.background-popover .background-popover-row {
+  justify-content: flex-start;
+  gap: 10px;
+  width: 100%;
+  padding: 7px 8px;
+  border-radius: 6px;
+  color: var(--text-primary);
+  text-align: left;
+}
+
+.background-popover .background-popover-row:hover {
+  background: var(--state-hover);
+}
+
+.background-popover-row svg {
+  color: var(--text-secondary);
+}
+
+.background-popover-row span:not(.background-switch) {
+  flex: 1;
+}
+
+.background-switch {
+  position: relative;
+  flex-shrink: 0;
+  width: 30px;
+  height: 17px;
+  border-radius: 9px;
+  background: var(--border-strong);
+}
+
+.background-switch::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--text-primary);
+  transition: transform 150ms ease;
+}
+
+.background-switch.on {
+  background: var(--accent);
+}
+
+.background-switch.on::after {
+  background: var(--text-on-accent);
+  transform: translateX(13px);
 }
 
 @container (max-width: 600px) {

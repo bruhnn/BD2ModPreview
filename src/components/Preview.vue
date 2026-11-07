@@ -3,7 +3,7 @@
   lang="ts"
 >
 import { useI18n } from "vue-i18n"
-import { WifiOff, FileQuestion, ImageOff, FileWarning, CircleAlert, Ellipsis, Scan, ExternalLink, Flame, GripVertical, PanelRightClose, PanelBottomClose, Play, Pause, Repeat, Hand, Eye, EyeOff, Check, ChevronDown, ChevronRight, FolderOpen, Focus, Image, Layers, Maximize, Palette, Shirt, Pencil, Plus, RotateCcw, SkipBack, Trash2, X } from "@lucide/vue"
+import { WifiOff, FileQuestion, ImageOff, FileWarning, CircleAlert, Ellipsis, Scan, ExternalLink, Flame, GripVertical, PanelRightClose, PanelBottomClose, Play, Pause, Repeat, Hand, Eye, EyeOff, Check, Clapperboard, Images, ChevronDown, ChevronRight, FolderOpen, Focus, Image, Layers, Maximize, Palette, Shirt, Pencil, Plus, RotateCcw, SkipBack, Trash2, X } from "@lucide/vue"
 import { autoUpdate, flip, offset, shift, useFloating } from "@floating-ui/vue"
 import { onClickOutside, useTimeoutFn } from "@vueuse/core"
 import { computed, nextTick, ref, useTemplateRef, watch } from "vue"
@@ -51,12 +51,17 @@ const { floatingStyles: datingTooltipStyles } = useFloating(datingButton, dating
   whileElementsMounted: autoUpdate,
 })
 
+const gameBackground = computed(() => previewerStore.getPreview(props.previewId)?.gameBackground ?? null)
 const playerContainer = useTemplateRef("player-container")
 
 const {
   cutsceneAvailable,
   cutsceneActive,
   cutsceneIncomplete,
+  gameBackgroundImages,
+  loadingGameImage,
+  selectGameBackgroundImage,
+  isGameBackgroundImageSelected,
   playGameCutscene,
   minigameAvailable,
   minigameEnabled,
@@ -636,9 +641,29 @@ const poseErrorMessage = computed(() => {
           <button type="button" role="menuitem" @click="backgroundInput?.click(); closeContext()">
             <Image :size="16" /><span>{{ t('preview.selectImage') }}</span>
           </button>
+          <button type="button" role="menuitem" @click="uiStore.openBackgrounds(props.previewId); closeContext()">
+            <Images :size="16" /><span>{{ t('backgroundsPanel.open') }}</span>
+          </button>
           <button type="button" role="menuitem" @click="settings.background = { type: 'theme' }; closeContext()">
             <RotateCcw :size="16" /><span>{{ t('preview.resetBackground') }}</span>
           </button>
+          <button v-if="gameBackground" type="button" role="menuitemradio" :aria-checked="settings.background.type === 'game'"
+            :title="t('preview.gameBackgroundHint')"
+            @click="settings.background = settings.background.type === 'game' ? { type: 'theme' } : { type: 'game' }; closeContext()">
+            <Clapperboard :size="16" /><span>{{ t('preview.gameBackground') }}</span>
+            <Check v-if="settings.background.type === 'game'" :size="16" />
+          </button>
+          <template v-if="gameBackgroundImages.length">
+            <div class="context-separator" />
+            <p class="background-heading">{{ t('preview.gameBackgroundImages') }}</p>
+            <button v-for="image in gameBackgroundImages" :key="image.hash" type="button" role="menuitemradio"
+              :aria-checked="isGameBackgroundImageSelected(image.hash)" :aria-busy="loadingGameImage === image.hash"
+              :disabled="!!loadingGameImage" :title="t('preview.gameBackgroundImageHint')"
+              @click="selectGameBackgroundImage(image.hash); closeContext()">
+              <Image :size="16" /><span>{{ image.name }}</span>
+              <Check v-if="isGameBackgroundImageSelected(image.hash)" :size="16" />
+            </button>
+          </template>
           <template v-if="source?.type === 'folder'">
             <div class="context-separator" />
             <p class="background-heading">{{ t('preview.modBackgrounds') }}</p>
@@ -729,6 +754,13 @@ const poseErrorMessage = computed(() => {
         :aria-label="t('preview.minigameInteractions')" :title="t('preview.minigameInteractions')"
         @click="minigameEnabled = !minigameEnabled">
         <Hand :size="16" aria-hidden="true" /><span class="playback-label">{{ t('preview.minigameInteractions')
+          }}</span>
+      </button>
+      <button v-if="cutsceneActive && gameBackground" type="button" class="dating-interactions-button"
+        :aria-pressed="settings.background.type === 'game'" :aria-label="t('preview.gameBackgroundToggleHint')"
+        :title="t('preview.gameBackgroundToggleHint')"
+        @click="settings.background = settings.background.type === 'game' ? { type: 'theme' } : { type: 'game' }">
+        <Clapperboard :size="16" aria-hidden="true" /><span class="playback-label">{{ t('preview.gameBackgroundToggle')
           }}</span>
       </button>
       <button v-if="datingEnabled && datingTools.length > 1" ref="datingToolsButton" type="button"

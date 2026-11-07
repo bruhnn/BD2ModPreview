@@ -1,0 +1,27 @@
+name: sync characters
+
+# Keeps public/data/characters.json identical to BD2ModManager's copy.
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download characters.json from BD2ModManager
+        run: curl -fsSL https://raw.githubusercontent.com/bruhnn/BD2ModManager/main/src-tauri/data/characters.json -o public/data/characters.json
+
+      - name: Commit if changed
+        run: |
+          git diff --quiet public/data/characters.json && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "chore: sync characters.json from BD2ModManager"
+          git push
