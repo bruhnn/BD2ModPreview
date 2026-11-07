@@ -58,7 +58,20 @@ const otherUpdates = [
 const versions = [
     {
         version: "1.0.4",
-        highlights: [],
+        highlights: [
+            {
+                title: "whatsNew.gameCutscenesTitle",
+                description: "whatsNew.gameCutscenesDescription",
+                video: "/docs/gameCutscene.mp4",
+                supporter: false
+            },
+            {
+                title: "whatsNew.backgroundsPanelTitle",
+                description: "whatsNew.backgroundsPanelDescription",
+                image: "/docs/gameBackgrounds.jpg",
+                supporter: false
+            }
+        ],
         changelog: [
             "whatsNew.cutsceneLook",
             "whatsNew.recordedCutscenes",
@@ -171,7 +184,8 @@ const versions = [
                                                 </template>
                                             </template>
                                         </p>
-                                        <video :src="highlight.video" class="update-video" autoplay muted loop
+                                        <img v-if="highlight.image" :src="highlight.image" class="update-video" alt="" />
+                                        <video v-else :src="highlight.video" class="update-video" autoplay muted loop
                                             playsinline preload="metadata" disablepictureinpicture />
                                     </section>
 
