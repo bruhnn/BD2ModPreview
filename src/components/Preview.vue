@@ -52,6 +52,9 @@ const { floatingStyles: datingTooltipStyles } = useFloating(datingButton, dating
 })
 
 const gameBackground = computed(() => previewerStore.getPreview(props.previewId)?.gameBackground ?? null)
+function toggleGameBackground() {
+  settings.value!.background = settings.value!.background.type === 'game' ? { type: 'theme' } : { type: 'game' }
+}
 const playerContainer = useTemplateRef("player-container")
 
 const {
@@ -649,7 +652,7 @@ const poseErrorMessage = computed(() => {
           </button>
           <button v-if="gameBackground" type="button" role="menuitemradio" :aria-checked="settings.background.type === 'game'"
             :title="t('preview.gameBackgroundHint')"
-            @click="settings.background = settings.background.type === 'game' ? { type: 'theme' } : { type: 'game' }; closeContext()">
+            @click="toggleGameBackground(); closeContext()">
             <Clapperboard :size="16" /><span>{{ t('preview.gameBackground') }}</span>
             <Check v-if="settings.background.type === 'game'" :size="16" />
           </button>
@@ -759,7 +762,7 @@ const poseErrorMessage = computed(() => {
       <button v-if="cutsceneActive && gameBackground" type="button" class="dating-interactions-button"
         :aria-pressed="settings.background.type === 'game'" :aria-label="t('preview.gameBackgroundToggleHint')"
         :title="t('preview.gameBackgroundToggleHint')"
-        @click="settings.background = settings.background.type === 'game' ? { type: 'theme' } : { type: 'game' }">
+        @click="toggleGameBackground">
         <Clapperboard :size="16" aria-hidden="true" /><span class="playback-label">{{ t('preview.gameBackgroundToggle')
           }}</span>
       </button>

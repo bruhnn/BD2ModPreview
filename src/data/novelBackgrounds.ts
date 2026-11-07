@@ -12,14 +12,12 @@ export const novelThumbnail = (id: number) => `${BASE}thumb/novel_background_${i
 // jsDelivr first, GitHub if it refuses (the asset repo is over its size limit). Resolves to the URL that loaded.
 export async function loadNovelBackground(id: number) {
 	for (const base of [BASE, GITHUB]) {
-		const url = `${base}novel_background_${id}.png`;
-		const loaded = await new Promise<boolean>((resolve) => {
-			const image = new Image();
-			image.onload = () => resolve(true);
-			image.onerror = () => resolve(false);
-			image.src = url;
-		});
-		if (loaded) return url;
+		const image = new Image();
+		image.src = `${base}novel_background_${id}.png`;
+		try {
+			await image.decode();
+			return image.src;
+		} catch {}
 	}
 	return null;
 }

@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useLogger } from "./useLogger";
 import type { SpinePlayer } from "../types/spine";
 import { loadCutscene } from "../utils/cutsceneData";
@@ -108,22 +108,43 @@ type Curve = {
 	keys: { time: number; value: number; coefficients: number[] }[];
 };
 
-export function useGameCutscene(backgroundEnabled: () => boolean = () => false) {
+export function useGameCutscene(
+	backgroundEnabled: () => boolean = () => false,
+) {
 	const { logMessage } = useLogger();
 	const backgroundStore = useGameBackgroundStore();
 	const incomplete = ref(false);
-	const backgroundInfo = ref<GameBackgroundInfo | null>(null);
 	// The images of this cutscene's game background, so one can be picked as a plain preview background.
 	const backgroundImages = ref<
-		{ hash: string; name: string; width: number; height: number; bytes: number }[]
+		{
+			hash: string;
+			name: string;
+			width: number;
+			height: number;
+			bytes: number;
+		}[]
 	>([]);
+	const backgroundInfo = computed<GameBackgroundInfo | null>(() =>
+		backgroundImages.value.length
+			? {
+					count: backgroundImages.value.length,
+					bytes: backgroundImages.value.reduce(
+						(sum, image) => sum + image.bytes,
+						0,
+					),
+				}
+			: null,
+	);
 	const layerTextures = new Map<string, any>();
 	// Multiply layers need premultiplied data (see drawLayer), uploaded as a second copy on first use.
 	const layerImages = new Map<string, HTMLImageElement>();
 	const premultipliedTextures = new Map<string, any>();
 	let texturesRequested = false;
+	// Layers wait for all images, so backdrops never flash.
+	let texturesPending = 0;
 	const cutsceneId = ref("");
 	let scene: Scene | null = null;
+	let end = 0;
 	const available = ref(false);
 	const active = ref(false);
 	let player: SpinePlayer | null = null;
@@ -147,7 +168,6 @@ export function useGameCutscene(backgroundEnabled: () => boolean = () => false) 
 		scene = null;
 		available.value = false;
 		incomplete.value = false;
-		backgroundInfo.value = null;
 		backgroundImages.value = [];
 		for (const texture of layerTextures.values()) texture.dispose();
 		layerTextures.clear();
@@ -157,6 +177,7 @@ export function useGameCutscene(backgroundEnabled: () => boolean = () => false) 
 		whiteTexture?.dispose();
 		whiteTexture = null;
 		texturesRequested = false;
+		texturesPending = 0;
 		cutsceneId.value = "";
 		active.value = false;
 		for (const manager of assetManagers) manager.dispose();
@@ -173,8 +194,9 @@ export function useGameCutscene(backgroundEnabled: () => boolean = () => false) 
 	// The game background images of a cutscene, biggest first, named after the layer that uses them.
 	function imagesOf(timeline: Scene) {
 		const names = new Map<string, string>();
-		const layerName = (path: string) => path.split("/").pop()?.trim() || path;
-		for (const node of timeline.nodes as { path: string; texture?: string | null }[])
+		const layerName = (path: string) =>
+			path.split("/").pop()?.trim() || path;
+		for (const node of timeline.nodes)
 			if (node.texture && !names.has(node.texture))
 				names.set(node.texture, layerName(node.path));
 		for (const element of timeline.baked?.elements ?? [])
@@ -200,12 +222,9 @@ export function useGameCutscene(backgroundEnabled: () => boolean = () => false) 
 		const request = generation;
 		const timeline = await loadCutscene(id);
 		if (request !== generation || !timeline) return;
-		const loaded = { default: timeline };
 		const data = new Map<string, any>([["", value.skeleton.data]]);
 		const managers: any[] = [];
-		for (const [key, asset] of Object.entries(
-			loaded.default.assets ?? {},
-		)) {
+		for (const [key, asset] of Object.entries(timeline.assets ?? {})) {
 			const base = `${import.meta.env.BASE_URL}cutscene-assets/${id}/${key}/`;
 			const manager = new spine.AssetManager(value.sceneRenderer.context);
 			try {
@@ -240,15 +259,15 @@ export function useGameCutscene(backgroundEnabled: () => boolean = () => false) 
 			}
 		}
 		// Keep the timing, skip tracks whose skeleton is missing.
-		const tracks = loaded.default.tracks.filter((track) =>
-			data.has(loaded.default.nodes[track.node].asset ?? ""),
+		const tracks = timeline.tracks.filter((track) =>
+			data.has(timeline.nodes[track.node].asset ?? ""),
 		);
 		if (
 			!tracks.length ||
 			!tracks.every((track) =>
 				track.clips.every((clip) =>
 					data
-						.get(loaded.default.nodes[track.node].asset ?? "")
+						.get(timeline.nodes[track.node].asset ?? "")
 						.findAnimation(clip.name),
 				),
 			)
@@ -256,8 +275,9 @@ export function useGameCutscene(backgroundEnabled: () => boolean = () => false) 
 			for (const manager of managers) manager.dispose();
 			return;
 		}
-		incomplete.value = tracks.length !== loaded.default.tracks.length;
-		scene = { ...loaded.default, tracks };
+		incomplete.value = tracks.length !== timeline.tracks.length;
+		scene = { ...timeline, tracks };
+		end = playbackEnd(scene);
 		assetManagers = managers;
 		player = value;
 		for (const track of scene.tracks) {
@@ -290,14 +310,75 @@ export function useGameCutscene(backgroundEnabled: () => boolean = () => false) 
 			);
 		// Only offer the background once the cutscene itself can play.
 		backgroundImages.value = imagesOf(timeline);
-		backgroundInfo.value = backgroundImages.value.length
-			? {
-					count: backgroundImages.value.length,
-					bytes: backgroundImages.value.reduce((sum, image) => sum + image.bytes, 0),
-				}
-			: null;
 		cutsceneId.value = id;
 		available.value = true;
+	}
+
+	// Stop where the closing fade begins: in the game the next scene follows it.
+	function playbackEnd(timeline: Scene) {
+		const tiny = (hash?: string | null) => {
+			const info = hash ? timeline.textures?.[hash] : undefined;
+			return !!info && info.width <= 64 && info.height <= 64;
+		};
+		let result = timeline.duration;
+		const fadeFrom = (time: number) => {
+			if (time > timeline.duration - 3 && time < result) result = time;
+		};
+		for (const element of timeline.baked?.elements ?? []) {
+			const last = element.keys[element.keys.length - 1];
+			if (
+				!(element.solid || tiny(element.texture)) ||
+				last.length === 1 ||
+				last[10] < 0.5
+			)
+				continue;
+			if (
+				Math.min(
+					Math.hypot(last[1], last[2]) * last[13],
+					Math.hypot(last[3], last[4]) * last[14],
+				) < 1500
+			)
+				continue;
+			for (let i = element.keys.length - 1; i >= 0; i--)
+				if (
+					element.keys[i].length === 1 ||
+					element.keys[i][10] <= 0.05
+				) {
+					fadeFrom(element.keys[i][0]);
+					break;
+				}
+		}
+		if (timeline.baked) return result;
+		for (const node of timeline.nodes) {
+			if (!(node.solid || tiny(node.texture))) continue;
+			if (
+				Math.min(
+					node.size.x * Math.abs(node.scale.x),
+					node.size.y * Math.abs(node.scale.y),
+				) < 1500
+			)
+				continue;
+			for (const curve of timeline.curves as Curve[]) {
+				const keys = curve.keys;
+				if (
+					curve.path !== node.path ||
+					curve.property !== "m_Color.a" ||
+					!keys.length
+				)
+					continue;
+				if (keys[keys.length - 1].value < 0.5) continue;
+				for (let i = keys.length - 1; i >= 0; i--)
+					if (keys[i].value <= 0.05) {
+						fadeFrom(
+							(keys[i].time - (curve.clipIn ?? 0)) /
+								(curve.speed ?? 1) +
+								(curve.start ?? 0),
+						);
+						break;
+					}
+			}
+		}
+		return result;
 	}
 
 	function start() {
@@ -309,16 +390,16 @@ export function useGameCutscene(backgroundEnabled: () => boolean = () => false) 
 
 	function seek(value: number) {
 		if (!scene) return;
-		time = Math.max(0, Math.min(value, scene.duration));
+		time = Math.max(0, Math.min(value, end));
 	}
 
 	function update(delta: number, loop: boolean) {
 		if (!active.value || !scene) return time;
 		time += delta;
-		if (loop && time > scene.duration) {
-			time %= scene.duration;
+		if (loop && time > end) {
+			time %= end;
 			animationTime = -1;
-		} else time = Math.min(time, scene.duration);
+		} else time = Math.min(time, end);
 		return time;
 	}
 
@@ -439,21 +520,34 @@ export function useGameCutscene(backgroundEnabled: () => boolean = () => false) 
 
 	// Downloads the layer images (cached on disk) once the game background is selected.
 	function requestTextures() {
-		if (texturesRequested || !scene || !player || !backgroundEnabled()) return;
+		if (texturesRequested || !scene || !player || !backgroundEnabled())
+			return;
 		texturesRequested = true;
 		const request = generation;
 		const context = player.sceneRenderer.context;
-		for (const hash of Object.keys(scene.textures ?? {})) {
+		const hashes = Object.keys(scene.textures ?? {});
+		texturesPending = hashes.length;
+		for (const hash of hashes) {
 			(async () => {
 				const image = new Image();
 				image.src = await backgroundStore.load(hash);
 				await image.decode();
 				if (request !== generation) return;
 				layerImages.set(hash, image);
-				layerTextures.set(hash, uploadLayer(context, hash, image, false));
-			})().catch((error) =>
-				logMessage(`Cutscene ${cutsceneId.value}: background layer ${hash.slice(0, 8)} failed: ${error}`, "warning"),
-			);
+				layerTextures.set(
+					hash,
+					uploadLayer(context, hash, image, false),
+				);
+			})()
+				.catch((error) =>
+					logMessage(
+						`Cutscene ${cutsceneId.value}: background layer ${hash.slice(0, 8)} failed: ${error}`,
+						"warning",
+					),
+				)
+				.finally(() => {
+					if (request === generation) texturesPending--;
+				});
 		}
 	}
 
@@ -467,7 +561,8 @@ export function useGameCutscene(backgroundEnabled: () => boolean = () => false) 
 		gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, premultiply);
 		const texture = new spine.GLTexture(context, image);
 		gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
-		if (scene?.textures?.[hash]?.repeat) texture.setWraps(gl.REPEAT, gl.REPEAT);
+		if (scene?.textures?.[hash]?.repeat)
+			texture.setWraps(gl.REPEAT, gl.REPEAT);
 		return texture;
 	}
 
@@ -482,6 +577,138 @@ export function useGameCutscene(backgroundEnabled: () => boolean = () => false) 
 	}
 
 	const quadIndices = new Uint32Array([0, 1, 2, 2, 3, 0]);
+
+	// The game renders in linear color space; an sRGB framebuffer blends in linear too.
+	let linear: {
+		gl: WebGL2RenderingContext;
+		shader: any;
+		copy: WebGLProgram;
+		texture: WebGLTexture;
+		framebuffer: WebGLFramebuffer;
+		width: number;
+		height: number;
+	} | null = null;
+
+	function beginLinear(renderer: any) {
+		const gl: WebGL2RenderingContext = renderer.context.gl;
+		if (linear?.gl !== gl) {
+			const fs = renderer.batcherShader.fsSource
+				.replace(
+					"uniform sampler2D u_texture;",
+					`uniform sampler2D u_texture;
+vec4 linearTexture(vec2 uv) {
+	vec4 c = texture2D(u_texture, uv);
+	return vec4(pow(c.rgb, vec3(2.2)), c.a);
+}`,
+				)
+				.replaceAll(
+					"texture2D(u_texture, v_texCoords)",
+					"linearTexture(v_texCoords)",
+				);
+			const compile = (type: number, source: string) => {
+				const shader = gl.createShader(type)!;
+				gl.shaderSource(shader, source);
+				gl.compileShader(shader);
+				return shader;
+			};
+			const copy = gl.createProgram()!;
+			gl.attachShader(
+				copy,
+				compile(
+					gl.VERTEX_SHADER,
+					`#version 300 es
+out vec2 uv;
+void main() {
+	vec2 p = vec2(gl_VertexID & 1, gl_VertexID >> 1) * 4.0 - 1.0;
+	uv = p * 0.5 + 0.5;
+	gl_Position = vec4(p, 0.0, 1.0);
+}`,
+				),
+			);
+			gl.attachShader(
+				copy,
+				compile(
+					gl.FRAGMENT_SHADER,
+					`#version 300 es
+precision mediump float;
+in vec2 uv;
+uniform sampler2D image;
+out vec4 color;
+void main() {
+	vec4 c = texture(image, uv);
+	color = vec4(pow(c.rgb, vec3(1.0 / 2.2)), c.a);
+}`,
+				),
+			);
+			gl.linkProgram(copy);
+			const texture = gl.createTexture()!;
+			gl.bindTexture(gl.TEXTURE_2D, texture);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+			const framebuffer = gl.createFramebuffer()!;
+			const vs = renderer.batcherShader.vsSource
+				.replace(
+					"= a_color;",
+					"= vec4(pow(a_color.rgb, vec3(2.2)), a_color.a);",
+				)
+				.replace(
+					"= a_color2;",
+					"= vec4(pow(a_color2.rgb, vec3(2.2)), a_color2.a);",
+				);
+			linear = {
+				gl,
+				shader: new spine.Shader(renderer.context, vs, fs),
+				copy,
+				texture,
+				framebuffer,
+				width: 0,
+				height: 0,
+			};
+		}
+		const { width, height } = gl.canvas;
+		if (linear.width !== width || linear.height !== height) {
+			gl.bindTexture(gl.TEXTURE_2D, linear.texture);
+			gl.texImage2D(
+				gl.TEXTURE_2D,
+				0,
+				gl.SRGB8_ALPHA8,
+				width,
+				height,
+				0,
+				gl.RGBA,
+				gl.UNSIGNED_BYTE,
+				null,
+			);
+			gl.bindFramebuffer(gl.FRAMEBUFFER, linear.framebuffer);
+			gl.framebufferTexture2D(
+				gl.FRAMEBUFFER,
+				gl.COLOR_ATTACHMENT0,
+				gl.TEXTURE_2D,
+				linear.texture,
+				0,
+			);
+			linear.width = width;
+			linear.height = height;
+		}
+		gl.bindFramebuffer(gl.FRAMEBUFFER, linear.framebuffer);
+		const original = renderer.batcherShader;
+		renderer.batcherShader = linear.shader;
+		return original;
+	}
+
+	function endLinear(renderer: any, original: any) {
+		const gl: WebGL2RenderingContext = renderer.context.gl;
+		renderer.batcherShader = original;
+		gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+		gl.disable(gl.BLEND);
+		gl.useProgram(linear!.copy);
+		gl.activeTexture(gl.TEXTURE0);
+		gl.bindTexture(gl.TEXTURE_2D, linear!.texture);
+		gl.drawArrays(gl.TRIANGLES, 0, 3);
+		gl.bindTexture(gl.TEXTURE_2D, null);
+		gl.enable(gl.BLEND);
+	}
+
 	let whiteTexture: any = null;
 
 	// Unity draws an Image without a sprite (or a RawImage without a texture) as a flat tinted rect.
@@ -498,6 +725,7 @@ export function useGameCutscene(backgroundEnabled: () => boolean = () => false) 
 	}
 
 	function drawLayer(renderer: any, node: any, texture: any) {
+		if (texturesPending) return;
 		const w = node.size.x,
 			h = node.size.y;
 		if (w <= 0 || h <= 0) return;
@@ -513,22 +741,46 @@ export function useGameCutscene(backgroundEnabled: () => boolean = () => false) 
 		// that with premultiplied data (texture and vertex color), but doubles the backdrop with straight alpha.
 		const multiply = node.blend === "multiply";
 		const tint = multiply ? alpha : 1;
-		const uv = node.uvRect ?? { x: 0, y: 0, width: 1, height: 1 };
+		const uv = node.uvRect;
 		const u0 = uv.x,
 			u1 = uv.x + uv.width,
 			vb = 1 - uv.y,
 			vt = 1 - (uv.y + uv.height);
-		const corners = [
+		let corners = [
 			[x0, y0, u0, vb],
 			[x1, y0, u1, vb],
 			[x1, y1, u1, vt],
 			[x0, y1, u0, vt],
-		];
+		].map(([x, y, u, v]) => [
+			m[12] + x * m[0] + y * m[4],
+			m[13] + x * m[1] + y * m[5],
+			u,
+			v,
+		]);
+		// Full-screen flat colors (flashes) cover the whole view.
+		const image = texture.getImage();
+		if (
+			image.width <= 64 &&
+			image.height <= 64 &&
+			Math.hypot(m[0], m[1]) * w >= 1500 &&
+			Math.hypot(m[4], m[5]) * h >= 1500
+		) {
+			const camera = renderer.camera;
+			const halfW = (camera.viewportWidth * camera.zoom) / 2;
+			const halfH = (camera.viewportHeight * camera.zoom) / 2;
+			const { x, y } = camera.position;
+			corners = [
+				[x - halfW, y - halfH, 0.5, 0.5],
+				[x + halfW, y - halfH, 0.5, 0.5],
+				[x + halfW, y + halfH, 0.5, 0.5],
+				[x - halfW, y + halfH, 0.5, 0.5],
+			];
+		}
 		const vertices: number[] = [];
 		for (const [x, y, u, v] of corners) {
 			vertices.push(
-				m[12] + x * m[0] + y * m[4],
-				m[13] + x * m[1] + y * m[5],
+				x,
+				y,
 				clamp(node.color.r) * tint,
 				clamp(node.color.g) * tint,
 				clamp(node.color.b) * tint,
@@ -550,7 +802,8 @@ export function useGameCutscene(backgroundEnabled: () => boolean = () => false) 
 	function bakedState(keys: number[][], t: number): number[] | null {
 		let low = 0,
 			high = keys.length - 1;
-		if (t <= keys[0][0]) return keys[0].length > 1 ? keys[0].slice(1) : null;
+		if (t <= keys[0][0])
+			return keys[0].length > 1 ? keys[0].slice(1) : null;
 		while (low < high) {
 			const mid = (low + high + 1) >> 1;
 			if (keys[mid][0] <= t) low = mid;
@@ -562,7 +815,8 @@ export function useGameCutscene(backgroundEnabled: () => boolean = () => false) 
 		if (!b || b.length === 1) return a.slice(1);
 		const f = (t - a[0]) / (b[0] - a[0]);
 		const out = new Array(18);
-		for (let i = 0; i < 18; i++) out[i] = a[i + 1] + (b[i + 1] - a[i + 1]) * f;
+		for (let i = 0; i < 18; i++)
+			out[i] = a[i + 1] + (b[i + 1] - a[i + 1]) * f;
 		return out;
 	}
 
@@ -577,7 +831,26 @@ export function useGameCutscene(backgroundEnabled: () => boolean = () => false) 
 				? premultipliedTexture(renderer.context, element.texture!)
 				: layerTextures.get(element.texture!);
 		if (!texture) return;
-		const [a, b, c, d, tx, ty, r, g, bl, alpha, rx, ry, rw, rh, u, uv, uw, uh] = v;
+		const [
+			a,
+			b,
+			c,
+			d,
+			tx,
+			ty,
+			r,
+			g,
+			bl,
+			alpha,
+			rx,
+			ry,
+			rw,
+			rh,
+			u,
+			uv,
+			uw,
+			uh,
+		] = v;
 		const values = new Array(16).fill(0);
 		values[0] = a;
 		values[1] = b;
@@ -622,7 +895,9 @@ export function useGameCutscene(backgroundEnabled: () => boolean = () => false) 
 			pivot: { ...node.pivot },
 			size: { ...node.size },
 			color: { ...node.color },
-			uvRect: node.uvRect ? { ...node.uvRect } : { x: 0, y: 0, width: 1, height: 1 },
+			uvRect: node.uvRect
+				? { ...node.uvRect }
+				: { x: 0, y: 0, width: 1, height: 1 },
 			enabled: node.enabled ?? true,
 		}));
 		// Layers recorded from the game replace the Timeline-derived ones while the game background is on.
@@ -649,7 +924,8 @@ export function useGameCutscene(backgroundEnabled: () => boolean = () => false) 
 					? "y"
 					: null;
 			if (curve.property === "m_Alpha") node.groupAlpha = value;
-			else if (curve.property === "m_Enabled") node.enabled = value >= 0.5;
+			else if (curve.property === "m_Enabled")
+				node.enabled = value >= 0.5;
 			else if (curve.property.startsWith("m_UVRect."))
 				node.uvRect[
 					curve.property.slice(9) as keyof typeof node.uvRect
@@ -764,7 +1040,14 @@ export function useGameCutscene(backgroundEnabled: () => boolean = () => false) 
 		const renderer = player.sceneRenderer;
 		const gl = renderer.context.gl;
 		// Replace the normal preview frame using the same renderer and textures.
-		gl.clearColor(player.bg.r, player.bg.g, player.bg.b, player.bg.a);
+		const shader = beginLinear(renderer);
+		const toLinear = (value: number) => Math.pow(value, 2.2);
+		gl.clearColor(
+			toLinear(player.bg.r),
+			toLinear(player.bg.g),
+			toLinear(player.bg.b),
+			player.bg.a,
+		);
 		gl.clear(gl.COLOR_BUFFER_BIT);
 		renderer.begin();
 		const drawNode = (node: (typeof nodes)[number], index: number) => {
@@ -816,7 +1099,8 @@ export function useGameCutscene(backgroundEnabled: () => boolean = () => false) 
 		if (!baked) nodes.forEach(drawNode);
 		else {
 			// Draw in the game's order: canvas sorting first, then hierarchy order.
-			const entries: { sort: number; order: number; run: () => void }[] = [];
+			const entries: { sort: number; order: number; run: () => void }[] =
+				[];
 			nodes.forEach((node, index) => {
 				if (!skeletons.has(index)) return;
 				const placed = baked.skeletons[node.path];
@@ -859,6 +1143,7 @@ export function useGameCutscene(backgroundEnabled: () => boolean = () => false) 
 			for (const entry of entries) entry.run();
 		}
 		renderer.end();
+		endLinear(renderer, shader);
 		return true;
 	}
 
@@ -876,7 +1161,7 @@ export function useGameCutscene(backgroundEnabled: () => boolean = () => false) 
 		draw,
 		dispose,
 		get duration() {
-			return scene?.duration ?? 0;
+			return scene ? end : 0;
 		},
 	};
 }
