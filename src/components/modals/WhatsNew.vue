@@ -57,6 +57,15 @@ const otherUpdates = [
 
 const versions = [
     {
+        version: "1.0.4",
+        highlights: [],
+        changelog: [
+            "whatsNew.cutsceneLook",
+            "whatsNew.recordedCutscenes",
+            "whatsNew.downloadedBackgrounds"
+        ]
+    },
+    {
         version: "1.0.3",
         highlights: [],
         changelog: [
