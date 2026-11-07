@@ -1,6 +1,6 @@
 use base64::{engine::general_purpose::STANDARD, Engine};
 use sha2::{Digest, Sha256};
-use std::{fs, path::PathBuf};
+use std::{fs, path::PathBuf, time::Duration};
 use tauri::Manager;
 
 const SOURCES: [&str; 2] = [
@@ -18,9 +18,11 @@ async fn download(hash: &str) -> Result<Vec<u8>, String> {
     if let Ok(url) = std::env::var("BD2_BACKGROUNDS_URL") {
         sources.insert(0, url);
     }
+    // A stalled download fails after 30 s and moves on to the next source.
+    let client = reqwest::Client::builder().timeout(Duration::from_secs(30)).build().map_err(|e| e.to_string())?;
     let mut errors = Vec::new();
     for base in sources {
-        let response = reqwest::get(format!("{base}{hash}.webp")).await.and_then(|r| r.error_for_status());
+        let response = client.get(format!("{base}{hash}.webp")).send().await.and_then(|r| r.error_for_status());
         match response {
             Ok(response) => match response.bytes().await {
                 // The file name is its SHA-256, so a match means the image is complete and correct.
