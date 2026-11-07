@@ -52,9 +52,19 @@ jobs:
           mkdir release
           cp src-tauri/target/release/bd2modpreview.exe release/BD2ModPreview.exe
 
+      # New releases start as drafts; rebuilding a published release keeps it published.
+      - name: Check existing release
+        id: release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+        run: echo "draft=$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json isDraft -q .isDraft 2>/dev/null || echo true)" >> "$GITHUB_OUTPUT"
+
       - uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
           name: BD2ModPreview ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
-          draft: true
+          draft: ${{ steps.release.outputs.draft }}
+          overwrite_files: true
           files: release/BD2ModPreview.exe
