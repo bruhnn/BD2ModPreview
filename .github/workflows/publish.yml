@@ -1,0 +1,60 @@
+name: publish
+
+on:
+  push:
+    tags:
+      - '*.*.*'
+      - 'v*'
+
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to build'
+        required: true
+        type: string
+
+jobs:
+  portable:
+    permissions:
+      contents: write
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref }}
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+
+      - name: Install frontend dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm tauri build --no-bundle
+
+      # BD2ModManager downloads releases/latest/download/BD2ModPreview.exe, so the name must stay the same.
+      - name: Prepare release file
+        shell: bash
+        run: |
+          mkdir release
+          cp src-tauri/target/release/bd2modpreview.exe release/BD2ModPreview.exe
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+          name: BD2ModPreview ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+          draft: true
+          files: release/BD2ModPreview.exe
