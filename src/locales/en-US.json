@@ -256,6 +256,7 @@
         "progress": "Animation progress",
         "previewAnimation": "Preview animation",
         "previewLayers": "Layers for this preview",
+        "saveScreenshot": "Save screenshot",
         "closeLayers": "Close layers",
         "searchLayersLabel": "Search layers",
         "closeSettings": "Close settings",

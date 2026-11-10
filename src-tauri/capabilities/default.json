@@ -14,6 +14,8 @@
     {"identifier": "fs:allow-write-text-file", "allow": [{"path": "$APPDATA/cutscenes"}, {"path": "$APPDATA/cutscenes/**"}]},
     {"identifier": "fs:allow-rename", "allow": [{"path": "$APPDATA/cutscenes"}, {"path": "$APPDATA/cutscenes/**"}]},
     "dialog:default",
+    "dialog:allow-save",
+    "fs:allow-write-file",
     {
       "identifier": "opener:allow-open-path",
       "allow": [

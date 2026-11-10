@@ -3,7 +3,7 @@
   lang="ts"
 >
 import { useI18n } from "vue-i18n"
-import { WifiOff, FileQuestion, ImageOff, FileWarning, CircleAlert, Ellipsis, Scan, ExternalLink, Flame, GripVertical, PanelRightClose, PanelBottomClose, Play, Pause, Repeat, Hand, Eye, EyeOff, Check, Clapperboard, Images, ChevronDown, ChevronRight, FolderOpen, Focus, Image, Layers, Maximize, Palette, Shirt, Pencil, Plus, RotateCcw, SkipBack, Trash2, X } from "@lucide/vue"
+import { WifiOff, FileQuestion, ImageOff, FileWarning, CircleAlert, Ellipsis, Scan, Camera, ExternalLink, Flame, GripVertical, PanelRightClose, PanelBottomClose, Play, Pause, Repeat, Hand, Eye, EyeOff, Check, Clapperboard, Images, ChevronDown, ChevronRight, FolderOpen, Focus, Image, Layers, Maximize, Palette, Shirt, Pencil, Plus, RotateCcw, SkipBack, Trash2, X } from "@lucide/vue"
 import { autoUpdate, flip, offset, shift, useFloating } from "@floating-ui/vue"
 import { onClickOutside, useTimeoutFn } from "@vueuse/core"
 import { computed, nextTick, ref, useTemplateRef, watch } from "vue"
@@ -16,7 +16,8 @@ import { useModManagerStore } from "../stores/modManager"
 import { usePreviewerStore } from "../stores/previewer"
 import { useUIStore } from "../stores/ui"
 
-import { open } from "@tauri-apps/plugin-dialog"
+import { open, save } from "@tauri-apps/plugin-dialog"
+import { writeFile } from "@tauri-apps/plugin-fs"
 import { openUrl } from "@tauri-apps/plugin-opener"
 import { invoke } from "@tauri-apps/api/core"
 
@@ -31,19 +32,23 @@ const errorIcons = { network: WifiOff, skeletonMissing: FileQuestion, atlasMissi
 function errorIcon(cause: LoadCause) { return errorIcons[cause] }
 
 const { t } = useI18n()
+
 const props = defineProps<{
   previewId: string
   canAddRight: boolean
   canAddBottom: boolean
 }>()
+
 const previewerStore = usePreviewerStore()
 const uiStore = useUIStore()
 const datingButton = ref<HTMLElement | null>(null)
 const datingTooltip = ref<HTMLElement | null>(null)
 const datingTooltipOpen = ref(false)
+
 const { start: closeDatingTooltip, stop: keepDatingTooltip } = useTimeoutFn(() => {
   datingTooltipOpen.value = false
 }, 150, { immediate: false })
+
 const { floatingStyles: datingTooltipStyles } = useFloating(datingButton, datingTooltip, {
   placement: "top-end",
   strategy: "fixed",
@@ -52,9 +57,11 @@ const { floatingStyles: datingTooltipStyles } = useFloating(datingButton, dating
 })
 
 const gameBackground = computed(() => previewerStore.getPreview(props.previewId)?.gameBackground ?? null)
+
 function toggleGameBackground() {
   settings.value!.background = settings.value!.background.type === 'game' ? { type: 'theme' } : { type: 'game' }
 }
+
 const playerContainer = useTemplateRef("player-container")
 
 const {
@@ -116,10 +123,13 @@ const {
   activeSequence,
   playSequence,
   stopSequence,
+  takeScreenshot,
 } = usePreview(props.previewId, playerContainer)
+
 const { isDragging, dropTarget, startDrag, moveDrag, finishDrag, cancelDrag } = usePreviewDrag(({ row, column, newRow }) => {
   previewerStore.movePreview(props.previewId, row, column, newRow)
 })
+
 const modManager = useModManagerStore()
 const { history } = useHistory()
 const { logMessage } = useLogger()
@@ -132,13 +142,16 @@ const animationPopover = ref<HTMLElement | null>(null)
 const datingToolsOpen = ref(false)
 const datingToolsButton = ref<HTMLElement | null>(null)
 const datingToolsPopover = ref<HTMLElement | null>(null)
+
 const syncGroup = computed({
   get: () => previewerStore.getPreview(props.previewId)?.syncGroup ?? 0,
   set: (value: number) => {
     const preview = previewerStore.getPreview(props.previewId)
+
     if (preview) preview.syncGroup = value || null
   },
 })
+
 const layersOpen = ref(false)
 const layerSearch = ref("")
 const layersButton = ref<HTMLElement | null>(null)
@@ -160,12 +173,17 @@ const recentExpanded = ref(true)
 const filteredLayers = computed(() => layers.value.filter(layer =>
   layer.toLowerCase().includes(layerSearch.value.trim().toLowerCase()),
 ))
+
 const managerMod = computed(() => {
   if (source.value?.type !== "folder") return null
+
   const path = source.value.path.replace(/\\/g, "/").replace(/\/+$/, "").toLowerCase()
+
   return modManager.mods.find(mod => mod.path.replace(/\\/g, "/").replace(/\/+$/, "").toLowerCase() === path) ?? null
 })
+
 const managerDisabled = computed(() => !modManager.connected || !managerMod.value || managerMod.value.errors.length > 0 || modManager.pending.includes(managerMod.value.name))
+
 const managerHint = computed(() => !modManager.connected ? t("preview.managerDisconnected")
   : !managerMod.value ? t("preview.managerUnknown")
     : managerMod.value.errors.length ? t("preview.managerModErrors") : t("preview.managerEnable"))
@@ -216,15 +234,46 @@ function saveSequence(sequence: AnimationSequence) {
   if (editingSequence.value === null) sequences.value.push(sequence)
   else {
     const playing = activeSequence.value === sequences.value[editingSequence.value]
+
     sequences.value[editingSequence.value] = sequence
     if (playing) playSequence(sequence)
   }
+
   sequenceEditorOpen.value = false
 }
 
 function deleteSequence(index: number) {
   if (activeSequence.value === sequences.value[index]) stopSequence()
   sequences.value.splice(index, 1)
+}
+
+const savingScreenshot = ref(false)
+
+async function saveScreenshot() {
+  if (savingScreenshot.value || !source.value) return
+
+  savingScreenshot.value = true
+
+  try {
+    const png = await takeScreenshot()
+    const stamp = new Date().toISOString().slice(0, 19).replace(/[T:]/g, "-")
+
+    const name = (title.value || "preview").replace(/[\\/:*?"<>|]+/g, "_").trim()
+
+    const path = await save({
+      defaultPath: `${name}_${stamp}.png`,
+      filters: [{ name: "PNG", extensions: ["png"] }],
+    })
+
+    if (!path) return
+
+    await writeFile(path, new Uint8Array(await png.arrayBuffer()))
+    logMessage("Screenshot saved: " + path, "success")
+  } catch (error) {
+    logMessage("Failed to save screenshot: " + String(error), "error")
+  } finally {
+    savingScreenshot.value = false
+  }
 }
 
 function openSubmenu(name: "background" | "skin", event: Event) {
@@ -235,9 +284,11 @@ function openSubmenu(name: "background" | "skin", event: Event) {
 
 async function openContext(event: MouseEvent | KeyboardEvent) {
   if (!source.value) return
+
   const rect = playerContainer.value!.getBoundingClientRect()
   const x = event instanceof MouseEvent ? event.clientX : rect.left + rect.width / 2
   const y = event instanceof MouseEvent ? event.clientY : rect.top + rect.height / 2
+
   contextPoint.value = { getBoundingClientRect: () => new DOMRect(x, y, 0, 0) }
   animationsOpen.value = false
   layersOpen.value = false
@@ -256,6 +307,7 @@ function onPreviewKeydown(event: KeyboardEvent) {
   if (event.ctrlKey || event.altKey || event.metaKey || event.repeat) return
   if ((event.target as HTMLElement).closest("input, select, textarea, [contenteditable=true]")) return
   if (!allAnimations.value.length) return
+
   switch (event.key.toLowerCase()) {
     case "f": fitCharacter()
       break
@@ -270,6 +322,7 @@ function onPreviewKeydown(event: KeyboardEvent) {
       break
     default: return
   }
+
   event.preventDefault()
   if (contextOpen.value) closeContext()
 }
@@ -277,11 +330,15 @@ function onPreviewKeydown(event: KeyboardEvent) {
 function selectBackground(event: Event) {
   const input = event.target as HTMLInputElement
   const file = input.files?.[0]
+
   if (!file) return
+
   const reader = new FileReader()
+
   reader.onload = () => {
     if (settings.value) settings.value.background = { type: "image", path: reader.result as string }
   }
+
   reader.readAsDataURL(file)
   input.value = ""
 }
@@ -289,13 +346,16 @@ function selectBackground(event: Event) {
 function changeEnabled(event: Event) {
   const input = event.target as HTMLInputElement
   const enabled = input.checked
+
   input.checked = managerMod.value?.enabled ?? false
   if (managerMod.value && !managerDisabled.value) modManager.setEnabled(managerMod.value, enabled)
 }
 
 function openRecentFolder(item: HistoryItem) {
   if (item.source.type !== "folder") return
+
   const preview = previewerStore.getPreview(props.previewId)
+
   if (!preview) return
   preview.title = item.source.path.split(/[\\/]/).filter(Boolean).pop() || item.source.path
   preview.source = { type: "folder", path: item.source.path }
@@ -303,7 +363,9 @@ function openRecentFolder(item: HistoryItem) {
 
 function addPreview(direction: "right" | "bottom") {
   if (previewerStore.previewLimitReached) return
+
   const current = previewerStore.getPreview(props.previewId)
+
   if (!current) return
 
   const position = direction === "right"
@@ -326,10 +388,14 @@ function addPreview(direction: "right" | "bottom") {
 async function selectFolder() {
   if (isOpening.value) return
   isOpening.value = true
+
   try {
     const path = await open({ directory: true, multiple: false })
+
     if (!path) return
+
     const preview = previewerStore.getPreview(props.previewId)
+
     if (!preview) return
     preview.title = path.split(/[\\/]/).filter(Boolean).pop() || path
     preview.source = { type: "folder", path }
@@ -353,11 +419,15 @@ watch([source, contextOpen, submenu], async ([value, open, menu], _previous, onC
   backgroundsError.value = false
   backgroundsLoading.value = false
   if (value?.type !== "folder" || !open || menu !== "background") return
+
   let cancelled = false
+
   onCleanup(() => cancelled = true)
   backgroundsLoading.value = true
+
   try {
     const images = await invoke<[string, string][]>("get_mod_backgrounds", { folderPath: value.path })
+
     if (!cancelled) modBackgrounds.value = images
   } catch (error) {
     if (!cancelled) backgroundsError.value = true
@@ -368,17 +438,25 @@ watch([source, contextOpen, submenu], async ([value, open, menu], _previous, onC
 })
 
 onClickOutside(contextPopover, () => contextOpen.value = false, { ignore: [submenuPopover] })
+
 const errorExplanation = computed(() => {
   const issue = errorInfo.value
+
   if (!issue) return ''
+
   const bothMissing = issue.origin === 'online' && ['skeletonMissing', 'atlasMissing', 'textureMissing'].includes(issue.cause)
     && ['jsDelivr', 'GitHub'].every(source => issue.results.some(result => result.source === source && result.cause === issue.cause && result.file === issue.file))
+
   return t(`loadError.${bothMissing ? 'both' : issue.origin}.${issue.cause}`, { file: issue.file || t('loadError.unspecified') })
 })
+
 const poseErrorMessage = computed(() => {
   const failure = datingPoseError.value
+
   if (!failure) return ''
+
   const message = t('loadError.pose', { pose: failure.pose, cause: t(`loadError.titles.${failure.issue.cause}`) })
+
   return failure.issue.origin === 'online' && ['network', 'textureFailed', 'textureMissing'].includes(failure.issue.cause)
     ? `${message} ${t('loadError.tryAgain')}` : message
 })
@@ -569,6 +647,10 @@ const poseErrorMessage = computed(() => {
           @click="resetCamera(); closeContext()" aria-keyshortcuts="R">
           <RotateCcw :size="16" /><span>{{ t('preview.resetCamera') }}</span><kbd>R</kbd>
         </button>
+        <button type="button" role="menuitem" :disabled="isLoading || savingScreenshot" @mouseenter="submenu = null"
+          @click="closeContext(); saveScreenshot()">
+          <Camera :size="16" /><span>{{ t('preview.saveScreenshot') }}</span>
+        </button>
 
 
         <template v-if="minigameAvailable">
@@ -608,7 +690,7 @@ const poseErrorMessage = computed(() => {
             <button v-for="item in datingTools" :key="item.id" type="button" role="menuitemradio"
               :aria-checked="datingTool === item.id" @click="selectDatingTool(item.id)">
               <Hand :size="16" /><span>{{ item.id === 0 ? t('preview.noTool') : t('preview.datingTool', { id: item.id })
-              }}{{ item.skin ? ' (' + item.skin + ')' : '' }}</span>
+                }}{{ item.skin ? ' (' + item.skin + ')' : '' }}</span>
               <Check v-if="datingTool === item.id" :size="16" />
             </button>
           </template>
@@ -723,13 +805,13 @@ const poseErrorMessage = computed(() => {
           :title="t('preview.showInteractionPoints')" :aria-pressed="showDatingPoints"
           @click="showDatingPoints = !showDatingPoints">
           <Eye :size="16" aria-hidden="true" /><span class="playback-label">{{ t('preview.showInteractionPoints')
-            }}</span>
+          }}</span>
         </button>
         <button type="button" class="dating-areas" :aria-label="t('preview.showInteractionAreas')"
           :title="t('preview.showInteractionAreas')" :aria-pressed="showDatingAreas"
           @click="showDatingAreas = !showDatingAreas">
           <Scan :size="16" aria-hidden="true" /><span class="playback-label">{{ t('preview.showInteractionAreas')
-            }}</span>
+          }}</span>
         </button>
         <select v-if="datingTools.length > 1" class="dating-tool-select" :value="datingTool"
           :aria-label="t('preview.datingToolLabel')"
@@ -754,14 +836,14 @@ const poseErrorMessage = computed(() => {
         :aria-label="t('preview.minigameInteractions')" :title="t('preview.minigameInteractions')"
         @click="minigameEnabled = !minigameEnabled">
         <Hand :size="16" aria-hidden="true" /><span class="playback-label">{{ t('preview.minigameInteractions')
-          }}</span>
+        }}</span>
       </button>
       <button v-if="cutsceneActive && gameBackground" type="button" class="dating-interactions-button"
         :aria-pressed="settings.background.type === 'game'" :aria-label="t('preview.gameBackgroundToggleHint')"
         :title="t('preview.gameBackgroundToggleHint')"
         @click="toggleGameBackground">
         <Clapperboard :size="16" aria-hidden="true" /><span class="playback-label">{{ t('preview.gameBackgroundToggle')
-          }}</span>
+        }}</span>
       </button>
       <button v-if="datingEnabled && datingTools.length > 1" ref="datingToolsButton" type="button"
         class="dating-tool-button" :aria-label="t('preview.datingToolLabel')" :title="t('preview.datingToolLabel')"
