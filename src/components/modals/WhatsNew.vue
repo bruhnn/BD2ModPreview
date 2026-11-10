@@ -57,6 +57,15 @@ const otherUpdates = [
 
 const versions = [
     {
+        version: "1.0.5-beta.1",
+        highlights: [],
+        changelog: [
+            "whatsNew.screenshot",
+            "whatsNew.loadChecklist",
+            "whatsNew.translatedErrors"
+        ]
+    },
+    {
         version: "1.0.4",
         highlights: [
             {

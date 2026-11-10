@@ -85,6 +85,9 @@
         "orderHelp": "AFDIAN: Go to your dashboard, open My orders, and copy the order number. Ko-fi: Enter the activation code you received, not the transaction number."
     },
     "whatsNew": {
+        "screenshot": "Save any preview as a PNG image from the right-click menu.",
+        "loadChecklist": "Replaced the default spine loading animation with a checklist of the files being loaded.",
+        "translatedErrors": "Error messages are now translated into all supported languages.",
         "cutsceneUpdates": "Game cutscene data now updates without an app update and stays available offline once downloaded.",
         "newCutscenes": "Added game cutscenes for Valze - Night of Betrayal and Liatris - Sweet Temptation.",
         "audioRetry": "Improved dating audio loading and added a Retry button when some sounds fail to download.",
