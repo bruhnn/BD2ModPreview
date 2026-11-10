@@ -437,6 +437,62 @@
             "title": "Invalid Directory",
             "message": "The selected directory is invalid or does not contain Spine assets."
         },
+        "MissingAtlas": {
+            "title": "Missing Atlas File",
+            "message": "The selected folder is missing the required .atlas file."
+        },
+        "InvalidSkeletonFileName": {
+            "title": "Invalid Skeleton File Name",
+            "message": "The skeleton file name is invalid."
+        },
+        "InvalidAtlasFileName": {
+            "title": "Invalid Atlas File Name",
+            "message": "The atlas file name is invalid."
+        },
+        "InvalidFileName": {
+            "title": "Invalid File Name",
+            "message": "A file in the selected folder has an invalid name."
+        },
+        "MachineIdNotFound": {
+            "title": "Machine ID Not Found",
+            "message": "Could not get the device ID. Restart the app and try again."
+        },
+        "IOError": {
+            "title": "File Error",
+            "message": "Could not read or write a file. Check that it is not in use or blocked."
+        },
+        "NetworkError": {
+            "title": "Network Error",
+            "message": "Could not connect to the server. Check your connection and try again."
+        },
+        "ServerError": {
+            "title": "Server Error",
+            "message": "The server returned an error. Please try again later."
+        },
+        "Unauthorized": {
+            "title": "Unauthorized",
+            "message": "The server refused access to this file."
+        },
+        "InvalidUrl": {
+            "title": "Invalid URL",
+            "message": "The download address is invalid."
+        },
+        "FileCreationError": {
+            "title": "File Creation Error",
+            "message": "Could not create the file to save the download."
+        },
+        "WriteError": {
+            "title": "Write Error",
+            "message": "Could not save the downloaded file."
+        },
+        "ContentLengthMissing": {
+            "title": "Download Size Unknown",
+            "message": "The server did not report the file size."
+        },
+        "UnsupportedModType": {
+            "title": "Unsupported Mod Type",
+            "message": "This mod type cannot be downloaded."
+        },
         "UnknownError": {
             "title": "An unexpected error occurred",
             "message": "An unexpected error occurred. More information in the logs."

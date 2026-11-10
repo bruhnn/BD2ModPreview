@@ -1,0 +1,474 @@
+{
+    "loadError": {
+        "titles": {
+            "network": "ネットワークエラー",
+            "skeletonMissing": "スケルトンファイルが見つかりません",
+            "atlasMissing": "アトラスファイルが見つかりません",
+            "textureMissing": "テクスチャファイルが見つかりません",
+            "textureFailed": "テクスチャの読み込みに失敗",
+            "unreadable": "ファイルを読み込めません",
+            "invalid": "無効なファイル",
+            "unknown": "不明なエラー"
+        },
+        "online": {
+            "network": "アセットの配信元に接続できませんでした。",
+            "skeletonMissing": "配信元にスケルトンファイルがありません。",
+            "atlasMissing": "配信元にアトラスファイルがありません。",
+            "textureMissing": "配信元にテクスチャ {file} がありません。",
+            "textureFailed": "テクスチャ {file} を読み込めませんでした。",
+            "unreadable": "ローダーから明確な原因が提供されませんでした。",
+            "invalid": "アセットを有効な Spine ファイルとして読み込めませんでした。",
+            "unknown": "ローダーから明確な原因が提供されませんでした。"
+        },
+        "folder": {
+            "network": "ローダーから明確な原因が提供されませんでした。",
+            "skeletonMissing": "フォルダーにスケルトンファイルがありません。",
+            "atlasMissing": "フォルダーにアトラスファイルがありません。",
+            "textureMissing": "テクスチャ {file} がフォルダーにないか、読み込めません。",
+            "textureFailed": "テクスチャ {file} がフォルダーにないか、読み込めません。",
+            "unreadable": "ファイルを開けませんでした。使用中またはアクセスがブロックされていないか確認してください。",
+            "invalid": "アセットを有効な Spine ファイルとして読み込めませんでした。",
+            "unknown": "ローダーから明確な原因が提供されませんでした。"
+        },
+        "both": {
+            "skeletonMissing": "両方の配信元にスケルトンファイルがありません。まだ公開されていない可能性があります。",
+            "atlasMissing": "両方の配信元にアトラスファイルがありません。まだ公開されていない可能性があります。",
+            "textureMissing": "両方の配信元にテクスチャ {file} がありません。まだ公開されていない可能性があります。"
+        },
+        "details": "詳細",
+        "folderName": "フォルダー",
+        "file": "ファイル",
+        "code": "コード",
+        "unspecified": "未提供",
+        "unavailable": "取得不可",
+        "folderLabel": "フォルダー",
+        "onlineLabel": "オンライン",
+        "pose": "ポーズ {pose} を読み込めませんでした：{cause}。",
+        "tryAgain": "もう一度お試しください。"
+    },
+    "datingPoseLoadFailed": "このポーズを読み込めませんでした。もう一度お試しください。",
+    "datingAudioStatus": {
+        "loading": "音声を読み込み中 {loaded}/{total}",
+        "completed": "音声の読み込みが完了しました",
+        "failed": "音声を {loaded}/{total} 読み込みました。一部のファイルを読み込めませんでした。"
+    },
+    "minigameAudio": "ミニゲームの効果音を有効にする",
+    "datingAudio": "デートインタラクションの効果音とボイスを有効にする",
+    "datingPointSettings": {
+        "click": "クリックポイント",
+        "drag": "ドラッグポイント",
+        "colorHelp": "マーカーと範囲枠の色。",
+        "size": "ポイントのサイズ",
+        "sizeHelp": "マーカーの大きさのみ変更します。操作範囲は変わりません。",
+        "reset": "初期設定に戻す"
+    },
+    "supporter": {
+        "title": "サポーター特典",
+        "active": "有効",
+        "thankYou": "ご支援ありがとうございます！",
+        "description": "AFDIAN の注文番号または Ko-fi の有効化コードで有効にします。",
+        "orderNumber": "AFDIAN の注文番号または有効化コード",
+        "placeholder": "注文番号または有効化コードを貼り付け",
+        "redeem": "有効にする",
+        "redeeming": "有効化中…",
+        "activated": "サポーターアクセスを有効化しました。",
+        "activatedRefreshFailed": "有効化しました。アプリを開き直してインタラクションの読み込みを再試行してください。",
+        "errors": {
+            "invalidCodeFormat": "有効な AFDIAN 注文番号または有効化コードを入力してください。",
+            "orderNotFound": "注文が見つかりません。AFDIAN 注文番号を確認してください。",
+            "activationCodeNotFound": "有効化コードが見つかりません。",
+            "activationUnavailable": "この有効化は期限切れ、無効、または別のデバイスで使用済みです。",
+            "orderNotEligible": "この注文は有効化の対象外です。",
+            "orderVerificationFailed": "注文を確認できませんでした。後でもう一度お試しください。",
+            "activationFailed": "有効化できませんでした。後でもう一度お試しください。",
+            "connectionFailed": "接続できませんでした。接続を確認して再試行してください。",
+            "invalidMachineId": "デバイス ID を取得できません。アプリを再起動してください。"
+        },
+        "findOrder": "注文番号やコードはどこにありますか？",
+        "orderHelp": "AFDIAN：ダッシュボードから「マイオーダー」を開き、注文番号をコピーしてください。Ko-fi：取引番号ではなく、受け取った有効化コードを入力してください。"
+    },
+    "whatsNew": {
+        "cutsceneUpdates": "アプリを更新せずにゲームのカットシーンデータを更新できるようになりました。ダウンロード後はオフラインでも使用できます。",
+        "newCutscenes": "Valze - Night of BetrayalとLiatris - Sweet Temptationのゲームカットシーンを追加しました。",
+        "audioRetry": "デートの音声読み込みを改善し、一部の音声をダウンロードできなかった場合の再試行ボタンを追加しました。",
+        "gameBackgrounds": "ゲームカットシーンでゲーム本来のアニメーション背景を表示できるようになりました。画像は一度だけダウンロードされ、確認ダイアログまたは設定で選べます。",
+        "backgroundsPanel": "ゲームの風景を選べる「ゲーム背景」パネルを追加し、ツールバーの背景オプションも使いやすくなりました。",
+        "machineId": "設定のマシンIDをクリックするとコピーできます。",
+        "framingFix": "大きな背景を持つキャラクターが正しくフレームに収まり、何も表示されなかったデートシーンは表示可能なスキンを自動で選びます。",
+        "skeletonPaths": "ファイル名の大文字・小文字の違いで一部のキャラクターが読み込めなかった問題を修正しました。",
+        "cutsceneLook": "ゲームカットシーンの背景がゲームにより近くなりました（ライティング、フラッシュ、フェード）。",
+        "recordedCutscenes": "ゲームと同じ背景で表示されるカットシーンが増えました。",
+        "downloadedBackgrounds": "ダウンロード済みのカットシーン背景は確認なしで表示されるようになりました。",
+        "gameCutscenesTitle": "ゲーム内カットシーンの背景",
+        "gameCutscenesDescription": "アニメーションメニューで「ゲーム内カットシーン」を選ぶと、ゲームのアニメーション背景付きでカットシーンを再生できます。",
+        "backgroundsPanelTitle": "ゲーム背景",
+        "backgroundsPanelDescription": "ゲームの風景をプレビューの背景に使えます。ツールバーの背景ボタンから開けます。",
+        "minigameAudio": "Slap Slap Slop のインタラクションに効果音を追加しました。設定でオン・オフを切り替えられます。",
+        "datingAudio": "デートインタラクションに韓国語ボイスと効果音を追加しました。設定でオン・オフを切り替えられます。",
+        "previewErrors": "プレビューのエラー表示を改善しました。失敗の原因やファイルの詳細を確認し、再試行できます。",
+        "versionLabel": "バージョン",
+        "changelog": "変更履歴",
+        "supportOr": " または ",
+        "pointAppearance": "設定でクリックとドラッグの操作ポイントの色とサイズを変更できます。範囲の枠にも同じ色が適用されます。",
+        "dragPosition": "位置の保持に対応した操作では、ドラッグを離した位置を保持するようになりました。",
+        "compactControls": "キャラクター一覧を開いたときなど、狭いパネルに合わせてプレビュー操作欄を調整します。",
+        "settingsScrolling": "設定画面がウィンドウ内に収まり、ヘッダーとフッターを固定したまま内容をスクロールできます。",
+        "supporterActivation": "設定で AFDIAN の注文番号または Ko-fi の有効化コードを入力し、サポーター機能を有効にできます。",
+        "datingControls": "デートのポーズを選択し、インタラクションをリセットしたり、操作ポイントや範囲の表示を切り替えたりできます。",
+        "appIcon": "アプリアイコンを新しくしました。",
+        "assetLoadingFix": "アセットのファイル名が正しくないため、一部のキャラクタープレビューを読み込めない問題を修正しました。",
+        "groupCameraFix": "グループ内の一部のプレビューが、キャラクターを画面に合わせるまでズームや移動に反応しない問題を修正しました。",
+        "minigames": "Slap Slap Slop のキャラクターをプレビューし、クリック、長押し、ドラッグ、フィーバーのインタラクションを楽しめます。",
+        "copyConfirmation": "ID をコピーしたときに確認メッセージを表示するようにしました。",
+        "cutsceneVisibilityFix": "カット終了後も一部の演出が表示されたままになる問題を修正しました。",
+        "datingAssetsFix": "Aquila の複数パートからなるデートプレビューで、一部のアセットが読み込まれない問題を修正しました。",
+        "whatsNewFix": "「更新内容」がツールバーの後ろに表示される問題を修正しました。",
+        "multiplePreviews": "複数のプレビュー",
+        "syncGroups": "同じ番号のグループに設定したプレビューを、一緒にズーム、移動、再生操作できます。",
+        "playbackFixes": "ツールバーからの一時停止と最初からの再生を修正しました。",
+        "datingFixes": "デートのインタラクションが空のアニメーションから始まる問題を修正し、複数パートのデートシーンに対応しました。",
+        "datingInteractions": "デートのインタラクション",
+        "supporterMessage": "この機能は支援者限定です。開発を支援して利用するには、こちらからご支援ください：",
+        "characters": "キャラクターデータを更新し、ドラッグ＆ドロップを改善しました。",
+        "interface": "設定、キャラクター一覧、履歴、ログをリニューアルしました。",
+        "layers": "スキンの選択や、レイヤーごとの表示・非表示を切り替えられます。",
+        "modManager": "BD2ModManager に接続すると、プレビューから MOD を有効・無効にできます。",
+        "dating": "支援者向けに、クリック、ドラッグ、長押しによるデートのインタラクションを追加しました。",
+        "datingCache": "デートのインタラクションデータは最大7日間キャッシュされます。認証済みの支援者は、有効期間中はオフラインでも利用できます。",
+        "cutscenes": "ゲームのタイミングに合わせて、対応するカットシーンを再生できます。",
+        "title": "更新内容",
+        "version": "バージョン {version}",
+        "current": "現在のバージョン",
+        "feedback": "ご意見やアイデアを GitHub でお寄せください。",
+        "issue": "GitHub で問題を報告",
+        "done": "閉じる",
+        "grid": "複数の MOD を並べてプレビューできます。ドラッグで並べ替え、各プレビューのサイズを変更できます。",
+        "controls": "すべてのプレビューをまとめて操作したり、個別にアニメーションを選択したりできます。",
+        "sequences": "アニメーションシーケンスを作成して保存できます。",
+        "folders": "複数のフォルダーを一度に開き、最近使ったフォルダーからプレビューを再度開けます。",
+        "themes": "テーマとキャラクター名の翻訳を追加しました。"
+    },
+    "preview": {
+        "minigameInteractions": "ミニゲームのインタラクション",
+        "minigameFever": "フィーバー",
+        "minigameHint": "左右どちらかをクリック、長押し、またはドラッグしてください。マウスの中ボタンでカメラを移動できます。",
+        "syncGroups": "同期グループ",
+        "syncGroup": "同期グループ {group}。同じ番号のプレビューは操作を共有します。もう一度クリックすると解除します。",
+        "datingInteractions": "デートのインタラクション",
+        "datingSupportMessage": "BD2ModManager と BD2ModPreview は無料です。デートのインタラクションは支援者へのお礼として用意しました。活動を応援していただける方は、Ko-fi または AFDIAN からご支援いただけます。",
+        "showInteractionAreas": "操作エリアを表示",
+        "gameCutscene": "ゲーム内カットシーン（プレビュー）",
+        "cutsceneIncomplete": "一部のカットシーン要素が不足しています。",
+        "datingTool": "ツール {id}",
+        "noTool": "ツールなし",
+        "datingGauge": "インタラクションゲージ",
+        "managerDisconnected": "BD2ModManager を開いてこの Mod を管理",
+        "managerUnknown": "このフォルダーは ModManager の Mod 一覧にありません",
+        "managerModErrors": "この Mod にはエラーがあるため変更できません",
+        "managerEnable": "BD2ModManager で Mod を有効にする",
+        "darkTheme": "ダーク {number}",
+        "lightTheme": "ライト {number}",
+        "fullPath": "フルパス",
+        "newPreview": "新しいプレビュー",
+        "originalTitle": "[オリジナル] {character} - {costume}",
+        "loading": "プレビューを読み込み中…",
+        "loadFailed": "プレビューを読み込めませんでした。",
+        "missingAssets": "フォルダーにスケルトンまたはアトラスがありません。",
+        "unsupportedSkeleton": "未対応のスケルトン形式です。",
+        "chooseFolder": "プレビューするフォルダーを選択",
+        "openFolder": "フォルダーを開く",
+        "recentFolders": "最近のフォルダー",
+        "fit": "キャラクターを画面に収める",
+        "center": "キャラクターを中央に移動",
+        "resetCamera": "カメラをリセット",
+        "skin": "スキン",
+        "none": "なし",
+        "background": "背景",
+        "selectColor": "色を選択",
+        "selectImage": "画像を選択",
+        "chooseImage": "画像を選択",
+        "modBackgrounds": "MODの背景",
+        "noBackgrounds": "textures/ に画像がありません。",
+        "backgroundsFailed": "MODの背景を読み込めませんでした。",
+        "resetBackground": "背景をリセット",
+        "removeImage": "画像を削除",
+        "color": "色",
+        "createSequence": "シーケンスを作成",
+        "editSequence": "シーケンスを編集",
+        "newSequence": "新しいシーケンス",
+        "saveSequence": "シーケンスを保存",
+        "name": "名前",
+        "animation": "アニメーション",
+        "startAfter": "開始までの時間",
+        "playFor": "再生時間",
+        "auto": "自動",
+        "addAnimation": "アニメーションを追加",
+        "addStep": "ステップを追加",
+        "step": "ステップ {number}",
+        "sequenceHelp": "ステップは順番に、同じステップのアニメーションは同時に再生されます。開始時間はステップを基準とします。自動は元の長さを使用し、ループは指定時間内で繰り返します。",
+        "restart": "プレビューを最初から再生",
+        "play": "再生",
+        "pause": "一時停止",
+        "playPreview": "プレビューを再生",
+        "pausePreview": "プレビューを一時停止",
+        "restartAll": "すべて最初から再生",
+        "playAll": "すべて再生",
+        "pauseAll": "すべて一時停止",
+        "loopAll": "すべてループ再生",
+        "loop": "ループ再生",
+        "noAnimations": "アニメーションなし",
+        "noAnimation": "アニメーションなし",
+        "global": "全体 ({animation})",
+        "layers": "レイヤー",
+        "showAllLayers": "すべて表示",
+        "hideAllLayers": "すべて非表示",
+        "resetLayers": "リセット",
+        "searchLayers": "レイヤーを検索…",
+        "noLayers": "レイヤーが見つかりません。",
+        "settings": "設定",
+        "characters": "キャラクター",
+        "application": "アプリケーション",
+        "theme": "テーマ",
+        "rendering": "描画",
+        "onTopHelp": "プレビューを最前面に表示します。",
+        "alphaHelp": "テクスチャに乗算済みアルファを使用します。",
+        "help": "ヘルプ",
+        "close": "閉じる",
+        "options": "プレビューのオプション",
+        "addRight": "右にプレビューを追加",
+        "addBottom": "下にプレビューを追加",
+        "rearrange": "プレビューを並べ替え",
+        "dragMove": "プレビューや行の間にドラッグして移動",
+        "closePreview": "プレビューを閉じる",
+        "progress": "再生位置",
+        "previewAnimation": "プレビューのアニメーション",
+        "previewLayers": "このプレビューのレイヤー",
+        "saveScreenshot": "スクリーンショットを保存",
+        "closeLayers": "レイヤーを閉じる",
+        "searchLayersLabel": "レイヤーを検索",
+        "closeSettings": "設定を閉じる",
+        "closeEditor": "シーケンス編集を閉じる",
+        "sequenceSteps": "シーケンスのステップ",
+        "loopDuration": "指定時間ループ再生",
+        "resize": "ドラッグしてサイズ変更。",
+        "resizeCharacters": "キャラクターパネルのサイズ変更",
+        "edit": "{name} を編集",
+        "delete": "{name} を削除",
+        "animationNumber": "アニメーション {number}",
+        "closeStep": "ステップ {number} を閉じる",
+        "reorderAnimation": "アニメーション {number} を並べ替え",
+        "loopNumber": "アニメーション {number} をループ",
+        "delayNumber": "アニメーション {number} の開始時間",
+        "durationNumber": "アニメーション {number} の再生時間",
+        "removeAnimation": "アニメーション {number} を削除"
+    },
+    "common": {
+        "viewLogs": "ログを表示",
+        "openFolder": "フォルダーを開く",
+        "retry": "再試行",
+        "goBack": "戻る",
+        "close": "閉じる"
+    },
+    "app": {
+        "copyMachineId": "クリップボードにコピー",
+        "copied": "クリップボードにコピーしました",
+        "machineIdNotFound": "マシン ID を取得できません",
+        "backToHome": "戻る",
+        "toggleControls": "コントロール"
+    },
+    "homePage": {
+        "title": "Modプレビュー",
+        "subtitle": "フォルダーをドラッグ&ドロップまたは選択",
+        "recentFoldersLabel": "最近のフォルダー",
+        "recentFoldersEmpty": "最近のフォルダーが見つかりません。",
+        "openFolderButton": "フォルダーを参照"
+    },
+    "characterList": {
+        "searchPlaceholder": "キャラクターを検索...",
+        "noCharactersFound": "キャラクターが見つかりません。",
+        "loadingCharacters": "キャラクターを読み込み中...",
+        "tabs": {
+            "minigames": "ミニゲーム",
+            "standing": "スタンディング",
+            "cutscene": "カットシーン",
+            "dating": "デート"
+        },
+        "sort": {
+            "newest": "新しい順",
+            "oldest": "古い順",
+            "a_z": "A-Z",
+            "z_a": "Z-A"
+        },
+        "loadingCharacter": "キャラクターを読み込み中...",
+        "information": "キャラクターアセットはGitHubリポジトリから読み込まれます"
+    },
+    "error": {
+        "title": "問題が発生しました",
+        "message": "予期しないエラーが発生しました。もう一度お試しください。",
+        "noInternet": {
+            "title": "インターネット接続がありません",
+            "message": "インターネット接続がないとキャラクターアセットを読み込めません。",
+            "checking": "確認中..."
+        }
+    },
+    "controls": {
+        "title": "コントロール",
+        "noSource": "ソースがありません！",
+        "links": {
+            "suggestFeature": "機能を提案する",
+            "reportIssue": "問題を報告する"
+        },
+        "render": {
+            "title": "レンダリング",
+            "premultipliedAlpha": "事前乗算アルファ",
+            "backgroundColor": "背景色",
+            "backgroundImage": "背景画像",
+            "chooseImage": "画像を選択"
+        },
+        "animations": {
+            "title": "アニメーション",
+            "available": "{count}個利用可能",
+            "loopAnimation": "アニメーションをループ",
+            "noAnimations": "利用可能なアニメーションがありません"
+        },
+        "actions": {
+            "title": "アクション",
+            "viewHistory": "履歴を表示",
+            "openLogs": "ログを開く"
+        },
+        "appSettings": {
+            "title": "アプリ設定",
+            "language": "言語",
+            "alwaysOnTop": "常に前面に表示"
+        },
+        "version": "BD2ModPreview v{version}"
+    },
+    "historyDialog": {
+        "title": "履歴 ({count})",
+        "noHistory": "最近の履歴がありません",
+        "unknownCharacter": "不明",
+        "unknownModType": "不明",
+        "sourceTypes": {
+            "github": "Github",
+            "folder": "フォルダー"
+        },
+        "modTypes": {
+            "standing": "スタンディング",
+            "cutscene": "カットシーン",
+            "npc": "NPC",
+            "scene": "シーン",
+            "dating": "デート"
+        },
+        "actions": {
+            "remove": "履歴から削除",
+            "loadAnimation": "アニメーションを読み込み"
+        }
+    },
+    "errors": {
+        "DirectoryNotFound": {
+            "title": "ディレクトリが見つかりません",
+            "message": "選択されたフォルダーが見つかりませんでした。"
+        },
+        "MissingSkeletonOrJson": {
+            "title": "スケルトンファイルが見つかりません",
+            "message": "選択されたフォルダーに必要なスケルトン.jsonまたは.skelファイルがありません。",
+            "actionLabel": "Githubから元のスケルトンをダウンロード"
+        },
+        "AssetLoadingError": {
+            "title": "アセット読み込みエラー",
+            "message": "Spineアセットの読み込みに失敗しました。"
+        },
+        "AssetNotFoundError": {
+            "title": "アセットが見つかりません",
+            "message": "アセットが見つかりませんでした。"
+        },
+        "AssetTooManyRequestsError": {
+            "title": "リクエストが多すぎます",
+            "message": "リクエストが多すぎます。しばらく待ってから再試行してください。"
+        },
+        "InitializationError": {
+            "title": "初期化エラー",
+            "message": "Spineプレイヤーの初期化に失敗しました。"
+        },
+        "PlayerError": {
+            "title": "プレイヤーエラー",
+            "message": "Spineプレイヤーでエラーが発生しました。"
+        },
+        "SkeletonError": {
+            "title": "スケルトンエラー",
+            "message": "スケルトン（.skelまたは.json）の読み込みに失敗しました。スケルトンが破損しているか、アトラスとスケルトンファイル間に不一致がある可能性があります。"
+        },
+        "SkeletonNotFound": {
+            "title": "スケルトンが見つかりません",
+            "message": "おっと！スケルトンアセットがGitHubリポジトリにありません。"
+        },
+        "CharacterIdNotFound": {
+            "title": "キャラクターIDが見つかりません",
+            "message": "フォルダーからキャラクターIDを解決できませんでした。"
+        },
+        "DirectoryInvalidError": {
+            "title": "無効なディレクトリ",
+            "message": "選択されたディレクトリが無効であるか、Spineアセットが含まれていません。"
+        },
+        "UnknownError": {
+            "title": "予期しないエラーが発生しました",
+            "message": "予期しないエラーが発生しました。詳細はログをご確認ください。"
+        },
+        "MissingAtlas": {
+            "title": "アトラスファイルがありません",
+            "message": "選択されたフォルダーに必要な.atlasファイルがありません。"
+        },
+        "InvalidSkeletonFileName": {
+            "title": "スケルトンのファイル名が無効です",
+            "message": "スケルトンのファイル名が無効です。"
+        },
+        "InvalidAtlasFileName": {
+            "title": "アトラスのファイル名が無効です",
+            "message": "アトラスのファイル名が無効です。"
+        },
+        "InvalidFileName": {
+            "title": "無効なファイル名",
+            "message": "選択されたフォルダー内に無効な名前のファイルがあります。"
+        },
+        "MachineIdNotFound": {
+            "title": "マシンIDが見つかりません",
+            "message": "デバイスIDを取得できませんでした。アプリを再起動してもう一度お試しください。"
+        },
+        "IOError": {
+            "title": "ファイルエラー",
+            "message": "ファイルの読み取りまたは書き込みに失敗しました。使用中またはアクセスがブロックされていないか確認してください。"
+        },
+        "NetworkError": {
+            "title": "ネットワークエラー",
+            "message": "サーバーに接続できませんでした。接続を確認してもう一度お試しください。"
+        },
+        "ServerError": {
+            "title": "サーバーエラー",
+            "message": "サーバーがエラーを返しました。しばらくしてからもう一度お試しください。"
+        },
+        "Unauthorized": {
+            "title": "権限がありません",
+            "message": "サーバーがこのファイルへのアクセスを拒否しました。"
+        },
+        "InvalidUrl": {
+            "title": "無効なURL",
+            "message": "ダウンロード先のアドレスが無効です。"
+        },
+        "FileCreationError": {
+            "title": "ファイル作成エラー",
+            "message": "ダウンロードを保存するファイルを作成できませんでした。"
+        },
+        "WriteError": {
+            "title": "書き込みエラー",
+            "message": "ダウンロードしたファイルを保存できませんでした。"
+        },
+        "ContentLengthMissing": {
+            "title": "ダウンロードサイズ不明",
+            "message": "サーバーからファイルサイズが通知されませんでした。"
+        },
+        "UnsupportedModType": {
+            "title": "未対応のMODタイプ",
+            "message": "このMODタイプはダウンロードできません。"
+        }
+    }
+}

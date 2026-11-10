@@ -1,0 +1,474 @@
+{
+    "loadError": {
+        "titles": {
+            "network": "网络错误",
+            "skeletonMissing": "未找到骨骼文件",
+            "atlasMissing": "未找到图集文件",
+            "textureMissing": "未找到纹理文件",
+            "textureFailed": "纹理加载失败",
+            "unreadable": "无法读取文件",
+            "invalid": "文件无效",
+            "unknown": "未知错误"
+        },
+        "online": {
+            "network": "无法连接到资源来源。",
+            "skeletonMissing": "资源来源中缺少骨骼文件。",
+            "atlasMissing": "资源来源中缺少图集文件。",
+            "textureMissing": "资源来源中缺少纹理 {file}。",
+            "textureFailed": "无法加载纹理 {file}。",
+            "unreadable": "加载器未提供明确原因。",
+            "invalid": "加载器无法将资源数据读取为有效的 Spine 文件。",
+            "unknown": "加载器未提供明确原因。"
+        },
+        "folder": {
+            "network": "加载器未提供明确原因。",
+            "skeletonMissing": "文件夹中缺少骨骼文件。",
+            "atlasMissing": "文件夹中缺少图集文件。",
+            "textureMissing": "文件夹中缺少纹理 {file}，或无法读取该文件。",
+            "textureFailed": "文件夹中缺少纹理 {file}，或无法读取该文件。",
+            "unreadable": "应用无法打开文件。请检查文件是否被占用或阻止访问。",
+            "invalid": "加载器无法将资源数据读取为有效的 Spine 文件。",
+            "unknown": "加载器未提供明确原因。"
+        },
+        "both": {
+            "skeletonMissing": "两个来源都缺少骨骼文件。该文件可能尚未发布。",
+            "atlasMissing": "两个来源都缺少图集文件。该文件可能尚未发布。",
+            "textureMissing": "两个来源都缺少纹理 {file}。该文件可能尚未发布。"
+        },
+        "details": "详情",
+        "folderName": "文件夹",
+        "file": "文件",
+        "code": "代码",
+        "unspecified": "未提供",
+        "unavailable": "不可用",
+        "folderLabel": "文件夹",
+        "onlineLabel": "在线",
+        "pose": "无法加载姿势 {pose}：{cause}。",
+        "tryAgain": "请重试。"
+    },
+    "datingPoseLoadFailed": "无法加载此姿势。请重试。",
+    "datingAudioStatus": {
+        "loading": "正在加载音频 {loaded}/{total}",
+        "completed": "音频加载完成",
+        "failed": "已加载音频 {loaded}/{total}。部分文件无法加载。"
+    },
+    "minigameAudio": "启用小游戏音效",
+    "datingAudio": "启用约会互动的音效和语音",
+    "datingPointSettings": {
+        "click": "点击互动点",
+        "drag": "拖动互动点",
+        "colorHelp": "指示标记和区域框的颜色。",
+        "size": "互动点大小",
+        "sizeHelp": "仅更改指示标记大小，不改变互动区域。",
+        "reset": "恢复默认"
+    },
+    "supporter": {
+        "title": "赞助者权限",
+        "active": "已激活",
+        "thankYou": "感谢你的支持！",
+        "description": "使用 AFDIAN 订单号或 Ko-fi 激活码激活。",
+        "orderNumber": "AFDIAN 订单号或激活码",
+        "placeholder": "粘贴订单号或激活码",
+        "redeem": "激活",
+        "redeeming": "正在激活…",
+        "activated": "赞助者权限已激活。",
+        "activatedRefreshFailed": "权限已激活。请重新打开应用以重试加载互动。",
+        "errors": {
+            "invalidCodeFormat": "请输入有效的 AFDIAN 订单号或激活码。",
+            "orderNotFound": "未找到订单，请检查 AFDIAN 订单号。",
+            "activationCodeNotFound": "未找到激活码。",
+            "activationUnavailable": "此激活已过期、被禁用或已在其他设备上使用。",
+            "orderNotEligible": "此订单不符合激活条件。",
+            "orderVerificationFailed": "无法验证订单，请稍后重试。",
+            "activationFailed": "无法激活，请稍后重试。",
+            "connectionFailed": "无法连接，请检查网络后重试。",
+            "invalidMachineId": "设备 ID 不可用，请重启应用后重试。"
+        },
+        "findOrder": "在哪里找到订单号或激活码？",
+        "orderHelp": "AFDIAN：进入个人中心，打开“我的订单”，然后复制订单号。Ko-fi：输入你收到的激活码，而不是交易编号。"
+    },
+    "whatsNew": {
+        "cutsceneUpdates": "游戏过场动画数据现可独立更新，无需更新应用；下载后可离线使用。",
+        "newCutscenes": "新增瓦尔泽「背叛之夜」和莉亚特里斯「甜蜜诱惑」的游戏过场动画。",
+        "audioRetry": "改进约会音频加载，并在部分声音下载失败时提供重试按钮。",
+        "gameBackgrounds": "游戏过场动画现可显示游戏原本的动态背景。图片只需下载一次，可在提示或设置中选择。",
+        "backgroundsPanel": "新增“游戏背景”面板，提供游戏中的场景背景，工具栏中的背景选项也更便捷。",
+        "machineId": "点击设置中的机器 ID 即可复制。",
+        "framingFix": "带有大型背景的角色现在可正确取景，原本空白的约会场景会自动选择可见的皮肤。",
+        "skeletonPaths": "修复了部分角色因文件名大小写而无法加载的问题。",
+        "cutsceneLook": "游戏过场动画背景更接近游戏原貌：光照、闪光和淡入淡出。",
+        "recordedCutscenes": "更多过场动画的背景与游戏中一致。",
+        "downloadedBackgrounds": "已下载的过场动画背景不再询问即可显示。",
+        "gameCutscenesTitle": "游戏过场动画背景",
+        "gameCutscenesDescription": "在动画菜单中选择“游戏过场动画”，即可使用游戏中的动态背景播放过场动画。",
+        "backgroundsPanelTitle": "游戏背景",
+        "backgroundsPanelDescription": "使用游戏中的场景作为预览背景。可从工具栏的背景按钮打开。",
+        "minigameAudio": "为 Slap Slap Slop 互动添加了音效，可在设置中开启或关闭。",
+        "datingAudio": "为约会互动添加了韩语语音和音效，可在设置中开启或关闭。",
+        "previewErrors": "预览错误提示更加清晰，说明失败原因，并提供文件详情和重试按钮。",
+        "versionLabel": "版本",
+        "changelog": "更新日志",
+        "supportOr": " 或 ",
+        "pointAppearance": "在设置中自定义点击和拖动互动点的颜色与大小。区域框使用相同的颜色。",
+        "dragPosition": "对于支持保留位置的互动，拖动后会停留在松开时的位置。",
+        "compactControls": "预览控件适配较小的面板，包括打开角色列表时。",
+        "settingsScrolling": "设置窗口不再超出屏幕，内容可滚动，标题和底部按钮保持固定。",
+        "supporterActivation": "在设置中使用 AFDIAN 订单号或 Ko-fi 激活码激活赞助者权限。",
+        "datingControls": "选择约会姿势、重置互动，并显示或隐藏互动点和区域。",
+        "appIcon": "全新应用图标。",
+        "assetLoadingFix": "修复了资源文件名错误导致部分角色预览无法加载的问题。",
+        "groupCameraFix": "修复了部分同步组预览必须先调整镜头才能响应缩放和移动的问题。",
+        "minigames": "预览 Slap Slap Slop 角色，支持点击、长按、拖动和狂热模式互动。",
+        "copyConfirmation": "复制 ID 后会显示确认提示。",
+        "cutsceneVisibilityFix": "修复了部分过场动画片段结束后仍然显示的问题。",
+        "datingAssetsFix": "修复了 Aquila 多部分约会预览缺少资源的问题。",
+        "whatsNewFix": "修复了“更新内容”窗口显示在工具栏后面的问题。",
+        "multiplePreviews": "多个预览",
+        "syncGroups": "将预览分配到相同编号的组，一起缩放、移动和控制播放。",
+        "playbackFixes": "修复了通过工具栏暂停和重新播放预览的问题。",
+        "datingFixes": "修复了约会互动从空动画开始的问题，并支持包含多个部分的约会场景。",
+        "datingInteractions": "约会互动",
+        "supporterMessage": "此功能仅限赞助者使用。如想支持开发并获得访问权限，可以通过以下平台赞助：",
+        "characters": "更新角色数据并改进拖放支持。",
+        "interface": "重新设计了设置、角色列表、历史记录和日志。",
+        "layers": "选择皮肤，并显示或隐藏单独的图层。",
+        "modManager": "连接 BD2ModManager 后，可在预览中启用或禁用模组。",
+        "dating": "为赞助者添加约会互动，包括点击、拖动和长按。",
+        "datingCache": "约会互动数据最多缓存七天，已验证的赞助者可在缓存有效期内离线使用。",
+        "cutscenes": "使用游戏中的时序播放支持的过场动画。",
+        "title": "更新内容",
+        "version": "版本 {version}",
+        "current": "当前版本",
+        "feedback": "有反馈或想法？欢迎在 GitHub 上分享。",
+        "issue": "在 GitHub 上提交问题",
+        "done": "知道了！",
+        "grid": "并排预览多个模组，拖动以重新排列并调整每个预览的大小。",
+        "controls": "同时控制所有预览，或分别选择动画。",
+        "sequences": "创建并保存动画序列。",
+        "folders": "一次打开多个文件夹，并从最近的文件夹中重新打开预览。",
+        "themes": "添加主题和角色名称翻译。"
+    },
+    "preview": {
+        "minigameInteractions": "小游戏互动",
+        "minigameFever": "狂热模式",
+        "minigameHint": "点击、长按或拖动任意一侧。按住鼠标中键移动镜头。",
+        "syncGroups": "同步组",
+        "syncGroup": "同步组 {group}。编号相同的预览共享控制，再次点击可取消同步。",
+        "datingInteractions": "约会互动",
+        "datingSupportMessage": "BD2ModManager 和 BD2ModPreview 都是免费的。约会互动是我为感谢赞助者准备的功能。如果你愿意支持我的工作，可以通过 Ko-fi 或爱发电赞助。",
+        "showInteractionAreas": "显示互动区域",
+        "gameCutscene": "游戏过场动画（预览）",
+        "cutsceneIncomplete": "部分过场动画元素缺失。",
+        "datingTool": "工具 {id}",
+        "noTool": "无工具",
+        "datingGauge": "互动进度",
+        "managerDisconnected": "打开 BD2ModManager 以管理此模组",
+        "managerUnknown": "此文件夹不在 ModManager 的模组列表中",
+        "managerModErrors": "此模组存在错误，无法更改",
+        "managerEnable": "在 BD2ModManager 中启用模组",
+        "darkTheme": "深色 {number}",
+        "lightTheme": "浅色 {number}",
+        "fullPath": "完整路径",
+        "newPreview": "新预览",
+        "originalTitle": "[原版] {character} - {costume}",
+        "loading": "正在加载预览…",
+        "loadFailed": "无法加载此预览。",
+        "missingAssets": "文件夹中缺少骨骼或图集。",
+        "unsupportedSkeleton": "不支持的骨骼文件格式。",
+        "chooseFolder": "选择要预览的文件夹",
+        "openFolder": "打开文件夹",
+        "recentFolders": "最近的文件夹",
+        "fit": "适应角色大小",
+        "center": "居中角色",
+        "resetCamera": "重置相机",
+        "skin": "皮肤",
+        "none": "无",
+        "background": "背景",
+        "selectColor": "选择颜色",
+        "selectImage": "选择图片",
+        "chooseImage": "选择图片",
+        "modBackgrounds": "模组背景",
+        "noBackgrounds": "textures/ 中没有图片。",
+        "backgroundsFailed": "无法加载模组背景。",
+        "resetBackground": "重置背景",
+        "removeImage": "移除图片",
+        "color": "颜色",
+        "createSequence": "创建序列",
+        "editSequence": "编辑序列",
+        "newSequence": "新序列",
+        "saveSequence": "保存序列",
+        "name": "名称",
+        "animation": "动画",
+        "startAfter": "延迟开始",
+        "playFor": "播放时长",
+        "auto": "自动",
+        "addAnimation": "添加动画",
+        "addStep": "添加步骤",
+        "step": "步骤 {number}",
+        "sequenceHelp": "步骤按顺序播放，同一步骤内的动画同时播放。延迟相对于步骤开始计算。自动使用原始时长。循环会在所选时长内重复动画。",
+        "restart": "重新播放预览",
+        "play": "播放",
+        "pause": "暂停",
+        "playPreview": "播放预览",
+        "pausePreview": "暂停预览",
+        "restartAll": "重新播放所有预览",
+        "playAll": "播放所有预览",
+        "pauseAll": "暂停所有预览",
+        "loopAll": "循环所有预览",
+        "loop": "循环动画",
+        "noAnimations": "无动画",
+        "noAnimation": "无动画",
+        "global": "全局 ({animation})",
+        "layers": "图层",
+        "showAllLayers": "全部显示",
+        "hideAllLayers": "全部隐藏",
+        "resetLayers": "重置",
+        "searchLayers": "搜索图层…",
+        "noLayers": "未找到图层。",
+        "settings": "设置",
+        "characters": "角色",
+        "application": "应用",
+        "theme": "主题",
+        "rendering": "渲染",
+        "onTopHelp": "将预览置于其他窗口之上。",
+        "alphaHelp": "为纹理使用预乘透明度。",
+        "help": "帮助",
+        "close": "关闭",
+        "options": "预览选项",
+        "addRight": "在右侧添加预览",
+        "addBottom": "在下方添加预览",
+        "rearrange": "排列预览",
+        "dragMove": "拖到预览或行之间以移动",
+        "closePreview": "关闭预览",
+        "progress": "动画进度",
+        "previewAnimation": "预览动画",
+        "previewLayers": "此预览的图层",
+        "saveScreenshot": "保存截图",
+        "closeLayers": "关闭图层",
+        "searchLayersLabel": "搜索图层",
+        "closeSettings": "关闭设置",
+        "closeEditor": "关闭序列编辑器",
+        "sequenceSteps": "序列步骤",
+        "loopDuration": "在所选时长内循环",
+        "resize": "拖动以调整大小。",
+        "resizeCharacters": "调整角色面板大小",
+        "edit": "编辑 {name}",
+        "delete": "删除 {name}",
+        "animationNumber": "动画 {number}",
+        "closeStep": "关闭步骤 {number}",
+        "reorderAnimation": "调整动画 {number} 的顺序",
+        "loopNumber": "循环动画 {number}",
+        "delayNumber": "动画 {number} 的延迟",
+        "durationNumber": "动画 {number} 的时长",
+        "removeAnimation": "移除动画 {number}"
+    },
+    "common": {
+        "viewLogs": "查看日志",
+        "openFolder": "打开文件夹",
+        "retry": "重试",
+        "goBack": "返回",
+        "close": "关闭"
+    },
+    "app": {
+        "copyMachineId": "复制到剪贴板",
+        "copied": "已复制到剪贴板",
+        "machineIdNotFound": "无法获取设备 ID",
+        "backToHome": "返回",
+        "toggleControls": "控制面板"
+    },
+    "homePage": {
+        "title": "Mod 预览",
+        "subtitle": "拖放或选择一个文件夹",
+        "recentFoldersLabel": "最近使用的文件夹",
+        "recentFoldersEmpty": "未找到最近使用的文件夹。",
+        "openFolderButton": "浏览文件夹"
+    },
+    "characterList": {
+        "searchPlaceholder": "搜索角色...",
+        "noCharactersFound": "未找到角色。",
+        "loadingCharacters": "正在加载角色...",
+        "tabs": {
+            "minigames": "小游戏",
+            "standing": "立绘",
+            "cutscene": "剧情",
+            "dating": "约会"
+        },
+        "sort": {
+            "newest": "最新",
+            "oldest": "最旧",
+            "a_z": "A-Z",
+            "z_a": "Z-A"
+        },
+        "loadingCharacter": "正在加载角色...",
+        "information": "角色资源从 GitHub 仓库加载"
+    },
+    "error": {
+        "title": "出现错误",
+        "message": "发生了意外错误，请重试。",
+        "noInternet": {
+            "title": "无网络连接",
+            "message": "没有网络连接无法加载角色资源。",
+            "checking": "正在检查..."
+        }
+    },
+    "controls": {
+        "title": "控制面板",
+        "noSource": "无来源！",
+        "links": {
+            "suggestFeature": "建议新功能",
+            "reportIssue": "报告问题"
+        },
+        "render": {
+            "title": "渲染",
+            "premultipliedAlpha": "预乘透明度",
+            "backgroundColor": "背景颜色",
+            "backgroundImage": "背景图片",
+            "chooseImage": "选择图片"
+        },
+        "animations": {
+            "title": "动画",
+            "available": "可用 {count} 个",
+            "loopAnimation": "循环动画",
+            "noAnimations": "无可用动画"
+        },
+        "actions": {
+            "title": "操作",
+            "viewHistory": "查看历史记录",
+            "openLogs": "打开日志"
+        },
+        "appSettings": {
+            "title": "应用设置",
+            "language": "语言",
+            "alwaysOnTop": "窗口置顶"
+        },
+        "version": "BD2ModPreview v{version}"
+    },
+    "historyDialog": {
+        "title": "历史记录 ({count})",
+        "noHistory": "无最近历史记录",
+        "unknownCharacter": "未知",
+        "unknownModType": "未知",
+        "sourceTypes": {
+            "github": "Github",
+            "folder": "文件夹"
+        },
+        "modTypes": {
+            "standing": "立绘",
+            "cutscene": "剧情",
+            "npc": "NPC",
+            "scene": "场景",
+            "dating": "约会"
+        },
+        "actions": {
+            "remove": "从历史记录中移除",
+            "loadAnimation": "加载动画"
+        }
+    },
+    "errors": {
+        "DirectoryNotFound": {
+            "title": "未找到目录",
+            "message": "未找到所选文件夹。"
+        },
+        "MissingSkeletonOrJson": {
+            "title": "缺少骨架文件",
+            "message": "所选文件夹缺少必需的骨架 .json 或 .skel 文件。",
+            "actionLabel": "从 Github 下载原始骨架"
+        },
+        "AssetLoadingError": {
+            "title": "资源加载错误",
+            "message": "加载 Spine 资源失败。"
+        },
+        "AssetNotFoundError": {
+            "title": "未找到资源",
+            "message": "未找到该资源。"
+        },
+        "AssetTooManyRequestsError": {
+            "title": "请求过多",
+            "message": "您的请求过多，请稍后重试。"
+        },
+        "InitializationError": {
+            "title": "初始化错误",
+            "message": "初始化 Spine 播放器失败。"
+        },
+        "PlayerError": {
+            "title": "播放器错误",
+            "message": "Spine 播放器发生错误。"
+        },
+        "SkeletonError": {
+            "title": "骨架错误",
+            "message": "加载骨架（.skel 或 .json）失败。骨架可能已损坏或图集与骨架文件不匹配。"
+        },
+        "SkeletonNotFound": {
+            "title": "未找到骨架",
+            "message": "糟糕！GitHub 仓库中缺少骨架资源。"
+        },
+        "CharacterIdNotFound": {
+            "title": "未找到角色 ID",
+            "message": "无法从文件夹中解析角色 ID。"
+        },
+        "DirectoryInvalidError": {
+            "title": "无效目录",
+            "message": "所选目录无效或不包含 Spine 资源。"
+        },
+        "UnknownError": {
+            "title": "发生意外错误",
+            "message": "发生了意外错误。更多信息请查看日志。"
+        },
+        "MissingAtlas": {
+            "title": "缺少图集文件",
+            "message": "所选文件夹缺少必需的 .atlas 文件。"
+        },
+        "InvalidSkeletonFileName": {
+            "title": "骨架文件名无效",
+            "message": "骨架文件名无效。"
+        },
+        "InvalidAtlasFileName": {
+            "title": "图集文件名无效",
+            "message": "图集文件名无效。"
+        },
+        "InvalidFileName": {
+            "title": "文件名无效",
+            "message": "所选文件夹中有文件名无效。"
+        },
+        "MachineIdNotFound": {
+            "title": "未找到设备 ID",
+            "message": "无法获取设备 ID。请重启应用后重试。"
+        },
+        "IOError": {
+            "title": "文件错误",
+            "message": "无法读取或写入文件。请检查文件是否被占用或阻止访问。"
+        },
+        "NetworkError": {
+            "title": "网络错误",
+            "message": "无法连接到服务器。请检查网络后重试。"
+        },
+        "ServerError": {
+            "title": "服务器错误",
+            "message": "服务器返回了错误。请稍后重试。"
+        },
+        "Unauthorized": {
+            "title": "未授权",
+            "message": "服务器拒绝访问此文件。"
+        },
+        "InvalidUrl": {
+            "title": "无效的网址",
+            "message": "下载地址无效。"
+        },
+        "FileCreationError": {
+            "title": "文件创建错误",
+            "message": "无法创建用于保存下载内容的文件。"
+        },
+        "WriteError": {
+            "title": "写入错误",
+            "message": "无法保存已下载的文件。"
+        },
+        "ContentLengthMissing": {
+            "title": "下载大小未知",
+            "message": "服务器未提供文件大小。"
+        },
+        "UnsupportedModType": {
+            "title": "不支持的模组类型",
+            "message": "此模组类型无法下载。"
+        }
+    }
+}
