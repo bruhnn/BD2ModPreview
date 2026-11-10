@@ -88,6 +88,9 @@
         "orderHelp": "AFDIAN：进入个人中心，打开“我的订单”，然后复制订单号。Ko-fi：输入你收到的激活码，而不是交易编号。"
     },
     "whatsNew": {
+        "screenshot": "可从右键菜单将任意预览保存为 PNG 图片。",
+        "loadChecklist": "已将默认的 Spine 加载动画替换为正在加载的文件清单。",
+        "translatedErrors": "错误信息现已翻译为所有支持的语言。",
         "cutsceneUpdates": "游戏过场动画数据现可独立更新，无需更新应用；下载后可离线使用。",
         "newCutscenes": "新增瓦尔泽「背叛之夜」和莉亚特里斯「甜蜜诱惑」的游戏过场动画。",
         "audioRetry": "改进约会音频加载，并在部分声音下载失败时提供重试按钮。",
