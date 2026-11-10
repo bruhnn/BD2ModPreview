@@ -526,10 +526,7 @@ const poseErrorMessage = computed(() => {
                   <span v-for="rotation in [0, 90, 180, 270]" :key="rotation" class="dating-marker-arrow-axis"
                     :style="{ transform: `rotate(${rotation}deg)` }">
                     <span class="dating-marker-arrow-gap">
-                      <svg class="dating-marker-arrow" width="6" height="10" viewBox="0 0 6 10" fill="none"
-                        stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M1 1l4 4-4 4" />
-                      </svg>
+                      <ChevronRight class="dating-marker-arrow" :size="18" :stroke-width="1.8" aria-hidden="true" />
                     </span>
                   </span>
                 </template>
@@ -2065,8 +2062,8 @@ const poseErrorMessage = computed(() => {
 
 .dating-marker-arrow {
   position: absolute;
-  width: 6px;
-  height: 10px;
+  width: 18px;
+  height: 18px;
   max-width: none;
   transform: translate(-50%, -50%);
   filter: drop-shadow(0 0 3px color-mix(in srgb, currentColor 80%, transparent));
