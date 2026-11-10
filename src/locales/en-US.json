@@ -177,6 +177,7 @@
         "newPreview": "New preview",
         "originalTitle": "[Original] {character} - {costume}",
         "loading": "Loading preview...",
+        "loadSteps": { "textures": "Textures", "textureCount": "Textures {loaded}/{total}" },
         "loadFailed": "Could not load this preview.",
         "missingAssets": "The folder is missing a skeleton or atlas.",
         "unsupportedSkeleton": "Unsupported skeleton file format.",

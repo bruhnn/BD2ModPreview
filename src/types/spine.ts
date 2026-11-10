@@ -29,3 +29,13 @@ export interface SpinePlayer {
     draw: () => void;
 }
 
+
+export type LoadStepState = "pending" | "loading" | "done" | "error";
+
+export interface LoadStep {
+	key: string;
+	name: string;
+	state: LoadStepState;
+	loaded?: number;
+	total?: number;
+}

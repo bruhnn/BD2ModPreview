@@ -3,7 +3,7 @@
   lang="ts"
 >
 import { useI18n } from "vue-i18n"
-import { WifiOff, FileQuestion, ImageOff, FileWarning, CircleAlert, Ellipsis, Scan, Camera, ExternalLink, Flame, GripVertical, PanelRightClose, PanelBottomClose, Play, Pause, Repeat, Hand, Eye, EyeOff, Check, Clapperboard, Images, ChevronDown, ChevronRight, FolderOpen, Focus, Image, Layers, Maximize, Palette, Shirt, Pencil, Plus, RotateCcw, SkipBack, Trash2, X } from "@lucide/vue"
+import { WifiOff, FileQuestion, ImageOff, FileWarning, CircleAlert, Ellipsis, Scan, Camera, ExternalLink, Flame, GripVertical, PanelRightClose, PanelBottomClose, Play, Pause, Repeat, Hand, Eye, EyeOff, Check, Circle, LoaderCircle, Clapperboard, Images, ChevronDown, ChevronRight, FolderOpen, Focus, Image, Layers, Maximize, Palette, Shirt, Pencil, Plus, RotateCcw, SkipBack, Trash2, X } from "@lucide/vue"
 import { autoUpdate, flip, offset, shift, useFloating } from "@floating-ui/vue"
 import { onClickOutside, useTimeoutFn } from "@vueuse/core"
 import { computed, nextTick, ref, useTemplateRef, watch } from "vue"
@@ -99,6 +99,7 @@ const {
   error,
   errorInfo,
   isLoading,
+  loadSteps,
   retry,
   title,
   source,
@@ -564,8 +565,7 @@ const poseErrorMessage = computed(() => {
         </p>
       </details>
     </div>
-    <p v-if="source && isLoading && !error" role="status" class="preview-loading">{{ t('preview.loading') }}</p>
-    <div v-else-if="source && !error && datingAudioProgress.status !== 'idle'" class="preview-loading audio-loading"
+    <div v-if="source && !error && !isLoading && datingAudioProgress.status !== 'idle'" class="preview-loading audio-loading"
       role="status">
       <span>
         {{ datingAudioProgress.status === 'loading'
@@ -586,6 +586,20 @@ const poseErrorMessage = computed(() => {
       <div ref="player-container" :id="`player-container-${props.previewId}`" tabindex="0" class="player-container"
         @contextmenu.prevent="openContext" @pointerdown.capture="playerContainer?.focus()" @keydown="onPreviewKeydown"
         @keydown.shift.f10.prevent="openContext" />
+      <div v-if="source && isLoading && !error" role="status" class="load-steps">
+        <ul>
+          <li v-for="step in loadSteps" :key="step.key" :class="`load-step-${step.state}`">
+            <Check v-if="step.state === 'done'" :size="14" />
+            <X v-else-if="step.state === 'error'" :size="14" />
+            <LoaderCircle v-else-if="step.state === 'loading'" :size="14" class="load-step-spin" />
+            <Circle v-else :size="14" />
+            <span>{{ step.key === 'textures'
+            ? (step.total ? t('preview.loadSteps.textureCount', { loaded: step.loaded, total: step.total }) :
+              t('preview.loadSteps.textures'))
+            : step.name }}</span>
+          </li>
+        </ul>
+      </div>
       <TransitionGroup v-if="datingEnabled && !isLoading" name="dating-point-fade" tag="div" class="dating-markers"
         aria-hidden="true">
         <div v-for="marker in datingMarkers" :key="marker.key" class="dating-point-layer"
@@ -1351,6 +1365,56 @@ const poseErrorMessage = computed(() => {
   font-size: 12px;
   line-height: 16px;
   color: var(--text-secondary);
+}
+
+.load-steps {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.load-steps ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+  font-family: var(--font-mono, monospace);
+  color: var(--text-secondary);
+}
+
+.load-steps li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.load-step-done {
+  color: var(--text-primary);
+}
+
+.load-step-error {
+  color: var(--error);
+}
+
+.load-step-pending {
+  opacity: 0.5;
+}
+
+.load-step-spin {
+  animation: load-step-rotate 0.8s linear infinite;
+}
+
+@keyframes load-step-rotate {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .audio-loading {

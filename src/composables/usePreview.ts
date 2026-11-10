@@ -18,6 +18,8 @@ import type {
 	SpineAssetsData,
 	SpinePlayer,
 	AnimationSequence,
+	LoadStep,
+	LoadStepState,
 } from "../types/spine";
 
 declare const spine: any;
@@ -81,6 +83,7 @@ export function usePreview(
 	const hiddenAttachments = new Map<any, any>();
 	let loadId = 0;
 	let spinePlayer: SpinePlayer | null = null;
+	const loadSteps = ref<LoadStep[]>([]);
 	let frameRequest: ((frame: HTMLCanvasElement) => void) | null = null;
 	let previousCamera: typeof camera = null;
 	let camera: { x: number; y: number; zoom: number } | null = null;
@@ -858,7 +861,7 @@ export function usePreview(
 			atlasUrl: assetsData.atlasFilename,
 			showControls: false,
 			alpha: true,
-			showLoading: true,
+			showLoading: false,
 			premultipliedAlpha: settings.value?.premultipliedAlpha,
 			draw: (player: SpinePlayer) => {
 				for (const [slot, attachment] of hiddenAttachments)
@@ -988,7 +991,79 @@ export function usePreview(
 		};
 
 		playerContainer.value.innerHTML = "";
-		spinePlayer = new spine.SpinePlayer(playerContainer.value, config);
+		const player: SpinePlayer = new spine.SpinePlayer(
+			playerContainer.value,
+			config,
+		);
+
+		spinePlayer = player;
+		trackLoadSteps(player, config, request);
+	}
+
+	function trackLoadSteps(player: SpinePlayer, config: any, request: number) {
+		const manager = (player as any).assetManager;
+		const skeletonPath: string = config.skelUrl ?? config.jsonUrl;
+		const atlasPath: string = config.atlasUrl;
+		const baseName = (path: string) =>
+			decodeURIComponent(path.split("?")[0].split(/[\\/]/).pop() ?? path);
+		const texturePaths: string[] = [];
+		const loadTexture = manager.loadTexture.bind(manager);
+		let last = "";
+
+		manager.loadTexture = (path: string, ...rest: unknown[]) => {
+			texturePaths.push(path);
+
+			return loadTexture(path, ...rest);
+		};
+
+		const stateOf = (path: string): LoadStepState =>
+			path in manager.getErrors()
+				? "error"
+				: path in manager.assets
+					? "done"
+					: "loading";
+
+		const tick = () => {
+			if (request !== loadId || !preview.value?.isLoading) return;
+
+			const atlasState = stateOf(atlasPath);
+			const textureStates = texturePaths.map(stateOf);
+			const loaded = textureStates.filter((state) => state === "done").length;
+			const textureState: LoadStepState = textureStates.includes("error")
+				? "error"
+				: !textureStates.length
+					? "pending"
+					: loaded === textureStates.length
+						? "done"
+						: "loading";
+			const steps: LoadStep[] = [
+				{ key: skeletonPath, name: baseName(skeletonPath), state: stateOf(skeletonPath) },
+				{
+					key: atlasPath,
+					name: baseName(atlasPath),
+					state:
+						atlasState === "loading" && texturePaths.length ? "done" : atlasState,
+				},
+				{
+					key: "textures",
+					name: "",
+					state: textureState,
+					loaded,
+					total: texturePaths.length,
+				},
+			];
+			const signature = JSON.stringify(steps);
+
+			if (signature !== last) {
+				last = signature;
+				loadSteps.value = steps;
+			}
+
+			requestAnimationFrame(tick);
+		};
+
+		loadSteps.value = [];
+		requestAnimationFrame(tick);
 	}
 
 	// Some dating skeletons (e.g. illust_dating10) draw nothing with the default skin; their images are in the named skins.
@@ -1388,6 +1463,7 @@ export function usePreview(
 		error,
 		errorInfo,
 		isLoading,
+		loadSteps,
 		retry: () => retryCount.value++,
 		cutsceneAvailable: cutscene.available,
 		cutsceneActive: cutscene.active,
