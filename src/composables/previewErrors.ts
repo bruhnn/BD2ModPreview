@@ -35,7 +35,7 @@ export function describeLoadError(reason: unknown, origin: LoadOrigin, url = '')
     if (start >= 0) {
       try {
         entries = Object.entries(JSON.parse(reason.slice(start))).filter((entry): entry is [string, string] => typeof entry[1] === 'string')
-      } catch { /* Some loader messages are plain text. */ }
+      } catch {}
     }
   }
   if (!entries.length) entries = [['', text]]

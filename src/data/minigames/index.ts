@@ -11,7 +11,6 @@ export interface MinigameDefinition {
   reactions: (action: MinigameAction, left: boolean, fever: boolean) => string[]
 }
 
-// Add other minigames here. Input and playback stay in useMinigameInteractions.
 export const minigames: MinigameDefinition[] = [{
   id: "rhythm",
   sounds: { tap: rhythmHit, hold: rhythmHit, slide: rhythmHit, fever: rhythmFever },

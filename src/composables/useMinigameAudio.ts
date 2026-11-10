@@ -47,7 +47,6 @@ export function useMinigameAudio() {
 		try {
 			if (audioContext.state !== "running") await audioContext.resume();
 			if (current !== generation || !ui.minigameAudio) return;
-			// Keep rapid hits from accumulating.
 			if (playing.size >= 10) {
 				const oldest = playing.values().next().value!;
 				oldest.stop();

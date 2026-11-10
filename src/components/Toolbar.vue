@@ -68,7 +68,6 @@ const currentColor = computed(() => {
   return value?.type === "color" ? value.color.toLowerCase() : ""
 })
 
-// A few game backgrounds; the dialog has all of them.
 const shortlist = NOVEL_BACKGROUNDS.slice(0, 3)
 const { isConnected, isChecking, checkConnection } = useNetworkStatus()
 async function applyShortlist(id: number) {

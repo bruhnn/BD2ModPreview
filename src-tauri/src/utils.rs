@@ -52,9 +52,8 @@ pub fn file_to_data_uri(file_path: &Path) -> Result<(String, String), Error> {
 pub fn extract_character_id(filename: &str, prefix: &str) -> Option<String> {
     if filename.starts_with(prefix) && filename.ends_with(".modfile") {
         let without_prefix = &filename[prefix.len()..];
-        let without_suffix = &without_prefix[..without_prefix.len() - 8]; // Remove ".modfile"
+        let without_suffix = &without_prefix[..without_prefix.len() - 8];
 
-        // Handle cases like "123" or "123_456"
         if let Some(underscore_pos) = without_suffix.find('_') {
             without_suffix[..underscore_pos].to_string().into()
         } else {

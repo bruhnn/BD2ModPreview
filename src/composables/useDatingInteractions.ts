@@ -498,7 +498,6 @@ export function useDatingInteractions(
 		if (drag || hold || transition || switching) return true;
 
 		const world = position(event);
-		// Visible markers can be grabbed even when the game area is tiny.
 		const selectedMarker = showPoints.value
 			? markers.value.find(
 					(marker) =>
@@ -954,7 +953,6 @@ export function useDatingInteractions(
 					!atlasUrl.startsWith(cdn)
 				)
 					throw error;
-				// Retry the whole part, including atlas textures, from GitHub.
 				const github =
 					"https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/";
 				skeletonUrl = github + skeletonUrl.slice(cdn.length);
@@ -1075,7 +1073,6 @@ export function useDatingInteractions(
 					false,
 				);
 				transition.mixDuration = 0;
-				// Switch after the player's current frame has finished.
 				transition.listener = {
 					complete: () => {
 						queueMicrotask(enterGroup);
@@ -1113,7 +1110,6 @@ export function useDatingInteractions(
 		const world = pointer ? position(pointer) : null;
 		const now = performance.now();
 		let cursor = "";
-		// Keep the active point visible while dragging or holding.
 		const activePoint = drag?.point ?? hold?.point;
 		const visiblePoints = activePoint
 			? [activePoint]

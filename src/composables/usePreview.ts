@@ -230,7 +230,6 @@ export function usePreview(
 		offerGameBackground();
 	}
 
-	// Uses one image of the game background as the plain preview background. Downloads only that image.
 	const gameImage = ref({ hash: "", uri: "" });
 	const loadingGameImage = ref("");
 
@@ -264,7 +263,6 @@ export function usePreview(
 		);
 	}
 
-	// Only offered while the preview still uses the default background, so a manual choice stays.
 	function offerGameBackground() {
 		const info = cutscene.backgroundInfo.value;
 
@@ -281,7 +279,6 @@ export function usePreview(
 		);
 	}
 
-	// Selecting or clearing the game background while the cutscene plays switches to the matching framing.
 	watch(
 		() => settings.value?.background.type === "game",
 		() => {
@@ -364,7 +361,6 @@ export function usePreview(
 
 		skeleton.setToSetupPose();
 
-		// Each row overlays the rows before it. Finished rows hold their last pose.
 		for (const entry of steps[index] ?? []) {
 			if (!entry.animation || position - start < entry.delay) continue;
 
@@ -613,7 +609,6 @@ export function usePreview(
 					Math.max(defaultZoom * 0.001, camera.zoom * Math.exp(delta * 0.001)),
 				);
 
-				// Keep the point under the cursor in place.
 				const oldZoom = camera.zoom;
 
 				camera.x += x * (oldZoom - zoom);
@@ -738,7 +733,6 @@ export function usePreview(
 			rendererCamera.position.x = camera.x;
 			rendererCamera.position.y = camera.y;
 
-			// Store zoom in CSS pixels so resizing keeps the same scale.
 			rendererCamera.zoom =
 				(camera.zoom * player.canvas.clientWidth) / player.canvas.width;
 			rendererCamera.update();
@@ -867,14 +861,12 @@ export function usePreview(
 			showLoading: true,
 			premultipliedAlpha: settings.value?.premultipliedAlpha,
 			draw: (player: SpinePlayer) => {
-				// Hide layers only while drawing; keep the animation's attachments.
 				for (const [slot, attachment] of hiddenAttachments)
 					slot.attachment = attachment;
 				hiddenAttachments.clear();
 
 				const cutsceneDrawn = cutscene.draw();
 
-				// The WebGL buffer is cleared after this frame, so copy it now.
 				if (frameRequest) {
 					const resolve = frameRequest;
 
@@ -1121,7 +1113,6 @@ export function usePreview(
 		{ flush: "sync" },
 	);
 
-	// Relative camera updates are applied locally, never re-broadcast.
 	watch(
 		() => previewerStore.cameraChange,
 		(change) => {
@@ -1197,6 +1188,7 @@ export function usePreview(
 		if (
 			datingInteraction.enabled.value ||
 			minigame.enabled.value
+			// && spinePlayer?.animationState.getCurrent(0)?.animation.name === animation
 		) {
 			return;
 		}
@@ -1348,7 +1340,6 @@ export function usePreview(
 		);
 	}
 
-	// Image backgrounds are CSS on the panel, not in the canvas, so they are drawn under the frame here.
 	async function takeScreenshot() {
 		const canvas = spinePlayer?.canvas;
 		const frame = await captureFrame();
@@ -1385,7 +1376,6 @@ export function usePreview(
 
 			return await toPng(result);
 		} catch (error) {
-			// A cross-origin image without CORS taints the canvas, so fall back to the character alone.
 			logMessage("Screenshot background skipped: " + String(error), "warning");
 
 			return toPng(frame);

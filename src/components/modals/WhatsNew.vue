@@ -273,7 +273,6 @@ const versions = [
     box-shadow: 0 25px 50px -12px rgb(0 0 0 / 25%);
 }
 
-/* Header */
 
 .updates-header {
     position: relative;
@@ -297,7 +296,6 @@ const versions = [
     transform: translateY(-50%);
 }
 
-/* Content */
 
 .updates-content {
     flex: 1;
@@ -374,7 +372,6 @@ const versions = [
     color: var(--text-secondary);
 }
 
-/* Sections */
 
 .updates-sections {
     min-width: 0;
@@ -403,7 +400,6 @@ const versions = [
     color: var(--text-secondary);
 }
 
-/* Videos */
 
 .update-video {
     display: block;
@@ -414,7 +410,6 @@ const versions = [
     background: transparent;
 }
 
-/* Supporter links */
 
 .supporter-link {
     display: inline-flex;
@@ -439,7 +434,6 @@ const versions = [
     align-self: center;
 }
 
-/* Other changelog */
 
 .updates-list {
     display: flex;
@@ -465,7 +459,6 @@ const versions = [
     color: var(--text-secondary);
 }
 
-/* Footer */
 
 .updates-footer {
     flex-shrink: 0;
@@ -526,7 +519,6 @@ const versions = [
     background: var(--state-hover);
 }
 
-/* Transitions */
 
 .dialog-enter {
     transition:
@@ -558,7 +550,6 @@ const versions = [
     transform: scale(1);
 }
 
-/* Responsive */
 
 @media (max-width: 640px) {
     .updates-container {

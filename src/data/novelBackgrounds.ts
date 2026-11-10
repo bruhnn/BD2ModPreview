@@ -9,7 +9,6 @@ const BASE = import.meta.env.VITE_ASSET_BASE
 
 export const novelThumbnail = (id: number) => `${BASE}thumb/novel_background_${id}.webp`;
 
-// jsDelivr first, GitHub if it refuses (the asset repo is over its size limit). Resolves to the URL that loaded.
 export async function loadNovelBackground(id: number) {
 	for (const base of [BASE, GITHUB]) {
 		const image = new Image();

@@ -10,7 +10,6 @@ export interface BackgroundPrompt {
 }
 
 export const useGameBackgroundStore = defineStore("gameBackgrounds", () => {
-	// Whether to download without asking, and whether cutscenes use the game background at all.
 	const mode = useLocalStorage<"ask" | "always">("GAME_BACKGROUND_MODE", "ask");
 	const showByDefault = useLocalStorage("GAME_BACKGROUND_SHOW", true);
 	const cacheSize = ref(0);
@@ -19,7 +18,6 @@ export const useGameBackgroundStore = defineStore("gameBackgrounds", () => {
 	const loaded = new Map<string, Promise<string>>();
 	let pendingApply: (() => void) | null = null;
 
-	// Data URI of an image; downloaded once, then read from memory or the disk cache.
 	function load(hash: string): Promise<string> {
 		let request = loaded.get(hash);
 		if (!request) {
@@ -40,7 +38,6 @@ export const useGameBackgroundStore = defineStore("gameBackgrounds", () => {
 		await refreshCacheSize();
 	}
 
-	// Called when a game cutscene starts; no prompt when the images are already downloaded.
 	async function offer(
 		key: string,
 		hashes: string[],

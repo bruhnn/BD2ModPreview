@@ -23,7 +23,6 @@ const { isConnected, isChecking, checkConnection } = useNetworkStatus()
 
 const search = ref('')
 const loading = ref(false)
-// The background whose full image could not be downloaded, so it can be retried.
 const failed = ref<number | null>(null)
 
 watch(() => props.show, (show) => {
@@ -38,7 +37,6 @@ const backgrounds = computed(() => {
   return text ? NOVEL_BACKGROUNDS.filter(id => String(id).includes(text)) : NOVEL_BACKGROUNDS
 })
 
-// Applies to the preview the dialog was opened from, or to every open preview.
 async function apply(id: number | null) {
   loading.value = true
   const url = id === null ? null : await loadNovelBackground(id)

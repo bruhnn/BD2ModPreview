@@ -62,7 +62,6 @@ export const useUIStore = defineStore('ui', () => {
   const isHistoryVisible = ref(false)
   const isWhatsNewVisible = ref(false)
   const isBackgroundsVisible = ref(false)
-  // The preview the backgrounds dialog applies to; null means every open preview.
   const backgroundsTarget = ref<string | null>(null)
 
   async function shouldShowWhatsNew() {
@@ -117,7 +116,6 @@ export const useUIStore = defineStore('ui', () => {
 
   watch(theme, value => { document.documentElement.dataset.theme = value; }, { immediate: true });
   watch(language, value => {
-    // Keep saved languages and older command-line arguments working.
     const previousCodes: Record<string, string> = { en: 'en_US', zh: 'zh_CN', ja: 'ja_JP', ko: 'ko_KR' }
     const code = previousCodes[value] ?? value.replace('-', '_')
     if (value !== code) language.value = code

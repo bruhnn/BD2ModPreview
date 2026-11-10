@@ -44,7 +44,6 @@ export function useHistory() {
 			};
 		} else {
 			// add item
-
 			// remove the last one if it is max
 			if (history.value.length >= MAX_HISTORY_ITEMS) {
 				history.value = history.value

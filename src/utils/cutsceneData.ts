@@ -55,7 +55,6 @@ async function download(file: string, valid: (data: any) => boolean): Promise<an
 }
 
 export function updateCutscenes(): Promise<void> {
-  // One background update per app session.
   return updating ??= (async () => {
     try {
       const index: Record<string, number> | null = await download("index", data =>
@@ -96,7 +95,6 @@ export async function loadCutscene(id: string): Promise<Scene | null> {
   if (saved && saved.revision >= (revisions[id] ?? 0)) return saved
   const load = bundled[`../data/cutscenes/${id}.json`]
   if (revisions[id] && load) return (await load()).default
-  // Only a missing timeline needs to wait for the initial download.
   await updateCutscenes()
   return readSaved(id)
 }

@@ -18,14 +18,12 @@ async fn download(hash: &str) -> Result<Vec<u8>, String> {
     if let Ok(url) = std::env::var("BD2_BACKGROUNDS_URL") {
         sources.insert(0, url);
     }
-    // A stalled download fails after 30 s and moves on to the next source.
     let client = reqwest::Client::builder().timeout(Duration::from_secs(30)).build().map_err(|e| e.to_string())?;
     let mut errors = Vec::new();
     for base in sources {
         let response = client.get(format!("{base}{hash}.webp")).send().await.and_then(|r| r.error_for_status());
         match response {
             Ok(response) => match response.bytes().await {
-                // The file name is its SHA-256, so a match means the image is complete and correct.
                 Ok(data) if hex::encode(Sha256::digest(&data)) == hash => return Ok(data.to_vec()),
                 Ok(_) => errors.push(format!("{base}: checksum mismatch")),
                 Err(error) => errors.push(error.to_string()),
@@ -36,7 +34,6 @@ async fn download(hash: &str) -> Result<Vec<u8>, String> {
     Err(errors.join("; "))
 }
 
-/// Returns the background image as a data URI, downloading it on first use.
 #[tauri::command]
 pub async fn get_game_background(app: tauri::AppHandle, hash: String) -> Result<String, String> {
     let dir = cache_dir(&app)?;

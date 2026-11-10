@@ -114,7 +114,6 @@ export function useGameCutscene(
 	const { logMessage } = useLogger();
 	const backgroundStore = useGameBackgroundStore();
 	const incomplete = ref(false);
-	// The images of this cutscene's game background, so one can be picked as a plain preview background.
 	const backgroundImages = ref<
 		{
 			hash: string;
@@ -140,7 +139,6 @@ export function useGameCutscene(
 	const layerImages = new Map<string, HTMLImageElement>();
 	const premultipliedTextures = new Map<string, any>();
 	let texturesRequested = false;
-	// Layers wait for all images, so backdrops never flash.
 	let texturesPending = 0;
 	const cutsceneId = ref("");
 	let scene: Scene | null = null;
@@ -191,7 +189,6 @@ export function useGameCutscene(
 		time = 0;
 	}
 
-	// The game background images of a cutscene, biggest first, named after the layer that uses them.
 	function imagesOf(timeline: Scene) {
 		const names = new Map<string, string>();
 		const layerName = (path: string) =>
@@ -258,7 +255,6 @@ export function useGameCutscene(
 				return;
 			}
 		}
-		// Keep the timing, skip tracks whose skeleton is missing.
 		const tracks = timeline.tracks.filter((track) =>
 			data.has(timeline.nodes[track.node].asset ?? ""),
 		);
@@ -308,7 +304,6 @@ export function useGameCutscene(
 					a.track - b.track ||
 					a.clip.duration - b.clip.duration,
 			);
-		// Only offer the background once the cutscene itself can play.
 		backgroundImages.value = imagesOf(timeline);
 		cutsceneId.value = id;
 		available.value = true;
@@ -489,7 +484,6 @@ export function useGameCutscene(
 	}
 
 	function advanceAnimations(target: number) {
-		// Apply intermediate poses so seeking preserves Spine's mixing state.
 		while (animationTime < target) {
 			const next = Math.min(target, animationTime + 1 / 60);
 			for (const [node, state] of states) {
@@ -518,7 +512,6 @@ export function useGameCutscene(
 		return ((a * dt + b) * dt + c) * dt + d;
 	}
 
-	// Downloads the layer images (cached on disk) once the game background is selected.
 	function requestTextures() {
 		if (texturesRequested || !scene || !player || !backgroundEnabled())
 			return;
@@ -862,7 +855,6 @@ void main() {
 			renderer,
 			{
 				size: { x: rw, y: rh },
-				// drawLayer places the quad at -pivot * size, so this puts its corner at (rx, ry).
 				pivot: { x: rw ? -rx / rw : 0, y: rh ? -ry / rh : 0 },
 				matrix: { values },
 				color: { r, g, b: bl, a: alpha },
@@ -1039,7 +1031,6 @@ void main() {
 		}
 		const renderer = player.sceneRenderer;
 		const gl = renderer.context.gl;
-		// Replace the normal preview frame using the same renderer and textures.
 		const shader = beginLinear(renderer);
 		const toLinear = (value: number) => Math.pow(value, 2.2);
 		gl.clearColor(
