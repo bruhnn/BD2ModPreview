@@ -498,5 +498,25 @@
             "title": "An unexpected error occurred",
             "message": "An unexpected error occurred. More information in the logs."
         }
+    },
+    "screenshotDialog": {
+        "title": "Save screenshot",
+        "modes": {
+            "full": "Full image",
+            "custom": "Custom"
+        },
+        "hints": {
+            "full": "The whole character at its original resolution. Not affected by zoom or window size. Hidden layers are left out.",
+            "custom": "What the preview shows, fitted to the size you choose."
+        },
+        "output": "Output",
+        "size": "Size",
+        "width": "Width",
+        "height": "Height",
+        "transparent": "Transparent background",
+        "copy": "Copy",
+        "copied": "Screenshot copied to clipboard",
+        "cancel": "Close",
+        "save": "Save PNG"
     }
 }
