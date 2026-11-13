@@ -1,19 +1,11 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { invoke } from "@tauri-apps/api/core";
-import { listen, type UnlistenFn } from "@tauri-apps/api/event";
+import { platform, type ManagerMod as BD2Mod } from "../backends";
 import { useLogger } from "../composables/useLogger";
-
-interface BD2Mod {
-  name: string;
-  path: string;
-  enabled: boolean;
-  errors: string[];
-}
 
 export const useModManagerStore = defineStore("modManager", () => {
   const { logMessage } = useLogger()
-  let listeners: UnlistenFn[] = []
+  let listeners: (() => void)[] = []
 
   const connected = ref(false)
 
@@ -27,7 +19,7 @@ export const useModManagerStore = defineStore("modManager", () => {
     if (connected.value || connecting) return;
     connecting = true;
     try {
-      await invoke("connect_to_bd2mm");
+      await platform.connectToManager();
     } catch {
       connected.value = false;
     } finally {
@@ -36,12 +28,13 @@ export const useModManagerStore = defineStore("modManager", () => {
   }
 
   async function initialize() {
-    listeners.push(await listen<{ mods: BD2Mod[] }>("bd2mm::state", ({ payload }) => {
-      mods.value = payload.mods;
-      connected.value = true;
-    }));
-    listeners.push(await listen("bd2mm::disconnected", () => {
-      connected.value = false;
+    listeners.push(await platform.onManagerEvent(event => {
+      if (event.type === "state") {
+        mods.value = event.mods;
+        connected.value = true;
+      } else {
+        connected.value = false;
+      }
     }));
     window.addEventListener("focus", connect);
     await connect();
@@ -58,7 +51,7 @@ export const useModManagerStore = defineStore("modManager", () => {
     pending.value.push(mod.name);
     delete errors.value[mod.name];
     try {
-      const result = await invoke<{ mods: BD2Mod[] }>("enable_mod_on_bd2mm", { modName: mod.name, enabled });
+      const result = await platform.setModEnabledOnManager(mod.name, enabled);
       mods.value = result.mods;
     } catch (reason) {
       errors.value[mod.name] = String(reason);

@@ -1,187 +1,233 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed, watch, nextTick } from "vue"
-import { Ellipsis, EllipsisVertical, Plus } from "@lucide/vue"
-import { saveWindowState, StateFlags } from '@tauri-apps/plugin-window-state'
-import { UnlistenFn } from '@tauri-apps/api/event'
-import { getCurrentWebview } from '@tauri-apps/api/webview'
+import { ref, onMounted, onUnmounted, computed, watch, nextTick } from "vue";
+import { Ellipsis, EllipsisVertical, Plus } from "@lucide/vue";
+import { platform } from "./backends";
 
-import { updateCutscenes } from "./utils/cutsceneData"
+import { updateCutscenes } from "./utils/cutsceneData";
 
-import { usePreviewDrag } from './composables/usePreviewDrag'
+import { usePreviewDrag } from "./composables/usePreviewDrag";
 
-import { useI18n } from "vue-i18n"
-import { getCurrentWindow } from "@tauri-apps/api/window"
-import { getMatches } from '@tauri-apps/plugin-cli'
+import { useI18n } from "vue-i18n";
 
-import { usePreviewerStore } from "./stores/previewer.ts"
-import { useCharactersStore } from "./stores/characters"
-import { useModManagerStore } from "./stores/modManager"
-import { useUIStore } from "./stores/ui"
-import { useLogger } from "./composables/useLogger"
-import Toolbar from "./components/Toolbar.vue"
-import Settings from "./components/modals/Settings.vue"
-import WhatsNew from "./components/modals/WhatsNew.vue"
-import GameBackgroundPrompt from "./components/modals/GameBackgroundPrompt.vue"
-import Preview from "./components/Preview.vue"
-import Logging from "./components/modals/Logging.vue"
-import History from "./components/modals/History.vue"
-import CharactersList from "./components/CharactersList.vue"
-import Backgrounds from "./components/modals/Backgrounds.vue"
+import { usePreviewerStore } from "./stores/previewer.ts";
+import { useCharactersStore } from "./stores/characters";
+import { useModManagerStore } from "./stores/modManager";
+import { useUIStore } from "./stores/ui";
+import { useLogger } from "./composables/useLogger";
+import Toolbar from "./components/Toolbar.vue";
+import Settings from "./components/modals/Settings.vue";
+import WhatsNew from "./components/modals/WhatsNew.vue";
+import GameBackgroundPrompt from "./components/modals/GameBackgroundPrompt.vue";
+import Preview from "./components/Preview.vue";
+import Logging from "./components/modals/Logging.vue";
+import History from "./components/modals/History.vue";
+import CharactersList from "./components/CharactersList.vue";
+import Backgrounds from "./components/modals/Backgrounds.vue";
 
 // [TODO] move to rust
-saveWindowState(StateFlags.ALL)
+platform.saveWindowState();
 
-let unlistenDragDrop: UnlistenFn | undefined
-const { logMessage, clearLogs } = useLogger()
-const uiStore = useUIStore()
-const modManager = useModManagerStore()
-const charactersStore = useCharactersStore()
-const previewerStore = usePreviewerStore()
-const { t } = useI18n()
+let unlistenDragDrop: (() => void) | undefined;
+const { logMessage, clearLogs } = useLogger();
+const uiStore = useUIStore();
+const modManager = useModManagerStore();
+const charactersStore = useCharactersStore();
+const previewerStore = usePreviewerStore();
+const { t } = useI18n();
 
-const isCharacterListVisible = ref(false)
-const charactersWidth = ref(40)
-const charactersResize = ref<{ start: number, width: number } | null>(null)
+const isCharacterListVisible = ref(false);
+const charactersWidth = ref(40);
+const charactersResize = ref<{ start: number; width: number } | null>(null);
 
 function startCharactersResize(event: PointerEvent) {
-  if (event.button !== 0) return
-  charactersResize.value = { start: event.clientX, width: charactersWidth.value }
-  const handle = event.currentTarget as HTMLElement
-  handle.setPointerCapture(event.pointerId)
-  event.preventDefault()
+  if (event.button !== 0) return;
+  charactersResize.value = {
+    start: event.clientX,
+    width: charactersWidth.value,
+  };
+  const handle = event.currentTarget as HTMLElement;
+  handle.setPointerCapture(event.pointerId);
+  event.preventDefault();
 }
 
 function moveCharactersResize(event: PointerEvent) {
-  if (!charactersResize.value) return
-  charactersWidth.value = Math.max(20, Math.min(80, charactersResize.value.width + (charactersResize.value.start - event.clientX) / window.innerWidth * 100))
+  if (!charactersResize.value) return;
+  charactersWidth.value = Math.max(
+    20,
+    Math.min(
+      80,
+      charactersResize.value.width +
+        ((charactersResize.value.start - event.clientX) / window.innerWidth) *
+          100,
+    ),
+  );
 }
 
-const { dropTarget: folderDropTarget, moveDrag: moveFolderDrag, cancelDrag: cancelFolderDrag } = usePreviewDrag(() => {}, true)
+const {
+  dropTarget: folderDropTarget,
+  moveDrag: moveFolderDrag,
+  cancelDrag: cancelFolderDrag,
+} = usePreviewDrag(() => {}, true);
 
 async function initializeDragAndDrop(): Promise<void> {
   try {
-    unlistenDragDrop = await getCurrentWebview().onDragDropEvent(event => {
-      const payload = event.payload
-
-      if (payload.type === 'leave') {
-        cancelFolderDrag()
-        return
+    unlistenDragDrop = await platform.onDragDrop((payload) => {
+      if (payload.type === "leave") {
+        cancelFolderDrag();
+        return;
       }
 
-      moveFolderDrag({
-        clientX: payload.position.x / window.devicePixelRatio,
-        clientY: payload.position.y / window.devicePixelRatio,
-      }, true)
+      moveFolderDrag({ clientX: payload.x, clientY: payload.y }, true);
 
-      if (payload.type !== 'drop') return
+      if (payload.type !== "drop") return;
 
-      const target = folderDropTarget.value
+      const target = folderDropTarget.value;
 
-      cancelFolderDrag()
+      cancelFolderDrag();
 
-      if (!target) return
+      if (!target) return;
 
       for (const [index, path] of payload.paths.entries()) {
         // [TODO] check if we need this opendroppedrpeview or only openpreview
         previewerStore.openDroppedPreview(
           path.split(/[\\/]/).filter(Boolean).pop() || path,
           { type: "folder", path },
-          index === 0 ? target : { row: target.row, column: target.column + index, newRow: false },
-        )
+          index === 0
+            ? target
+            : { row: target.row, column: target.column + index, newRow: false },
+        );
       }
-    })
-    logMessage('Drag and drop listener initialized')
+    });
+    logMessage("Drag and drop listener initialized");
   } catch (error) {
-    logMessage(`Failed to initialize drag and drop: ${error}`, 'error')
+    logMessage(`Failed to initialize drag and drop: ${error}`, "error");
   }
 }
 
 async function loadFromCli(): Promise<void> {
   try {
-    const matches = await getMatches()
+    const {
+      paths,
+      theme: themeArg,
+      language: langArg,
+    } = await platform.getLaunchArgs();
 
-    const themeArg: string | null = typeof matches.args.theme?.value === 'string' ? matches.args.theme.value : null
-    const langArg : string | null = typeof matches.args.language?.value === 'string' ? matches.args.language.value : null
-
-    if (themeArg && ['dark-1', 'dark-2', 'dark-3', 'dark-4', 'light-1', 'light-2'].includes(themeArg)) {
-      uiStore.theme = themeArg
+    if (
+      themeArg &&
+      ["dark-1", "dark-2", "dark-3", "dark-4", "light-1", "light-2"].includes(
+        themeArg,
+      )
+    ) {
+      uiStore.theme = themeArg;
     }
-
 
     if (langArg) {
-      uiStore.language = langArg
+      uiStore.language = langArg;
     }
 
-    const pathArg = matches.args.path?.value
-
-    const paths = Array.isArray(pathArg) ? pathArg : typeof pathArg === 'string' ? [pathArg] : []
     for (const path of paths) {
-      if (typeof path !== 'string' || !path) continue
-      previewerStore.openPreview(path.split(/[\\/]/).filter(Boolean).pop() || path, { type: "folder", path })
+      previewerStore.openPreview(
+        path.split(/[\\/]/).filter(Boolean).pop() || path,
+        { type: "folder", path },
+      );
     }
   } catch (error) {
-    logMessage(`Error processing CLI arguments: ${error}`, 'error')
+    logMessage(`Error processing CLI arguments: ${error}`, "error");
   }
 }
 
 const previewRows = computed(() => {
-  const rows = [...new Set(previewerStore.previewers.map(p => p.pos.row))].sort((a, b) => a - b)
-  return rows.map(row => ({
+  const rows = [
+    ...new Set(previewerStore.previewers.map((p) => p.pos.row)),
+  ].sort((a, b) => a - b);
+  return rows.map((row) => ({
     row,
     previews: previewerStore.previewers
-      .filter(p => p.pos.row === row)
+      .filter((p) => p.pos.row === row)
       .sort((a, b) => a.pos.column - b.pos.column),
-  }))
-})
+  }));
+});
 
-const rowSizes = ref<number[]>([])
-const columnSizes = ref<Record<number, number[]>>({})
+const rowSizes = ref<number[]>([]);
+const columnSizes = ref<Record<number, number[]>>({});
 
-let resize: { axis: "row" | "column", row: number, index: number, start: number, length: number, sizes: number[] } | null = null
+let resize: {
+  axis: "row" | "column";
+  row: number;
+  index: number;
+  start: number;
+  length: number;
+  sizes: number[];
+} | null = null;
 
-watch(() => previewRows.value.map(row => row.previews.map(p => p.id).join(",")).join(";"), () => {
-  rowSizes.value = previewRows.value.map(() => 1)
-  columnSizes.value = Object.fromEntries(previewRows.value.map(row => [row.row, row.previews.map(() => 1)]))
-  resize = null
-}, { immediate: true })
+watch(
+  () =>
+    previewRows.value
+      .map((row) => row.previews.map((p) => p.id).join(","))
+      .join(";"),
+  () => {
+    rowSizes.value = previewRows.value.map(() => 1);
+    columnSizes.value = Object.fromEntries(
+      previewRows.value.map((row) => [row.row, row.previews.map(() => 1)]),
+    );
+    resize = null;
+  },
+  { immediate: true },
+);
 
-function startResize(event: PointerEvent, axis: "row" | "column", index: number, row = 0) {
-  if (event.button !== 0) return
-  const handle = event.currentTarget as HTMLElement
-  const container = handle.closest(axis === "row" ? "#preview-grid" : ".preview-row")!
-  const panels = container.querySelectorAll(axis === "row" ? ":scope > .preview-row" : ":scope > .preview-cell")
+function startResize(
+  event: PointerEvent,
+  axis: "row" | "column",
+  index: number,
+  row = 0,
+) {
+  if (event.button !== 0) return;
+  const handle = event.currentTarget as HTMLElement;
+  const container = handle.closest(
+    axis === "row" ? "#preview-grid" : ".preview-row",
+  )!;
+  const panels = container.querySelectorAll(
+    axis === "row" ? ":scope > .preview-row" : ":scope > .preview-cell",
+  );
   const length = Array.from(panels).reduce((total, panel) => {
-    const bounds = panel.getBoundingClientRect()
-    return total + (axis === "row" ? bounds.height : bounds.width)
-  }, 0)
+    const bounds = panel.getBoundingClientRect();
+    return total + (axis === "row" ? bounds.height : bounds.width);
+  }, 0);
   resize = {
-    axis, row, index,
+    axis,
+    row,
+    index,
     start: axis === "row" ? event.clientY : event.clientX,
     length,
     sizes: [...(axis === "row" ? rowSizes.value : columnSizes.value[row])],
-  }
-  handle.setPointerCapture(event.pointerId)
-  event.preventDefault()
+  };
+  handle.setPointerCapture(event.pointerId);
+  event.preventDefault();
 }
 
 function moveResize(event: PointerEvent) {
-  if (!resize) return
-  const { axis, row, index, start, length, sizes } = resize
-  const delta = ((axis === "row" ? event.clientY : event.clientX) - start) / length * sizes.reduce((a, b) => a + b, 0)
-  const pair = sizes[index] + sizes[index + 1]
-  const first = Math.max(pair * .1, Math.min(pair * .9, sizes[index] + delta))
-  const target = axis === "row" ? rowSizes.value : columnSizes.value[row]
-  target[index] = first
-  target[index + 1] = pair - first
+  if (!resize) return;
+  const { axis, row, index, start, length, sizes } = resize;
+  const delta =
+    (((axis === "row" ? event.clientY : event.clientX) - start) / length) *
+    sizes.reduce((a, b) => a + b, 0);
+  const pair = sizes[index] + sizes[index + 1];
+  const first = Math.max(
+    pair * 0.1,
+    Math.min(pair * 0.9, sizes[index] + delta),
+  );
+  const target = axis === "row" ? rowSizes.value : columnSizes.value[row];
+  target[index] = first;
+  target[index + 1] = pair - first;
 }
 
 onMounted(async () => {
-  clearLogs()
+  clearLogs();
 
-  logMessage('Application starting...')
+  logMessage("Application starting...");
 
-  await loadFromCli()
-  await uiStore.loadLanguage()
+  await loadFromCli();
+  await uiStore.loadLanguage();
 
   // these functions we dont need to wait because they are not critical for the app to start, but we want to run them in parallel to save time
   void Promise.allSettled([
@@ -189,39 +235,45 @@ onMounted(async () => {
     modManager.initialize(),
     charactersStore.loadCharacters(),
     updateCutscenes(),
-    uiStore.checkSupporter().catch(error => {
-      logMessage(`Failed to check supporter access: ${error}`, "error")
-    })
-  ])
+    uiStore.checkSupporter().catch((error) => {
+      logMessage(`Failed to check supporter access: ${error}`, "error");
+    }),
+  ]);
 
-  await uiStore.shouldShowWhatsNew()
+  await uiStore.shouldShowWhatsNew();
 
   if (previewerStore.previewers.length === 0) {
-    previewerStore.openPreview(t('preview.newPreview'))
+    previewerStore.openPreview(t("preview.newPreview"));
   }
 
-  await nextTick()
+  await nextTick();
 
-  await getCurrentWindow().show()
+  await platform.showWindow();
 
-  logMessage('Application initialized successfully.', "success")
-})
+  logMessage("Application initialized successfully.", "success");
+});
 
 onUnmounted(() => {
-  modManager.dispose()
-  unlistenDragDrop?.()
-  cancelFolderDrag()
-  logMessage('Application cleaned up')
-})
+  modManager.dispose();
+  unlistenDragDrop?.();
+  cancelFolderDrag();
+  logMessage("Application cleaned up");
+});
 </script>
 
 <template>
   <div id="app">
     <Teleport to="body">
-      <div v-if="folderDropTarget" class="folder-drop-target" :style="{
-          left: folderDropTarget.left + 'px', top: folderDropTarget.top + 'px',
-          width: folderDropTarget.width + 'px', height: folderDropTarget.height + 'px',
-        }">
+      <div
+        v-if="folderDropTarget"
+        class="folder-drop-target"
+        :style="{
+          left: folderDropTarget.left + 'px',
+          top: folderDropTarget.top + 'px',
+          width: folderDropTarget.width + 'px',
+          height: folderDropTarget.height + 'px',
+        }"
+      >
         <Plus :size="18" />
       </div>
     </Teleport>
@@ -229,51 +281,118 @@ onUnmounted(() => {
     <!-- #modals> -->
     <Logging :show="uiStore.isLogsVisible" @close="uiStore.closeLogs" />
     <History :show="uiStore.isHistoryVisible" @close="uiStore.closeHistory" />
-    <WhatsNew :show="uiStore.isWhatsNewVisible" @close="uiStore.closeWhatsNew" />
+    <WhatsNew
+      :show="uiStore.isWhatsNewVisible"
+      @close="uiStore.closeWhatsNew"
+    />
     <GameBackgroundPrompt />
-    <Backgrounds :show="uiStore.isBackgroundsVisible" @close="uiStore.closeBackgrounds" />
+    <Backgrounds
+      :show="uiStore.isBackgroundsVisible"
+      @close="uiStore.closeBackgrounds"
+    />
     <!-- modals# -->
 
     <main id="main">
-      <Toolbar :characters-open="isCharacterListVisible" @characters="isCharacterListVisible = !isCharacterListVisible" />
+      <Toolbar
+        :characters-open="isCharacterListVisible"
+        @characters="isCharacterListVisible = !isCharacterListVisible"
+      />
 
       <div id="workspace">
         <div id="content">
-            <div id="preview-grid" :style="{
-              gridTemplateRows: rowSizes.map(size => `minmax(0, ${size}fr)`).join(' '),
-            }">
-              <div v-for="(row, rowIndex) in previewRows" :key="row.row" class="preview-row"
-                :style="{ gridTemplateColumns: (columnSizes[row.row] || row.previews.map(() => 1)).map(size => `minmax(0, ${size}fr)`).join(' ') }">
-                <div v-for="(preview, columnIndex) in row.previews" :key="preview.id" class="preview-cell">
-                  <Preview :preview-id="preview.id" :can-add-right="columnIndex === row.previews.length - 1"
-                    :can-add-bottom="rowIndex === previewRows.length - 1" />
-                  <div v-if="columnIndex < row.previews.length - 1" class="resize-divider resize-column"
-                    :title="t('preview.resize')" role="separator" aria-orientation="vertical"
-                    @pointerdown="startResize($event, 'column', columnIndex, row.row)" @pointermove="moveResize"
-                    @pointerup="resize = null" @pointercancel="resize = null" @lostpointercapture="resize = null"
-                    @dblclick="columnSizes[row.row][columnIndex] = columnSizes[row.row][columnIndex + 1] = 1">
-                    <EllipsisVertical :size="12" />
-                  </div>
-                </div>
-                <div v-if="rowIndex < previewRows.length - 1" class="resize-divider resize-row" :title="t('preview.resize')"
-                  role="separator" aria-orientation="horizontal" @pointerdown="startResize($event, 'row', rowIndex)"
-                  @pointermove="moveResize" @pointerup="resize = null" @pointercancel="resize = null"
-                  @lostpointercapture="resize = null" @dblclick="rowSizes[rowIndex] = rowSizes[rowIndex + 1] = 1">
-                  <Ellipsis :size="12" />
+          <div
+            id="preview-grid"
+            :style="{
+              gridTemplateRows: rowSizes
+                .map((size) => `minmax(0, ${size}fr)`)
+                .join(' '),
+            }"
+          >
+            <div
+              v-for="(row, rowIndex) in previewRows"
+              :key="row.row"
+              class="preview-row"
+              :style="{
+                gridTemplateColumns: (
+                  columnSizes[row.row] || row.previews.map(() => 1)
+                )
+                  .map((size) => `minmax(0, ${size}fr)`)
+                  .join(' '),
+              }"
+            >
+              <div
+                v-for="(preview, columnIndex) in row.previews"
+                :key="preview.id"
+                class="preview-cell"
+              >
+                <Preview
+                  :preview-id="preview.id"
+                  :can-add-right="columnIndex === row.previews.length - 1"
+                  :can-add-bottom="rowIndex === previewRows.length - 1"
+                />
+                <div
+                  v-if="columnIndex < row.previews.length - 1"
+                  class="resize-divider resize-column"
+                  :title="t('preview.resize')"
+                  role="separator"
+                  aria-orientation="vertical"
+                  @pointerdown="
+                    startResize($event, 'column', columnIndex, row.row)
+                  "
+                  @pointermove="moveResize"
+                  @pointerup="resize = null"
+                  @pointercancel="resize = null"
+                  @lostpointercapture="resize = null"
+                  @dblclick="
+                    columnSizes[row.row][columnIndex] = columnSizes[row.row][
+                      columnIndex + 1
+                    ] =
+                      1
+                  "
+                >
+                  <EllipsisVertical :size="12" />
                 </div>
               </div>
+              <div
+                v-if="rowIndex < previewRows.length - 1"
+                class="resize-divider resize-row"
+                :title="t('preview.resize')"
+                role="separator"
+                aria-orientation="horizontal"
+                @pointerdown="startResize($event, 'row', rowIndex)"
+                @pointermove="moveResize"
+                @pointerup="resize = null"
+                @pointercancel="resize = null"
+                @lostpointercapture="resize = null"
+                @dblclick="rowSizes[rowIndex] = rowSizes[rowIndex + 1] = 1"
+              >
+                <Ellipsis :size="12" />
+              </div>
             </div>
+          </div>
         </div>
       </div>
     </main>
 
     <Transition name="characters">
-      <aside v-show="isCharacterListVisible" id="characters-list" :aria-label="t('preview.characters')"
-        :style="{ '--characters-width': `${charactersWidth}vw` }">
-        <div class="resize-divider resize-characters" :title="t('preview.resize')" role="separator"
-          :aria-label="t('preview.resizeCharacters')" aria-orientation="vertical" @pointerdown="startCharactersResize"
-          @pointermove="moveCharactersResize" @pointerup="charactersResize = null"
-          @pointercancel="charactersResize = null" @lostpointercapture="charactersResize = null">
+      <aside
+        v-show="isCharacterListVisible"
+        id="characters-list"
+        :aria-label="t('preview.characters')"
+        :style="{ '--characters-width': `${charactersWidth}vw` }"
+      >
+        <div
+          class="resize-divider resize-characters"
+          :title="t('preview.resize')"
+          role="separator"
+          :aria-label="t('preview.resizeCharacters')"
+          aria-orientation="vertical"
+          @pointerdown="startCharactersResize"
+          @pointermove="moveCharactersResize"
+          @pointerup="charactersResize = null"
+          @pointercancel="charactersResize = null"
+          @lostpointercapture="charactersResize = null"
+        >
           <EllipsisVertical :size="12" aria-hidden="true" />
         </div>
         <div id="characters-content">
@@ -281,12 +400,26 @@ onUnmounted(() => {
         </div>
       </aside>
     </Transition>
-    <Settings :show="uiStore.isSettingsVisible" @close="uiStore.closeSettings" />
+    <Settings
+      :show="uiStore.isSettingsVisible"
+      @close="uiStore.closeSettings"
+    />
   </div>
 </template>
 
 <style scoped>
-.folder-drop-target { position: fixed; z-index: 200; display: flex; align-items: center; justify-content: center; pointer-events: none; border: 1px solid var(--accent); border-radius: 4px; background: var(--surface-popover); color: var(--accent); }
+.folder-drop-target {
+  position: fixed;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  background: var(--surface-popover);
+  color: var(--accent);
+}
 
 #main {
   display: flex;
@@ -331,7 +464,9 @@ onUnmounted(() => {
 
 #characters-list.characters-enter-active,
 #characters-list.characters-leave-active {
-  transition: flex-basis 200ms ease-out, transform 200ms ease-out;
+  transition:
+    flex-basis 200ms ease-out,
+    transform 200ms ease-out;
 }
 
 #characters-list.characters-enter-from,
@@ -342,7 +477,6 @@ onUnmounted(() => {
 }
 
 @media (prefers-reduced-motion: reduce) {
-
   #characters-list.characters-enter-active,
   #characters-list.characters-leave-active {
     transition: none;
@@ -382,7 +516,7 @@ onUnmounted(() => {
 }
 
 .resize-divider::before {
-  content: '';
+  content: "";
   position: absolute;
   background: var(--border-default);
   opacity: 0;
@@ -447,7 +581,6 @@ onUnmounted(() => {
 
 .resize-divider:hover::before,
 .resize-divider:active::before {
-  /* background: var(--accent); */
   opacity: 0;
 }
 
@@ -457,7 +590,6 @@ onUnmounted(() => {
 }
 
 @media (prefers-reduced-motion: reduce) {
-
   .resize-divider::before,
   .resize-divider svg {
     transition: none;

@@ -3,11 +3,14 @@
   "private": true,
   "version": "1.0.5-beta.1",
   "type": "module",
+  "main": "electron/main.cjs",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "electron:dev": "node electron/dev.mjs",
+    "electron:build": "pnpm build && electron-builder --linux AppImage --publish never"
   },
   "dependencies": {
     "@floating-ui/vue": "^2.0.1",
@@ -27,9 +30,31 @@
   "devDependencies": {
     "@tauri-apps/cli": "^2.12.4",
     "@vitejs/plugin-vue": "^6.0.10",
+    "electron": "^45.3.0",
+    "electron-builder": "^26.18.0",
     "prettier": "^3.9.10",
     "typescript": "~6.0.3",
     "vite": "^8.3.5",
     "vue-tsc": "^3.3.14"
+  },
+  "build": {
+    "appId": "com.bruhnn.BD2ModPreview",
+    "productName": "BD2ModPreview",
+    "files": [
+      "dist/**",
+      "electron/main.cjs",
+      "electron/preload.cjs",
+      "package.json",
+      "!node_modules/**"
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "Graphics",
+      "icon": "src-tauri/icons/128x128@2x.png",
+      "artifactName": "BD2ModPreview.AppImage"
+    }
   }
 }

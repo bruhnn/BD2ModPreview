@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { useLocalStorage } from "@vueuse/core";
-import { invoke } from "@tauri-apps/api/core";
+import { platform } from "../backends";
 
 export interface BackgroundPrompt {
 	key: string;
@@ -21,7 +21,7 @@ export const useGameBackgroundStore = defineStore("gameBackgrounds", () => {
 	function load(hash: string): Promise<string> {
 		let request = loaded.get(hash);
 		if (!request) {
-			request = invoke<string>("get_game_background", { hash });
+			request = platform.getGameBackground(hash);
 			request.then(refreshCacheSize, () => loaded.delete(hash));
 			loaded.set(hash, request);
 		}
@@ -29,11 +29,11 @@ export const useGameBackgroundStore = defineStore("gameBackgrounds", () => {
 	}
 
 	async function refreshCacheSize() {
-		cacheSize.value = await invoke<number>("get_game_background_cache_size");
+		cacheSize.value = await platform.getGameBackgroundCacheSize();
 	}
 
 	async function clearCache() {
-		await invoke("clear_game_background_cache");
+		await platform.clearGameBackgroundCache();
 		loaded.clear();
 		await refreshCacheSize();
 	}
@@ -47,7 +47,7 @@ export const useGameBackgroundStore = defineStore("gameBackgrounds", () => {
 		if (!showByDefault.value || decided.has(key)) return;
 		if (
 			mode.value === "always" ||
-			(await invoke<boolean>("has_game_backgrounds", { hashes }))
+			(await platform.hasGameBackgrounds(hashes))
 		) {
 			decided.add(key);
 			apply();

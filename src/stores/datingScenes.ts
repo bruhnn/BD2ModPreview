@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { getVersion } from "@tauri-apps/api/app";
+import { platform } from "../backends";
 import { onScopeDispose, shallowRef } from "vue";
 import { useUIStore } from "./ui";
 import { useLogger } from "../composables/useLogger";
@@ -69,7 +69,7 @@ export const useDatingScenesStore = defineStore("datingScenes", () => {
 					cache: "no-store",
 					headers: {
 						"X-Machine-ID": machineId,
-						"X-Preview-Version": await getVersion(),
+						"X-Preview-Version": await platform.getVersion(),
 					},
 				},
 			)

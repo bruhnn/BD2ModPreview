@@ -3,7 +3,7 @@
     lang="ts"
 >
 import { useI18n } from "vue-i18n"
-import { openUrl } from "@tauri-apps/plugin-opener"
+import { platform } from "../../backends"
 import { X, Info, ExternalLink } from "@lucide/vue"
 import {
     Dialog,
@@ -186,7 +186,7 @@ const versions = [
                                                 {{ t("whatsNew.supporterMessage") }}
                                                 <template v-for="(link, linkIndex) in supportLinks" :key="link.name">
                                                     <span v-if="linkIndex > 0">{{ t("whatsNew.supportOr") }}</span>
-                                                    <button type="button" class="supporter-link" @click="openUrl(link.url)">
+                                                    <button type="button" class="supporter-link" @click="platform.openUrl(link.url)">
                                                         {{ link.name }}
                                                         <ExternalLink :size="12" aria-hidden="true" />
                                                     </button>
@@ -218,7 +218,7 @@ const versions = [
                                     <Info class="github-icon" aria-hidden="true" />
 
                                     <button type="button" class="github-link"
-                                        @click="openUrl('https://github.com/bruhnn/BD2ModManager/issues')">
+                                        @click="platform.openUrl('https://github.com/bruhnn/BD2ModManager/issues')">
                                         {{ t("whatsNew.issue") }}
                                     </button>
                                 </div>
