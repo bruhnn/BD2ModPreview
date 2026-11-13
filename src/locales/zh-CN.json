@@ -88,6 +88,8 @@
         "orderHelp": "AFDIAN：进入个人中心，打开“我的订单”，然后复制订单号。Ko-fi：输入你收到的激活码，而不是交易编号。"
     },
     "whatsNew": {
+        "linuxSupport": "新增 Linux 版本，以 AppImage 格式提供。",
+        "screenshotOptions": "截图对话框现支持截取完整角色或自定义图片尺寸、使用透明背景，以及保存或复制图片。",
         "screenshot": "可从右键菜单将任意预览保存为 PNG 图片。",
         "loadChecklist": "已将默认的 Spine 加载动画替换为正在加载的文件清单。",
         "translatedErrors": "错误信息现已翻译为所有支持的语言。",

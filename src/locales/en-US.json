@@ -85,6 +85,8 @@
         "orderHelp": "AFDIAN: Go to your dashboard, open My orders, and copy the order number. Ko-fi: Enter the activation code you received, not the transaction number."
     },
     "whatsNew": {
+        "linuxSupport": "Added a Linux version, available as an AppImage.",
+        "screenshotOptions": "The screenshot dialog now lets you capture the full character or choose a custom image size, use a transparent background, and save or copy the image.",
         "screenshot": "Save any preview as a PNG image from the right-click menu.",
         "loadChecklist": "Replaced the default spine loading animation with a checklist of the files being loaded.",
         "translatedErrors": "Error messages are now translated into all supported languages.",
