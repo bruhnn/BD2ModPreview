@@ -1,4 +1,56 @@
 {
+    "backgroundsPanel": {
+        "title": "게임 배경",
+        "open": "게임 배경...",
+        "search": "번호로 검색",
+        "reset": "배경 초기화",
+        "resetShort": "초기화",
+        "seeAllShort": "모두 보기",
+        "hintAll": "배경을 선택하여 열려 있는 모든 미리보기에 적용합니다.",
+        "hintOne": "배경을 선택하여 이 미리보기에 적용합니다.",
+        "item": "배경 {number}",
+        "none": "배경을 찾을 수 없습니다.",
+        "failed": "배경 {number}을(를) 불러오지 못했습니다.",
+        "offline": "게임 배경을 불러오지 못했습니다."
+    },
+    "gameBackgroundPrompt": {
+        "title": "컷신 배경을 표시할까요?",
+        "message": "이 컷신에는 게임의 움직이는 배경이 있습니다(이미지 {count}개, {size}, 한 번만 다운로드). 배경 없이 컷신을 재생할 수도 있습니다.",
+        "hint": "미리보기 조작 패널의 배경 버튼으로 언제든 배경을 켜거나 끌 수 있습니다.",
+        "remember": "내 선택 기억하기",
+        "yes": "다운로드 후 표시",
+        "no": "배경 없이 재생"
+    },
+    "gameBackgroundSettings": {
+        "title": "컷신 배경",
+        "show": "게임 내 컷신에 배경 표시",
+        "showHelp": "끄면 배경 없이 컷신을 재생합니다. 배경 버튼으로 다시 켤 수 있습니다.",
+        "mode": "배경 이미지 다운로드",
+        "ask": "먼저 확인",
+        "always": "자동으로 다운로드",
+        "cache": "다운로드됨: {size}",
+        "clear": "다운로드 삭제"
+    },
+    "screenshotDialog": {
+        "title": "스크린샷 저장",
+        "modes": {
+            "full": "전체 이미지",
+            "custom": "사용자 지정"
+        },
+        "hints": {
+            "full": "캐릭터 전체를 원본 해상도로 캡처합니다. 확대/축소나 창 크기의 영향을 받지 않으며 숨겨진 레이어는 제외됩니다.",
+            "custom": "미리보기에 표시된 내용을 지정한 크기에 맞춥니다."
+        },
+        "output": "출력",
+        "size": "크기",
+        "width": "너비",
+        "height": "높이",
+        "transparent": "투명 배경",
+        "copy": "복사",
+        "copied": "스크린샷을 클립보드에 복사했습니다",
+        "cancel": "닫기",
+        "save": "PNG 저장"
+    },
     "loadError": {
         "titles": {
             "network": "네트워크 오류",
@@ -154,6 +206,24 @@
         "themes": "테마와 캐릭터 이름 번역을 추가했습니다."
     },
     "preview": {
+        "loadSteps": {
+            "textures": "텍스처",
+            "textureCount": "텍스처 {loaded}/{total}"
+        },
+        "resetDating": "데이트 초기화",
+        "datingStageLabel": "포즈",
+        "datingStage": "포즈 {number}",
+        "datingToolLabel": "도구",
+        "showAreas": "영역 표시",
+        "showInteractionPoints": "상호작용 지점 표시",
+        "gameBackground": "게임 내 컷신에 배경 표시",
+        "gameBackgroundHint": "이 컷신의 게임 내 움직이는 배경입니다. 애니메이션 메뉴에서 게임 내 컷신을 선택하면 표시되며, 이미지는 한 번만 다운로드됩니다.",
+        "gameBackgroundImageHint": "이 게임 내 컷신 이미지를 배경으로 사용합니다. 한 번만 다운로드됩니다.",
+        "gameBackgroundImages": "컷신 배경",
+        "gameBackgroundToggle": "배경",
+        "gameBackgroundToggleHint": "게임 내 컷신 배경 켜기 또는 끄기",
+        "storyBackground": "배경 {number}",
+        "storyBackgroundHint": "게임 속 풍경 배경입니다. 선택하면 전체 이미지를 한 번만 다운로드합니다.",
         "minigameInteractions": "미니게임 상호작용",
         "minigameFever": "피버",
         "minigameHint": "양쪽 중 한쪽을 클릭하거나 길게 누르거나 드래그하세요. 마우스 가운데 버튼으로 카메라를 이동할 수 있습니다.",

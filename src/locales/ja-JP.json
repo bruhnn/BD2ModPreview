@@ -1,4 +1,56 @@
 {
+    "backgroundsPanel": {
+        "title": "ゲーム背景",
+        "open": "ゲーム背景...",
+        "search": "番号で検索",
+        "reset": "背景をリセット",
+        "resetShort": "リセット",
+        "seeAllShort": "すべて表示",
+        "hintAll": "背景を選んで、開いているすべてのプレビューに適用します。",
+        "hintOne": "背景を選んで、このプレビューに適用します。",
+        "item": "背景 {number}",
+        "none": "背景が見つかりません。",
+        "failed": "背景 {number} を読み込めませんでした。",
+        "offline": "ゲーム背景を読み込めませんでした。"
+    },
+    "gameBackgroundPrompt": {
+        "title": "カットシーンの背景を表示しますか？",
+        "message": "このカットシーンにはゲーム内のアニメーション背景があります（画像 {count} 枚、{size}、初回のみダウンロード）。背景なしでも再生できます。",
+        "hint": "プレビュー操作パネルの「背景」ボタンで、いつでも背景の表示を切り替えられます。",
+        "remember": "選択を記憶する",
+        "yes": "ダウンロードして表示",
+        "no": "背景なしで再生"
+    },
+    "gameBackgroundSettings": {
+        "title": "カットシーンの背景",
+        "show": "ゲーム内カットシーンの背景を表示する",
+        "showHelp": "オフの場合、背景なしでカットシーンを再生します。「背景」ボタンから表示することもできます。",
+        "mode": "背景画像のダウンロード",
+        "ask": "毎回確認する",
+        "always": "自動でダウンロード",
+        "cache": "ダウンロード済み: {size}",
+        "clear": "ダウンロード済みデータを削除"
+    },
+    "screenshotDialog": {
+        "title": "スクリーンショットを保存",
+        "modes": {
+            "full": "画像全体",
+            "custom": "カスタム"
+        },
+        "hints": {
+            "full": "元の解像度でキャラクター全体を撮影します。ズームやウィンドウサイズの影響を受けません。非表示のレイヤーは含まれません。",
+            "custom": "プレビューの表示内容を指定したサイズに合わせます。"
+        },
+        "output": "出力",
+        "size": "サイズ",
+        "width": "幅",
+        "height": "高さ",
+        "transparent": "背景を透過",
+        "copy": "コピー",
+        "copied": "スクリーンショットをクリップボードにコピーしました",
+        "cancel": "閉じる",
+        "save": "PNG を保存"
+    },
     "loadError": {
         "titles": {
             "network": "ネットワークエラー",
@@ -154,6 +206,24 @@
         "themes": "テーマとキャラクター名の翻訳を追加しました。"
     },
     "preview": {
+        "loadSteps": {
+            "textures": "テクスチャ",
+            "textureCount": "テクスチャ {loaded}/{total}"
+        },
+        "resetDating": "デートをリセット",
+        "datingStageLabel": "ポーズ",
+        "datingStage": "ポーズ {number}",
+        "datingToolLabel": "ツール",
+        "showAreas": "領域を表示",
+        "showInteractionPoints": "インタラクションポイントを表示",
+        "gameBackground": "ゲーム内カットシーンの背景を表示",
+        "gameBackgroundHint": "このカットシーンのゲーム内アニメーション背景です。アニメーションメニューでゲーム内カットシーンを選ぶと表示され、画像は初回のみダウンロードされます。",
+        "gameBackgroundImageHint": "このゲーム内カットシーンの画像を背景に使用します。初回のみダウンロードされます。",
+        "gameBackgroundImages": "カットシーンの背景",
+        "gameBackgroundToggle": "背景",
+        "gameBackgroundToggleHint": "ゲーム内カットシーンの背景の表示を切り替える",
+        "storyBackground": "背景 {number}",
+        "storyBackgroundHint": "ゲーム内の風景背景です。選択時に画像全体を初回のみダウンロードします。",
         "minigameInteractions": "ミニゲームのインタラクション",
         "minigameFever": "フィーバー",
         "minigameHint": "左右どちらかをクリック、長押し、またはドラッグしてください。マウスの中ボタンでカメラを移動できます。",

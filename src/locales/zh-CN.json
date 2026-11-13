@@ -1,4 +1,56 @@
 {
+    "backgroundsPanel": {
+        "title": "游戏背景",
+        "open": "游戏背景...",
+        "search": "按编号搜索",
+        "reset": "重置背景",
+        "resetShort": "重置",
+        "seeAllShort": "查看全部",
+        "hintAll": "选择背景以应用到所有已打开的预览。",
+        "hintOne": "选择背景以应用到当前预览。",
+        "item": "背景 {number}",
+        "none": "未找到背景。",
+        "failed": "无法加载背景 {number}。",
+        "offline": "无法加载游戏背景。"
+    },
+    "gameBackgroundPrompt": {
+        "title": "显示过场动画背景？",
+        "message": "此过场动画包含游戏中的动态背景（{count} 张图片，{size}，仅需下载一次）。也可以不显示背景直接播放。",
+        "hint": "可随时通过预览控制面板中的“背景”按钮开启或关闭背景。",
+        "remember": "记住我的选择",
+        "yes": "下载并显示",
+        "no": "不显示背景并播放"
+    },
+    "gameBackgroundSettings": {
+        "title": "过场动画背景",
+        "show": "在游戏内过场动画中显示背景",
+        "showHelp": "关闭时，过场动画将不显示背景。仍可通过“背景”按钮开启。",
+        "mode": "背景图片下载",
+        "ask": "先询问我",
+        "always": "自动下载",
+        "cache": "已下载：{size}",
+        "clear": "清除下载内容"
+    },
+    "screenshotDialog": {
+        "title": "保存截图",
+        "modes": {
+            "full": "完整图片",
+            "custom": "自定义"
+        },
+        "hints": {
+            "full": "以原始分辨率截取整个角色。不受缩放或窗口大小影响，不包含隐藏的图层。",
+            "custom": "将预览显示的内容适配到指定尺寸。"
+        },
+        "output": "输出",
+        "size": "尺寸",
+        "width": "宽度",
+        "height": "高度",
+        "transparent": "透明背景",
+        "copy": "复制",
+        "copied": "截图已复制到剪贴板",
+        "cancel": "关闭",
+        "save": "保存 PNG"
+    },
     "loadError": {
         "titles": {
             "network": "网络错误",
@@ -154,6 +206,24 @@
         "themes": "添加主题和角色名称翻译。"
     },
     "preview": {
+        "loadSteps": {
+            "textures": "纹理",
+            "textureCount": "纹理 {loaded}/{total}"
+        },
+        "resetDating": "重置约会",
+        "datingStageLabel": "姿势",
+        "datingStage": "姿势 {number}",
+        "datingToolLabel": "工具",
+        "showAreas": "显示区域",
+        "showInteractionPoints": "显示互动点",
+        "gameBackground": "显示游戏内过场动画背景",
+        "gameBackgroundHint": "此过场动画在游戏中的动态背景。在动画菜单中选择游戏内过场动画时显示，图片仅需下载一次。",
+        "gameBackgroundImageHint": "将此游戏内过场动画图片用作背景。仅需下载一次。",
+        "gameBackgroundImages": "过场动画背景",
+        "gameBackgroundToggle": "背景",
+        "gameBackgroundToggleHint": "开启或关闭游戏内过场动画背景",
+        "storyBackground": "背景 {number}",
+        "storyBackgroundHint": "游戏中的场景背景。选择时下载完整图片，仅需下载一次。",
         "minigameInteractions": "小游戏互动",
         "minigameFever": "狂热模式",
         "minigameHint": "点击、长按或拖动任意一侧。按住鼠标中键移动镜头。",
