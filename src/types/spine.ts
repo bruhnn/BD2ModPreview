@@ -30,6 +30,25 @@ export interface SpinePlayer {
 }
 
 
+export type ScreenshotMode = "full" | "custom";
+
+export interface ScreenshotOptions {
+    mode: ScreenshotMode;
+    transparent: boolean;
+    width?: number;
+    height?: number;
+}
+
+export interface ScreenshotSize {
+    width: number;
+    height: number;
+}
+
+export interface ScreenshotInfo extends ScreenshotSize {
+    maxSize: number;
+    full: ScreenshotSize;
+}
+
 export type LoadStepState = "pending" | "loading" | "done" | "error";
 
 export interface LoadStep {

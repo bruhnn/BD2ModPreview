@@ -2,29 +2,31 @@
   setup
   lang="ts"
 >
-import { useI18n } from "vue-i18n"
 import { WifiOff, FileQuestion, ImageOff, FileWarning, CircleAlert, Ellipsis, Scan, Camera, ExternalLink, Flame, GripVertical, PanelRightClose, PanelBottomClose, Play, Pause, Repeat, Hand, Eye, EyeOff, Check, Circle, LoaderCircle, Clapperboard, Images, ChevronDown, ChevronRight, FolderOpen, Focus, Image, Layers, Maximize, Palette, Shirt, Pencil, Plus, RotateCcw, SkipBack, Trash2, X } from "@lucide/vue"
-import { autoUpdate, flip, offset, shift, useFloating } from "@floating-ui/vue"
-import { onClickOutside, useTimeoutFn } from "@vueuse/core"
 import { computed, nextTick, ref, useTemplateRef, watch } from "vue"
-
-import { usePreviewDrag } from "../composables/usePreviewDrag"
-import { usePreview } from "../composables/usePreview"
-import SequenceEditor from "./modals/SequenceEditor.vue"
-import type { AnimationSequence } from "../types/spine"
-import { useModManagerStore } from "../stores/modManager"
-import { usePreviewerStore } from "../stores/previewer"
-import { useUIStore } from "../stores/ui"
+import { useI18n } from "vue-i18n"
+import { onClickOutside, useTimeoutFn } from "@vueuse/core"
+import { autoUpdate, flip, offset, shift, useFloating } from "@floating-ui/vue"
 
 import { open, save } from "@tauri-apps/plugin-dialog"
 import { writeFile } from "@tauri-apps/plugin-fs"
 import { openUrl } from "@tauri-apps/plugin-opener"
 import { invoke } from "@tauri-apps/api/core"
 
-import { useLogger } from "../composables/useLogger"
-import RecentFolderItem from "./RecentFolderItem.vue"
+import { usePreviewDrag } from "../composables/usePreviewDrag"
+import { usePreview } from "../composables/usePreview"
+import { useModManagerStore } from "../stores/modManager"
+import { usePreviewerStore } from "../stores/previewer"
+import { useUIStore } from "../stores/ui"
 import { useHistory } from "../composables/useHistory"
+import { useLogger } from "../composables/useLogger"
+
+import SequenceEditor from "./modals/SequenceEditor.vue"
+import ScreenshotDialog from "./modals/ScreenshotDialog.vue"
+import RecentFolderItem from "./RecentFolderItem.vue"
+
 import type { HistoryItem } from "../types/history"
+import type { AnimationSequence, ScreenshotInfo, ScreenshotOptions } from "../types/spine"
 
 import { fileName, type LoadCause } from "../composables/previewErrors"
 
@@ -125,6 +127,7 @@ const {
   playSequence,
   stopSequence,
   takeScreenshot,
+  screenshotInfo,
 } = usePreview(props.previewId, playerContainer)
 
 const { isDragging, dropTarget, startDrag, moveDrag, finishDrag, cancelDrag } = usePreviewDrag(({ row, column, newRow }) => {
@@ -249,14 +252,23 @@ function deleteSequence(index: number) {
 }
 
 const savingScreenshot = ref(false)
+const screenshotDialog = ref<ScreenshotInfo | null>(null)
 
-async function saveScreenshot() {
+function openScreenshotDialog() {
+  if (savingScreenshot.value || !source.value) return
+
+  screenshotDialog.value = screenshotInfo()
+  if (!screenshotDialog.value) logMessage("Failed to save screenshot: No preview loaded", "error")
+}
+
+async function saveScreenshot(options: ScreenshotOptions) {
+  screenshotDialog.value = null
   if (savingScreenshot.value || !source.value) return
 
   savingScreenshot.value = true
 
   try {
-    const png = await takeScreenshot()
+    const png = await takeScreenshot(options)
     const stamp = new Date().toISOString().slice(0, 19).replace(/[T:]/g, "-")
 
     const name = (title.value || "preview").replace(/[\\/:*?"<>|]+/g, "_").trim()
@@ -272,6 +284,24 @@ async function saveScreenshot() {
     logMessage("Screenshot saved: " + path, "success")
   } catch (error) {
     logMessage("Failed to save screenshot: " + String(error), "error")
+  } finally {
+    savingScreenshot.value = false
+  }
+}
+
+async function copyScreenshot(options: ScreenshotOptions) {
+  screenshotDialog.value = null
+  if (savingScreenshot.value || !source.value) return
+
+  savingScreenshot.value = true
+
+  try {
+    const png = await takeScreenshot(options)
+
+    await navigator.clipboard.write([new ClipboardItem({ "image/png": png })])
+    logMessage(t("screenshotDialog.copied"), "success")
+  } catch (error) {
+    logMessage("Failed to copy screenshot: " + String(error), "error")
   } finally {
     savingScreenshot.value = false
   }
@@ -463,6 +493,8 @@ const poseErrorMessage = computed(() => {
 })
 </script>
 <template>
+  <ScreenshotDialog v-if="screenshotDialog" :info="screenshotDialog"
+    @close="screenshotDialog = null" @save="saveScreenshot" @copy="copyScreenshot" />
   <SequenceEditor v-if="sequenceEditorOpen" :animations="allAnimations"
     :sequence="editingSequence === null ? null : sequences[editingSequence]" @close="sequenceEditorOpen = false"
     @save="saveSequence" />
@@ -662,7 +694,7 @@ const poseErrorMessage = computed(() => {
           <RotateCcw :size="16" /><span>{{ t('preview.resetCamera') }}</span><kbd>R</kbd>
         </button>
         <button type="button" role="menuitem" :disabled="isLoading || savingScreenshot" @mouseenter="submenu = null"
-          @click="closeContext(); saveScreenshot()">
+          @click="closeContext(); openScreenshotDialog()">
           <Camera :size="16" /><span>{{ t('preview.saveScreenshot') }}</span>
         </button>
 

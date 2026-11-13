@@ -20,6 +20,8 @@ import type {
 	AnimationSequence,
 	LoadStep,
 	LoadStepState,
+	ScreenshotInfo,
+	ScreenshotOptions,
 } from "../types/spine";
 
 declare const spine: any;
@@ -67,7 +69,7 @@ export function usePreview(
 				"error",
 			),
 	);
-	
+
 	const error = ref("");
 	const errorInfo = ref<LoadIssue | null>(null);
 	let loadResults: LoadFailure[] = [];
@@ -85,6 +87,8 @@ export function usePreview(
 	let spinePlayer: SpinePlayer | null = null;
 	const loadSteps = ref<LoadStep[]>([]);
 	let frameRequest: ((frame: HTMLCanvasElement) => void) | null = null;
+
+	let captureCamera: { x: number; y: number; zoom: number } | null = null;
 	let previousCamera: typeof camera = null;
 	let camera: { x: number; y: number; zoom: number } | null = null;
 	let initialCamera: { x: number; y: number; zoom: number } | null = null;
@@ -387,11 +391,18 @@ export function usePreview(
 		skeleton.updateWorldTransform();
 	}
 
-	// Skeleton bounds without huge backdrop meshes (dating illusts have one), which would zoom the camera way out.
-	function characterBounds(offset: any, size: any) {
+
+	function characterBounds(
+		offset: any,
+		size: any,
+		trim = true,
+		hidden: string[] = [],
+	) {
 		const rects: number[][] = [];
 
 		for (const slot of spinePlayer!.skeleton.drawOrder) {
+			if (hidden.includes(slot.data.name)) continue;
+
 			const attachment = slot.attachment;
 			const vertices: number[] = [];
 
@@ -425,7 +436,9 @@ export function usePreview(
 			Math.floor(rects.length / 2)
 		];
 
-		const kept = rects.filter((rect) => extent(rect) <= median * 20);
+		const kept = trim
+			? rects.filter((rect) => extent(rect) <= median * 20)
+			: rects;
 		const left = Math.min(...kept.map((r) => r[0]));
 		const bottom = Math.min(...kept.map((r) => r[1]));
 
@@ -600,7 +613,6 @@ export function usePreview(
 				const y = rect.height / 2 - (event.clientY - rect.top);
 				const delta =
 					event.deltaY *
-
 					(event.deltaMode === 1
 						? 16
 						: event.deltaMode === 2
@@ -730,14 +742,26 @@ export function usePreview(
 		if (!camera) fitCharacter();
 		if (activeSequence.value) applySequence(playbackTime.value + delta);
 
-		if (camera) {
+		if (captureCamera) {
+			const rendererCamera = player.sceneRenderer.camera;
+
+			rendererCamera.position.x = captureCamera.x;
+			rendererCamera.position.y = captureCamera.y;
+			rendererCamera.zoom = captureCamera.zoom;
+			rendererCamera.update();
+		} else if (camera) {
 			const rendererCamera = player.sceneRenderer.camera;
 
 			rendererCamera.position.x = camera.x;
 			rendererCamera.position.y = camera.y;
 
+			// fit the view
 			rendererCamera.zoom =
-				(camera.zoom * player.canvas.clientWidth) / player.canvas.width;
+				camera.zoom *
+				Math.max(
+					player.canvas.clientWidth / player.canvas.width,
+					player.canvas.clientHeight / player.canvas.height,
+				);
 			rendererCamera.update();
 		}
 
@@ -1037,12 +1061,18 @@ export function usePreview(
 						? "done"
 						: "loading";
 			const steps: LoadStep[] = [
-				{ key: skeletonPath, name: baseName(skeletonPath), state: stateOf(skeletonPath) },
+				{
+					key: skeletonPath,
+					name: baseName(skeletonPath),
+					state: stateOf(skeletonPath),
+				},
 				{
 					key: atlasPath,
 					name: baseName(atlasPath),
 					state:
-						atlasState === "loading" && texturePaths.length ? "done" : atlasState,
+						atlasState === "loading" && texturePaths.length
+							? "done"
+							: atlasState,
 				},
 				{
 					key: "textures",
@@ -1181,7 +1211,6 @@ export function usePreview(
 				change.sourceId === id ||
 				preview.value?.syncGroup !== change.groupId
 			)
-
 				return;
 			applyControl(change.control as PreviewControl);
 		},
@@ -1197,7 +1226,6 @@ export function usePreview(
 				!preview.value?.syncGroup ||
 				preview.value.syncGroup !== change.groupId
 			)
-
 				return;
 
 			const width = spinePlayer.canvas.clientWidth;
@@ -1298,7 +1326,6 @@ export function usePreview(
 					!datingInteraction.enabled.value &&
 					!minigame.enabled.value
 				)
-
 					track.loop = loop;
 			});
 		},
@@ -1376,18 +1403,114 @@ export function usePreview(
 		return copy;
 	}
 
-	function captureFrame() {
+	const MAX_SCREENSHOT_SIZE = 8192;
+
+	function screenshotInfo(): ScreenshotInfo | null {
+		if (!spinePlayer) return null;
+
+		const canvas = spinePlayer.canvas;
+		const gl: WebGLRenderingContext = spinePlayer.sceneRenderer.context.gl;
+		const viewport = gl.getParameter(gl.MAX_VIEWPORT_DIMS);
+		const maxSize = Math.min(
+			MAX_SCREENSHOT_SIZE,
+			gl.getParameter(gl.MAX_RENDERBUFFER_SIZE),
+			viewport[0],
+			viewport[1],
+		);
+
+		const view = { width: canvas.width, height: canvas.height };
+
+		return {
+			...view,
+			maxSize,
+			full: skeletonShot(maxSize)?.size ?? view,
+		};
+	}
+
+	// Output size and camera for rendering the visible skeleton (hidden layers left out) at 1 world unit =
+	// 1 pixel, scaled down to maxSize. Null in cutscenes, which span several skeletons and keep the current view.
+	function skeletonShot(maxSize: number) {
+		if (!spinePlayer || cutscene.active.value) return null;
+
+		const offset = new spine.Vector2();
+		const bounds = new spine.Vector2();
+
+		characterBounds(offset, bounds, false, hiddenLayers.value);
+		if (!bounds.x || !bounds.y) return null;
+
+		// Small margin so a playing animation is not clipped by the next frame's pose.
+		const pad = Math.max(bounds.x, bounds.y) * 0.02;
+		const width = bounds.x + pad * 2;
+		const height = bounds.y + pad * 2;
+		const zoom = Math.max(1, width / maxSize, height / maxSize);
+
+		return {
+			size: {
+				width: Math.max(1, Math.round(width / zoom)),
+				height: Math.max(1, Math.round(height / zoom)),
+			},
+			view: { x: offset.x + bounds.x / 2, y: offset.y + bounds.y / 2, zoom },
+		};
+	}
+
+	// Captures the next frame. With a size, that one frame is rendered into a drawing buffer of that size
+	// (the canvas keeps its size on screen). With a view, it uses that camera, else the current view fitted inside.
+	function captureFrame(
+		size: { width: number; height: number } | null,
+		transparent: boolean,
+		view: typeof captureCamera = null,
+	) {
 		return new Promise<HTMLCanvasElement>((resolve, reject) => {
-			if (!spinePlayer) return reject(new Error("No preview loaded"));
+			const player = spinePlayer;
+
+			if (!player) return reject(new Error("No preview loaded"));
+
+			const renderer = player.sceneRenderer;
+			const resize = renderer.resize;
+			const background = player.bg;
+
+			const restore = () => {
+				renderer.resize = resize;
+				player.bg = background;
+				frameRequest = null;
+				captureCamera = null;
+			};
+
+			captureCamera = view;
+
+			if (size) {
+				renderer.resize = function (this: any, mode: number) {
+					resize.call(this, mode);
+
+					const canvas = player.canvas;
+
+					canvas.width = size.width;
+					canvas.height = size.height;
+					this.context.gl.viewport(0, 0, size.width, size.height);
+					this.camera.setViewport(size.width, size.height);
+					this.camera.update();
+				};
+			}
+
+			if (transparent) player.bg = new spine.Color(0, 0, 0, 0);
 
 			const timeout = setTimeout(() => {
-				frameRequest = null;
+				restore();
 				reject(new Error("Timed out waiting for a frame"));
 			}, 2000);
 
 			frameRequest = (frame) => {
 				clearTimeout(timeout);
-				resolve(frame);
+
+				const gl: WebGLRenderingContext = renderer.context.gl;
+				const complete =
+					gl.drawingBufferWidth === player.canvas.width &&
+					gl.drawingBufferHeight === player.canvas.height;
+
+				restore();
+
+				if (complete) resolve(frame);
+				else reject(new Error("Screenshot size is too large for this GPU"));
 			};
 		});
 	}
@@ -1415,30 +1538,43 @@ export function usePreview(
 		);
 	}
 
-	async function takeScreenshot() {
-		const canvas = spinePlayer?.canvas;
-		const frame = await captureFrame();
+	// Full renders the skeleton bounds at 1 world unit = 1 pixel, independent of the window and camera.
+	// Custom renders the current view (pan and zoom) at the given size.
+	async function takeScreenshot(
+		options: ScreenshotOptions = { mode: "full", transparent: false },
+	) {
+		const info = screenshotInfo();
+
+		if (!spinePlayer || !info) throw new Error("No preview loaded");
+
+		const clamp = (value = 0) =>
+			Math.max(1, Math.min(Math.round(value), info.maxSize));
+		let frame: HTMLCanvasElement;
+
+		if (options.mode === "custom") {
+			const size = {
+				width: clamp(options.width),
+				height: clamp(options.height),
+			};
+
+			frame = await captureFrame(size, options.transparent);
+		} else {
+			const shot = skeletonShot(info.maxSize);
+
+			if (!shot && !cutscene.active.value)
+				throw new Error("Nothing visible to capture");
+
+			frame = shot
+				? await captureFrame(shot.size, options.transparent, shot.view)
+				: await captureFrame(null, options.transparent);
+		}
+
 		const background = settings.value?.background;
-		const panel = playerContainer.value?.closest(".preview-panel");
 
-		if (!canvas || background?.type !== "image" || !panel) return toPng(frame);
+		if (options.transparent) return toPng(frame);
 
-		try {
-			const image = await loadImage(background.path);
-			const canvasRect = canvas.getBoundingClientRect();
-			const panelRect = panel.getBoundingClientRect();
-			const ratio = frame.width / canvasRect.width;
-
-			const scale = Math.max(
-				panelRect.width / image.naturalWidth,
-				panelRect.height / image.naturalHeight,
-			);
-
-			const width = image.naturalWidth * scale;
-			const height = image.naturalHeight * scale;
-			const x = panelRect.left - canvasRect.left + (panelRect.width - width) / 2;
-			const y = panelRect.top - canvasRect.top + (panelRect.height - height) / 2;
-
+		// The theme background is CSS behind a transparent canvas, so paint it in.
+		if (background?.type === "theme") {
 			const result = document.createElement("canvas");
 
 			result.width = frame.width;
@@ -1446,7 +1582,43 @@ export function usePreview(
 
 			const context = result.getContext("2d")!;
 
-			context.drawImage(image, x * ratio, y * ratio, width * ratio, height * ratio);
+			context.fillStyle =
+				getComputedStyle(playerContainer.value ?? document.documentElement)
+					.getPropertyValue("--surface-app")
+					.trim() || "#000";
+			context.fillRect(0, 0, result.width, result.height);
+			context.drawImage(frame, 0, 0);
+
+			return toPng(result);
+		}
+
+		if (background?.type !== "image") return toPng(frame);
+
+		try {
+			const image = await loadImage(background.path);
+			// Cover the frame, like the preview background covers the panel.
+			const scale = Math.max(
+				frame.width / image.naturalWidth,
+				frame.height / image.naturalHeight,
+			);
+
+			const width = image.naturalWidth * scale;
+			const height = image.naturalHeight * scale;
+			const result = document.createElement("canvas");
+
+			result.width = frame.width;
+			result.height = frame.height;
+
+			const context = result.getContext("2d")!;
+
+			context.imageSmoothingQuality = "high";
+			context.drawImage(
+				image,
+				(frame.width - width) / 2,
+				(frame.height - height) / 2,
+				width,
+				height,
+			);
 			context.drawImage(frame, 0, 0);
 
 			return await toPng(result);
@@ -1521,6 +1693,7 @@ export function usePreview(
 		fitCharacter: () => runControl({ type: "fit" }),
 		centerCharacter: () => runControl({ type: "center" }),
 		takeScreenshot,
+		screenshotInfo,
 		skins,
 		skin,
 		layers,
