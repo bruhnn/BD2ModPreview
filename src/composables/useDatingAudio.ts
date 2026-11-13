@@ -1,5 +1,5 @@
 import { onScopeDispose, ref, watch } from "vue";
-import { invoke } from "@tauri-apps/api/core";
+import { platform } from "../backends";
 import { useLogger } from "./useLogger";
 import { useUIStore } from "../stores/ui";
 import type { DatingPoint, DatingAudio } from "../types/dating";
@@ -9,10 +9,7 @@ const downloads = new Map<string, Promise<string>>();
 function download(hash: string) {
 	let request = downloads.get(hash);
 	if (!request) {
-		request = invoke<{ data: string; failures: string[] }>(
-			"get_dating_audio",
-			{ hash },
-		).then((result) => {
+		request = platform.getDatingAudio(hash).then((result) => {
 			for (const failure of result.failures)
 				useLogger().logMessage(
 					`Dating audio ${hash}.ogg: ${failure}. Loaded from GitHub fallback.`,

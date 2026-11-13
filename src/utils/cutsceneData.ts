@@ -1,11 +1,10 @@
-import { BaseDirectory, exists, mkdir, readTextFile, rename, writeTextFile } from "@tauri-apps/plugin-fs"
+import { platform } from "../backends"
 import bundledIndex from "../data/cutscenes/index.json"
 import type { Scene } from "../composables/useGameCutscene"
 import { useLogger } from "../composables/useLogger"
 
 const revisions: Record<string, number> = bundledIndex
 const bundled = import.meta.glob<{ default: Scene }>("../data/cutscenes/[0-9]*.json")
-const options = { baseDir: BaseDirectory.AppData }
 const { logMessage } = useLogger()
 let updating: Promise<void> | undefined
 
@@ -24,9 +23,9 @@ function validScene(data: any): data is Scene {
 
 async function readSaved(id: string): Promise<Scene | null> {
   try {
-    const path = `cutscenes/${id}.json`
-    if (!await exists(path, options)) return null
-    const data = JSON.parse(await readTextFile(path, options))
+    const text = await platform.readAppDataText(`cutscenes/${id}.json`)
+    if (text === null) return null
+    const data = JSON.parse(text)
     if (!validScene(data)) throw new Error("Invalid saved timeline")
     return data
   } catch (error) {
@@ -63,7 +62,6 @@ export function updateCutscenes(): Promise<void> {
           Number.isInteger(revision) && (revision as number) > 0),
       )
       if (!index) return
-      await mkdir("cutscenes", { ...options, recursive: true })
       let updated = 0
       for (const [id, revision] of Object.entries(index)) {
         const saved = await readSaved(id)
@@ -71,12 +69,7 @@ export function updateCutscenes(): Promise<void> {
         const data = await download(id, data => validScene(data) && data.revision === revision)
         if (!data) continue
         try {
-          const path = `cutscenes/${id}.json`
-          await writeTextFile(`${path}.download`, JSON.stringify(data), options)
-          await rename(`${path}.download`, path, {
-            oldPathBaseDir: BaseDirectory.AppData,
-            newPathBaseDir: BaseDirectory.AppData,
-          })
+          await platform.writeAppDataText(`cutscenes/${id}.json`, JSON.stringify(data))
           updated++
         } catch (error) {
           logMessage(`Cutscene ${id}: could not save update: ${error}`, "warning")

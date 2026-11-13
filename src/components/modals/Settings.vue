@@ -6,9 +6,7 @@ import { ExternalLink, RotateCcw, Bug, Check, ChevronDown, ChevronRight, CircleQ
 import { Dialog, DialogPanel, DialogTitle, Menu, MenuButton, MenuItems, MenuItem, TransitionRoot, TransitionChild } from '@headlessui/vue'
 import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { openUrl } from '@tauri-apps/plugin-opener'
-import { getCurrentWindow } from '@tauri-apps/api/window'
-import { getVersion } from "@tauri-apps/api/app"
+import { platform } from '../../backends'
 
 import { useUIStore } from '../../stores/ui'
 import { useGameBackgroundStore } from '../../stores/gameBackgrounds'
@@ -68,7 +66,7 @@ async function redeem() {
 async function changeAlwaysOnTop(event: Event) {
   const checked = (event.target as HTMLInputElement).checked
   try {
-    await getCurrentWindow().setAlwaysOnTop(checked)
+    await platform.setAlwaysOnTop(checked)
     alwaysOnTop.value = checked
   } catch (error) {
     (event.target as HTMLInputElement).checked = alwaysOnTop.value
@@ -87,14 +85,14 @@ function formatSize(bytes: number) {
 
 async function openIssues() {
   try {
-    await openUrl('https://github.com/bruhnn/BD2ModManager/issues')
+    await platform.openUrl('https://github.com/bruhnn/BD2ModManager/issues')
   } catch (error) {
     logMessage(`Failed to open GitHub issues: ${error}`, 'error')
   }
 }
 
 onMounted(async () => {
-  getVersion().then((v) => {
+  platform.getVersion().then((v) => {
     appVersion.value = v
   })
 })
@@ -116,7 +114,7 @@ watch(() => props.show, async (show) => {
   if (show) {
     uiStore.loadMachineId().catch((error) => logMessage(`Failed to load machine ID: ${error}`, 'error'))
     gameBackgrounds.refreshCacheSize()
-    alwaysOnTop.value = await getCurrentWindow().isAlwaysOnTop()
+    alwaysOnTop.value = await platform.isAlwaysOnTop()
   }
 })
 </script>
@@ -254,11 +252,11 @@ watch(() => props.show, async (show) => {
                   <ChevronDown :size="17" class="supporter-chevron" />
                 </summary>
                 <div class="supporter-links">
-                  <button type="button" @click="openUrl('https://ko-fi.com/bruhnn')">
+                  <button type="button" @click="platform.openUrl('https://ko-fi.com/bruhnn')">
                     Ko-fi
                     <ExternalLink :size="12" aria-hidden="true" />
                   </button>
-                  <button type="button" @click="openUrl('https://afdian.com/a/bruhnn')">
+                  <button type="button" @click="platform.openUrl('https://afdian.com/a/bruhnn')">
                     AFDIAN
                     <ExternalLink :size="12" aria-hidden="true" />
                   </button>

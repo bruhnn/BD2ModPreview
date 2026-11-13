@@ -4,15 +4,15 @@ use std::{
     time::Duration,
 };
 use tauri::{Emitter, Manager};
-use tokio::{
-    io::{AsyncReadExt, AsyncWriteExt},
-    net::windows::named_pipe::{ClientOptions, NamedPipeClient},
-};
+use tokio::io::{AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt};
 
 #[derive(Default)]
 pub struct ManagerConnection(pub AtomicBool);
 
-async fn connect() -> std::io::Result<NamedPipeClient> {
+#[cfg(windows)]
+async fn connect() -> std::io::Result<tokio::net::windows::named_pipe::NamedPipeClient> {
+    use tokio::net::windows::named_pipe::ClientOptions;
+
     loop {
         match ClientOptions::new().open(format!(
             r"\\.\pipe\BD2ModManager-preview-{}",
@@ -26,7 +26,16 @@ async fn connect() -> std::io::Result<NamedPipeClient> {
     }
 }
 
-async fn write_message(pipe: &mut NamedPipeClient, value: Value) -> Result<(), String> {
+// BD2ModManager only listens on a Windows named pipe, so other platforms run without the link.
+#[cfg(not(windows))]
+async fn connect() -> std::io::Result<tokio::net::UnixStream> {
+    Err(std::io::Error::new(
+        std::io::ErrorKind::Unsupported,
+        "BD2MM connection is only supported on Windows",
+    ))
+}
+
+async fn write_message(pipe: &mut (impl AsyncWrite + Unpin), value: Value) -> Result<(), String> {
     let bytes = serde_json::to_vec(&value).map_err(|e| e.to_string())?;
     pipe.write_u32(bytes.len() as u32)
         .await
@@ -34,7 +43,7 @@ async fn write_message(pipe: &mut NamedPipeClient, value: Value) -> Result<(), S
     pipe.write_all(&bytes).await.map_err(|e| e.to_string())
 }
 
-async fn read_message(pipe: &mut NamedPipeClient) -> Result<Value, String> {
+async fn read_message(pipe: &mut (impl AsyncRead + Unpin)) -> Result<Value, String> {
     let length = pipe.read_u32().await.map_err(|e| e.to_string())?;
     if length > 16 * 1024 * 1024 {
         return Err("ModManager response is too large".into());

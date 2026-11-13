@@ -7,8 +7,6 @@ use std::fs;
 use std::path::{Path, PathBuf};
 use sha2::{Sha256, Digest};
 use tauri::{AppHandle, Emitter};
-use winreg::RegKey;
-use winreg::enums::HKEY_LOCAL_MACHINE;
 
 #[tauri::command]
 pub fn get_user_locale() -> String {
@@ -137,8 +135,11 @@ pub fn download_missing_skeleton(app: AppHandle, folder_path: String) -> Result<
     Ok(())
 }
 
-#[tauri::command]
-pub fn get_machine_id() -> Result<String, Error> {
+#[cfg(windows)]
+fn read_machine_guid() -> Result<String, Error> {
+    use winreg::enums::HKEY_LOCAL_MACHINE;
+    use winreg::RegKey;
+
     let hklm = RegKey::predef(HKEY_LOCAL_MACHINE);
 
     let key = hklm
@@ -154,6 +155,25 @@ pub fn get_machine_id() -> Result<String, Error> {
             eprint!("Failed to get MachineGuid value: {}", err);
             Error::MachineIdNotFound
         })?;
+
+    Ok(machine_guid)
+}
+
+#[cfg(not(windows))]
+fn read_machine_guid() -> Result<String, Error> {
+    ["/etc/machine-id", "/var/lib/dbus/machine-id"]
+        .iter()
+        .find_map(|path| std::fs::read_to_string(path).ok())
+        .filter(|id| !id.trim().is_empty())
+        .ok_or_else(|| {
+            eprint!("Failed to read machine id");
+            Error::MachineIdNotFound
+        })
+}
+
+#[tauri::command]
+pub fn get_machine_id() -> Result<String, Error> {
+    let machine_guid = read_machine_guid()?;
 
     let mut hasher = Sha256::new();
 

@@ -16,10 +16,7 @@ import { useModManagerStore } from "../stores/modManager"
 import { usePreviewerStore } from "../stores/previewer"
 import { useUIStore } from "../stores/ui"
 
-import { open, save } from "@tauri-apps/plugin-dialog"
-import { writeFile } from "@tauri-apps/plugin-fs"
-import { openUrl } from "@tauri-apps/plugin-opener"
-import { invoke } from "@tauri-apps/api/core"
+import { platform } from "../backends"
 
 import { useLogger } from "../composables/useLogger"
 import RecentFolderItem from "./RecentFolderItem.vue"
@@ -261,14 +258,14 @@ async function saveScreenshot() {
 
     const name = (title.value || "preview").replace(/[\\/:*?"<>|]+/g, "_").trim()
 
-    const path = await save({
-      defaultPath: `${name}_${stamp}.png`,
-      filters: [{ name: "PNG", extensions: ["png"] }],
-    })
+    const path = await platform.saveFile(
+      `${name}_${stamp}.png`,
+      [{ name: "PNG", extensions: ["png"] }],
+      new Uint8Array(await png.arrayBuffer()),
+    )
 
     if (!path) return
 
-    await writeFile(path, new Uint8Array(await png.arrayBuffer()))
     logMessage("Screenshot saved: " + path, "success")
   } catch (error) {
     logMessage("Failed to save screenshot: " + String(error), "error")
@@ -391,7 +388,7 @@ async function selectFolder() {
   isOpening.value = true
 
   try {
-    const path = await open({ directory: true, multiple: false })
+    const path = await platform.pickFolder()
 
     if (!path) return
 
@@ -427,7 +424,7 @@ watch([source, contextOpen, submenu], async ([value, open, menu], _previous, onC
   backgroundsLoading.value = true
 
   try {
-    const images = await invoke<[string, string][]>("get_mod_backgrounds", { folderPath: value.path })
+    const images = await platform.getModBackgrounds(value.path)
 
     if (!cancelled) modBackgrounds.value = images
   } catch (error) {
@@ -897,11 +894,11 @@ const poseErrorMessage = computed(() => {
           @keydown.esc="datingTooltipOpen = false">
           {{ t('preview.datingSupportMessage') }}
           <div class="dating-support-links">
-            <button type="button" @click="openUrl('https://ko-fi.com/bruhnn')">
+            <button type="button" @click="platform.openUrl('https://ko-fi.com/bruhnn')">
               Ko-fi
               <ExternalLink :size="12" aria-hidden="true" />
             </button>
-            <button type="button" @click="openUrl('https://afdian.com/a/bruhnn')">
+            <button type="button" @click="platform.openUrl('https://afdian.com/a/bruhnn')">
               AFDIAN
               <ExternalLink :size="12" aria-hidden="true" />
             </button>

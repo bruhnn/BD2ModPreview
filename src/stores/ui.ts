@@ -2,9 +2,8 @@ import { useIntervalFn, useLocalStorage, useTimestamp } from '@vueuse/core';
 import { defineStore } from 'pinia'
 import { computed, ref, readonly, watch } from 'vue'
 
-import { getVersion } from '@tauri-apps/api/app';
 import { useI18n } from 'vue-i18n';
-import { invoke } from '@tauri-apps/api/core';
+import { platform } from '../backends';
 
 export const useUIStore = defineStore('ui', () => {
   const { locale } = useI18n()
@@ -19,7 +18,7 @@ export const useUIStore = defineStore('ui', () => {
   async function loadLanguage() {
     if (localStorage.getItem('APP_LANGUAGE')) return
     try {
-      const systemLocale = await invoke<string>('get_user_locale')
+      const systemLocale = await platform.getUserLocale()
       const languages: Record<string, string> = { en: 'en_US', zh: 'zh_CN', ja: 'ja_JP', ko: 'ko_KR' }
       language.value = languages[systemLocale.toLowerCase().split(/[-_]/)[0]] ?? 'en_US'
     } catch (error) {
@@ -52,7 +51,7 @@ export const useUIStore = defineStore('ui', () => {
 
   async function loadMachineId() {
     if (!machineId.value) {
-      machineId.value = await invoke<string>('get_machine_id')
+      machineId.value = await platform.getMachineId()
     }
     return machineId.value
   }
@@ -66,7 +65,7 @@ export const useUIStore = defineStore('ui', () => {
 
   async function shouldShowWhatsNew() {
     const dontShowWhatsNewForVersion = localStorage.getItem('DONT_SHOW_WHATS_NEW_FOR_VERSION')
-    const currentVersion = await getVersion()
+    const currentVersion = await platform.getVersion()
 
     isWhatsNewVisible.value = !(dontShowWhatsNewForVersion && dontShowWhatsNewForVersion === currentVersion)
   }
@@ -111,7 +110,7 @@ export const useUIStore = defineStore('ui', () => {
   async function closeWhatsNew() {
     isWhatsNewVisible.value = false;
 
-    localStorage.setItem('DONT_SHOW_WHATS_NEW_FOR_VERSION', await getVersion());
+    localStorage.setItem('DONT_SHOW_WHATS_NEW_FOR_VERSION', await platform.getVersion());
   }
 
   watch(theme, value => { document.documentElement.dataset.theme = value; }, { immediate: true });

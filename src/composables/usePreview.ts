@@ -6,7 +6,7 @@ import {
 } from "./previewErrors";
 import { computed, onUnmounted, ref, Ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { invoke } from "@tauri-apps/api/core";
+import { platform } from "../backends";
 import { usePreviewerStore, type PreviewControl } from "../stores/previewer";
 import { useHistory } from "./useHistory";
 import { useLogger } from "./useLogger";
@@ -795,9 +795,7 @@ export function usePreview(
 	}
 
 	async function loadSpineFromFolder(path: string, request: number) {
-		const assets = await invoke<SpineAssetsData>("get_spine_assets", {
-			folderPath: path,
-		});
+		const assets = await platform.getSpineAssets(path);
 
 		if (request !== loadId) return;
 		if (!assets.skeletonFilename || !assets.atlasFilename)

@@ -68,3 +68,44 @@ jobs:
           draft: ${{ steps.release.outputs.draft }}
           overwrite_files: true
           files: release/BD2ModPreview.exe
+
+  linux:
+    needs: portable
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref }}
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install frontend dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm electron:build
+
+      - name: Check existing release
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+        run: echo "draft=$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json isDraft -q .isDraft 2>/dev/null || echo true)" >> "$GITHUB_OUTPUT"
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+          name: BD2ModPreview ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+          draft: ${{ steps.release.outputs.draft }}
+          overwrite_files: true
+          files: release/BD2ModPreview.AppImage
