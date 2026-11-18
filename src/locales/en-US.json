@@ -108,6 +108,7 @@
         "loadChecklist": "Replaced the default spine loading animation with a checklist of the files being loaded.",
         "translatedErrors": "Error messages are now translated into all supported languages.",
         "multiIdFix": "Fixed some characters failing to load in cutscene or standing previews.",
+        "thumbnailFallback": "Character and background images that fail to load are retried from GitHub, and a placeholder is shown if they still fail.",
         "cutsceneUpdates": "Game cutscene data now updates without an app update and stays available offline once downloaded.",
         "newCutscenes": "Added game cutscenes for Valze - Night of Betrayal and Liatris - Sweet Temptation.",
         "audioRetry": "Improved dating audio loading and added a Retry button when some sounds fail to download.",

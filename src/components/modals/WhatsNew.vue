@@ -66,7 +66,8 @@ const versions = [
             "whatsNew.downloadProgress",
             "whatsNew.loadChecklist",
             "whatsNew.translatedErrors",
-            "whatsNew.multiIdFix"
+            "whatsNew.multiIdFix",
+            "whatsNew.thumbnailFallback"
         ]
     },
     {

@@ -5,12 +5,12 @@
 import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import { RefreshCw, RotateCcw, Search, X } from '@lucide/vue'
+import { ImageOff, RefreshCw, RotateCcw, Search, X } from '@lucide/vue'
 
 import { useNetworkStatus } from '../../composables/useNetworkStatus'
 import { usePreviewerStore } from '../../stores/previewer'
 import { useUIStore } from '../../stores/ui'
-import { NOVEL_BACKGROUNDS, novelThumbnail, loadNovelBackground } from '../../data/novelBackgrounds'
+import { NOVEL_BACKGROUNDS, novelThumbnail, novelThumbnailFailed, loadNovelBackground } from '../../data/novelBackgrounds'
 import NoInternetState from '../NoInternetState.vue'
 
 const props = defineProps<{ show: boolean }>()
@@ -102,7 +102,9 @@ async function apply(id: number | null) {
                   :disabled="loading"
                   :aria-label="t('backgroundsPanel.item', { number: id })"
                   :title="t('backgroundsPanel.item', { number: id })" @click="apply(id)">
-                  <img loading="lazy" draggable="false" :src="novelThumbnail(id)" alt="" />
+                  <img v-if="novelThumbnail(id)" loading="lazy" draggable="false" :src="novelThumbnail(id)" alt=""
+                    @error="novelThumbnailFailed(id)" />
+                  <ImageOff v-else :size="24" class="background-missing" />
                   <span>{{ id }}</span>
                 </button>
               </div>
@@ -305,6 +307,13 @@ async function apply(id: number | null) {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.background-item .background-missing {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  color: var(--text-secondary);
 }
 
 .background-item span {

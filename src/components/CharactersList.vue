@@ -3,7 +3,7 @@
 	lang="ts"
 >
 import { computed, onMounted, ref, watch } from 'vue'
-import { Plus, Search, ChevronDown, Info } from '@lucide/vue'
+import { Plus, Search, ChevronDown, Info, ImageOff } from '@lucide/vue'
 
 import { usePreviewDrag, type PreviewDropTarget } from '../composables/usePreviewDrag'
 
@@ -43,7 +43,7 @@ const previewerStore = usePreviewerStore()
 const charactersStore = useCharactersStore()
 
 const draggedCharacter = ref<Character | null>(null)
-type MinigameCard = MinigameEntry & { character: Character; title: string; thumbnail: string }
+type MinigameCard = MinigameEntry & { character: Character; title: string; thumbnailPath: string }
 const draggedMinigame = ref<MinigameCard | null>(null)
 const dragCard = ref({ width: 0, height: 0, x: 0, y: 0, imageWidth: '', imageHeight: '', imageTransform: '', shadow: '' })
 
@@ -119,9 +119,11 @@ const filteredMinigames = computed(() => {
 	const items = minigameCatalog.flatMap(game => {
 		const character = charactersStore.characters.find(char => char.costume_id === game.costumeId)
 		if (!character) return []
+
 		const title = `${charactersStore.getLocalizedName(character.character_name)} - ${charactersStore.getLocalizedName(character.costume_name)}`
-		const thumbnail = `https://cdn.jsdelivr.net/gh/bruhnn/Brown-Dust-2-Asset@master/ui/illust/illust_inven_char/${character.assets.character_image}`
-		return `${title} ${game.name}`.toLowerCase().includes(search) ? [{ ...game, character, title, thumbnail }] : []
+		const thumbnailPath = `illust_inven_char/${character.assets.character_image}`
+
+		return `${title} ${game.name}`.toLowerCase().includes(search) ? [{ ...game, character, title, thumbnailPath }] : []
 	})
 	if (sortValue.value === 'a-z') items.sort((a, b) => a.title.localeCompare(b.title))
 	else if (sortValue.value === 'z-a') items.sort((a, b) => b.title.localeCompare(a.title))
@@ -135,6 +137,33 @@ const filteredMinigames = computed(() => {
 
 const JSDELIVR_BASE_URL = "https://cdn.jsdelivr.net/gh/bruhnn/Brown-Dust-2-Asset@master/spine"
 const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/spine'
+const ILLUST_JSDELIVR_URL = "https://cdn.jsdelivr.net/gh/bruhnn/Brown-Dust-2-Asset@master/ui/illust"
+const ILLUST_GITHUB_URL = "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/master/ui/illust"
+
+const githubThumbnails = ref(new Set<string>())
+const failedThumbnails = ref(new Set<string>())
+
+function thumbnailUrl(path: string | undefined) {
+	if (!path || failedThumbnails.value.has(path)) return ""
+	const base = githubThumbnails.value.has(path) ? ILLUST_GITHUB_URL : ILLUST_JSDELIVR_URL
+	return `${base}/${path}`
+}
+
+function onThumbnailError(path: string | undefined) {
+	if (!path) return
+
+	if (!githubThumbnails.value.has(path)) {
+		const next = new Set(githubThumbnails.value)
+		next.add(path)
+		githubThumbnails.value = next
+		return
+	}
+
+	const next = new Set(failedThumbnails.value)
+	next.add(path)
+	failedThumbnails.value = next
+}
+
 const ENDPOINTS = {
 	standing: 'char',
 	cutscene: 'cutscenes',
@@ -146,11 +175,14 @@ function startCharacterDrag(event: PointerEvent, character: Character) {
 	if (event.button !== 0) return
 	const card = event.currentTarget as HTMLElement
 	const bounds = card.getBoundingClientRect()
-	const image = getComputedStyle(card.querySelector('img')!)
+
+	const img = card.querySelector('img')
+	const image = img ? getComputedStyle(img) : null
+
 	dragCard.value = {
 		width: bounds.width, height: bounds.height,
 		x: event.clientX - bounds.left, y: event.clientY - bounds.top,
-		imageWidth: image.width, imageHeight: image.height, imageTransform: image.transform,
+		imageWidth: image?.width ?? '100%', imageHeight: image?.height ?? '100%', imageTransform: image?.transform ?? 'none',
 		shadow: getComputedStyle(card).boxShadow,
 	}
 	draggedCharacter.value = character
@@ -228,22 +260,22 @@ function characterClicked(char: Character, target?: PreviewDropTarget) {
 	else previewerStore.openPreview(title, source)
 }
 
-function getThumbnail(character: Character) {
-	if (typeSelected.value === "minigames") return
-	const imageKey = characterTypeMap[typeSelected.value]
-	const baseUrl = "https://cdn.jsdelivr.net/gh/bruhnn/Brown-Dust-2-Asset@master/ui/illust"
+function getThumbnailPath(character: Character) {
+	if (typeSelected.value === "minigames") return ""
 
-	if (!imageKey || !character.assets[imageKey.image]) {
+	const imageKey = characterTypeMap[typeSelected.value]
+	const file = imageKey ? character.assets[imageKey.image] : ""
+
+	if (!imageKey || !file) {
 		logMessage(`Invalid Character Data. Could not find image for ${charactersStore.getLocalizedName(character.character_name)} - ${charactersStore.getLocalizedName(character.costume_name)} (${character.id}) ${typeSelected.value} type.`, "error")
-		return `${baseUrl}/illust_simple_char/illust_simple_char000201_2.png`
+		return "illust_simple_char/illust_simple_char000201_2.png"
 	}
-	// standind and dating show the character image
-	// cutscene shows the skill preview image
-	if (imageKey.key === "standing" || imageKey.key === "dating_id") {
-		return `${baseUrl}/illust_inven_char/${character.assets[imageKey.image]}`
-	} else if (imageKey.key === "cutscene") {
-		return `${baseUrl}/illust_skill_char/${character.assets[imageKey.image]}`
+
+	if (imageKey.key === "cutscene") {
+		return `illust_skill_char/${file}`
 	}
+
+	return `illust_inven_char/${file}`
 }
 
 function minigameClicked(game: MinigameCard, target?: PreviewDropTarget) {
@@ -263,11 +295,14 @@ function startMinigameDrag(event: PointerEvent, game: MinigameCard) {
 	if (event.button !== 0) return
 	const card = event.currentTarget as HTMLElement
 	const bounds = card.getBoundingClientRect()
-	const image = getComputedStyle(card.querySelector('img')!)
+
+	const img = card.querySelector('img')
+	const image = img ? getComputedStyle(img) : null
+
 	dragCard.value = {
 		width: bounds.width, height: bounds.height,
 		x: event.clientX - bounds.left, y: event.clientY - bounds.top,
-		imageWidth: image.width, imageHeight: image.height, imageTransform: image.transform,
+		imageWidth: image?.width ?? '100%', imageHeight: image?.height ?? '100%', imageTransform: image?.transform ?? 'none',
 		shadow: getComputedStyle(card).boxShadow,
 	}
 	draggedCharacter.value = null
@@ -296,8 +331,11 @@ onMounted(async () => {
 					left: dragPosition.x - dragCard.x + 'px', top: dragPosition.y - dragCard.y + 'px',
 					width: dragCard.width + 'px', height: dragCard.height + 'px', boxShadow: dragCard.shadow,
 				}" aria-hidden="true">
-				<img :src="getThumbnail(draggedCharacter)" alt="" draggable="false" class="ghost-image"
+				<img v-if="thumbnailUrl(getThumbnailPath(draggedCharacter))" :src="thumbnailUrl(getThumbnailPath(draggedCharacter))"
+					alt="" draggable="false" class="ghost-image"
 					:style="{ width: dragCard.imageWidth, height: dragCard.imageHeight, transform: dragCard.imageTransform }" />
+				<div v-else class="ghost-image thumbnail-fallback"
+					:style="{ width: dragCard.imageWidth, height: dragCard.imageHeight }"><ImageOff :size="24" /></div>
 				<div class="character-caption">
 					<h3 class="character-name">{{ charactersStore.getLocalizedName(draggedCharacter.character_name) }}</h3>
 					<p class="character-costume">{{ charactersStore.getLocalizedName(draggedCharacter.costume_name) }}</p>
@@ -308,8 +346,11 @@ onMounted(async () => {
 					left: dragPosition.x - dragCard.x + 'px', top: dragPosition.y - dragCard.y + 'px',
 					width: dragCard.width + 'px', height: dragCard.height + 'px', boxShadow: dragCard.shadow,
 				}" aria-hidden="true">
-				<img :src="draggedMinigame.thumbnail" alt="" draggable="false" class="ghost-image"
+				<img v-if="thumbnailUrl(draggedMinigame.thumbnailPath)" :src="thumbnailUrl(draggedMinigame.thumbnailPath)"
+					alt="" draggable="false" class="ghost-image"
 					:style="{ width: dragCard.imageWidth, height: dragCard.imageHeight, transform: dragCard.imageTransform }" />
+				<div v-else class="ghost-image thumbnail-fallback"
+					:style="{ width: dragCard.imageWidth, height: dragCard.imageHeight }"><ImageOff :size="24" /></div>
 				<div class="character-caption">
 					<h3 class="character-name">{{ draggedMinigame.title }}</h3>
 					<p class="character-costume">{{ draggedMinigame.name }}</p>
@@ -375,7 +416,12 @@ onMounted(async () => {
 							@pointerdown.prevent="startMinigameDrag($event, game)" @pointermove="moveDrag"
 							@pointerup="finishDrag" @pointercancel="cancelDrag" @lostpointercapture="cancelDrag"
 							@keydown.esc="cancelDrag" @dragstart.prevent>
-							<img v-if="visibleOnce" loading="lazy" draggable="false" :src="game.thumbnail" :alt="game.title" class="character-image" />
+							<template v-if="visibleOnce">
+								<img v-if="thumbnailUrl(game.thumbnailPath)" loading="lazy" draggable="false"
+									:src="thumbnailUrl(game.thumbnailPath)" :alt="game.title" class="character-image"
+									@error="onThumbnailError(game.thumbnailPath)" />
+								<div v-else class="character-image thumbnail-fallback"><ImageOff :size="24" /></div>
+							</template>
 							<div class="character-caption">
 								<h3 class="character-name">{{ game.title }}</h3>
 								<p class="character-costume">{{ game.name }}</p>
@@ -401,8 +447,13 @@ onMounted(async () => {
 							@keydown.esc="cancelDrag" @dragstart.prevent
 							:class="{ dragging: isDragging && hasDragged && draggedCharacter?.id === character.id }"
 							class="character-card">
-							<img v-if="visibleOnce" loading="lazy" draggable="false" :src="getThumbnail(character)"
-								:alt="charactersStore.getLocalizedName(character.character_name)" class="character-image" />
+							<template v-if="visibleOnce">
+								<img v-if="thumbnailUrl(getThumbnailPath(character))" loading="lazy" draggable="false"
+									:src="thumbnailUrl(getThumbnailPath(character))"
+									:alt="charactersStore.getLocalizedName(character.character_name)" class="character-image"
+									@error="onThumbnailError(getThumbnailPath(character))" />
+								<div v-else class="character-image thumbnail-fallback"><ImageOff :size="24" /></div>
+							</template>
 
 							<div class="character-caption">
 								<h3 class="character-name">{{ charactersStore.getLocalizedName(character.character_name) }}</h3>
@@ -436,6 +487,13 @@ onMounted(async () => {
 .character-image {
 	flex: 1;
 	object-fit: cover;
+}
+
+.thumbnail-fallback {
+	display: grid;
+	place-items: center;
+	background: var(--surface-input);
+	color: var(--text-secondary);
 }
 
 .character-caption {

@@ -2,7 +2,7 @@
   setup
   lang="ts"
 >
-import { History, Sparkles, Image, Clapperboard, ChevronRight, RefreshCw, Pause, Repeat, SkipBack, X, Settings, Users } from "@lucide/vue"
+import { History, Sparkles, Image, Clapperboard, ChevronRight, RefreshCw, Pause, Repeat, SkipBack, X, Settings, Users, ImageOff } from "@lucide/vue"
 import { computed, ref, watch } from "vue"
 import { useI18n } from "vue-i18n"
 import { onClickOutside } from "@vueuse/core"
@@ -11,7 +11,7 @@ import { autoUpdate, flip, offset, shift, useFloating } from "@floating-ui/vue"
 import { usePreviewerStore } from "../stores/previewer"
 import { useUIStore } from "../stores/ui"
 import { useNetworkStatus } from "../composables/useNetworkStatus"
-import { NOVEL_BACKGROUNDS, novelThumbnail, loadNovelBackground } from "../data/novelBackgrounds"
+import { NOVEL_BACKGROUNDS, novelThumbnail, novelThumbnailFailed, loadNovelBackground } from "../data/novelBackgrounds"
 
 defineProps<{ charactersOpen: boolean }>()
 
@@ -175,7 +175,9 @@ function selectBackground(event: Event) {
       <div v-else class="background-thumbs">
         <button v-for="id in shortlist" :key="id" type="button" :title="t('backgroundsPanel.item', { number: id })"
           :aria-label="t('backgroundsPanel.item', { number: id })" @click="applyShortlist(id)">
-          <img loading="lazy" draggable="false" :src="novelThumbnail(id)" alt="" />
+          <img v-if="novelThumbnail(id)" loading="lazy" draggable="false" :src="novelThumbnail(id)" alt=""
+            @error="novelThumbnailFailed(id)" />
+          <ImageOff v-else :size="20" class="background-missing" />
         </button>
       </div>
 
@@ -445,6 +447,12 @@ input[type="color"] {
 
 .background-popover .background-thumbs button:hover {
   border-color: var(--accent);
+}
+
+.background-popover .background-thumbs button:has(.background-missing) {
+  display: grid;
+  place-items: center;
+  color: var(--text-secondary);
 }
 
 .background-thumbs img {

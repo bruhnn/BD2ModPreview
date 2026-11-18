@@ -158,6 +158,7 @@
         "loadChecklist": "기본 Spine 로딩 애니메이션을 불러오는 중인 파일의 체크리스트로 교체했습니다.",
         "translatedErrors": "오류 메시지가 지원되는 모든 언어로 번역되었습니다.",
         "multiIdFix": "일부 캐릭터가 컷신 또는 스탠딩 미리보기에서 로드되지 않던 문제를 수정했습니다.",
+        "thumbnailFallback": "불러오지 못한 캐릭터 및 배경 이미지는 GitHub에서 다시 불러오며, 그래도 실패하면 대체 이미지가 표시됩니다.",
         "cutsceneUpdates": "앱 업데이트 없이 게임 컷신 데이터를 업데이트하며, 다운로드한 데이터는 오프라인에서도 사용할 수 있습니다.",
         "newCutscenes": "Valze - Night of Betrayal 및 Liatris - Sweet Temptation의 게임 컷신을 추가했습니다.",
         "audioRetry": "데이트 오디오 로딩을 개선하고 일부 소리 다운로드에 실패했을 때 재시도 버튼을 추가했습니다.",
