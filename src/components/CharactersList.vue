@@ -166,7 +166,10 @@ function getCharacterUrl(character: Character, type: keyof typeof ENDPOINTS): { 
 
 	switch (type) {
 		case 'standing': {
-			filename = `char${character.id}/char${character.id}`
+			const filenames: Record<string, string> = {
+				'060401': 'char101601/char101601',
+			}
+			filename = filenames[character.id] ?? `char${character.id}/char${character.id}`
 			break
 		}
 		case 'cutscene': {
