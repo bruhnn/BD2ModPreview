@@ -2,6 +2,7 @@ export type LocalizedName = Record<"en" | "cn" | "jp" | "tw" | "kr", string>
 
 export interface Character {
     id: string,
+    ids?: readonly string[],
 
     /** @deprecated use character_name instead */
     character: string,

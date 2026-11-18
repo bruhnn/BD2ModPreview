@@ -18,7 +18,7 @@ function compareVersions(a: string, b: string): number {
 
 interface CharactersJson {
 	version: string;
-	characters: Character[];
+	characters: (Omit<Character, "id"> & { id: string | string[] })[];
 	dating: DatingMap;
 }
 
@@ -44,7 +44,9 @@ export const useCharactersStore = defineStore("characters", () => {
 	}
 
 	function getCharacterById(id: string) {
-		return characters.value.find((char) => char.id === id);
+		return characters.value.find(
+			(char) => char.id === id || char.ids?.includes(id),
+		);
 	}
 
 	function getCharacterByDatingId(id: string) {
@@ -87,9 +89,10 @@ export const useCharactersStore = defineStore("characters", () => {
 			const data = (await response.json()) as CharactersJson;
 
 			const existingIds = new Set(characters.value.map((c) => c.id));
-			const newCharacters = data.characters.filter(
-				(c) => !existingIds.has(c.id),
-			);
+
+			const newCharacters = data.characters
+				.map((c) => (Array.isArray(c.id) ? { ...c, id: c.id[0], ids: c.id } : { ...c, id: c.id }))
+				.filter((c) => !existingIds.has(c.id));
 
 			characters.value = [...characters.value, ...newCharacters];
 			datingMap.value = { ...datingMap.value, ...data.dating };
@@ -124,7 +127,10 @@ export const useCharactersStore = defineStore("characters", () => {
 				return;
 			}
 
-			characters.value = data.characters;
+			characters.value = data.characters.map((c) =>
+				Array.isArray(c.id) ? { ...c, id: c.id[0], ids: c.id } : { ...c, id: c.id },
+			);
+
 			datingMap.value = data.dating;
 
 			console.log("Remote characters loaded:", data.characters.length);
