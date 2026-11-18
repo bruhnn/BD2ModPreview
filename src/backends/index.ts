@@ -23,6 +23,10 @@ export interface DatingAudioDownload {
   failures: string[]
 }
 
+export type AssetDownloadEvent =
+  | { type: "start"; id: string; source: string }
+  | { type: "progress"; id: string; received: number; total: number | null }
+
 export interface ManagerMod {
   name: string
   path: string
@@ -63,6 +67,8 @@ export interface Platform {
   hasGameBackgrounds(hashes: string[]): Promise<boolean>
   getGameBackgroundCacheSize(): Promise<number>
   clearGameBackgroundCache(): Promise<void>
+  missingAssets(kind: "background" | "voice", hashes: string[]): Promise<string[]>
+  onAssetDownload(handler: (event: AssetDownloadEvent) => void): Promise<() => void>
 
   connectToManager(): Promise<void>
   setModEnabledOnManager(modName: string, enabled: boolean): Promise<{ mods: ManagerMod[] }>

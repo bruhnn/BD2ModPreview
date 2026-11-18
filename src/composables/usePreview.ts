@@ -12,6 +12,7 @@ import { useHistory } from "./useHistory";
 import { useLogger } from "./useLogger";
 import { useGameCutscene } from "./useGameCutscene";
 import { useGameBackgroundStore } from "../stores/gameBackgrounds";
+import { useDownloadStore } from "../stores/downloads";
 import { useMinigameInteractions } from "./useMinigameInteractions";
 import { useDatingInteractions } from "./useDatingInteractions";
 import type {
@@ -37,10 +38,12 @@ export function usePreview(
 	const { t, te } = useI18n();
 
 	const cutscene = useGameCutscene(
+		id,
 		() => settings.value?.background.type === "game",
 	);
 
 	const gameBackgrounds = useGameBackgroundStore();
+	const downloadStore = useDownloadStore();
 	const minigame = useMinigameInteractions();
 
 	const datingInteraction = useDatingInteractions(
@@ -68,6 +71,7 @@ export function usePreview(
 				JSON.stringify({ source: source.value, error: message }),
 				"error",
 			),
+		id,
 	);
 
 	const error = ref("");
@@ -245,7 +249,10 @@ export function usePreview(
 		loadingGameImage.value = hash;
 
 		try {
-			const uri = await gameBackgrounds.load(hash);
+			void downloadStore.start(id, "background", [hash], () =>
+				selectGameBackgroundImage(hash),
+			);
+			const uri = await downloadStore.track(id, hash, gameBackgrounds.load(hash));
 
 			if (!settings.value) return;
 			gameImage.value = { hash, uri };
@@ -1627,7 +1634,10 @@ export function usePreview(
 		}
 	}
 
-	onUnmounted(destroyPlayer);
+	onUnmounted(() => {
+		destroyPlayer();
+		downloadStore.clear(id);
+	});
 
 	return {
 		error,
@@ -1649,9 +1659,6 @@ export function usePreview(
 		minigameFeverAvailable: minigame.feverAvailable,
 		datingPoseLoadFailed: datingInteraction.poseLoadFailed,
 		datingPoseError: datingInteraction.poseError,
-		datingAudioProgress: datingInteraction.audioProgress,
-		retryDatingAudio: datingInteraction.retryAudio,
-		dismissDatingAudioError: datingInteraction.dismissAudioError,
 		datingMarkers: datingInteraction.markers,
 		datingGroups: datingInteraction.groups,
 		datingGroup: datingInteraction.group,

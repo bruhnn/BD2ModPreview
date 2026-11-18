@@ -99,10 +99,21 @@
         "tryAgain": "请重试。"
     },
     "datingPoseLoadFailed": "无法加载此姿势。请重试。",
-    "datingAudioStatus": {
-        "loading": "正在加载音频 {loaded}/{total}",
-        "completed": "音频加载完成",
-        "failed": "已加载音频 {loaded}/{total}。部分文件无法加载。"
+    "downloads": {
+        "title": "下载",
+        "active": "下载中",
+        "failed": "失败",
+        "done": "已完成",
+        "background": "背景",
+        "voice": "语音",
+        "backgroundItem": "背景 {n}",
+        "voiceItem": "语音 {n}",
+        "tryingGithub": "正在从 GitHub 重试 {name}（jsDelivr 失败）",
+        "tryingGithubCount": "正在从 GitHub 重试 {count} 个文件（jsDelivr 失败）",
+        "failedBoth": "无法从 jsDelivr 或 GitHub 下载",
+        "downloading": "下载中：剩余 {count}",
+        "failedCount": "下载失败：{count}",
+        "finished": "下载完成"
     },
     "minigameAudio": "启用小游戏音效",
     "datingAudio": "启用约会互动的音效和语音",

@@ -1,6 +1,7 @@
 mod commands;
 mod ipc;
 mod download;
+mod asset_download;
 mod dating_audio;
 mod game_backgrounds;
 mod errors;
@@ -83,6 +84,7 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             ipc::connect_to_bd2mm,
             ipc::enable_mod_on_bd2mm,
+            asset_download::missing_assets,
             dating_audio::get_dating_audio,
             game_backgrounds::get_game_background,
             game_backgrounds::get_game_background_cache_size,

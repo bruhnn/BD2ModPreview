@@ -47,7 +47,22 @@
   "tryAgain": "Please try again."
 },
   "datingPoseLoadFailed": "Could not load this pose. Please try again.",
-  "datingAudioStatus": { "loading": "Loading audio {loaded}/{total}", "completed": "Audio loading completed", "failed": "Audio loaded {loaded}/{total}. Some files could not be loaded." },
+  "downloads": {
+    "title": "Downloads",
+    "active": "Downloading",
+    "failed": "Failed",
+    "done": "Finished",
+    "background": "Backgrounds",
+    "voice": "Voices",
+    "backgroundItem": "Background {n}",
+    "voiceItem": "Voice clip {n}",
+    "tryingGithub": "Trying GitHub for {name} (jsDelivr failed)",
+    "tryingGithubCount": "Trying GitHub for {count} files (jsDelivr failed)",
+    "failedBoth": "Could not download from jsDelivr or GitHub",
+    "downloading": "Downloading: {count} left",
+    "failedCount": "Failed downloads: {count}",
+    "finished": "Downloads finished"
+  },
   "minigameAudio": "Enable sounds for minigames",
   "datingAudio": "Enable sounds and voices for dating interactions",
   "gameBackgroundPrompt": {

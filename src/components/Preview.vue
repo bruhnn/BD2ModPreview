@@ -21,6 +21,7 @@ import { useLogger } from "../composables/useLogger"
 import SequenceEditor from "./modals/SequenceEditor.vue"
 import ScreenshotDialog from "./modals/ScreenshotDialog.vue"
 import RecentFolderItem from "./RecentFolderItem.vue"
+import PreviewDownloads from "./PreviewDownloads.vue"
 
 import type { HistoryItem } from "../types/history"
 import type { AnimationSequence, ScreenshotInfo, ScreenshotOptions } from "../types/spine"
@@ -78,9 +79,6 @@ const {
   minigameFeverAvailable,
   datingPoseLoadFailed,
   datingPoseError,
-  datingAudioProgress,
-  retryDatingAudio,
-  dismissDatingAudioError,
   datingMarkers,
   datingGroups,
   datingGroup,
@@ -594,27 +592,11 @@ const poseErrorMessage = computed(() => {
         </p>
       </details>
     </div>
-    <div v-if="source && !error && !isLoading && datingAudioProgress.status !== 'idle'" class="preview-loading audio-loading"
-      role="status">
-      <span>
-        {{ datingAudioProgress.status === 'loading'
-          ? t('datingAudioStatus.loading', { loaded: datingAudioProgress.loaded, total: datingAudioProgress.total })
-          : datingAudioProgress.status === 'complete'
-            ? t('datingAudioStatus.completed')
-            : t('datingAudioStatus.failed', { loaded: datingAudioProgress.loaded, total: datingAudioProgress.total }) }}
-      </span>
-      <template v-if="datingAudioProgress.status === 'failed'">
-        <button class="error-button" @click="retryDatingAudio">{{ t('common.retry') }}</button>
-        <button class="audio-close" :aria-label="t('common.close')" :title="t('common.close')"
-          @click="dismissDatingAudioError">
-          <X :size="16" />
-        </button>
-      </template>
-    </div>
     <div v-show="source && !error" class="preview-stage">
       <div ref="player-container" :id="`player-container-${props.previewId}`" tabindex="0" class="player-container"
         @contextmenu.prevent="openContext" @pointerdown.capture="playerContainer?.focus()" @keydown="onPreviewKeydown"
         @keydown.shift.f10.prevent="openContext" />
+      <PreviewDownloads :preview-id="props.previewId" />
       <div v-if="source && isLoading && !error" role="status" class="load-steps">
         <ul>
           <li v-for="step in loadSteps" :key="step.key" :class="`load-step-${step.state}`">
@@ -1389,13 +1371,6 @@ const poseErrorMessage = computed(() => {
   cursor: pointer;
 }
 
-.preview-loading {
-  padding: 8px 16px;
-  font-size: 12px;
-  line-height: 16px;
-  color: var(--text-secondary);
-}
-
 .load-steps {
   position: absolute;
   inset: 0;
@@ -1444,29 +1419,6 @@ const poseErrorMessage = computed(() => {
   to {
     transform: rotate(360deg);
   }
-}
-
-.audio-loading {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.audio-loading .error-button {
-  padding: 0 6px;
-  line-height: 16px;
-  border: 0;
-}
-
-.audio-loading>span {
-  flex: 1;
-  min-width: 0;
-}
-
-.audio-close {
-  display: flex;
-  padding: 0;
-  flex-shrink: 0;
 }
 
 .player-container {

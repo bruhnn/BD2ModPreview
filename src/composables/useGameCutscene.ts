@@ -3,6 +3,7 @@ import { useLogger } from "./useLogger";
 import type { SpinePlayer } from "../types/spine";
 import { loadCutscene } from "../utils/cutsceneData";
 import { useGameBackgroundStore } from "../stores/gameBackgrounds";
+import { useDownloadStore } from "../stores/downloads";
 import type { GameBackgroundInfo } from "../types/background";
 
 export type Scene = {
@@ -109,10 +110,12 @@ type Curve = {
 };
 
 export function useGameCutscene(
+	owner: string,
 	backgroundEnabled: () => boolean = () => false,
 ) {
 	const { logMessage } = useLogger();
 	const backgroundStore = useGameBackgroundStore();
+	const downloadStore = useDownloadStore();
 	const incomplete = ref(false);
 	const backgroundImages = ref<
 		{
@@ -176,6 +179,7 @@ export function useGameCutscene(
 		whiteTexture = null;
 		texturesRequested = false;
 		texturesPending = 0;
+		downloadStore.clear(owner, "background");
 		cutsceneId.value = "";
 		active.value = false;
 		for (const manager of assetManagers) manager.dispose();
@@ -515,33 +519,42 @@ export function useGameCutscene(
 	function requestTextures() {
 		if (texturesRequested || !scene || !player || !backgroundEnabled())
 			return;
+
 		texturesRequested = true;
+		const hashes = Object.keys(scene.textures ?? {});
+
+		void downloadStore.start(owner, "background", hashes, () => {
+			for (const hash of hashes) if (!layerTextures.has(hash)) loadLayer(hash);
+		});
+
+		for (const hash of hashes) loadLayer(hash);
+	}
+
+	function loadLayer(hash: string) {
+		if (!player) return;
+
 		const request = generation;
 		const context = player.sceneRenderer.context;
-		const hashes = Object.keys(scene.textures ?? {});
-		texturesPending = hashes.length;
-		for (const hash of hashes) {
-			(async () => {
-				const image = new Image();
-				image.src = await backgroundStore.load(hash);
-				await image.decode();
-				if (request !== generation) return;
-				layerImages.set(hash, image);
-				layerTextures.set(
-					hash,
-					uploadLayer(context, hash, image, false),
-				);
-			})()
-				.catch((error) =>
-					logMessage(
-						`Cutscene ${cutsceneId.value}: background layer ${hash.slice(0, 8)} failed: ${error}`,
-						"warning",
-					),
-				)
-				.finally(() => {
-					if (request === generation) texturesPending--;
-				});
-		}
+		texturesPending++;
+
+		(async () => {
+			const image = new Image();
+			image.src = await downloadStore.track(owner, hash, backgroundStore.load(hash));
+			await image.decode();
+			if (request !== generation) return;
+
+			layerImages.set(hash, image);
+			layerTextures.set(hash, uploadLayer(context, hash, image, false));
+		})()
+			.catch((error) =>
+				logMessage(
+					`Cutscene ${cutsceneId.value}: background layer ${hash.slice(0, 8)} failed: ${error}`,
+					"warning",
+				),
+			)
+			.finally(() => {
+				if (request === generation) texturesPending--;
+			});
 	}
 
 	function uploadLayer(

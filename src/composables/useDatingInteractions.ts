@@ -19,10 +19,11 @@ export function useDatingInteractions(
 	onAnimation: (animation: string) => void = () => {},
 	onSkeleton: (player: SpinePlayer) => void = () => {},
 	onError: (message: string) => void = () => {},
+	owner = "",
 ) {
 	const datingScenesStore = useDatingScenesStore();
 	const uiStore = useUIStore();
-	const audio = useDatingAudio();
+	const audio = useDatingAudio(owner);
 	const poseLoadFailed = ref(false);
 	const poseError = shallowRef<{
 		issue: LoadIssue;
@@ -1202,9 +1203,6 @@ export function useDatingInteractions(
 	return {
 		poseLoadFailed,
 		poseError,
-		audioProgress: audio.audioProgress,
-		retryAudio: audio.retryAudio,
-		dismissAudioError: audio.dismissAudioError,
 		groups,
 		group,
 		selectGroup,

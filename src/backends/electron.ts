@@ -1,8 +1,9 @@
-import type { DragDropEvent, Platform } from "."
+import type { AssetDownloadEvent, DragDropEvent, Platform } from "."
 
 interface ElectronBridge {
   invoke(command: string, args?: Record<string, unknown>): Promise<{ ok: true; value: unknown } | { ok: false; error: unknown }>
   getPathForFile(file: File): string
+  onAssetDownload(handler: (event: AssetDownloadEvent) => void): () => void
 }
 
 declare global {
@@ -77,6 +78,8 @@ export default {
   hasGameBackgrounds: hashes => call("has_game_backgrounds", { hashes }),
   getGameBackgroundCacheSize: () => call("get_game_background_cache_size"),
   clearGameBackgroundCache: () => call("clear_game_background_cache"),
+  missingAssets: (kind, hashes) => call("missing_assets", { kind, hashes }),
+  onAssetDownload: async handler => window.electron!.onAssetDownload(handler),
 
   connectToManager: () => Promise.reject(new Error("BD2MM connection is only supported on Windows")),
   setModEnabledOnManager: () => Promise.reject(new Error("BD2MM connection is only supported on Windows")),

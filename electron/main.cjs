@@ -191,14 +191,61 @@ handle("get_mod_backgrounds", async () => {
 
 const sha256 = (data) => crypto.createHash("sha256").update(data).digest("hex");
 
-async function fetchBytes(url, limit) {
+const emitAssetDownload = (event) =>
+  win?.webContents.send("asset-download", event);
+
+async function fetchBytes(id, url, limit) {
   const response = await net.fetch(url, {
     signal: AbortSignal.timeout(30_000),
   });
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
-  const data = Buffer.from(await response.arrayBuffer());
-  if (limit && data.length > limit) throw new Error("File is too large");
-  return data;
+
+  const total = Number(response.headers.get("content-length")) || null;
+  if (total && total > limit) throw new Error("File is too large");
+
+  const chunks = [];
+  let received = 0;
+  let last = Date.now();
+
+  for await (const value of response.body) {
+    chunks.push(value);
+    received += value.length;
+    if (received > limit) throw new Error("File is too large");
+
+    if (Date.now() - last >= 100) {
+      last = Date.now();
+      emitAssetDownload({ type: "progress", id, received, total });
+    }
+  }
+
+  emitAssetDownload({ type: "progress", id, received, total });
+  return Buffer.concat(chunks);
+}
+
+const ASSET_SOURCES = [
+  ["jsDelivr", "https://cdn.jsdelivr.net/gh/bruhnn/Brown-Dust-2-Asset@master/"],
+  [
+    "GitHub",
+    "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/master/",
+  ],
+];
+
+async function fetchAsset(id, directory, file, limit, verify) {
+  const failures = [];
+
+  for (const [source, base] of ASSET_SOURCES) {
+    emitAssetDownload({ type: "start", id, source });
+
+    try {
+      const data = await fetchBytes(id, `${base}${directory}${file}`, limit);
+      if (!verify(data)) throw new Error("verification failed");
+      return { data, failures };
+    } catch (e) {
+      failures.push(`${source}: ${e.message}`);
+    }
+  }
+
+  throw failures.join("; ");
 }
 
 async function writeAtomic(filePath, data) {
@@ -207,17 +254,6 @@ async function writeAtomic(filePath, data) {
   await fsp.writeFile(temporary, data);
   await fsp.rename(temporary, filePath);
 }
-
-const AUDIO_SOURCES = [
-  [
-    "jsDelivr",
-    "https://cdn.jsdelivr.net/gh/bruhnn/Brown-Dust-2-Asset@master/audio/dating/",
-  ],
-  [
-    "GitHub",
-    "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/master/audio/dating/",
-  ],
-];
 
 handle("get_dating_audio", async ({ hash }) => {
   if (!/^[0-9a-f]{64}$/.test(hash)) throw "Invalid audio hash";
@@ -230,25 +266,18 @@ handle("get_dating_audio", async ({ hash }) => {
     await fsp.rm(filePath, { force: true });
   } catch {}
 
-  const failures = [];
-  for (const [source, base] of AUDIO_SOURCES) {
-    try {
-      const data = await fetchBytes(`${base}${hash}.ogg`, 20 * 1024 * 1024);
-      if (data.subarray(0, 4).toString() !== "OggS" || sha256(data) !== hash)
-        throw new Error("Dating audio verification failed");
-      await writeAtomic(filePath, data);
-      return { data: data.toString("base64"), failures };
-    } catch (e) {
-      failures.push(`${source}: ${e.message}`);
-    }
-  }
-  throw failures.join("; ");
+  const { data, failures } = await fetchAsset(
+    hash,
+    "audio/dating/",
+    `${hash}.ogg`,
+    20 * 1024 * 1024,
+    (data) =>
+      data.subarray(0, 4).toString() === "OggS" && sha256(data) === hash,
+  );
+  await writeAtomic(filePath, data);
+  return { data: data.toString("base64"), failures };
 });
 
-const BACKGROUND_SOURCES = [
-  "https://cdn.jsdelivr.net/gh/bruhnn/Brown-Dust-2-Asset@master/backgrounds/cutscene/",
-  "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/master/backgrounds/cutscene/",
-];
 const backgroundsDir = path.join(cacheDir, "game-backgrounds");
 
 handle("get_game_background", async ({ hash }) => {
@@ -257,22 +286,30 @@ handle("get_game_background", async ({ hash }) => {
   let data = await fsp.readFile(filePath).catch(() => null);
 
   if (!data) {
-    const errors = [];
-    for (const base of BACKGROUND_SOURCES) {
-      try {
-        const downloaded = await fetchBytes(`${base}${hash}.webp`);
-        if (sha256(downloaded) !== hash) throw new Error("checksum mismatch");
-        data = downloaded;
-        break;
-      } catch (e) {
-        errors.push(`${base}: ${e.message}`);
-      }
-    }
-    if (!data) throw errors.join("; ");
+    ({ data } = await fetchAsset(
+      hash,
+      "backgrounds/cutscene/",
+      `${hash}.webp`,
+      64 * 1024 * 1024,
+      (data) => sha256(data) === hash,
+    ));
     await writeAtomic(filePath, data);
   }
 
   return `data:image/webp;base64,${data.toString("base64")}`;
+});
+
+const ASSET_CACHE = {
+  background: ["game-backgrounds", "webp"],
+  voice: ["dating-audio", "ogg"],
+};
+
+handle("missing_assets", async ({ kind, hashes }) => {
+  const [directory, extension] = ASSET_CACHE[kind] ?? [];
+  if (!directory) throw `Unknown asset kind: ${kind}`;
+  return hashes.filter(
+    (hash) => !fs.existsSync(path.join(cacheDir, directory, `${hash}.${extension}`)),
+  );
 });
 
 handle("has_game_backgrounds", async ({ hashes }) =>
@@ -345,7 +382,6 @@ handle("save_file", async ({ defaultName, filters, bytes }) => {
   await fsp.writeFile(result.filePath, Buffer.from(bytes));
   return result.filePath;
 });
-
 
 function appDataPath(relative) {
   const root = app.getPath("userData");

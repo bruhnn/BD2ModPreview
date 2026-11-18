@@ -99,10 +99,21 @@
         "tryAgain": "다시 시도해 주세요."
     },
     "datingPoseLoadFailed": "이 포즈를 불러오지 못했습니다. 다시 시도해 주세요.",
-    "datingAudioStatus": {
-        "loading": "오디오 로딩 중 {loaded}/{total}",
-        "completed": "오디오 로딩 완료",
-        "failed": "오디오 {loaded}/{total} 로딩 완료. 일부 파일을 불러오지 못했습니다."
+    "downloads": {
+        "title": "다운로드",
+        "active": "다운로드 중",
+        "failed": "실패",
+        "done": "완료",
+        "background": "배경",
+        "voice": "보이스",
+        "backgroundItem": "배경 {n}",
+        "voiceItem": "보이스 {n}",
+        "tryingGithub": "{name} 파일을 GitHub에서 다시 시도 중 (jsDelivr 실패)",
+        "tryingGithubCount": "파일 {count}개를 GitHub에서 다시 시도 중 (jsDelivr 실패)",
+        "failedBoth": "jsDelivr 및 GitHub에서 다운로드하지 못했습니다",
+        "downloading": "다운로드 중: {count}개 남음",
+        "failedCount": "실패한 다운로드: {count}",
+        "finished": "다운로드 완료"
     },
     "minigameAudio": "미니게임 효과음 활성화",
     "datingAudio": "데이트 상호작용의 효과음과 음성 활성화",

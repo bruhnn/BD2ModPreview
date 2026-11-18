@@ -8,7 +8,7 @@ import { open, save } from "@tauri-apps/plugin-dialog"
 import { BaseDirectory, exists, mkdir, readTextFile, rename, writeFile, writeTextFile } from "@tauri-apps/plugin-fs"
 import { openUrl } from "@tauri-apps/plugin-opener"
 import { saveWindowState, StateFlags } from "@tauri-apps/plugin-window-state"
-import type { ManagerMod, Platform } from "."
+import type { AssetDownloadEvent, ManagerMod, Platform } from "."
 
 const appData = { baseDir: BaseDirectory.AppData }
 
@@ -82,6 +82,8 @@ export default {
   hasGameBackgrounds: hashes => invoke("has_game_backgrounds", { hashes }),
   getGameBackgroundCacheSize: () => invoke("get_game_background_cache_size"),
   clearGameBackgroundCache: () => invoke("clear_game_background_cache"),
+  missingAssets: (kind, hashes) => invoke("missing_assets", { kind, hashes }),
+  onAssetDownload: handler => listen<AssetDownloadEvent>("asset-download", ({ payload }) => handler(payload)),
 
   connectToManager: () => invoke("connect_to_bd2mm"),
   setModEnabledOnManager: (modName, enabled) => invoke("enable_mod_on_bd2mm", { modName, enabled }),

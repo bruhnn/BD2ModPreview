@@ -1,7 +1,8 @@
-import { onScopeDispose, ref, watch } from "vue";
+import { onScopeDispose, watch } from "vue";
 import { platform } from "../backends";
 import { useLogger } from "./useLogger";
 import { useUIStore } from "../stores/ui";
+import { useDownloadStore } from "../stores/downloads";
 import type { DatingPoint, DatingAudio } from "../types/dating";
 
 const downloads = new Map<string, Promise<string>>();
@@ -23,21 +24,15 @@ function download(hash: string) {
 	return request;
 }
 
-export function useDatingAudio() {
+export function useDatingAudio(owner: string) {
 	const ui = useUIStore();
+	const downloadStore = useDownloadStore();
 	let scene: DatingAudio | undefined;
 	let context: AudioContext | null = null;
 	let generation = 0;
 	let request = 0;
 	let warned = false;
-	const audioProgress = ref({
-		status: "idle",
-		loaded: 0,
-		total: 0,
-		failed: 0,
-	});
 	let preloadId = 0;
-	let completedTimer: ReturnType<typeof setTimeout> | undefined;
 	const buffers = new Map<string, AudioBuffer>();
 	const playing = new Set<AudioBufferSourceNode>();
 
@@ -51,13 +46,7 @@ export function useDatingAudio() {
 		stop();
 		generation++;
 		preloadId++;
-		clearTimeout(completedTimer);
-		audioProgress.value = {
-			status: "idle",
-			loaded: 0,
-			total: 0,
-			failed: 0,
-		};
+		downloadStore.clear(owner, "voice");
 		scene = data;
 		buffers.clear();
 		warned = false;
@@ -66,28 +55,36 @@ export function useDatingAudio() {
 
 	async function preload() {
 		const current = ++preloadId;
-		clearTimeout(completedTimer);
 		const hashes = [
 			...new Set(
 				Object.values(scene?.events ?? {}).map((clip) => clip.file),
 			),
 		];
-		audioProgress.value = {
-			status: hashes.length ? "loading" : "idle",
-			loaded: 0,
-			total: hashes.length,
-			failed: 0,
-		};
 		if (!hashes.length) return;
+
+		void downloadStore.start(
+			owner,
+			"voice",
+			hashes.filter((hash) => !buffers.has(hash)),
+			preload,
+		);
+
 		let next = 0;
+
 		async function worker() {
 			while (next < hashes.length) {
 				if (current !== preloadId || !ui.datingAudio) return;
 				const hash = hashes[next++];
+
 				try {
 					if (!buffers.has(hash)) {
-						const encoded = await download(hash);
+						const encoded = await downloadStore.track(
+							owner,
+							hash,
+							download(hash),
+						);
 						if (current !== preloadId || !ui.datingAudio) return;
+
 						context ??= new AudioContext();
 						const bytes = Uint8Array.from(atob(encoded), (char) =>
 							char.charCodeAt(0),
@@ -96,12 +93,11 @@ export function useDatingAudio() {
 							bytes.buffer,
 						);
 						if (current !== preloadId || !ui.datingAudio) return;
+
 						buffers.set(hash, buffer);
 					}
-					audioProgress.value.loaded++;
 				} catch (error) {
 					if (current !== preloadId || !ui.datingAudio) return;
-					audioProgress.value.failed++;
 					useLogger().logMessage(
 						`Could not load dating audio ${hash}.ogg: ${String(error)}`,
 						"error",
@@ -109,23 +105,10 @@ export function useDatingAudio() {
 				}
 			}
 		}
+
 		await Promise.all(
 			Array.from({ length: Math.min(4, hashes.length) }, worker),
 		);
-		if (current !== preloadId || !ui.datingAudio) return;
-		audioProgress.value.status = audioProgress.value.failed
-			? "failed"
-			: "complete";
-		if (!audioProgress.value.failed) {
-			completedTimer = setTimeout(() => {
-				if (current === preloadId) audioProgress.value.status = "idle";
-			}, 2500);
-		}
-	}
-
-	function dismissAudioError() {
-		if (audioProgress.value.status === "failed")
-			audioProgress.value.status = "idle";
 	}
 
 	async function playEvents(
@@ -215,8 +198,7 @@ export function useDatingAudio() {
 			else {
 				stop();
 				preloadId++;
-				clearTimeout(completedTimer);
-				audioProgress.value.status = "idle";
+				downloadStore.clear(owner, "voice");
 			}
 		},
 	);
@@ -224,7 +206,6 @@ export function useDatingAudio() {
 		stop();
 		generation++;
 		preloadId++;
-		clearTimeout(completedTimer);
 		void context?.close();
 		buffers.clear();
 	});
@@ -233,8 +214,5 @@ export function useDatingAudio() {
 		play,
 		stop,
 		playEvents,
-		audioProgress,
-		retryAudio: preload,
-		dismissAudioError,
 	};
 }

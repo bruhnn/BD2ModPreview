@@ -99,10 +99,21 @@
         "tryAgain": "もう一度お試しください。"
     },
     "datingPoseLoadFailed": "このポーズを読み込めませんでした。もう一度お試しください。",
-    "datingAudioStatus": {
-        "loading": "音声を読み込み中 {loaded}/{total}",
-        "completed": "音声の読み込みが完了しました",
-        "failed": "音声を {loaded}/{total} 読み込みました。一部のファイルを読み込めませんでした。"
+    "downloads": {
+        "title": "ダウンロード",
+        "active": "ダウンロード中",
+        "failed": "失敗",
+        "done": "完了",
+        "background": "背景",
+        "voice": "ボイス",
+        "backgroundItem": "背景 {n}",
+        "voiceItem": "ボイス {n}",
+        "tryingGithub": "{name} を GitHub から取得しています (jsDelivr 失敗)",
+        "tryingGithubCount": "{count} 件のファイルを GitHub から取得しています (jsDelivr 失敗)",
+        "failedBoth": "jsDelivr と GitHub からダウンロードできませんでした",
+        "downloading": "ダウンロード中: 残り {count}",
+        "failedCount": "失敗したダウンロード: {count}",
+        "finished": "ダウンロード完了"
     },
     "minigameAudio": "ミニゲームの効果音を有効にする",
     "datingAudio": "デートインタラクションの効果音とボイスを有効にする",
