@@ -1,6 +1,11 @@
 import { computed, ref } from "vue";
 import { useLogger } from "./useLogger";
 import type { SpinePlayer } from "../types/spine";
+import {
+	runtimeOf,
+	spineRuntime,
+	updateWorldTransform,
+} from "../utils/spineRuntime";
 import { loadCutscene } from "../utils/cutsceneData";
 import { useGameBackgroundStore } from "../stores/gameBackgrounds";
 import { useDownloadStore } from "../stores/downloads";
@@ -96,8 +101,6 @@ export type Scene = {
 	};
 };
 
-declare const spine: any;
-
 type Curve = {
 	start?: number;
 	end?: number;
@@ -113,6 +116,7 @@ export function useGameCutscene(
 	owner: string,
 	backgroundEnabled: () => boolean = () => false,
 ) {
+	let spine: any = spineRuntime();
 	const { logMessage } = useLogger();
 	const backgroundStore = useGameBackgroundStore();
 	const downloadStore = useDownloadStore();
@@ -216,6 +220,7 @@ export function useGameCutscene(
 
 	async function load(value: SpinePlayer, filename: string) {
 		dispose();
+		spine = runtimeOf(value);
 		const id = filename.match(
 			/(?:^|[/\\])cutscene_char(\d+)(?:_[a-z])?\.(?:skel|json)(?:[?#]|$)/i,
 		)?.[1];
@@ -1078,7 +1083,7 @@ void main() {
 				node.color.b,
 				node.color.a * node.groupAlpha,
 			);
-			skeleton.updateWorldTransform();
+			updateWorldTransform(spine, skeleton);
 			renderer.drawSkeleton(
 				skeleton,
 				player!.config.premultipliedAlpha,

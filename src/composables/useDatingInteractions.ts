@@ -7,13 +7,16 @@ import {
 import { computed, ref, shallowRef, watch } from "vue";
 import { useTimeoutFn } from "@vueuse/core";
 import type { SpinePlayer } from "../types/spine";
+import {
+	runtimeOf,
+	spineRuntime,
+	updateWorldTransform,
+} from "../utils/spineRuntime";
 import { DatingPoint, DatingScene, DatingGroup } from "../types/dating";
 import { useDatingScenesStore } from "../stores/datingScenes";
 import { useUIStore } from "../stores/ui";
 
 import { useDatingAudio } from "./useDatingAudio";
-
-declare const spine: any;
 
 export function useDatingInteractions(
 	onAnimation: (animation: string) => void = () => {},
@@ -21,6 +24,7 @@ export function useDatingInteractions(
 	onError: (message: string) => void = () => {},
 	owner = "",
 ) {
+	let spine: any = spineRuntime();
 	const datingScenesStore = useDatingScenesStore();
 	const uiStore = useUIStore();
 	const audio = useDatingAudio(owner);
@@ -129,7 +133,7 @@ export function useDatingInteractions(
 			dragPositions.clear();
 			player.skeleton.setToSetupPose();
 			player.animationState.apply(player.skeleton);
-			player.skeleton.updateWorldTransform();
+			updateWorldTransform(spine, player.skeleton);
 		}
 		markers.value = [];
 		pointer = null;
@@ -161,7 +165,7 @@ export function useDatingInteractions(
 			player.animationState.clearTrack(1);
 			player.skeleton.setToSetupPose();
 			player.animationState.apply(player.skeleton);
-			player.skeleton.updateWorldTransform();
+			updateWorldTransform(spine, player.skeleton);
 		}
 		reaction = null;
 	}
@@ -217,6 +221,7 @@ export function useDatingInteractions(
 			skeletons.clear();
 		}
 		player = value;
+		spine = runtimeOf(value);
 		if (player && !skeletons.size)
 			skeletons.set(
 				filename
@@ -297,7 +302,7 @@ export function useDatingInteractions(
 			dragPositions.clear();
 			player.skeleton.setToSetupPose();
 			player.animationState.apply(player.skeleton);
-			player.skeleton.updateWorldTransform();
+			updateWorldTransform(spine, player.skeleton);
 		}
 
 		hidden.clear();
@@ -491,7 +496,7 @@ export function useDatingInteractions(
 		reaction = state.setAnimation(1, animation, false);
 		reaction.mixDuration = 0;
 		state.apply(player!.skeleton);
-		player!.skeleton.updateWorldTransform();
+		updateWorldTransform(spine, player!.skeleton);
 	}
 
 	function pointerDown(event: PointerEvent) {
@@ -715,7 +720,7 @@ export function useDatingInteractions(
 		if (current?.started && player) {
 			player.skeleton.setToSetupPose();
 			player.animationState.apply(player.skeleton);
-			player.skeleton.updateWorldTransform();
+			updateWorldTransform(spine, player.skeleton);
 		}
 	}
 
@@ -769,7 +774,7 @@ export function useDatingInteractions(
 					dragPositions.clear();
 					player.skeleton.setToSetupPose();
 					player.animationState.apply(player.skeleton);
-					player.skeleton.updateWorldTransform();
+					updateWorldTransform(spine, player.skeleton);
 					cancelDrag();
 					clicks.clear();
 				}
@@ -810,12 +815,12 @@ export function useDatingInteractions(
 			bone.x = position.x;
 			bone.y = position.y;
 		}
-		if (dragPositions.size) player.skeleton.updateWorldTransform();
+		if (dragPositions.size) updateWorldTransform(spine, player.skeleton);
 		if (!drag?.started) return;
 		const bone = player.skeleton.findBone(drag.point.bone);
 		bone.x = drag.x;
 		bone.y = drag.y;
-		player.skeleton.updateWorldTransform();
+		updateWorldTransform(spine, player.skeleton);
 		const destinations = drag.point.destinations;
 		if (!destinations.length) return;
 		const collider = drag.point.collider.map(([x, y]) =>
@@ -1063,7 +1068,7 @@ export function useDatingInteractions(
 					onAnimation(next.animation);
 				}
 				player.animationState.apply(player.skeleton);
-				player.skeleton.updateWorldTransform();
+				updateWorldTransform(spine, player.skeleton);
 				switching = false;
 			};
 			onMotion?.();

@@ -24,8 +24,13 @@ import type {
 	ScreenshotInfo,
 	ScreenshotOptions,
 } from "../types/spine";
-
-declare const spine: any;
+import {
+	createSpinePlayer,
+	detectSpineVersion,
+	runtimeForVersion,
+	spineRuntime,
+	updateWorldTransform,
+} from "../utils/spineRuntime";
 
 export function usePreview(
 	id: string,
@@ -89,6 +94,7 @@ export function usePreview(
 	const hiddenAttachments = new Map<any, any>();
 	let loadId = 0;
 	let spinePlayer: SpinePlayer | null = null;
+	let spine: any = spineRuntime();
 	const loadSteps = ref<LoadStep[]>([]);
 	let frameRequest: ((frame: HTMLCanvasElement) => void) | null = null;
 
@@ -395,7 +401,7 @@ export function usePreview(
 			);
 		}
 
-		skeleton.updateWorldTransform();
+		updateWorldTransform(spine, skeleton);
 	}
 
 
@@ -664,7 +670,7 @@ export function usePreview(
 		if (!spinePlayer) return;
 		spinePlayer.skeleton.setToSetupPose();
 		spinePlayer.animationState.apply(spinePlayer.skeleton);
-		spinePlayer.skeleton.updateWorldTransform();
+		updateWorldTransform(spine, spinePlayer.skeleton);
 	}
 
 	function restart() {
@@ -844,7 +850,7 @@ export function usePreview(
 			assets.atlasFilename = firstPart.replace(/\.(skel|json)$/i, ".atlas");
 		}
 
-		initializePlayer(createPlayerConfig(assets), request);
+		await initializePlayer(createPlayerConfig(assets), request);
 	}
 
 	function loadSpineFromUrl(
@@ -882,7 +888,9 @@ export function usePreview(
 			} else showError(message, request, true);
 		};
 
-		initializePlayer(config, request);
+		initializePlayer(config, request).catch((error) =>
+			showError(error, request),
+		);
 	}
 
 	function createPlayerConfig(assetsData: SpineAssetsData) {
@@ -980,9 +988,29 @@ export function usePreview(
 		return config;
 	}
 
-	function initializePlayer(config: any, request: number) {
+	async function initializePlayer(config: any, request: number) {
 		if (!playerContainer.value) return;
 		destroyPlayer();
+
+		const skeletonPath: string = config.skelUrl ?? config.jsonUrl;
+		const skeletonVersion = await detectSpineVersion(
+			skeletonPath,
+			config.rawDataURIs,
+		);
+
+		if (request !== loadId || !playerContainer.value) return;
+
+		const version = runtimeForVersion(skeletonVersion);
+		spine = spineRuntime(version);
+
+		logMessage(
+			JSON.stringify({
+				skeleton: skeletonPath,
+				skeletonVersion,
+				runtime: version,
+			}),
+			"info",
+		);
 
 		const onError = config.error;
 
@@ -1020,7 +1048,8 @@ export function usePreview(
 		};
 
 		playerContainer.value.innerHTML = "";
-		const player: SpinePlayer = new spine.SpinePlayer(
+		const player: SpinePlayer = createSpinePlayer(
+			version,
 			playerContainer.value,
 			config,
 		);
@@ -1108,7 +1137,7 @@ export function usePreview(
 		const drawsImages = () => {
 			skeleton.setToSetupPose();
 			player.animationState.apply(skeleton);
-			skeleton.updateWorldTransform();
+			updateWorldTransform(spine, skeleton);
 
 			return skeleton.drawOrder.some(
 				(slot: any) =>

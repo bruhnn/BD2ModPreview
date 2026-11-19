@@ -135,8 +135,8 @@ const filteredMinigames = computed(() => {
 	return items
 })
 
-const JSDELIVR_BASE_URL = "https://cdn.jsdelivr.net/gh/bruhnn/Brown-Dust-2-Asset@master/spine"
-const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/spine'
+const JSDELIVR_BASE_URL = "https://cdn.jsdelivr.net/gh/bruhnn/Brown-Dust-2-Asset@master/spine-4.2"
+const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/spine-4.2'
 const ILLUST_JSDELIVR_URL = "https://cdn.jsdelivr.net/gh/bruhnn/Brown-Dust-2-Asset@master/ui/illust"
 const ILLUST_GITHUB_URL = "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/master/ui/illust"
 

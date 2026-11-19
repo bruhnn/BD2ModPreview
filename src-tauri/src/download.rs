@@ -6,14 +6,14 @@ use std::io::{Read, Write};
 use std::path::Path;
 use tauri::{AppHandle, Emitter};
 
-const CUTSCENE_URL: &str = "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/spine/cutscenes/";
+const CUTSCENE_URL: &str = "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/spine-4.2/cutscenes/";
 const IDLE_URL: &str =
-    "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/spine/char/";
+    "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/spine-4.2/char/";
 const NPC_URL: &str =
-    "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/spine/npc/";
-const ILLUST_DATING_URL: &str = "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/spine/illust/illust_dating/";
-const ILLUST_SPECIAL_URL: &str = "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/spine/illust/illust_special/";
-const ILLUST_TALK_URL: &str = "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/spine/illust/illust_talk/";
+    "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/spine-4.2/npc/";
+const ILLUST_DATING_URL: &str = "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/spine-4.2/illust/illust_dating/";
+const ILLUST_SPECIAL_URL: &str = "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/spine-4.2/illust/illust_special/";
+const ILLUST_TALK_URL: &str = "https://raw.githubusercontent.com/bruhnn/Brown-Dust-2-Asset/refs/heads/master/spine-4.2/illust/illust_talk/";
 
 pub fn download_file(app: AppHandle, url: &str, dest_path: &Path) -> Result<(), DownloadError> {
     app.emit(
