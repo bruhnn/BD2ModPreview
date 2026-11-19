@@ -57,6 +57,14 @@ const otherUpdates = [
 
 const versions = [
     {
+        version: "1.6.0-beta.1",
+        highlights: [],
+        changelog: [
+            "whatsNew.spine42",
+            "whatsNew.venaka"
+        ]
+    },
+    {
         version: "1.0.5",
         highlights: [],
         changelog: [
@@ -213,6 +221,9 @@ const versions = [
                                             </li>
                                         </ul>
                                     </section>
+                                    <div class="version-end">
+                                        <span>{{ t("whatsNew.versionEnd", { version: release.version }) }}</span>
+                                    </div>
                                 </div>
                             </section>
                         </DialogDescription>
@@ -313,7 +324,7 @@ const versions = [
 .version {
     position: relative;
     display: grid;
-    grid-template-columns: 92px 1fr;
+    grid-template-columns: 124px minmax(0, 1fr);
     gap: 12px;
     padding-bottom: 22px;
 }
@@ -383,6 +394,24 @@ const versions = [
     display: flex;
     flex-direction: column;
     gap: 28px;
+}
+
+.version-end {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-block: 8px;
+    color: var(--text-secondary);
+    font-size: 11px;
+    text-align: center;
+}
+
+.version-end::before,
+.version-end::after {
+    content: "";
+    flex: 1;
+    min-width: 16px;
+    border-top: 1px solid var(--border-strong);
 }
 
 .update-feature {
@@ -589,12 +618,6 @@ const versions = [
 
     .github-link {
         font-size: 12px;
-    }
-}
-
-@media (max-width: 520px) {
-    .version {
-        grid-template-columns: 76px 1fr;
     }
 }
 
