@@ -25,6 +25,7 @@ export interface SpinePlayer {
     animationState: any;
     canvas: HTMLCanvasElement;
     setAnimation: (animation: string, loop: boolean) => void;
+    setViewport: (animation: string) => void;
     addAnimation: () => void;
     draw: () => void;
 }

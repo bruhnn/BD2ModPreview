@@ -1077,7 +1077,7 @@ export function usePreview(
 		const stateOf = (path: string): LoadStepState =>
 			path in manager.getErrors()
 				? "error"
-				: path in manager.assets
+				: manager.get(path) !== undefined
 					? "done"
 					: "loading";
 
@@ -1192,11 +1192,17 @@ export function usePreview(
 
 		if (animation) {
 			preview.value.settings.currentAnimation = animation;
-			player.setAnimation(animation, preview.value.settings.loopAnimation);
+			player.animationState.setAnimation(
+				0,
+				animation,
+				preview.value.settings.loopAnimation,
+			);
 		}
 
-		applyPose();
+		// Spine 4.2 rejects empty bounds, so pick a visible skin before fitting the viewport.
 		pickVisibleSkin(player);
+		if (animation) player.setViewport(animation);
+		applyPose();
 		setupCamera(player);
 		minigame.load(player);
 
