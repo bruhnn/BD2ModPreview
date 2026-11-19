@@ -57,7 +57,7 @@ const otherUpdates = [
 
 const versions = [
     {
-        version: "1.6.0-beta.1",
+        version: "1.0.6-beta.1",
         highlights: [],
         changelog: [
             "whatsNew.spine42",
